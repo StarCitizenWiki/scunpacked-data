@@ -86,6 +86,7 @@
                         "RequiredTags": "NOPE",
                         "DisplayType": "",
                         "ignoredAttachAxis": "None",
+                        "attachCheckCenterOfMass": 0,
                         "Localization": {
                             "Name": "AAT-34 Turret",
                             "__Name": "@item_NameBRAA_groundturret_AA",
@@ -163,7 +164,6 @@
                     "intoxicationModifierRef": "00000000-0000-0000-0000-000000000000",
                     "hudParamsOverride": "00000000-0000-0000-0000-000000000000",
                     "autoDeployHelmetTargetingMode": 1,
-                    "runsSafetyChecks": 1,
                     "recenterTask": [],
                     "resumeControlTask": [],
                     "setMovementTagTasks": [],
@@ -482,6 +482,11 @@
                     },
                     "audioRtpcHealthRatio": {
                         "rtpc": "Turret_Health"
+                    },
+                    "gunFireSafety": {
+                        "selfHitCheckType": "All",
+                        "fireConsentAngleCheckType": "All",
+                        "fireConsentAngleDeg": 25
                     }
                 },
                 "SGeometryResourceParams": {
@@ -649,8 +654,24 @@
                 },
                 "SSCItemControllableManagerParams": {
                     "defaultMasterMode": "SCM",
-                    "masterModeSpoolTimeToNAV": 1,
-                    "masterModeSpoolTimeToSCM": 0.2,
+                    "masterModes": [
+                        {
+                            "available": 0,
+                            "spoolTime": 1
+                        },
+                        {
+                            "available": 1,
+                            "spoolTime": 1
+                        },
+                        {
+                            "available": 1,
+                            "spoolTime": 0.2
+                        },
+                        {
+                            "available": 0,
+                            "spoolTime": 1
+                        }
+                    ],
                     "controllerParams": {
                         "SCItemControllableGroupParams": {
                             "priorityGroups": []
@@ -694,6 +715,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "<= PLACEHOLDER =>",
                                                         "__Name": "@LOC_PLACEHOLDER",
@@ -765,7 +787,8 @@
                                             },
                                             "SAISkillsComponentParams": {
                                                 "skills": "355f453f-bef8-4dcb-82c6-c68da1336da9",
-                                                "profile": "16831c7a-9ad0-44be-a856-8d0ad1c2c0bc"
+                                                "profile": "16831c7a-9ad0-44be-a856-8d0ad1c2c0bc",
+                                                "skillExtenderList": "00000000-0000-0000-0000-000000000000"
                                             },
                                             "SubsumptionComponentParams": {
                                                 "subsumptionMastergraph": "AIModuleMastergraph",
@@ -852,6 +875,8 @@
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 0,
+                                                "duplicateHitToParent": 0,
+                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                 "DamageResistances": {
                                                     "DamageResistance": {
                                                         "IgnoreMeleeDamage": 0,
@@ -1143,6 +1168,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "GVSR Repeater",
                                                         "__Name": "@item_NameBEHR_LaserRepeater_VNG_S2",
@@ -1192,13 +1218,13 @@
                                                         "z": 4.81137
                                                     },
                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": -2.527,
+                                                        "y": -6.048,
+                                                        "z": -8.385
                                                     },
                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                        "x": 0,
-                                                        "y": 0,
+                                                        "x": 2.527,
+                                                        "y": 10.716,
                                                         "z": 0
                                                     },
                                                     "inventoryOccupancyDimensionsUIOverride": {
@@ -1251,7 +1277,32 @@
                                                     },
                                                     "accuracyRangeCurve": {
                                                         "useLUT": 0,
-                                                        "points": []
+                                                        "points": [
+                                                            {
+                                                                "x": -0.1,
+                                                                "y": 1
+                                                            },
+                                                            {
+                                                                "x": 0,
+                                                                "y": 1
+                                                            },
+                                                            {
+                                                                "x": 0.4,
+                                                                "y": 1
+                                                            },
+                                                            {
+                                                                "x": 0.4798653,
+                                                                "y": 1
+                                                            },
+                                                            {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            },
+                                                            {
+                                                                "x": 1.520135,
+                                                                "y": 1
+                                                            }
+                                                        ]
                                                     },
                                                     "shootingTimeAccuracyData": {
                                                         "maxShootingTime": 10,
@@ -2459,8 +2510,7 @@
                                                                             }
                                                                         },
                                                                         "vibrationParams": {
-                                                                            "normalVibration": 0,
-                                                                            "playerVibration": 0
+                                                                            "vibrationImpulse": 2500
                                                                         },
                                                                         "explosionParams": [],
                                                                         "signatureEmitterParams": []
@@ -2547,8 +2597,7 @@
                                                                             }
                                                                         },
                                                                         "vibrationParams": {
-                                                                            "normalVibration": 0,
-                                                                            "playerVibration": 0
+                                                                            "vibrationImpulse": 2500
                                                                         },
                                                                         "explosionParams": [],
                                                                         "signatureEmitterParams": []
@@ -3602,6 +3651,7 @@
                                                                                 "RequiredTags": "",
                                                                                 "DisplayType": "",
                                                                                 "ignoredAttachAxis": "None",
+                                                                                "attachCheckCenterOfMass": 0,
                                                                                 "Localization": {
                                                                                     "Name": "<= PLACEHOLDER =>",
                                                                                     "__Name": "@LOC_PLACEHOLDER",
@@ -3651,14 +3701,14 @@
                                                                                     "z": 0.15
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMin": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": -1.588,
+                                                                                    "y": -1.001,
+                                                                                    "z": -2.068
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMax": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": 1.588,
+                                                                                    "y": 20.969,
+                                                                                    "z": 1.757
                                                                                 },
                                                                                 "inventoryOccupancyDimensionsUIOverride": []
                                                                             },
@@ -4135,6 +4185,7 @@
                                                                                 "RequiredTags": "",
                                                                                 "DisplayType": "",
                                                                                 "ignoredAttachAxis": "None",
+                                                                                "attachCheckCenterOfMass": 0,
                                                                                 "Localization": {
                                                                                     "Name": "<= PLACEHOLDER =>",
                                                                                     "__Name": "@LOC_PLACEHOLDER",
@@ -4184,14 +4235,14 @@
                                                                                     "z": 0.15
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMin": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": -2.011,
+                                                                                    "y": -0.084,
+                                                                                    "z": -1.312
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMax": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": 2.039,
+                                                                                    "y": 3.694,
+                                                                                    "z": 1.347
                                                                                 },
                                                                                 "inventoryOccupancyDimensionsUIOverride": []
                                                                             },
@@ -4646,6 +4697,7 @@
                                                                                 "RequiredTags": "",
                                                                                 "DisplayType": "",
                                                                                 "ignoredAttachAxis": "None",
+                                                                                "attachCheckCenterOfMass": 0,
                                                                                 "Localization": {
                                                                                     "Name": "<= PLACEHOLDER =>",
                                                                                     "__Name": "@LOC_PLACEHOLDER",
@@ -4695,14 +4747,14 @@
                                                                                     "z": 0.15
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMin": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": -1.559,
+                                                                                    "y": -1.991,
+                                                                                    "z": -2.544
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMax": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": 1.559,
+                                                                                    "y": 5.049,
+                                                                                    "z": 1.804
                                                                                 },
                                                                                 "inventoryOccupancyDimensionsUIOverride": []
                                                                             },
@@ -5157,6 +5209,7 @@
                                                                                 "RequiredTags": "",
                                                                                 "DisplayType": "",
                                                                                 "ignoredAttachAxis": "None",
+                                                                                "attachCheckCenterOfMass": 0,
                                                                                 "Localization": {
                                                                                     "Name": "<= PLACEHOLDER =>",
                                                                                     "__Name": "@LOC_PLACEHOLDER",
@@ -5206,14 +5259,14 @@
                                                                                     "z": 0.15
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMin": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": -1.063,
+                                                                                    "y": -3.001,
+                                                                                    "z": -0.664
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMax": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": 1.061,
+                                                                                    "y": 4.706,
+                                                                                    "z": 1.046
                                                                                 },
                                                                                 "inventoryOccupancyDimensionsUIOverride": []
                                                                             },
@@ -5739,6 +5792,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "Fulgur",
                                                         "__Name": "@item_Name_POWR_AEGS_S03_Fulgur",
@@ -5788,14 +5842,14 @@
                                                         "z": 1.202842
                                                     },
                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": -1.507,
+                                                        "y": -1.038,
+                                                        "z": -0.025
                                                     },
                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": 1.515,
+                                                        "y": 0.937,
+                                                        "z": 1.983
                                                     },
                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                         "Vec3": {
@@ -5956,6 +6010,8 @@
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 0,
+                                                "duplicateHitToParent": 0,
+                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                 "DamageResistances": {
                                                     "DamageResistance": {
                                                         "IgnoreMeleeDamage": 0,
@@ -6310,7 +6366,7 @@
                                                 "DecayRateOfEM": 0.18,
                                                 "WarningDelayTime": 0.3,
                                                 "WarningDisplayTime": 8,
-                                                "MisfireItemTypeLocID": "Power Plants",
+                                                "MisfireItemTypeLocID": "Power Plant",
                                                 "__MisfireItemTypeLocID": "@item_TypePowerPlant",
                                                 "MisfireGenerationParams": {
                                                     "SMisfireGenerationParams": {
@@ -6440,7 +6496,7 @@
                                             "SCItemPurchasableParams": {
                                                 "displayName": "Fulgur",
                                                 "__displayName": "@item_Name_POWR_AEGS_S03_Fulgur",
-                                                "displayType": "Power Plants",
+                                                "displayType": "Power Plant",
                                                 "__displayType": "@item_TypePowerPlant",
                                                 "displayThumbnail": "",
                                                 "allowTryOn": 0,
@@ -6796,6 +6852,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "WEAPONS",
                                                         "__Name": "@item_Name_WEAP_Controller",
@@ -6940,6 +6997,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "TARGET SELECTOR",
                                                         "__Name": "@item_Name_TARGET_Controller",
@@ -7275,6 +7333,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "POWER",
                                                         "__Name": "@item_Name_POWR_Controller",
@@ -7452,6 +7511,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "HEAT",
                                                         "__Name": "@item_Name_COOL_Controller",
@@ -7584,6 +7644,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "<= PLACEHOLDER =>",
                                                         "__Name": "@LOC_PLACEHOLDER",
@@ -7795,6 +7856,8 @@
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 0,
+                                                "duplicateHitToParent": 0,
+                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                 "DamageResistances": {
                                                     "DamageResistance": {
                                                         "IgnoreMeleeDamage": 0,
@@ -8197,6 +8260,7 @@
                                                             "enablePassiveScan": 0,
                                                             "enablePingWaveScan": 0,
                                                             "allowPassiveUnlockContactType": 1,
+                                                            "enableActiveUnlockName": 1,
                                                             "unscannedText": "Unknown",
                                                             "__unscannedText": "@scan_data_scan_needed",
                                                             "sfxParams": {
@@ -9743,6 +9807,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "MISSILES",
                                                         "__Name": "@item_Name_MISL_Controller",
@@ -9931,6 +9996,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "Avalanche",
                                                         "__Name": "@item_Name_COOL_AEGS_S02_Avalanche",
@@ -9980,14 +10046,14 @@
                                                         "z": 0.801895
                                                     },
                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": -0.75,
+                                                        "y": -0.519,
+                                                        "z": -0.01
                                                     },
                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": 0.75,
+                                                        "y": 0.519,
+                                                        "z": 0.501
                                                     },
                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                         "Vec3": {
@@ -10143,6 +10209,8 @@
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 0,
+                                                "duplicateHitToParent": 0,
+                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                 "DamageResistances": {
                                                     "DamageResistance": {
                                                         "IgnoreMeleeDamage": 0,
@@ -10527,7 +10595,7 @@
                                                 "DecayRateOfEM": 0.25,
                                                 "WarningDelayTime": 0.3,
                                                 "WarningDisplayTime": 8,
-                                                "MisfireItemTypeLocID": "Coolers",
+                                                "MisfireItemTypeLocID": "Cooler",
                                                 "__MisfireItemTypeLocID": "@item_TypeCooler",
                                                 "MisfireGenerationParams": {
                                                     "SMisfireGenerationParams": {
@@ -10834,6 +10902,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "Avalanche",
                                                         "__Name": "@item_Name_COOL_AEGS_S02_Avalanche",
@@ -10883,14 +10952,14 @@
                                                         "z": 0.801895
                                                     },
                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": -0.75,
+                                                        "y": -0.519,
+                                                        "z": -0.01
                                                     },
                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": 0.75,
+                                                        "y": 0.519,
+                                                        "z": 0.501
                                                     },
                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                         "Vec3": {
@@ -11046,6 +11115,8 @@
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 0,
+                                                "duplicateHitToParent": 0,
+                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                 "DamageResistances": {
                                                     "DamageResistance": {
                                                         "IgnoreMeleeDamage": 0,
@@ -11430,7 +11501,7 @@
                                                 "DecayRateOfEM": 0.25,
                                                 "WarningDelayTime": 0.3,
                                                 "WarningDisplayTime": 8,
-                                                "MisfireItemTypeLocID": "Coolers",
+                                                "MisfireItemTypeLocID": "Cooler",
                                                 "__MisfireItemTypeLocID": "@item_TypeCooler",
                                                 "MisfireGenerationParams": {
                                                     "SMisfireGenerationParams": {
@@ -11768,6 +11839,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -11817,14 +11889,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -11845,7 +11917,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -11862,7 +11934,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -12374,6 +12446,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -12741,6 +12815,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -12790,14 +12865,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -12818,7 +12893,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -12835,7 +12910,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -13347,6 +13422,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -13714,6 +13791,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -13763,14 +13841,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -13791,7 +13869,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -13808,7 +13886,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -14320,6 +14398,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -14687,6 +14767,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -14736,14 +14817,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -14764,7 +14845,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -14781,7 +14862,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -15293,6 +15374,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -15660,6 +15743,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -15709,14 +15793,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -15737,7 +15821,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -15754,7 +15838,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -16266,6 +16350,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -16633,6 +16719,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -16682,14 +16769,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -16710,7 +16797,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -16727,7 +16814,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -17239,6 +17326,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -17606,6 +17695,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -17655,14 +17745,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -17683,7 +17773,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -17700,7 +17790,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -18212,6 +18302,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -18579,6 +18671,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -18628,14 +18721,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -18656,7 +18749,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -18673,7 +18766,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -19185,6 +19278,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -19552,6 +19647,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -19601,14 +19697,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -19629,7 +19725,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -19646,7 +19742,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -20158,6 +20254,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -20543,6 +20641,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "Freelancer Stock Missile Rack",
                                                         "__Name": "@item_DescFreelancer_Stock_Missile_Rack",
@@ -20592,14 +20691,14 @@
                                                         "z": 4.009475
                                                     },
                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": -1.564,
+                                                        "y": -0.01,
+                                                        "z": -1.484
                                                     },
                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": 1.564,
+                                                        "y": 5.517,
+                                                        "z": 0.154
                                                     },
                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                         "Vec3": {
@@ -20814,6 +20913,8 @@
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 0,
+                                                "duplicateHitToParent": 0,
+                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                 "DamageResistances": {
                                                     "DamageResistance": {
                                                         "IgnoreMeleeDamage": 0,
@@ -21989,6 +22090,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -22038,14 +22140,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -22066,7 +22168,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -22083,7 +22185,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -22595,6 +22697,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -22962,6 +23066,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -23011,14 +23116,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -23039,7 +23144,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -23056,7 +23161,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -23568,6 +23673,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -23935,6 +24042,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -23984,14 +24092,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -24012,7 +24120,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -24029,7 +24137,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -24541,6 +24649,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -24908,6 +25018,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -24957,14 +25068,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -24985,7 +25096,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -25002,7 +25113,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -25514,6 +25625,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -25881,6 +25994,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -25930,14 +26044,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -25958,7 +26072,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -25975,7 +26089,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -26487,6 +26601,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -26854,6 +26970,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -26903,14 +27020,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -26931,7 +27048,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -26948,7 +27065,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -27460,6 +27577,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -27827,6 +27946,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -27876,14 +27996,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -27904,7 +28024,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -27921,7 +28041,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -28433,6 +28553,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -28800,6 +28922,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -28849,14 +28972,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -28877,7 +29000,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -28894,7 +29017,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -29406,6 +29529,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -29773,6 +29898,7 @@
                                                                     "RequiredTags": "",
                                                                     "DisplayType": "",
                                                                     "ignoredAttachAxis": "YAxis",
+                                                                    "attachCheckCenterOfMass": 0,
                                                                     "Localization": {
                                                                         "Name": "Stalker V Missile",
                                                                         "__Name": "@item_NameMISL_S05_CS_TALN_Stalker",
@@ -29822,14 +29948,14 @@
                                                                         "z": 1
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": -0.254,
+                                                                        "y": -2.496,
+                                                                        "z": -0.233
                                                                     },
                                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                                        "x": 0,
-                                                                        "y": 0,
-                                                                        "z": 0
+                                                                        "x": 0.254,
+                                                                        "y": 2.496,
+                                                                        "z": 0.233
                                                                     },
                                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                                         "Vec3": {
@@ -29850,7 +29976,7 @@
                                                                 "igniteTime": 0.5,
                                                                 "collisionDelayTime": 0.5,
                                                                 "explosionSafetyDistance": 5,
-                                                                "projectileProximity": 1,
+                                                                "projectileProximity": 0.5,
                                                                 "audioParams": {
                                                                     "releaseAudioTrigger": {
                                                                         "audioTrigger": "Play_WPMR_MISL_S5_Launch"
@@ -29867,7 +29993,7 @@
                                                                 },
                                                                 "explosionParams": {
                                                                     "friendlyFire": "None",
-                                                                    "minRadius": 0.25,
+                                                                    "minRadius": 3.5,
                                                                     "maxRadius": 5,
                                                                     "soundRadius": 50,
                                                                     "minPhysRadius": 30,
@@ -30379,6 +30505,8 @@
                                                                 "MirrorSalvageHit": 0,
                                                                 "DisableMaterialDamage": 0,
                                                                 "alwaysPropagateHitToParent": 0,
+                                                                "duplicateHitToParent": 0,
+                                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                                 "DamageResistances": {
                                                                     "DamageResistance": {
                                                                         "IgnoreMeleeDamage": 0,
@@ -30764,6 +30892,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "Freelancer Stock Missile Rack",
                                                         "__Name": "@item_DescFreelancer_Stock_Missile_Rack",
@@ -30813,14 +30942,14 @@
                                                         "z": 4.009475
                                                     },
                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": -1.564,
+                                                        "y": -0.01,
+                                                        "z": -1.484
                                                     },
                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": 1.564,
+                                                        "y": 5.517,
+                                                        "z": 0.154
                                                     },
                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                         "Vec3": {
@@ -31035,6 +31164,8 @@
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 0,
+                                                "duplicateHitToParent": 0,
+                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                 "DamageResistances": {
                                                     "DamageResistance": {
                                                         "IgnoreMeleeDamage": 0,
@@ -32202,6 +32333,8 @@
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
+                    "duplicateHitToParent": 0,
+                    "sendOnDestructionEventToMasterRootContainer": 0,
                     "DamageResistances": {
                         "DamageResistance": {
                             "IgnoreMeleeDamage": 0,
