@@ -89,6 +89,7 @@
                         "RequiredTags": "NOPE",
                         "DisplayType": "",
                         "ignoredAttachAxis": "None",
+                        "attachCheckCenterOfMass": 0,
                         "Localization": {
                             "Name": "AAT-34 Turret",
                             "__Name": "@item_NameBRAA_groundturret_AA",
@@ -166,7 +167,6 @@
                     "intoxicationModifierRef": "00000000-0000-0000-0000-000000000000",
                     "hudParamsOverride": "00000000-0000-0000-0000-000000000000",
                     "autoDeployHelmetTargetingMode": 1,
-                    "runsSafetyChecks": 1,
                     "recenterTask": [],
                     "resumeControlTask": [],
                     "setMovementTagTasks": [],
@@ -485,6 +485,11 @@
                     },
                     "audioRtpcHealthRatio": {
                         "rtpc": "Turret_Health"
+                    },
+                    "gunFireSafety": {
+                        "selfHitCheckType": "All",
+                        "fireConsentAngleCheckType": "All",
+                        "fireConsentAngleDeg": 25
                     }
                 },
                 "SGeometryResourceParams": {
@@ -652,8 +657,24 @@
                 },
                 "SSCItemControllableManagerParams": {
                     "defaultMasterMode": "SCM",
-                    "masterModeSpoolTimeToNAV": 1,
-                    "masterModeSpoolTimeToSCM": 0.2,
+                    "masterModes": [
+                        {
+                            "available": 0,
+                            "spoolTime": 1
+                        },
+                        {
+                            "available": 1,
+                            "spoolTime": 1
+                        },
+                        {
+                            "available": 1,
+                            "spoolTime": 0.2
+                        },
+                        {
+                            "available": 0,
+                            "spoolTime": 1
+                        }
+                    ],
                     "controllerParams": {
                         "SCItemControllableGroupParams": {
                             "priorityGroups": []
@@ -697,6 +718,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "<= PLACEHOLDER =>",
                                                         "__Name": "@LOC_PLACEHOLDER",
@@ -768,7 +790,8 @@
                                             },
                                             "SAISkillsComponentParams": {
                                                 "skills": "355f453f-bef8-4dcb-82c6-c68da1336da9",
-                                                "profile": "16831c7a-9ad0-44be-a856-8d0ad1c2c0bc"
+                                                "profile": "16831c7a-9ad0-44be-a856-8d0ad1c2c0bc",
+                                                "skillExtenderList": "00000000-0000-0000-0000-000000000000"
                                             },
                                             "SubsumptionComponentParams": {
                                                 "subsumptionMastergraph": "AIModuleMastergraph",
@@ -859,6 +882,8 @@
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 1,
+                                                "duplicateHitToParent": 0,
+                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                 "DamageResistances": {
                                                     "DamageResistance": {
                                                         "IgnoreMeleeDamage": 0,
@@ -1150,6 +1175,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "Attrition-4 Repeater",
                                                         "__Name": "@item_NameHRST_LaserRepeater_S4",
@@ -1199,14 +1225,14 @@
                                                         "z": 1.60379
                                                     },
                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": -0.292,
+                                                        "y": -1.483,
+                                                        "z": -1.016
                                                     },
                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": 0.292,
+                                                        "y": 3.258,
+                                                        "z": 0.048
                                                     },
                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                         "Vec3": {
@@ -1258,7 +1284,32 @@
                                                     },
                                                     "accuracyRangeCurve": {
                                                         "useLUT": 0,
-                                                        "points": []
+                                                        "points": [
+                                                            {
+                                                                "x": -0.1,
+                                                                "y": 1
+                                                            },
+                                                            {
+                                                                "x": 0,
+                                                                "y": 1
+                                                            },
+                                                            {
+                                                                "x": 0.4,
+                                                                "y": 1
+                                                            },
+                                                            {
+                                                                "x": 0.4798653,
+                                                                "y": 1
+                                                            },
+                                                            {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            },
+                                                            {
+                                                                "x": 1.520135,
+                                                                "y": 1
+                                                            }
+                                                        ]
                                                     },
                                                     "shootingTimeAccuracyData": {
                                                         "maxShootingTime": 10,
@@ -2587,8 +2638,7 @@
                                                                             }
                                                                         },
                                                                         "vibrationParams": {
-                                                                            "normalVibration": 0,
-                                                                            "playerVibration": 0
+                                                                            "vibrationImpulse": 2500
                                                                         },
                                                                         "explosionParams": [],
                                                                         "signatureEmitterParams": []
@@ -2675,8 +2725,7 @@
                                                                             }
                                                                         },
                                                                         "vibrationParams": {
-                                                                            "normalVibration": 0,
-                                                                            "playerVibration": 0
+                                                                            "vibrationImpulse": 2500
                                                                         },
                                                                         "explosionParams": [],
                                                                         "signatureEmitterParams": []
@@ -3687,6 +3736,7 @@
                                                                                 "RequiredTags": "",
                                                                                 "DisplayType": "",
                                                                                 "ignoredAttachAxis": "None",
+                                                                                "attachCheckCenterOfMass": 0,
                                                                                 "Localization": {
                                                                                     "Name": "<= PLACEHOLDER =>",
                                                                                     "__Name": "@LOC_PLACEHOLDER",
@@ -3736,14 +3786,14 @@
                                                                                     "z": 0.15
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMin": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": -0.121,
+                                                                                    "y": -0.01,
+                                                                                    "z": -0.524
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMax": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": 0.121,
+                                                                                    "y": 3.677,
+                                                                                    "z": 0.524
                                                                                 },
                                                                                 "inventoryOccupancyDimensionsUIOverride": []
                                                                             },
@@ -4198,6 +4248,7 @@
                                                                                 "RequiredTags": "",
                                                                                 "DisplayType": "",
                                                                                 "ignoredAttachAxis": "None",
+                                                                                "attachCheckCenterOfMass": 0,
                                                                                 "Localization": {
                                                                                     "Name": "<= PLACEHOLDER =>",
                                                                                     "__Name": "@LOC_PLACEHOLDER",
@@ -4247,14 +4298,14 @@
                                                                                     "z": 0.15
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMin": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": -0.111,
+                                                                                    "y": -0.034,
+                                                                                    "z": -0.388
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMax": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": 0.111,
+                                                                                    "y": 0.677,
+                                                                                    "z": 0.384
                                                                                 },
                                                                                 "inventoryOccupancyDimensionsUIOverride": []
                                                                             },
@@ -4651,6 +4702,7 @@
                                                                                 "RequiredTags": "",
                                                                                 "DisplayType": "",
                                                                                 "ignoredAttachAxis": "None",
+                                                                                "attachCheckCenterOfMass": 0,
                                                                                 "Localization": {
                                                                                     "Name": "<= PLACEHOLDER =>",
                                                                                     "__Name": "@LOC_PLACEHOLDER",
@@ -4700,14 +4752,14 @@
                                                                                     "z": 0.15
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMin": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": -0.199,
+                                                                                    "y": -0.322,
+                                                                                    "z": -0.262
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMax": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": 0.2,
+                                                                                    "y": 0.206,
+                                                                                    "z": 0.043
                                                                                 },
                                                                                 "inventoryOccupancyDimensionsUIOverride": []
                                                                             },
@@ -5119,6 +5171,7 @@
                                                                                 "RequiredTags": "",
                                                                                 "DisplayType": "",
                                                                                 "ignoredAttachAxis": "None",
+                                                                                "attachCheckCenterOfMass": 0,
                                                                                 "Localization": {
                                                                                     "Name": "<= PLACEHOLDER =>",
                                                                                     "__Name": "@LOC_PLACEHOLDER",
@@ -5168,14 +5221,14 @@
                                                                                     "z": 0.15
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMin": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": -0.269,
+                                                                                    "y": -0.399,
+                                                                                    "z": -0.189
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMax": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": 0.286,
+                                                                                    "y": 0.399,
+                                                                                    "z": 0.206
                                                                                 },
                                                                                 "inventoryOccupancyDimensionsUIOverride": []
                                                                             },
@@ -5645,6 +5698,8 @@
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 1,
+                                                "duplicateHitToParent": 0,
+                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                 "DamageResistances": {
                                                     "DamageResistance": {
                                                         "IgnoreMeleeDamage": 0,
@@ -5936,6 +5991,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "Attrition-4 Repeater",
                                                         "__Name": "@item_NameHRST_LaserRepeater_S4",
@@ -5985,14 +6041,14 @@
                                                         "z": 1.60379
                                                     },
                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": -0.292,
+                                                        "y": -1.483,
+                                                        "z": -1.016
                                                     },
                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": 0.292,
+                                                        "y": 3.258,
+                                                        "z": 0.048
                                                     },
                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                         "Vec3": {
@@ -6044,7 +6100,32 @@
                                                     },
                                                     "accuracyRangeCurve": {
                                                         "useLUT": 0,
-                                                        "points": []
+                                                        "points": [
+                                                            {
+                                                                "x": -0.1,
+                                                                "y": 1
+                                                            },
+                                                            {
+                                                                "x": 0,
+                                                                "y": 1
+                                                            },
+                                                            {
+                                                                "x": 0.4,
+                                                                "y": 1
+                                                            },
+                                                            {
+                                                                "x": 0.4798653,
+                                                                "y": 1
+                                                            },
+                                                            {
+                                                                "x": 1,
+                                                                "y": 1
+                                                            },
+                                                            {
+                                                                "x": 1.520135,
+                                                                "y": 1
+                                                            }
+                                                        ]
                                                     },
                                                     "shootingTimeAccuracyData": {
                                                         "maxShootingTime": 10,
@@ -7373,8 +7454,7 @@
                                                                             }
                                                                         },
                                                                         "vibrationParams": {
-                                                                            "normalVibration": 0,
-                                                                            "playerVibration": 0
+                                                                            "vibrationImpulse": 2500
                                                                         },
                                                                         "explosionParams": [],
                                                                         "signatureEmitterParams": []
@@ -7461,8 +7541,7 @@
                                                                             }
                                                                         },
                                                                         "vibrationParams": {
-                                                                            "normalVibration": 0,
-                                                                            "playerVibration": 0
+                                                                            "vibrationImpulse": 2500
                                                                         },
                                                                         "explosionParams": [],
                                                                         "signatureEmitterParams": []
@@ -8473,6 +8552,7 @@
                                                                                 "RequiredTags": "",
                                                                                 "DisplayType": "",
                                                                                 "ignoredAttachAxis": "None",
+                                                                                "attachCheckCenterOfMass": 0,
                                                                                 "Localization": {
                                                                                     "Name": "<= PLACEHOLDER =>",
                                                                                     "__Name": "@LOC_PLACEHOLDER",
@@ -8522,14 +8602,14 @@
                                                                                     "z": 0.15
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMin": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": -0.121,
+                                                                                    "y": -0.01,
+                                                                                    "z": -0.524
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMax": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": 0.121,
+                                                                                    "y": 3.677,
+                                                                                    "z": 0.524
                                                                                 },
                                                                                 "inventoryOccupancyDimensionsUIOverride": []
                                                                             },
@@ -8984,6 +9064,7 @@
                                                                                 "RequiredTags": "",
                                                                                 "DisplayType": "",
                                                                                 "ignoredAttachAxis": "None",
+                                                                                "attachCheckCenterOfMass": 0,
                                                                                 "Localization": {
                                                                                     "Name": "<= PLACEHOLDER =>",
                                                                                     "__Name": "@LOC_PLACEHOLDER",
@@ -9033,14 +9114,14 @@
                                                                                     "z": 0.15
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMin": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": -0.111,
+                                                                                    "y": -0.034,
+                                                                                    "z": -0.388
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMax": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": 0.111,
+                                                                                    "y": 0.677,
+                                                                                    "z": 0.384
                                                                                 },
                                                                                 "inventoryOccupancyDimensionsUIOverride": []
                                                                             },
@@ -9437,6 +9518,7 @@
                                                                                 "RequiredTags": "",
                                                                                 "DisplayType": "",
                                                                                 "ignoredAttachAxis": "None",
+                                                                                "attachCheckCenterOfMass": 0,
                                                                                 "Localization": {
                                                                                     "Name": "<= PLACEHOLDER =>",
                                                                                     "__Name": "@LOC_PLACEHOLDER",
@@ -9486,14 +9568,14 @@
                                                                                     "z": 0.15
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMin": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": -0.199,
+                                                                                    "y": -0.322,
+                                                                                    "z": -0.262
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMax": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": 0.2,
+                                                                                    "y": 0.206,
+                                                                                    "z": 0.043
                                                                                 },
                                                                                 "inventoryOccupancyDimensionsUIOverride": []
                                                                             },
@@ -9905,6 +9987,7 @@
                                                                                 "RequiredTags": "",
                                                                                 "DisplayType": "",
                                                                                 "ignoredAttachAxis": "None",
+                                                                                "attachCheckCenterOfMass": 0,
                                                                                 "Localization": {
                                                                                     "Name": "<= PLACEHOLDER =>",
                                                                                     "__Name": "@LOC_PLACEHOLDER",
@@ -9954,14 +10037,14 @@
                                                                                     "z": 0.15
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMin": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": -0.269,
+                                                                                    "y": -0.399,
+                                                                                    "z": -0.189
                                                                                 },
                                                                                 "inventoryOccupancyLocalBoundsMax": {
-                                                                                    "x": 0,
-                                                                                    "y": 0,
-                                                                                    "z": 0
+                                                                                    "x": 0.286,
+                                                                                    "y": 0.399,
+                                                                                    "z": 0.206
                                                                                 },
                                                                                 "inventoryOccupancyDimensionsUIOverride": []
                                                                             },
@@ -10469,6 +10552,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "Regulus",
                                                         "__Name": "@item_NamePOWR_AEGS_S01_Regulus",
@@ -10518,14 +10602,14 @@
                                                         "z": 0.801895
                                                     },
                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": -0.375,
+                                                        "y": -0.249,
+                                                        "z": -0.01
                                                     },
                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": 0.373,
+                                                        "y": 0.249,
+                                                        "z": 0.498
                                                     },
                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                         "Vec3": {
@@ -10686,6 +10770,8 @@
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 0,
+                                                "duplicateHitToParent": 0,
+                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                 "DamageResistances": {
                                                     "DamageResistance": {
                                                         "IgnoreMeleeDamage": 0,
@@ -11040,7 +11126,7 @@
                                                 "DecayRateOfEM": 0.18,
                                                 "WarningDelayTime": 0.3,
                                                 "WarningDisplayTime": 8,
-                                                "MisfireItemTypeLocID": "Power Plants",
+                                                "MisfireItemTypeLocID": "Power Plant",
                                                 "__MisfireItemTypeLocID": "@item_TypePowerPlant",
                                                 "MisfireGenerationParams": {
                                                     "SMisfireGenerationParams": {
@@ -11170,7 +11256,7 @@
                                             "SCItemPurchasableParams": {
                                                 "displayName": "Regulus",
                                                 "__displayName": "@item_NamePOWR_AEGS_S01_Regulus",
-                                                "displayType": "Power Plants",
+                                                "displayType": "Power Plant",
                                                 "__displayType": "@item_TypePowerPlant",
                                                 "displayThumbnail": "",
                                                 "allowTryOn": 0,
@@ -11534,6 +11620,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "WEAPONS",
                                                         "__Name": "@item_Name_WEAP_Controller",
@@ -11678,6 +11765,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "TARGET SELECTOR",
                                                         "__Name": "@item_Name_TARGET_Controller",
@@ -12013,6 +12101,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "POWER",
                                                         "__Name": "@item_Name_POWR_Controller",
@@ -12190,6 +12279,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "HEAT",
                                                         "__Name": "@item_Name_COOL_Controller",
@@ -12322,6 +12412,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "<= PLACEHOLDER =>",
                                                         "__Name": "@LOC_PLACEHOLDER",
@@ -12533,6 +12624,8 @@
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 0,
+                                                "duplicateHitToParent": 0,
+                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                 "DamageResistances": {
                                                     "DamageResistance": {
                                                         "IgnoreMeleeDamage": 0,
@@ -12935,6 +13028,7 @@
                                                             "enablePassiveScan": 0,
                                                             "enablePingWaveScan": 0,
                                                             "allowPassiveUnlockContactType": 1,
+                                                            "enableActiveUnlockName": 1,
                                                             "unscannedText": "Unknown",
                                                             "__unscannedText": "@scan_data_scan_needed",
                                                             "sfxParams": {
@@ -14546,6 +14640,7 @@
                                                     "RequiredTags": "",
                                                     "DisplayType": "",
                                                     "ignoredAttachAxis": "None",
+                                                    "attachCheckCenterOfMass": 0,
                                                     "Localization": {
                                                         "Name": "Avalanche",
                                                         "__Name": "@item_Name_COOL_AEGS_S02_Avalanche",
@@ -14595,14 +14690,14 @@
                                                         "z": 0.801895
                                                     },
                                                     "inventoryOccupancyLocalBoundsMin": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": -0.75,
+                                                        "y": -0.519,
+                                                        "z": -0.01
                                                     },
                                                     "inventoryOccupancyLocalBoundsMax": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
+                                                        "x": 0.75,
+                                                        "y": 0.519,
+                                                        "z": 0.501
                                                     },
                                                     "inventoryOccupancyDimensionsUIOverride": {
                                                         "Vec3": {
@@ -14758,6 +14853,8 @@
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 0,
+                                                "duplicateHitToParent": 0,
+                                                "sendOnDestructionEventToMasterRootContainer": 0,
                                                 "DamageResistances": {
                                                     "DamageResistance": {
                                                         "IgnoreMeleeDamage": 0,
@@ -15142,7 +15239,7 @@
                                                 "DecayRateOfEM": 0.25,
                                                 "WarningDelayTime": 0.3,
                                                 "WarningDisplayTime": 8,
-                                                "MisfireItemTypeLocID": "Coolers",
+                                                "MisfireItemTypeLocID": "Cooler",
                                                 "__MisfireItemTypeLocID": "@item_TypeCooler",
                                                 "MisfireGenerationParams": {
                                                     "SMisfireGenerationParams": {
@@ -15472,6 +15569,8 @@
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
+                    "duplicateHitToParent": 0,
+                    "sendOnDestructionEventToMasterRootContainer": 0,
                     "DamageResistances": {
                         "DamageResistance": {
                             "IgnoreMeleeDamage": 0,
