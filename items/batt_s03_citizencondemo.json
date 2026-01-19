@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "59035b54-d90e-4271-8a1c-0c5a5c922a09",
             "__path": "libs/foundry/records/entities/scitem/ships/batteries/batt_s03_citizencondemo.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": [],
             "Components": {
@@ -135,6 +140,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -615,6 +625,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 2,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 0,
                             "NeverAffectTriggers": 0,
@@ -635,23 +646,30 @@
                             "temperature": {
                                 "enable": 1,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 500,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationRateAtTemperatureDifference": {
+                                        "coolingEqualizationRate": 3.75,
+                                        "temperatureDifference": 400
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 1,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 10
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
-                                    "enableOverheat": 0,
+                                    "enableOverheat": 1,
                                     "overheatTemperature": 648,
                                     "overheatWarningTemperature": 474,
                                     "overheatRecoveryTemperature": 454,
                                     "stateHeatGenerationValues": {
                                         "EntityTemperatureResourceHeatGeneration": {
                                             "state": "states",
+                                            "resource": "Power",
                                             "baselineTemperatureChange": 10
                                         }
                                     },
@@ -674,7 +692,7 @@
                     }
                 },
                 "SHealthComponentParams": {
-                    "Health": 1700,
+                    "Health": 1500,
                     "DamageCap": 0,
                     "SerializedDamageMapPath": "",
                     "ClientOnly": 0,
@@ -695,6 +713,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -704,32 +723,32 @@
                         "DamageResistance": {
                             "IgnoreMeleeDamage": 0,
                             "PhysicalResistance": {
-                                "Multiplier": 0.9,
+                                "Multiplier": 1,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             },
                             "EnergyResistance": {
-                                "Multiplier": 0.36,
+                                "Multiplier": 1,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             },
                             "DistortionResistance": {
-                                "Multiplier": 0.9,
+                                "Multiplier": 1,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             },
                             "ThermalResistance": {
-                                "Multiplier": 0.9,
+                                "Multiplier": 1,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             },
                             "BiochemicalResistance": {
-                                "Multiplier": 0.9,
+                                "Multiplier": 1,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             },
                             "StunResistance": {
-                                "Multiplier": 0.9,
+                                "Multiplier": 1,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             }
@@ -742,7 +761,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "ItemControlComponentParams": {
@@ -800,7 +819,9 @@
                                     "consumptionComposition": {
                                         "values": []
                                     },
-                                    "dynamicAmountOverride": []
+                                    "dynamicAmountOverride": {
+                                        "ItemResourceDynamicAmountCoolant": []
+                                    }
                                 }
                             },
                             "linkedInteractionStates": [],
@@ -816,13 +837,34 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 102,
+                        "healthRatio": 0.2
+                    }
                 },
                 "EntityComponentMisfireParams": {
                     "itemLocId": "<= PLACEHOLDER =>",
@@ -845,17 +887,7 @@
                         }
                     },
                     "misfireLevels": [],
-                    "misfires": {
-                        "SDamageMisfireEffect": {
-                            "effectTrigger": "00000000-0000-0000-0000-000000000000",
-                            "effectTag": "00000000-0000-0000-0000-000000000000",
-                            "damageValue": {
-                                "SMisfireDamageValue": {
-                                    "health": 10
-                                }
-                            }
-                        }
-                    }
+                    "misfires": []
                 },
                 "EntityComponentFireIgniter": {
                     "igniteOnLoad": 0,
@@ -867,6 +899,7 @@
                         }
                     }
                 },
+                "EntityComponentRoomOccupantParams": [],
                 "SDegradationParams": {
                     "StopDegradingIfDestroyed": 0,
                     "accumulators": {
@@ -883,13 +916,18 @@
                             "UseAsTimer": 0,
                             "InitialAgeRatio": 0,
                             "InitialUsageRatio": 0,
-                            "BasePowerMultiplier": 0,
-                            "DrawPowerMultiplier": 0,
                             "AtmosphereMultiplier": 1,
                             "DamageConversionRate": 0.01,
                             "HeatMultipliers": {
                                 "NormalTemperatureMultiplier": 1,
                                 "OverheatTemperatureMultiplier": 1
+                            },
+                            "FunctionalityMultiplier": {
+                                "UsePowerRatio": 1,
+                                "FunctionalityMultiplyCurve": {
+                                    "useLUT": 0,
+                                    "points": []
+                                }
                             },
                             "EffectCurve": {
                                 "useLUT": 0,
@@ -903,11 +941,11 @@
                     }
                 },
                 "SDistortionParams": {
-                    "DecayDelay": 1.5,
-                    "DecayRate": 40,
-                    "Maximum": 1000,
+                    "DecayDelay": 4.5,
+                    "DecayRate": 0.6666667,
+                    "Maximum": 10,
                     "WarningRatio": 0.75,
-                    "RecoveryRatio": 0.7,
+                    "RecoveryRatio": 0,
                     "PowerRatioAtMaxDistortion": 0,
                     "PowerChangeOnlyAtMaxDistortion": 0
                 },
@@ -920,6 +958,7 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": [],
                     "InternalResourceLinks": [],
@@ -973,6 +1012,8 @@
                                 "TextScale": 1,
                                 "ShowInteractionTextAtCursorPos": 0,
                                 "ScalePromptOffsetWithEntity": 0,
+                                "PromptStyle": "PromptAndText",
+                                "OverrideControlHintDescription": 0,
                                 "InteractionPromptScale": 1,
                                 "InteractionPromptLabelVerticalOffset": 70,
                                 "InteractionPromptBound": "EntityRoot",
@@ -1047,6 +1088,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1081,6 +1123,7 @@
                                             }
                                         }
                                     },
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1127,7 +1170,7 @@
         "grade": 1,
         "name": "<= PLACEHOLDER =>",
         "tags": "",
-        "manufacturer": "ESPR",
+        "required_tags": "",
         "stdItem": {
             "UUID": "59035b54-d90e-4271-8a1c-0c5a5c922a09",
             "ClassName": "BATT_S03_CitizenConDemo",
@@ -1136,15 +1179,181 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 0,
             "Type": "Battery.UNDEFINED",
             "Name": "<= PLACEHOLDER =>",
             "Description": "",
+            "DescriptionText": "",
             "Manufacturer": {
-                "Code": "ESPR",
-                "Name": "Esperia"
+                "Name": "Esperia",
+                "UUID": "4ecc1a24-d228-4dd5-8857-21ba6145a1d3"
+            },
+            "Distortion": {
+                "DecayDelay": 4.5,
+                "DecayRate": 0.6666667,
+                "Maximum": 10,
+                "WarningRatio": 0.75,
+                "RecoveryRatio": 0,
+                "PowerRatioAtMaxDistortion": 0,
+                "PowerChangeOnlyAtMaxDistortion": 0,
+                "ShutdownTime": 14.5
             },
             "Durability": {
-                "Health": 1700
+                "Lifetime": 37.3,
+                "Health": 1500,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
+            },
+            "Emission": {
+                "Em": {
+                    "Maximum": 0,
+                    "Minimum": 0,
+                    "Decay": 0.15
+                },
+                "Ir": 0
+            },
+            "Temperature": {
+                "Enable": 1,
+                "InitialTemperature": -1,
+                "InternalTemperatureGeneration": 0,
+                "SignatureParams": {
+                    "Enable": 1,
+                    "MinimumTemperatureForIR": 250,
+                    "TemperatureToIR": 10
+                },
+                "ItemResourceParams": {
+                    "PoweredAmbientCoolingMultiplier": 1,
+                    "MinOperatingTemperature": 0,
+                    "MinCoolingTemperature": 300,
+                    "EnableOverheat": 1,
+                    "OverheatTemperature": 648,
+                    "OverheatWarningTemperature": 474,
+                    "OverheatRecoveryTemperature": 454
+                },
+                "Calculated": {
+                    "Unit": "C",
+                    "CoolingThreshold": 26.9,
+                    "IrThreshold": -23.1,
+                    "Overheat": 200.9,
+                    "Maximum": 374.9,
+                    "Recovery": 180.9
+                }
+            },
+            "ResourceContainer": {
+                "Mass": 0,
+                "Immutable": false,
+                "DefaultFillFraction": 1,
+                "Capacity": {
+                    "Unit": "SStandardCargoUnit",
+                    "Value": 0,
+                    "UnitName": "SCU",
+                    "SCU": 0
+                },
+                "InclusiveResources": [
+                    "bcc8cde9-de58-4e6b-8ee9-37d4aaa507eb"
+                ],
+                "DefaultComposition": [
+                    {
+                        "Entry": "bcc8cde9-de58-4e6b-8ee9-37d4aaa507eb",
+                        "Weight": 1
+                    }
+                ]
+            },
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "Storage",
+                                "Resource": "Power",
+                                "Rate": 0,
+                                "GeneratedResource": "Power",
+                                "GeneratedRate": 0,
+                                "Discharge": 0
+                            },
+                            {
+                                "Type": "Consumption",
+                                "Resource": "Coolant",
+                                "Rate": 0,
+                                "MinimumFraction": 0
+                            }
+                        ],
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 102,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 0,
+                        "Maximum": 0
+                    },
+                    "Coolant": {
+                        "Minimum": 0,
+                        "Maximum": 0
+                    }
+                }
             }
         }
     }

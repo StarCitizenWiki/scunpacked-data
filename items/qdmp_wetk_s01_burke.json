@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "1f74e62c-6093-4d2f-a560-e33df359a7e4",
             "__path": "libs/foundry/records/entities/scitem/ships/quantumenforcementdevice/qdmp_wetk_s01_burke.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": {
                 "Reference": {
                     "value": "980ce6e8-afa2-4084-b13b-b0d01e5d7848"
@@ -822,6 +827,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -1427,11 +1437,15 @@
                     "onInteractionSuccessTriggers": [
                         {
                             "targetInteraction": "Interactable.SharedInteractions[0]",
-                            "gameplayTriggers": []
+                            "gameplayTriggers": {
+                                "STurnOnItemGameplayTrigger": []
+                            }
                         },
                         {
                             "targetInteraction": "Interactable.SharedInteractions[1]",
-                            "gameplayTriggers": []
+                            "gameplayTriggers": {
+                                "STurnOffItemGameplayTrigger": []
+                            }
                         }
                     ],
                     "onInteractionFailedTriggers": []
@@ -1447,6 +1461,7 @@
                     },
                     "masterModeExclusionsOverride": []
                 },
+                "SCItemAimableComponentParams": [],
                 "ItemResourceComponentParams": {
                     "isResourceNetworked": 1,
                     "isRelay": 0,
@@ -1487,14 +1502,36 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
-                }
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 120,
+                        "healthRatio": 0.2
+                    }
+                },
+                "SAudioProxyParams": []
             },
             "ClassName": "QDMP_WETK_S01_Burke",
             "__type": "QuantumInterdictionGenerator"
@@ -1510,7 +1547,16 @@
         "grade": 1,
         "name": "Burke QD",
         "tags": "",
-        "manufacturer": "WETK",
+        "required_tags": "",
+        "entity_tags": [
+            "980ce6e8-afa2-4084-b13b-b0d01e5d7848"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "980ce6e8-afa2-4084-b13b-b0d01e5d7848",
+                "name": "Static"
+            }
+        ],
         "classification": "Ship.QuantumInterdictionGenerator",
         "stdItem": {
             "UUID": "1f74e62c-6093-4d2f-a560-e33df359a7e4",
@@ -1520,12 +1566,41 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 0,
             "Type": "QuantumInterdictionGenerator.UNDEFINED",
             "Name": "Burke QD",
             "Description": "Manufacturer: Wei-Tek\\nType: Quantum Dampener\\nSize: 1\\nGrade: A\\nClass: Military\\n\\nSee that justice is served with the Burke QD. This powerful quantum dampener from Wei-Tek projects a massive field that keeps ships from engaging their quantum drives, making it a valuable component for both law enforcement and security professionals.",
+            "DescriptionData": {
+                "Manufacturer": "Wei-Tek",
+                "Type": "Quantum Dampener",
+                "Size": "1",
+                "Grade": "A",
+                "Class": "Military"
+            },
+            "DescriptionText": "See that justice is served with the Burke QD. This powerful quantum dampener from Wei-Tek projects a massive field that keeps ships from engaging their quantum drives, making it a valuable component for both law enforcement and security professionals.",
             "Manufacturer": {
-                "Code": "WETK",
-                "Name": "Wei-Tek"
+                "Name": "Wei-Tek",
+                "UUID": "0f9ffe57-8542-4d83-a246-72568a5f2f91"
+            },
+            "Emission": {
+                "Em": {
+                    "Maximum": 0,
+                    "Minimum": 0,
+                    "Decay": 0.15
+                },
+                "Ir": 0
             },
             "HeatConnection": {
                 "TemperatureToIR": 2.3,
@@ -1548,6 +1623,15 @@
                 "MisfireMinTemperature": 300,
                 "MisfireMaxTemperature": 900
             },
+            "Interactions": [
+                "Maindeviceswitchon",
+                "Maindeviceswitchoff",
+                "Startchargeinteraction",
+                "Cancelchargeinteraction",
+                "Disperseinteraction",
+                "Setjammerswitchon",
+                "Setjammerswitchoff"
+            ],
             "PowerConnection": {
                 "PowerBase": 500,
                 "PowerDraw": 1100,
@@ -1563,32 +1647,82 @@
                 "PowerToEM": 5,
                 "DecayRateOfEM": 0.15
             },
-            "QuantumInterdiction": {
-                "basePowerDrawFraction": 0.2,
-                "pulsePowerFraction": 0.8,
-                "jammerPowerFraction": 0.4,
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "Consumption",
+                                "Resource": "Power",
+                                "Rate": 3,
+                                "MinimumFraction": 1
+                            }
+                        ],
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 120,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 3,
+                        "Maximum": 3
+                    },
+                    "Coolant": {
+                        "Minimum": 0,
+                        "Maximum": 3
+                    }
+                }
+            },
+            "QuantumInterdictionGenerator": {
+                "BasePowerDrawFraction": 0.2,
+                "PulsePowerFraction": 0.8,
+                "JammerPowerFraction": 0.4,
                 "JammingRange": 4000,
                 "InterdictionRange": 1,
                 "Jammer": {
-                    "jammerRange": 4000,
-                    "maxPowerDraw": 200,
-                    "greenZoneCheckRange": 4000
+                    "JammerRange": 4000,
+                    "MaxPowerDraw": 200,
+                    "GreenZoneCheckRange": 4000
                 },
                 "Pulse": {
-                    "chargeTimeSecs": 90,
-                    "dischargeTimeSecs": 30,
-                    "cooldownTimeSecs": 1,
-                    "radiusMeters": 1,
-                    "decreaseChargeRateTimeSeconds": 1.5,
-                    "increaseChargeRateTimeSeconds": 3.5,
-                    "activationPhaseDuration_seconds": 3,
-                    "disperseChargeTimeSeconds": 5,
-                    "maxPowerDraw": 1100,
-                    "stopChargingPowerDrawFraction": 0.2,
-                    "maxChargeRatePowerDrawFraction": 0.85,
-                    "activePowerDrawFraction": 0.95,
-                    "tetheringPowerDrawFraction": 0.8,
-                    "greenZoneCheckRange": 30000
+                    "ChargeTimeSecs": 90,
+                    "DischargeTimeSecs": 30,
+                    "CooldownTimeSecs": 1,
+                    "RadiusMeters": 1,
+                    "DecreaseChargeRateTimeSeconds": 1.5,
+                    "IncreaseChargeRateTimeSeconds": 3.5,
+                    "ActivationPhaseDurationSeconds": 3,
+                    "DisperseChargeTimeSeconds": 5,
+                    "MaxPowerDraw": 1100,
+                    "StopChargingPowerDrawFraction": 0.2,
+                    "MaxChargeRatePowerDrawFraction": 0.85,
+                    "ActivePowerDrawFraction": 0.95,
+                    "TetheringPowerDrawFraction": 0.8,
+                    "GreenZoneCheckRange": 30000
                 }
             }
         }

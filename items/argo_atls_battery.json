@@ -8,6 +8,11 @@
             "entityDensityClass": "ad1a0441-246c-4b7a-859d-bfa38f91a816",
             "__ref": "3e4429cb-fb98-420b-aed2-648dad6144e0",
             "__path": "libs/foundry/records/entities/scitem/ships/subitem/fuses/argo_atls_battery.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [
                 {
                     "value": "5e11a544-7fea-4160-b2bf-98c6cf9ee9df"
@@ -32,6 +37,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -52,14 +58,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -172,6 +183,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -272,6 +288,8 @@
                         "materialVariants": []
                     }
                 },
+                "SPersistentComponentParams": [],
+                "SubsumptionMissionLinkComponentParams": [],
                 "EntityPhysicalAudioParams": {
                     "minimumImpulseContinuous": 3,
                     "minimumImpulseTransient": 3,
@@ -279,6 +297,7 @@
                     "slideThreshold": 0.04,
                     "rollThreshold": 0.04,
                     "momentumScale": 1,
+                    "rollVelocityScale": 1,
                     "useAABBCentre": 0,
                     "oneShotTag": "0d401f6c-38a4-4c52-bb02-26059dd8d98a",
                     "oneShotCooldown": 0.2,
@@ -322,6 +341,18 @@
                     "placeTrigger": {
                         "audioTrigger": "Play_PHOB_Electronic_Device_Place"
                     },
+                    "tractorBeamPickupTrigger": {
+                        "audioTrigger": ""
+                    },
+                    "tractorBeamDropTrigger": {
+                        "audioTrigger": ""
+                    },
+                    "detachBreakTrigger": {
+                        "audioTrigger": ""
+                    },
+                    "playerCausedDetachBreakTrigger": {
+                        "audioTrigger": ""
+                    },
                     "rtpcSlideVelocity": {
                         "rtpc": "PhysicalAudio_Velocity"
                     },
@@ -354,6 +385,9 @@
                     },
                     "rtpcCarried": {
                         "rtpc": "PhysicalAudio_CarryState"
+                    },
+                    "rtpcSize": {
+                        "rtpc": ""
                     }
                 },
                 "SEntityAudioControllerParams": {
@@ -369,6 +403,7 @@
                     },
                     "tagTriggers": []
                 },
+                "SAudioProxyParams": [],
                 "ItemControlComponentParams": {
                     "turnedOnByDefault": 1,
                     "forceOn": 0,
@@ -377,27 +412,28 @@
                     "masterModeExclusionsOverride": []
                 },
                 "SHealthComponentParams": {
-                    "Health": 225,
+                    "Health": 150,
                     "DamageCap": 0,
                     "SerializedDamageMapPath": "",
                     "ClientOnly": 0,
                     "UnlockInteractionsOnDeath": 0,
                     "PushDamageUpPartsHeirarchyWhenDead": 1,
-                    "DetachFromItemPortOnDeath": 0,
-                    "DetachFromEntityOnDeath": 0,
+                    "DetachFromItemPortOnDeath": 1,
+                    "DetachFromEntityOnDeath": 1,
                     "DestroySelfOnDeath": 0,
                     "DestroyChildrenOnDeath": 0,
                     "PropagateExplosionDamageToChildren": 0,
                     "UseDirtShaderForDamage": 0,
                     "UpdateObservableStatus": 0,
                     "DestroyedGeometryTag": "",
-                    "ExplodedGeometryTag": "Damaged",
+                    "ExplodedGeometryTag": "",
                     "DebrisGeometryTag": "",
                     "ExplosionDelayTime": 0,
                     "ExplosionRandomDelayRange": 0,
                     "ExplosionBone": "",
-                    "IsSalvagable": 1,
-                    "IsRepairable": 1,
+                    "IsSalvagable": 0,
+                    "IsRepairable": 0,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -407,32 +443,32 @@
                         "DamageResistance": {
                             "IgnoreMeleeDamage": 0,
                             "PhysicalResistance": {
-                                "Multiplier": 0.15,
+                                "Multiplier": 1,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             },
                             "EnergyResistance": {
-                                "Multiplier": 0.0075,
+                                "Multiplier": 1,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             },
                             "DistortionResistance": {
-                                "Multiplier": 0.15,
+                                "Multiplier": 1,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             },
                             "ThermalResistance": {
-                                "Multiplier": 0.0075,
+                                "Multiplier": 1,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             },
                             "BiochemicalResistance": {
-                                "Multiplier": 0.0075,
+                                "Multiplier": 1,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             },
                             "StunResistance": {
-                                "Multiplier": 0.0075,
+                                "Multiplier": 1,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             }
@@ -441,115 +477,12 @@
                     "hitManipulationParams": [],
                     "InitialDamage": [],
                     "HealthLevelStates": [],
-                    "DeathExplosionParams": {
-                        "ExplosionParams": {
-                            "friendlyFire": "None",
-                            "minRadius": 0.1,
-                            "maxRadius": 1,
-                            "soundRadius": 100,
-                            "minPhysRadius": 2.5,
-                            "maxPhysRadius": 15,
-                            "angle": 0,
-                            "angleVertical": 0,
-                            "pressure": 20,
-                            "holeSize": 0,
-                            "terrainHoleSize": 3,
-                            "maxblurdist": 10,
-                            "effectScale": 1,
-                            "useRandomScale": 0,
-                            "effectScaleMin": 1,
-                            "effectScaleMax": 1,
-                            "hitType": "explosion",
-                            "customMaterialEffect": "",
-                            "particleStrength": 1,
-                            "radarContactType": "00000000-0000-0000-0000-000000000000",
-                            "explosionFront": {
-                                "x": 0,
-                                "y": 0,
-                                "z": 0
-                            },
-                            "explosionUp": {
-                                "x": 0,
-                                "y": 0,
-                                "z": 1
-                            },
-                            "damage": {
-                                "DamageInfo": {
-                                    "DamagePhysical": 0,
-                                    "DamageEnergy": 0,
-                                    "DamageDistortion": 0,
-                                    "DamageThermal": 0,
-                                    "DamageBiochemical": 0,
-                                    "DamageStun": 0
-                                }
-                            },
-                            "flashbangParams": [],
-                            "shockwaveParams": [],
-                            "effect": {
-                                "path": "Environments\\Generic\\Generic_Explosions.LT_EXPLOSIONS.lt_explosion_single_1m3_once_1"
-                            },
-                            "failedEffect": {
-                                "path": ""
-                            },
-                            "sound": {
-                                "audioTrigger": ""
-                            },
-                            "failedSound": {
-                                "audioTrigger": ""
-                            },
-                            "materialEffectEntry": [],
-                            "Offset": {
-                                "x": 0,
-                                "y": 0,
-                                "z": 0
-                            },
-                            "Direction": {
-                                "x": 0,
-                                "y": 0,
-                                "z": 1
-                            }
-                        }
-                    },
+                    "DeathExplosionParams": [],
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
-                },
-                "SDegradationParams": {
-                    "StopDegradingIfDestroyed": 1,
-                    "accumulators": {
-                        "SWearAccumulatorParams": {
-                            "InitialAccumulationRatio": 0,
-                            "AccumulateWhenUnstreamed": 0,
-                            "AccumulateOnlyAfterTractorBeam": 0,
-                            "AccumulateOnlyWhenAttached": 1,
-                            "StopAccumulationWhenAttached": 0,
-                            "AccumulationEventThreshold": 1,
-                            "PortTags": "",
-                            "RequiredPortTags": "",
-                            "MaxLifetimeHours": 25,
-                            "UseAsTimer": 0,
-                            "InitialAgeRatio": 0,
-                            "InitialUsageRatio": 0,
-                            "BasePowerMultiplier": 0,
-                            "DrawPowerMultiplier": 0,
-                            "AtmosphereMultiplier": 1,
-                            "DamageConversionRate": 0.01,
-                            "HeatMultipliers": {
-                                "NormalTemperatureMultiplier": 1,
-                                "OverheatTemperatureMultiplier": 1
-                            },
-                            "EffectCurve": {
-                                "useLUT": 0,
-                                "points": []
-                            },
-                            "degradeFromParentParams": [],
-                            "DegradationPercentageRTPC": {
-                                "rtpc": ""
-                            }
-                        }
-                    }
                 },
                 "SEntityTraversingTreeParams": {
                     "TraversingNodes": [],
@@ -633,6 +566,31 @@
         "grade": 1,
         "name": "Fuse",
         "tags": "",
+        "required_tags": "",
+        "entity_tags": [
+            "5e11a544-7fea-4160-b2bf-98c6cf9ee9df",
+            "00ead468-9073-485b-a6df-ca6b94053603",
+            "b97f2439-cde7-45f9-acc3-5eab75b0f84c",
+            "487d9209-d611-4338-aa94-924aebb99b3c"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "5e11a544-7fea-4160-b2bf-98c6cf9ee9df",
+                "name": "1H"
+            },
+            {
+                "tag": "00ead468-9073-485b-a6df-ca6b94053603",
+                "name": "ActionArea"
+            },
+            {
+                "tag": "b97f2439-cde7-45f9-acc3-5eab75b0f84c",
+                "name": "Stackable"
+            },
+            {
+                "tag": "487d9209-d611-4338-aa94-924aebb99b3c",
+                "name": "Fuse"
+            }
+        ],
         "stdItem": {
             "UUID": "3e4429cb-fb98-420b-aed2-648dad6144e0",
             "ClassName": "ARGO_ATLS_Battery",
@@ -641,16 +599,69 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "UIDimensions": {
+                    "Width": 0.75,
+                    "Length": 0.75,
+                    "Height": 0.75
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 0,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 0.2,
             "Type": "Misc.Fuse",
             "Name": "Fuse",
             "Description": "This safety device provides protection to relays and other power systems from excessive current. Once tripped, fuses need to be replaced before normal operation can resume.",
+            "DescriptionText": "This safety device provides protection to relays and other power systems from excessive current. Once tripped, fuses need to be replaced before normal operation can resume.",
+            "Manufacturer": {
+                "Name": "Unknown Manufacturer",
+                "Code": "UNKN",
+                "UUID": "00000000-0000-0000-0000-000000000000"
+            },
             "DimensionOverrides": {
                 "Width": 0.75,
                 "Length": 0.75,
-                "Height": 0.75
+                "Height": 0.75,
+                "Volume": 0.216
             },
             "Durability": {
-                "Health": 225
+                "Health": 150,
+                "Salvageable": 0,
+                "Repairable": 0,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
             }
         }
     }

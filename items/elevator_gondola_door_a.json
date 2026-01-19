@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "0a666de1-9bde-4dc6-b993-181054d005f4",
             "__path": "libs/foundry/records/entities/scitem/doors/elevator_gondola_door_a.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": [],
             "Components": {
@@ -90,7 +95,7 @@
                 "SEntityComponentDefaultLoadoutParams": {
                     "loadout": {
                         "SItemPortLoadoutXMLParams": {
-                            "loadoutPath": "scripts/loadouts/objects/doors/doordefaultloadout.xml",
+                            "loadoutPath": "scripts/loadouts/objects/doors/elevatordooremptyloadout.xml",
                             "WearRange": [],
                             "DirtRange": [],
                             "InventoryItems": []
@@ -99,7 +104,7 @@
                 },
                 "SCItemDoorParams": {
                     "UseAutoCloseDelay": 0,
-                    "AutoCloseDelay": 3,
+                    "AutoCloseDelay": 5,
                     "DoorAnimationSpeed": 1,
                     "BreachingDoorAnimationSpeed": 1,
                     "BreachedDoorAnimationSpeed": 1,
@@ -135,7 +140,9 @@
                     "DestructionBehavior": "UnlockDoor",
                     "idleState": "null",
                     "activeState": "null",
-                    "CollisionReaction": [],
+                    "CollisionReaction": {
+                        "SDoorCollisionReactionNoneParams": []
+                    },
                     "AnimationParams": {
                         "SCItemDoorSimpleOpenCloseParams": {
                             "DefaultAnimationDurationScale": 1,
@@ -1043,6 +1050,8 @@
                                 "TextScale": 1,
                                 "ShowInteractionTextAtCursorPos": 0,
                                 "ScalePromptOffsetWithEntity": 0,
+                                "PromptStyle": "PromptAndText",
+                                "OverrideControlHintDescription": 0,
                                 "InteractionPromptScale": 1,
                                 "InteractionPromptLabelVerticalOffset": 70,
                                 "InteractionPromptBound": "EntityRoot",
@@ -1113,6 +1122,8 @@
                                 "TextScale": 1,
                                 "ShowInteractionTextAtCursorPos": 0,
                                 "ScalePromptOffsetWithEntity": 0,
+                                "PromptStyle": "PromptAndText",
+                                "OverrideControlHintDescription": 0,
                                 "InteractionPromptScale": 1,
                                 "InteractionPromptLabelVerticalOffset": 70,
                                 "InteractionPromptBound": "EntityRoot",
@@ -1225,6 +1236,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -1289,6 +1305,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -1309,14 +1326,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -1400,7 +1422,7 @@
                         {
                             "GeomTags": "",
                             "SoundParams": {
-                                "Name": "",
+                                "Name": "Do_Nothing",
                                 "tag": "OpenGroup",
                                 "Helper": "$slot_sensor",
                                 "IsLooped": 0,
@@ -1435,7 +1457,7 @@
                         {
                             "GeomTags": "",
                             "SoundParams": {
-                                "Name": "",
+                                "Name": "Do_Nothing",
                                 "tag": "CloseGroup",
                                 "Helper": "$slot_sensor",
                                 "IsLooped": 0,
@@ -1616,12 +1638,12 @@
                     "audioSoundProofing": -20,
                     "defaultAreaBounds": {
                         "x": 2.25,
-                        "y": 1,
+                        "y": 1.5,
                         "z": 2.5
                     },
                     "boundsOffset": {
                         "x": 0,
-                        "y": 0,
+                        "y": -0.5,
                         "z": 1.25
                     },
                     "densityClassOverwrites": []
@@ -1631,6 +1653,8 @@
                     "fragmentTag": "",
                     "isExterior": 0,
                     "allowDeadOrUnconscious": 0,
+                    "lowEnergyThreshold": 0,
+                    "highEnergyThreshold": 2,
                     "useSlots": [
                         {
                             "name": "TraverseSlot_A",
@@ -1704,11 +1728,14 @@
                                     "shouldValidateExitAnimations": 1,
                                     "fragmentTag": "navlink+door_transition_single_idris",
                                     "preparationSequence": "null",
-                                    "alignmentSlots": {
-                                        "WeakPointer": {
+                                    "alignmentSlots": [
+                                        {
+                                            "alignmentSlots": "alignmentSlots[1]"
+                                        },
+                                        {
                                             "alignmentSlots": "alignmentSlots[1]"
                                         }
-                                    },
+                                    ],
                                     "conditionList": [],
                                     "useChannelInstancesToEnable": [],
                                     "useChannelInstancesToDisable": [],
@@ -1878,6 +1905,7 @@
                         }
                     ],
                     "exclusivityGroups": [],
+                    "freeItemPortsForDirectInteraction": [],
                     "slottingSetups": [],
                     "views": [],
                     "abilityLocks": [],
@@ -1891,7 +1919,7 @@
                     "navLinks": [
                         {
                             "linkValidForAgentType": "MediumSizedCharacters",
-                            "linkingType": "LinksInsideSameZone",
+                            "linkingType": "LinksToExternalZone",
                             "useChannel": "useSlots[0].UsableUseSlot.useChannelInstances",
                             "navlinkWidth": 0.3,
                             "maxAllowedLinks": 10,
@@ -1936,7 +1964,7 @@
                         },
                         {
                             "linkValidForAgentType": "MediumSizedCharacters",
-                            "linkingType": "LinksInsideSameZone",
+                            "linkingType": "LinksFromExternalZone",
                             "useChannel": "useSlots[1].UsableUseSlot.useChannelInstances",
                             "navlinkWidth": 0.3,
                             "maxAllowedLinks": 10,
@@ -1955,7 +1983,7 @@
                                         },
                                         "Position": {
                                             "x": 0,
-                                            "y": -1.5,
+                                            "y": 1.5,
                                             "z": 0
                                         }
                                     }
@@ -1972,7 +2000,7 @@
                                         },
                                         "Position": {
                                             "x": 0,
-                                            "y": 1.5,
+                                            "y": -1.5,
                                             "z": 0
                                         }
                                     }
@@ -1980,7 +2008,9 @@
                             }
                         }
                     ],
-                    "controller": []
+                    "controller": {
+                        "DoorNavigationLinkController": []
+                    }
                 },
                 "SInteractionStateMachineParams": {
                     "StateTypes": [
@@ -2001,6 +2031,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -2030,6 +2061,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -2054,6 +2086,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -2083,6 +2116,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -2134,6 +2168,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -2158,6 +2193,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": {
                                         "SStateAutoChange": {
                                             "NextState": "StateTypes[1].SInteractionStateType.States[0]",
@@ -2168,7 +2204,11 @@
                                     "Interactions": [],
                                     "interactionPoints": [],
                                     "stateTags": {
-                                        "tags": []
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "00000000-0000-0000-0000-000000000000"
+                                            }
+                                        }
                                     },
                                     "entityTags": {
                                         "tags": []
@@ -2184,6 +2224,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": {
                                         "SStateAutoChange": {
                                             "NextState": "StateTypes[1].SInteractionStateType.States[3]",
@@ -2210,6 +2251,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -2254,6 +2296,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [
                                         {
@@ -2287,6 +2330,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -2317,6 +2361,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -2342,6 +2387,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -2367,6 +2413,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -2386,7 +2433,9 @@
                             "StateModifiers": {
                                 "SLinkedInteractionStateChangedStateModifier": {
                                     "nullEntityState": "null",
-                                    "context": [],
+                                    "context": {
+                                        "SEntityLinkedContext": []
+                                    },
                                     "onChangeStateTagStates": {
                                         "SLinkedInteractionStateTags": {
                                             "isANDList": 0,
@@ -2421,6 +2470,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [
                                         {
@@ -2450,6 +2500,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -2480,13 +2531,22 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
+                                    "Interactions": [
+                                        {
                                             "Interaction": "Interactable.SharedInteractions[22]",
                                             "NextState": "StateTypes[5].SInteractionStateType.States[1]"
+                                        },
+                                        {
+                                            "Interaction": "null",
+                                            "NextState": "null"
+                                        },
+                                        {
+                                            "Interaction": "null",
+                                            "NextState": "null"
                                         }
-                                    },
+                                    ],
                                     "interactionPoints": [],
                                     "stateTags": {
                                         "tags": []
@@ -2505,8 +2565,18 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
-                                    "Interactions": [],
+                                    "Interactions": [
+                                        {
+                                            "Interaction": "null",
+                                            "NextState": "null"
+                                        },
+                                        {
+                                            "Interaction": "null",
+                                            "NextState": "null"
+                                        }
+                                    ],
                                     "interactionPoints": [],
                                     "stateTags": {
                                         "tags": {
@@ -2539,6 +2609,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [
                                         {
@@ -2579,6 +2650,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [
                                         {
@@ -2616,6 +2688,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -2645,6 +2718,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -2684,6 +2758,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -2713,6 +2788,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -2752,6 +2828,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -2781,6 +2858,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -2820,6 +2898,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -2849,6 +2928,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -2879,16 +2959,20 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": [
                         {
                             "Name": "control_panel_a",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "Front",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 10,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -2896,6 +2980,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -2980,11 +3065,14 @@
                         {
                             "Name": "control_panel_b",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "Back",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 0,
                             "MaxSize": 10,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -2992,6 +3080,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -3076,11 +3165,14 @@
                         {
                             "Name": "charge_handle_a",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "Front",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 0,
                             "MaxSize": 10,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -3088,6 +3180,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -3172,11 +3265,14 @@
                         {
                             "Name": "charge_handle_b",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "Back",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 0,
                             "MaxSize": 10,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -3184,6 +3280,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -3268,11 +3365,14 @@
                         {
                             "Name": "close_button_a",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 0,
                             "MaxSize": 10,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -3280,6 +3380,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -3364,11 +3465,14 @@
                         {
                             "Name": "close_button_b",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 10,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -3376,6 +3480,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -3460,11 +3565,14 @@
                         {
                             "Name": "proximity_sensor",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 0,
                             "MaxSize": 2,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -3472,6 +3580,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -3578,11 +3687,14 @@
                         {
                             "Name": "light_group_a",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 10,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -3590,6 +3702,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -3674,11 +3787,14 @@
                         {
                             "Name": "light_group_b",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 10,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -3686,6 +3802,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -3770,11 +3887,14 @@
                         {
                             "Name": "decal_front",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 0,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -3782,6 +3902,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -3866,11 +3987,14 @@
                         {
                             "Name": "decal_rear",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 0,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -3878,6 +4002,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -3962,11 +4087,14 @@
                         {
                             "Name": "decal_screen",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 0,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -3974,6 +4102,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -4224,120 +4353,7 @@
                                 "enabled": 1,
                                 "allowMultipleTags": 1,
                                 "tagEffects": [],
-                                "triggerEffects": [
-                                    {
-                                        "name": "Door Open",
-                                        "enabled": 1,
-                                        "multiPosition": 0,
-                                        "useDefaultProxy": 0,
-                                        "trigger": "c6637024-8feb-47ef-afe7-c18c40b5039b",
-                                        "soundEffect": {
-                                            "audioTrigger": "Play_Silence"
-                                        },
-                                        "attachmentSettings": {
-                                            "SEntityEffectSystem_Attachment_EntitySlot": {
-                                                "offsetParameter": "00000000-0000-0000-0000-000000000000",
-                                                "offset": {
-                                                    "Rotation": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
-                                                    },
-                                                    "Position": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "propertyLinks": []
-                                    },
-                                    {
-                                        "name": "Door Close",
-                                        "enabled": 1,
-                                        "multiPosition": 0,
-                                        "useDefaultProxy": 0,
-                                        "trigger": "d7313a48-3b2e-4c8d-9353-0d846ee21310",
-                                        "soundEffect": {
-                                            "audioTrigger": "Play_Silence"
-                                        },
-                                        "attachmentSettings": {
-                                            "SEntityEffectSystem_Attachment_EntitySlot": {
-                                                "offsetParameter": "00000000-0000-0000-0000-000000000000",
-                                                "offset": {
-                                                    "Rotation": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
-                                                    },
-                                                    "Position": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "propertyLinks": []
-                                    },
-                                    {
-                                        "name": "Door Opened",
-                                        "enabled": 1,
-                                        "multiPosition": 0,
-                                        "useDefaultProxy": 0,
-                                        "trigger": "55a1d276-3857-4280-a3f5-0e3af0a25035",
-                                        "soundEffect": {
-                                            "audioTrigger": "Play_Silence"
-                                        },
-                                        "attachmentSettings": {
-                                            "SEntityEffectSystem_Attachment_EntitySlot": {
-                                                "offsetParameter": "00000000-0000-0000-0000-000000000000",
-                                                "offset": {
-                                                    "Rotation": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
-                                                    },
-                                                    "Position": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "propertyLinks": []
-                                    },
-                                    {
-                                        "name": "Door Closed",
-                                        "enabled": 1,
-                                        "multiPosition": 0,
-                                        "useDefaultProxy": 0,
-                                        "trigger": "75073b3f-85e3-46c8-9158-b69f74f5ae3a",
-                                        "soundEffect": {
-                                            "audioTrigger": "Play_Silence"
-                                        },
-                                        "attachmentSettings": {
-                                            "SEntityEffectSystem_Attachment_EntitySlot": {
-                                                "offsetParameter": "00000000-0000-0000-0000-000000000000",
-                                                "offset": {
-                                                    "Rotation": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
-                                                    },
-                                                    "Position": {
-                                                        "x": 0,
-                                                        "y": 0,
-                                                        "z": 0
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "propertyLinks": []
-                                    }
-                                ]
+                                "triggerEffects": []
                             }
                         },
                         "audioEnvironmentEffects": [],
@@ -4350,9 +4366,13 @@
                     "tagsToEnableOnLoad": [],
                     "triggersToEnableOnLoad": []
                 },
+                "EntityComponentRoomOccupantParams": [],
                 "InteriorMapEntityVisiblityEntityComponentParams": {
                     "show": 1
-                }
+                },
+                "SAudioProxyParams": [],
+                "SubsumptionMissionLinkComponentParams": [],
+                "TransitPeripheralParams": []
             },
             "ClassName": "Elevator_Gondola_Door_A",
             "__type": "Door"
@@ -4368,6 +4388,7 @@
         "grade": 1,
         "name": "Door Control",
         "tags": "",
+        "required_tags": "",
         "stdItem": {
             "UUID": "0a666de1-9bde-4dc6-b993-181054d005f4",
             "ClassName": "Elevator_Gondola_Door_A",
@@ -4376,118 +4397,305 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 0,
             "Type": "Door.UNDEFINED",
             "Name": "Door Control",
             "Description": "",
+            "DescriptionText": "",
+            "Manufacturer": {
+                "Name": "Unknown Manufacturer",
+                "Code": "UNKN",
+                "UUID": "00000000-0000-0000-0000-000000000000"
+            },
             "Ports": [
                 {
                     "PortName": "control_panel_a",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 10,
+                    "MinSize": 1,
+                    "MaxSize": 10,
                     "Tags": [
                         "Front"
                     ],
                     "Types": [
-                        "ControlPanel"
+                        "ControlPanel.DoorPart"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "ControlPanel",
+                            "SubTypes": [
+                                "DoorPart"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 },
                 {
                     "PortName": "control_panel_b",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 10,
+                    "MinSize": 0,
+                    "MaxSize": 10,
                     "Tags": [
                         "Back"
                     ],
                     "Types": [
-                        "ControlPanel"
+                        "ControlPanel.DoorPart"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "ControlPanel",
+                            "SubTypes": [
+                                "DoorPart"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 },
                 {
                     "PortName": "charge_handle_a",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 10,
+                    "MinSize": 0,
+                    "MaxSize": 10,
                     "Tags": [
                         "Front"
                     ],
                     "Types": [
-                        "Misc"
+                        "Misc.DoorPart"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "Misc",
+                            "SubTypes": [
+                                "DoorPart"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 },
                 {
                     "PortName": "charge_handle_b",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 10,
+                    "MinSize": 0,
+                    "MaxSize": 10,
                     "Tags": [
                         "Back"
                     ],
                     "Types": [
-                        "Misc"
+                        "Misc.DoorPart"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "Misc",
+                            "SubTypes": [
+                                "DoorPart"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 },
                 {
                     "PortName": "close_button_a",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 10,
+                    "MinSize": 0,
+                    "MaxSize": 10,
                     "Types": [
-                        "Button"
+                        "Button.DoorPart"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "Button",
+                            "SubTypes": [
+                                "DoorPart"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 },
                 {
                     "PortName": "close_button_b",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 10,
+                    "MinSize": 1,
+                    "MaxSize": 10,
                     "Types": [
-                        "Button"
+                        "Button.DoorPart"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "Button",
+                            "SubTypes": [
+                                "DoorPart"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 },
                 {
                     "PortName": "proximity_sensor",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 2,
+                    "MinSize": 0,
+                    "MaxSize": 2,
                     "Types": [
-                        "Sensor"
+                        "Sensor.DoorPart"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "Sensor",
+                            "SubTypes": [
+                                "DoorPart"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 },
                 {
                     "PortName": "light_group_a",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 10,
+                    "MinSize": 1,
+                    "MaxSize": 10,
                     "Types": [
-                        "Lightgroup"
+                        "Lightgroup.DoorPart"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "Lightgroup",
+                            "SubTypes": [
+                                "DoorPart"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 },
                 {
                     "PortName": "light_group_b",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 10,
+                    "MinSize": 1,
+                    "MaxSize": 10,
                     "Types": [
-                        "Lightgroup"
+                        "Lightgroup.DoorPart"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "Lightgroup",
+                            "SubTypes": [
+                                "DoorPart"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 },
                 {
                     "PortName": "decal_front",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 0,
+                    "MaxSize": 1,
                     "Types": [
-                        "Decal"
+                        "Decal.DoorPart"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "Decal",
+                            "SubTypes": [
+                                "DoorPart"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 },
                 {
                     "PortName": "decal_rear",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 0,
+                    "MaxSize": 1,
                     "Types": [
-                        "Decal"
+                        "Decal.DoorPart"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "Decal",
+                            "SubTypes": [
+                                "DoorPart"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 },
                 {
                     "PortName": "decal_screen",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 0,
+                    "MaxSize": 1,
                     "Types": [
-                        "Decal"
+                        "Decal.DoorPart"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "Decal",
+                            "SubTypes": [
+                                "DoorPart"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 }
+            ],
+            "Interactions": [
+                "Open",
+                "Close",
+                "Lock",
+                "Override",
+                "Stepthrough",
+                "Toggle",
+                "Unlock",
+                "Overrideclose",
+                "Opencomplete",
+                "Closecomplete",
+                "Opentrigger",
+                "Openself",
+                "Allowopen",
+                "Locktrigger",
+                "Unlocktrigger",
+                "Lockself",
+                "Unlockself",
+                "Openrequest",
+                "Closerequest",
+                "Closetrigger",
+                "Closeself",
+                "Allowclose",
+                "Gate_close",
+                "Set_pressurenormalized",
+                "Set_pressuredifferential",
+                "Setstate_powered",
+                "Setstate_unpowered",
+                "Setstate_blocked",
+                "Setstate_unblocked",
+                "Setstate_noaccess",
+                "Setstate_access",
+                "Pressurecycle",
+                "Pressurecyclecomplete",
+                "Set_airlockconnected"
             ],
             "PowerConnection": {
                 "PowerBase": 0,

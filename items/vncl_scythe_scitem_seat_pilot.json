@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "a4651f5c-1d51-429f-bda8-9591a87486a4",
             "__path": "libs/foundry/records/entities/scitem/ships/seat/entityclassdefinition.vncl_scythe_scitem_seat_pilot.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [
                 {
                     "value": "dc4f5796-93c5-4634-9399-5e3937e1444f"
@@ -47,13 +52,34 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 120,
+                        "healthRatio": 0.2
+                    }
                 },
                 "SAttachableComponentParams": {
                     "attachToTileItemPort": "NoConnection",
@@ -261,6 +287,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -325,6 +356,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -345,14 +377,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -613,6 +650,8 @@
                     "fragmentTag": "",
                     "isExterior": 0,
                     "allowDeadOrUnconscious": 0,
+                    "lowEnergyThreshold": 0,
+                    "highEnergyThreshold": 2,
                     "useSlots": {
                         "UsableUseSlot": {
                             "name": "",
@@ -679,6 +718,7 @@
                         }
                     },
                     "exclusivityGroups": [],
+                    "freeItemPortsForDirectInteraction": [],
                     "slottingSetups": [],
                     "views": [],
                     "abilityLocks": [],
@@ -705,16 +745,20 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": {
                         "SItemPortDef": {
                             "Name": "Display_HUD",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 0,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -722,6 +766,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -802,7 +847,9 @@
                         "maxDefaultDistribution": 0,
                         "itemPools": []
                     }
-                }
+                },
+                "SDialogueComponentParams": [],
+                "SAudioProxyParams": []
             },
             "ClassName": "VNCL_Scythe_SCItem_Seat_Pilot",
             "__type": "Seat"
@@ -818,7 +865,21 @@
         "grade": 1,
         "name": "TRGT. STATUS",
         "tags": "flightReady",
-        "manufacturer": "VNC",
+        "required_tags": "",
+        "entity_tags": [
+            "dc4f5796-93c5-4634-9399-5e3937e1444f",
+            "275db83d-5b41-4ebc-bcd7-d325220af86a"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "dc4f5796-93c5-4634-9399-5e3937e1444f",
+                "name": "Seat"
+            },
+            {
+                "tag": "275db83d-5b41-4ebc-bcd7-d325220af86a",
+                "name": "Helmsman"
+            }
+        ],
         "stdItem": {
             "UUID": "a4651f5c-1d51-429f-bda8-9591a87486a4",
             "ClassName": "VNCL_Scythe_SCItem_Seat_Pilot",
@@ -827,12 +888,26 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 10,
             "Type": "Seat.UNDEFINED",
             "Name": "TRGT. STATUS",
             "Description": "",
+            "DescriptionText": "",
             "Manufacturer": {
-                "Code": "VNC",
-                "Name": "Vanduul"
+                "Name": "Vanduul",
+                "UUID": "4668760a-d8a1-48d0-be4d-42304b702de0"
             },
             "Tags": [
                 "flightReady"
@@ -840,10 +915,81 @@
             "Ports": [
                 {
                     "PortName": "Display_HUD",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 0,
+                    "MaxSize": 1,
                     "Uneditable": false
                 }
-            ]
+            ],
+            "Emission": {
+                "Em": {
+                    "Maximum": 0,
+                    "Minimum": 0,
+                    "Decay": 0.15
+                },
+                "Ir": 0
+            },
+            "Seat": {
+                "SeatType": "DUAL_STICK",
+                "Yaw": {
+                    "Minimum": -70,
+                    "Maximum": 70
+                },
+                "Pitch": {
+                    "Minimum": -65,
+                    "Maximum": 65
+                },
+                "SetYawPitchLimits": false,
+                "HasEjection": false
+            },
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "NetworkReflection",
+                                "Resource": "Power",
+                                "BinaryEvaluation": 1
+                            }
+                        ],
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 120,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 0
+                    },
+                    "Coolant": {
+                        "Minimum": 0
+                    }
+                }
+            }
         }
     }
 }

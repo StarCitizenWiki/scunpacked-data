@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "56cbca50-f142-47e9-80d2-6bcb13eaa1a8",
             "__path": "libs/foundry/records/entities/scitem/ships/cargogrid/crus/starlifter/crus_starlifter_cargogrid_personal_armory_large.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": [],
             "Components": {
@@ -138,6 +143,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -158,14 +164,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -203,6 +214,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -458,6 +474,8 @@
                                 "TextScale": 1,
                                 "ShowInteractionTextAtCursorPos": 0,
                                 "ScalePromptOffsetWithEntity": 0,
+                                "PromptStyle": "PromptAndText",
+                                "OverrideControlHintDescription": 0,
                                 "InteractionPromptScale": 1,
                                 "InteractionPromptLabelVerticalOffset": 70,
                                 "InteractionPromptBound": "EntityRoot",
@@ -547,6 +565,8 @@
                                 "TextScale": 1,
                                 "ShowInteractionTextAtCursorPos": 0,
                                 "ScalePromptOffsetWithEntity": 0,
+                                "PromptStyle": "PromptAndText",
+                                "OverrideControlHintDescription": 0,
                                 "InteractionPromptScale": 1,
                                 "InteractionPromptLabelVerticalOffset": 70,
                                 "InteractionPromptBound": "EntityRoot",
@@ -645,6 +665,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -670,6 +691,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [
                                         {
@@ -941,7 +963,9 @@
                     "DestructionBehavior": "BreakDoor",
                     "idleState": "null",
                     "activeState": "null",
-                    "CollisionReaction": [],
+                    "CollisionReaction": {
+                        "SDoorCollisionReactionNoneParams": []
+                    },
                     "AnimationParams": {
                         "SCItemDoorSimpleOpenCloseParams": {
                             "DefaultAnimationDurationScale": 1,
@@ -997,6 +1021,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -1044,7 +1069,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "ItemControlComponentParams": {
@@ -1069,8 +1094,7 @@
         "grade": 1,
         "name": "<= PLACEHOLDER =>",
         "tags": "",
-        "manufacturer": "CRUS",
-        "classification": "Ship.CargoGrid",
+        "required_tags": "",
         "stdItem": {
             "UUID": "56cbca50-f142-47e9-80d2-6bcb13eaa1a8",
             "ClassName": "CRUS_Starlifter_CargoGrid_Personal_Armory_Large",
@@ -1079,26 +1103,77 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 1,
             "Type": "Cargo.UNDEFINED",
             "Name": "<= PLACEHOLDER =>",
             "Description": "",
+            "DescriptionText": "",
             "Manufacturer": {
-                "Code": "CRUS",
-                "Name": "Crusader Industries"
+                "Name": "Crusader Industries",
+                "UUID": "63685f47-b0cc-4ebe-8f16-72793a5cd6e0"
             },
             "Durability": {
-                "Health": 1000
+                "Health": 1000,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
             },
+            "Interactions": [
+                "Open",
+                "Close",
+                "Accesscargogrid",
+                "Opened",
+                "Lock",
+                "Unlock"
+            ],
             "InventoryContainer": {
-                "unit": 0,
-                "unitName": "SCU",
+                "SCU": 3,
+                "Unit": 0,
+                "UnitName": "SCU",
                 "x": 1.75,
                 "y": 1.75,
                 "z": 1,
-                "isOpenContainer": false,
-                "isExternalContainer": false,
-                "isClosedContainer": true,
-                "uuid": "22910161-b338-43d5-a9e4-03cb598ff5a8"
+                "IsOpenContainer": false,
+                "IsExternalContainer": false,
+                "IsClosedContainer": true,
+                "UUID": "22910161-b338-43d5-a9e4-03cb598ff5a8"
             }
         }
     }

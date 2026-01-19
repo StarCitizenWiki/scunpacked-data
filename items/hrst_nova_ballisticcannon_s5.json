@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "189b0ce2-d934-4208-9970-ac633dbd67d3",
             "__path": "libs/foundry/records/entities/scitem/ships/weapons/hrst_nova_ballisticcannon_s5.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": {
                 "DefaultEntitlementEntityParams": {
@@ -38,6 +43,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -47,7 +53,7 @@
                         "DamageResistance": {
                             "IgnoreMeleeDamage": 0,
                             "PhysicalResistance": {
-                                "Multiplier": 1,
+                                "Multiplier": 0.6,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             },
@@ -85,47 +91,12 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
-                "SDegradationParams": {
-                    "StopDegradingIfDestroyed": 0,
-                    "accumulators": {
-                        "SWearAccumulatorParams": {
-                            "InitialAccumulationRatio": 0,
-                            "AccumulateWhenUnstreamed": 0,
-                            "AccumulateOnlyAfterTractorBeam": 0,
-                            "AccumulateOnlyWhenAttached": 1,
-                            "StopAccumulationWhenAttached": 0,
-                            "AccumulationEventThreshold": 1,
-                            "PortTags": "",
-                            "RequiredPortTags": "",
-                            "MaxLifetimeHours": 20,
-                            "UseAsTimer": 0,
-                            "InitialAgeRatio": 0,
-                            "InitialUsageRatio": 0,
-                            "BasePowerMultiplier": 0,
-                            "DrawPowerMultiplier": 0,
-                            "AtmosphereMultiplier": 1,
-                            "DamageConversionRate": 0.01,
-                            "HeatMultipliers": {
-                                "NormalTemperatureMultiplier": 1,
-                                "OverheatTemperatureMultiplier": 1
-                            },
-                            "EffectCurve": {
-                                "useLUT": 0,
-                                "points": []
-                            },
-                            "degradeFromParentParams": [],
-                            "DegradationPercentageRTPC": {
-                                "rtpc": ""
-                            }
-                        }
-                    }
-                },
                 "SAmmoContainerComponentParams": {
-                    "initialAmmoCount": 60,
-                    "maxAmmoCount": 60,
+                    "initialAmmoCount": 363,
+                    "maxAmmoCount": 363,
                     "maxRestockCount": 3,
                     "lowAmmoWarningPercentage": 0.1,
                     "ammoParamsRecord": "8a3f6c41-c87a-40a3-8596-89f2661f9eda",
@@ -259,6 +230,7 @@
                                             "maxPhysRadius": 5,
                                             "angle": 0,
                                             "angleVertical": 0,
+                                            "explosionZone": "AdamHosted",
                                             "pressure": 750,
                                             "holeSize": 0,
                                             "terrainHoleSize": 3,
@@ -293,8 +265,9 @@
                                             },
                                             "flashbangParams": [],
                                             "shockwaveParams": [],
+                                            "fragmentParams": [],
                                             "effect": {
-                                                "path": "Environments\\Generic\\Generic_Explosions.LT_EXPLOSIONS.lt_explosion_single_1m3_once_1"
+                                                "path": "14263f7e-cb75-f03d-17e1-f05dd54e5306|Environments/Generic/Generic_Explosions.LT_EXPLOSIONS.lt_explosion_single_1m3_once_1"
                                             },
                                             "failedEffect": {
                                                 "path": ""
@@ -343,8 +316,9 @@
                                     "maxPenetrationThickness": 0.5
                                 },
                                 "penetrationParams": {
-                                    "basePenetrationDistance": 50,
-                                    "angle": 14.3
+                                    "basePenetrationDistance": 11.55,
+                                    "nearRadius": 0.58,
+                                    "farRadius": 1.16
                                 },
                                 "visualParams": {
                                     "maxLength": 0,
@@ -521,7 +495,8 @@
                         "adsReticle": "none"
                     },
                     "weaponAIData": {
-                        "idealCombatRange": 50,
+                        "idealCombatRange": 30,
+                        "maxFiringRange": 50,
                         "CombatRangeCategory": "Medium",
                         "baseAccuracy": 1,
                         "impactRadiusForFriendlyFire": 0,
@@ -576,13 +551,36 @@
                         "aiFiringActionParams": []
                     },
                     "connectionParams": {
-                        "powerActiveCooldown": 0.68,
-                        "heatRateOnline": 26.5,
+                        "powerActiveCooldown": 1,
+                        "heatRateOnline": 0,
                         "lockOnOnverheat": 0,
                         "maxGlow": 100,
                         "glowTag": "00000000-0000-0000-0000-000000000000",
                         "heatReduceWhenOverheatIsFixed": 100000,
-                        "simplifiedHeatParams": [],
+                        "simplifiedHeatParams": {
+                            "SWeaponSimplifiedHeatParams": {
+                                "minTemperature": 0,
+                                "overheatTemperature": 100,
+                                "coolingPerSecond": 24.2,
+                                "temperatureAfterOverheatFix": 0,
+                                "timeTillCoolingStarts": 1.21,
+                                "overheatFixTime": 6.71,
+                                "heatModifierCurve": "00000000-0000-0000-0000-000000000000",
+                                "whitelistFPSOverheat": 0,
+                                "temperatureCurveParams": [],
+                                "glowParams": {
+                                    "glowCurve": "00000000-0000-0000-0000-000000000000",
+                                    "maxGlowValue": 100000,
+                                    "fadeoutTime": 2,
+                                    "glowColor": {
+                                        "r": 1,
+                                        "g": 1,
+                                        "b": 1
+                                    }
+                                },
+                                "heatRangeAudioTriggers": []
+                            }
+                        },
                         "noPowerStats": {
                             "fireRate": 0,
                             "fireRateMultiplier": 0,
@@ -598,6 +596,7 @@
                             "chargeTimeMultiplier": 1,
                             "useAlternateProjectileVisuals": 0,
                             "useAugmentedRealityProjectiles": 0,
+                            "disableMisfire": 0,
                             "recoilModifier": {
                                 "decayMultiplier": 1,
                                 "endDecayMultiplier": 1,
@@ -612,6 +611,7 @@
                                 "frontalOscillationDecayMultiplier": 1,
                                 "frontalOscillationRandomnessMultiplier": 1,
                                 "animatedRecoilMultiplier": 1,
+                                "disableRecoil": 0,
                                 "headRotationMultiplier": {
                                     "x": 1,
                                     "y": 1,
@@ -810,6 +810,7 @@
                             "chargeTimeMultiplier": 1,
                             "useAlternateProjectileVisuals": 0,
                             "useAugmentedRealityProjectiles": 0,
+                            "disableMisfire": 0,
                             "recoilModifier": {
                                 "decayMultiplier": 1,
                                 "endDecayMultiplier": 1,
@@ -824,6 +825,7 @@
                                 "frontalOscillationDecayMultiplier": 1,
                                 "frontalOscillationRandomnessMultiplier": 1,
                                 "animatedRecoilMultiplier": 1,
+                                "disableRecoil": 0,
                                 "headRotationMultiplier": {
                                     "x": 1,
                                     "y": 1,
@@ -1022,6 +1024,7 @@
                             "chargeTimeMultiplier": 1,
                             "useAlternateProjectileVisuals": 0,
                             "useAugmentedRealityProjectiles": 0,
+                            "disableMisfire": 0,
                             "recoilModifier": {
                                 "decayMultiplier": 1,
                                 "endDecayMultiplier": 1,
@@ -1036,6 +1039,7 @@
                                 "frontalOscillationDecayMultiplier": 1,
                                 "frontalOscillationRandomnessMultiplier": 1,
                                 "animatedRecoilMultiplier": 1,
+                                "disableRecoil": 0,
                                 "headRotationMultiplier": {
                                     "x": 1,
                                     "y": 1,
@@ -1234,6 +1238,7 @@
                             "chargeTimeMultiplier": 1,
                             "useAlternateProjectileVisuals": 0,
                             "useAugmentedRealityProjectiles": 0,
+                            "disableMisfire": 0,
                             "recoilModifier": {
                                 "decayMultiplier": 1,
                                 "endDecayMultiplier": 1,
@@ -1248,6 +1253,7 @@
                                 "frontalOscillationDecayMultiplier": 1,
                                 "frontalOscillationRandomnessMultiplier": 1,
                                 "animatedRecoilMultiplier": 1,
+                                "disableRecoil": 0,
                                 "headRotationMultiplier": {
                                     "x": 1,
                                     "y": 1,
@@ -1446,6 +1452,7 @@
                             "chargeTimeMultiplier": 1,
                             "useAlternateProjectileVisuals": 0,
                             "useAugmentedRealityProjectiles": 0,
+                            "disableMisfire": 0,
                             "recoilModifier": {
                                 "decayMultiplier": 1,
                                 "endDecayMultiplier": 1,
@@ -1460,6 +1467,7 @@
                                 "frontalOscillationDecayMultiplier": 1,
                                 "frontalOscillationRandomnessMultiplier": 1,
                                 "animatedRecoilMultiplier": 1,
+                                "disableRecoil": 0,
                                 "headRotationMultiplier": {
                                     "x": 1,
                                     "y": 1,
@@ -1666,6 +1674,7 @@
                             "aiShootingMode": "Single",
                             "hasReloadModesOnUI": 0,
                             "mode": "Looping",
+                            "misfire": "00000000-0000-0000-0000-000000000000",
                             "mannequinTag": {
                                 "tag": ""
                             },
@@ -1695,6 +1704,7 @@
                                             "wearPerShot": 0,
                                             "recoil": "00000000-0000-0000-0000-000000000000",
                                             "misfire": "00000000-0000-0000-0000-000000000000",
+                                            "adaptiveTriggerParams": "00000000-0000-0000-0000-000000000000",
                                             "mannequinTag": {
                                                 "tag": ""
                                             },
@@ -1739,6 +1749,20 @@
                                             "cooldownStopTrigger": {
                                                 "audioTrigger": ""
                                             },
+                                            "NLPCAudioTriggers": {
+                                                "fireAudioTrigger": {
+                                                    "audioTrigger": ""
+                                                },
+                                                "dryFireAudioTrigger": {
+                                                    "audioTrigger": ""
+                                                },
+                                                "cooldownStartTrigger": {
+                                                    "audioTrigger": ""
+                                                },
+                                                "cooldownStopTrigger": {
+                                                    "audioTrigger": ""
+                                                }
+                                            },
                                             "fireEffects": [
                                                 {
                                                     "helper": "ejection_port",
@@ -1748,12 +1772,14 @@
                                                     "scale": 1,
                                                     "retriggerOnViewModeChange": 0,
                                                     "isMuzzleFlash": 0,
+                                                    "allowConditionReEvaluation": 0,
                                                     "firstPerson": {
                                                         "path": "8b433d60-7664-3752-5aa8-cfbb2a4f2c1c|Spaceships/Weapons/HRST_Nova_BallisticCannon_S5.nova_gun_fire"
                                                     },
                                                     "thirdPerson": {
                                                         "path": "8b433d60-7664-3752-5aa8-cfbb2a4f2c1c|Spaceships/Weapons/HRST_Nova_BallisticCannon_S5.nova_gun_fire"
-                                                    }
+                                                    },
+                                                    "effectCondition": []
                                                 },
                                                 {
                                                     "helper": "barrel_01_out",
@@ -1763,12 +1789,14 @@
                                                     "scale": 1,
                                                     "retriggerOnViewModeChange": 0,
                                                     "isMuzzleFlash": 0,
+                                                    "allowConditionReEvaluation": 0,
                                                     "firstPerson": {
                                                         "path": "2e5bfd96-4328-d718-9eb6-3ac4321671f9|Spaceships/Weapons/HRST_Nova_BallisticCannon_S5.All.gun_fire_first_person"
                                                     },
                                                     "thirdPerson": {
                                                         "path": "8b433d60-7664-3752-5aa8-cfbb2a4f2c1c|Spaceships/Weapons/HRST_Nova_BallisticCannon_S5.nova_gun_fire"
-                                                    }
+                                                    },
+                                                    "effectCondition": []
                                                 }
                                             ],
                                             "vibrationParams": {
@@ -1816,6 +1844,9 @@
                             "rtpc": "Weapon_Power_Level"
                         },
                         "switchFireModeAudioTrigger": {
+                            "audioTrigger": ""
+                        },
+                        "switchWeaponPresetAudioTrigger": {
                             "audioTrigger": ""
                         },
                         "weaponHeatRTPC": {
@@ -2036,6 +2067,11 @@
                     "rootOverridePaint": 1,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -3126,11 +3162,12 @@
                 "SEntityPhysicsControllerParams": {
                     "PhysType": {
                         "SEntityRigidPhysicsControllerParams": {
-                            "Mass": 510,
+                            "Mass": 7500,
                             "compoundingAllowed": 1,
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -3151,14 +3188,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -3233,16 +3275,20 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": [
                         {
                             "Name": "magazine_attach",
-                            "DisplayName": "Magazine Slot",
+                            "DisplayName": "@Magazine Slot",
+                            "__DisplayName": "@Magazine Slot",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -3250,6 +3296,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -3355,12 +3402,15 @@
                         },
                         {
                             "Name": "MEC",
-                            "DisplayName": "Firing Mechanism Attachment",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -3368,6 +3418,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -3451,12 +3502,15 @@
                         },
                         {
                             "Name": "POW",
-                            "DisplayName": "Power Array Attachment",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -3464,6 +3518,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -3547,12 +3602,15 @@
                         },
                         {
                             "Name": "VEN",
-                            "DisplayName": "Ventilation Attachment",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -3560,6 +3618,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -3669,6 +3728,7 @@
                     },
                     "masterModeExclusionsOverride": []
                 },
+                "SCItemAimableComponentParams": [],
                 "SEntityComponentDefaultLoadoutParams": {
                     "loadout": {
                         "SItemPortLoadoutManualParams": {
@@ -3709,7 +3769,7 @@
                             "linkedInteractionStates": [],
                             "signatureParams": {
                                 "EMSignature": {
-                                    "nominalSignature": 0,
+                                    "nominalSignature": 49.5,
                                     "decayRate": 0.15,
                                     "functionalityCurve": []
                                 },
@@ -3719,13 +3779,34 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 122,
+                        "healthRatio": 0.2
+                    }
                 },
                 "InteriorMapEntityVisiblityEntityComponentParams": {
                     "show": 1
@@ -3788,7 +3869,7 @@
         "grade": 1,
         "name": "Slayer Cannon",
         "tags": "HRST BallisticCannon flightReady weaponMountUsable $TMBL_Nova ",
-        "manufacturer": "HRST",
+        "required_tags": "TMBL_Nova",
         "classification": "Ship.Weapon.Gun",
         "stdItem": {
             "UUID": "189b0ce2-d934-4208-9970-ac633dbd67d3",
@@ -3798,12 +3879,36 @@
             "Width": 1.116502,
             "Height": 2.004737,
             "Length": 8.84403,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 1.12,
+                    "Length": 8.84,
+                    "Height": 2
+                },
+                "UIDimensions": {
+                    "Width": 1.5,
+                    "Length": 3,
+                    "Height": 1.5
+                },
+                "Volume": {
+                    "SCU": 4.2,
+                    "SCUConverted": 4200000,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 7500,
             "Type": "WeaponGun.Gun",
             "Name": "Slayer Cannon",
             "Description": "Manufacturer: Hurston Dynamics\\nItem Type: Ballistic Cannon\\nSize: 5\\n\\nDesigned specifically for the Nova tank, Hurston Dynamics' Slayer ballistic cannon earned its illustrious reputation through countless battlefield engagements during the Second Tevarin War. This battlefield beast excels against armored targets and fortified emplacements by firing large caliber artillery rounds with astounding accuracy and velocity. Hurston worked closely with Tumbril when the tank manufacturer decided to bring back the Nova. Though they painstakingly honored the original Slayer design, Hurston also updated it for the 30th century by improving the pivot speed, heat resistance, and associated software to provide a state-of-the-art gunner UI.",
+            "DescriptionData": {
+                "Manufacturer": "Hurston Dynamics",
+                "Item Type": "Ballistic Cannon",
+                "Size": "5"
+            },
+            "DescriptionText": "Designed specifically for the Nova tank, Hurston Dynamics' Slayer ballistic cannon earned its illustrious reputation through countless battlefield engagements during the Second Tevarin War. This battlefield beast excels against armored targets and fortified emplacements by firing large caliber artillery rounds with astounding accuracy and velocity. Hurston worked closely with Tumbril when the tank manufacturer decided to bring back the Nova. Though they painstakingly honored the original Slayer design, Hurston also updated it for the 30th century by improving the pivot speed, heat resistance, and associated software to provide a state-of-the-art gunner UI.",
             "Manufacturer": {
-                "Code": "HRST",
-                "Name": "Hurston Dynamics"
+                "Name": "Hurston Dynamics",
+                "UUID": "ee8b7bb3-d420-435c-924f-561e67e64588"
             },
             "Tags": [
                 "HRST",
@@ -3812,45 +3917,93 @@
                 "weaponMountUsable",
                 "$TMBL_Nova"
             ],
+            "RequiredTags": [
+                "TMBL_Nova"
+            ],
             "Ports": [
                 {
                     "PortName": "magazine_attach",
+                    "DisplayName": "@Magazine Slot",
                     "Size": 1,
+                    "MinSize": 1,
+                    "MaxSize": 1,
                     "Types": [
-                        "WeaponAttachment"
+                        "WeaponAttachment.Barrel"
                     ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponAttachment",
+                            "SubTypes": [
+                                "Barrel"
+                            ]
+                        }
+                    ],
+                    "Position": "magazine_well",
                     "Uneditable": false
                 },
                 {
                     "PortName": "MEC",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 1,
+                    "MaxSize": 1,
                     "Types": [
-                        "WeaponAttachment"
+                        "WeaponAttachment.FiringMechanism"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponAttachment",
+                            "SubTypes": [
+                                "FiringMechanism"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 },
                 {
                     "PortName": "POW",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 1,
+                    "MaxSize": 1,
                     "Types": [
-                        "WeaponAttachment"
+                        "WeaponAttachment.PowerArray"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponAttachment",
+                            "SubTypes": [
+                                "PowerArray"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 },
                 {
                     "PortName": "VEN",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 1,
+                    "MaxSize": 1,
                     "Types": [
-                        "WeaponAttachment"
+                        "WeaponAttachment.Ventilation"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponAttachment",
+                            "SubTypes": [
+                                "Ventilation"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 }
             ],
             "Ammunition": {
                 "UUID": "8a3f6c41-c87a-40a3-8596-89f2661f9eda",
-                "Type": "AmmoParams",
                 "Speed": 564,
-                "Range": 6147.6,
+                "Lifetime": 10.9,
+                "Range": 6148,
                 "Size": 1,
                 "ImpactDamage": {
                     "Physical": 18500,
@@ -3868,17 +4021,139 @@
                     "Biochemical": 0,
                     "Stun": 0
                 },
-                "Capacity": 60
+                "ExplosionRadius": {
+                    "Minimum": 2.5,
+                    "Maximum": 5
+                },
+                "InitialCapacity": 363,
+                "Capacity": 363,
+                "ImpulseScale": 1,
+                "BulletType": -1,
+                "DamageFalloffLevel1": 0,
+                "DamageFalloffLevel2": 0,
+                "DamageFalloffLevel3": 0,
+                "MaxPenetrationThickness": 0.5,
+                "Penetration": {
+                    "BasePenetrationDistance": 11.55,
+                    "NearRadius": 0.58,
+                    "FarRadius": 1.16
+                }
             },
             "DimensionOverrides": {
                 "Width": 1.5,
                 "Length": 3,
-                "Height": 1.5
+                "Height": 1.5,
+                "Volume": 3.456
+            },
+            "Distortion": {
+                "DecayDelay": 0,
+                "DecayRate": 500000,
+                "Maximum": 500000,
+                "WarningRatio": 0.75,
+                "RecoveryRatio": 0,
+                "PowerRatioAtMaxDistortion": 0,
+                "PowerChangeOnlyAtMaxDistortion": 0,
+                "ShutdownTime": 1
             },
             "Durability": {
-                "Health": 20000
+                "Health": 20000,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 0.6,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
+            },
+            "Emission": {
+                "Em": {
+                    "Maximum": 49.5,
+                    "Minimum": 0,
+                    "Decay": 0.15
+                },
+                "Ir": 0
+            },
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "Consumption",
+                                "Resource": "Power",
+                                "Rate": 0.1,
+                                "MinimumFraction": 1
+                            }
+                        ],
+                        "Signature": {
+                            "EM": 49.5
+                        },
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 122,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 0.1,
+                        "Maximum": 0.1
+                    },
+                    "Coolant": {
+                        "Minimum": 0,
+                        "Maximum": 0.1
+                    }
+                }
             },
             "Weapon": {
+                "Size": 5,
+                "WeaponType": "WeaponGun",
+                "WeaponClass": "Gun",
+                "EffectiveRange": 6148,
+                "RateOfFire": 12,
+                "Capacity": 363,
                 "Modes": [
                     {
                         "Name": "Single",
@@ -3887,33 +4162,80 @@
                         "FireType": "sequence",
                         "AmmoPerShot": 1,
                         "PelletsPerShot": 1,
+                        "HeatPerShot": 91125,
+                        "WearPerShot": 0,
                         "DamagePerShot": 32000,
-                        "DamagePerSecond": 6400
+                        "DamagePerSecond": 6400,
+                        "Alpha": 32000,
+                        "Dps": 6400,
+                        "MaxDamagePerMagazine": 11616000,
+                        "DpsPhysical": 6400,
+                        "DpsEnergy": 0,
+                        "DpsDistortion": 0,
+                        "DpsThermal": 0,
+                        "DpsBiochemical": 0,
+                        "DpsStun": 0,
+                        "AlphaPhysical": 32000,
+                        "AlphaEnergy": 0,
+                        "AlphaDistortion": 0,
+                        "AlphaThermal": 0,
+                        "AlphaBiochemical": 0,
+                        "AlphaStun": 0,
+                        "Spread": {
+                            "Minimum": 0.4,
+                            "Maximum": 0.4,
+                            "FirstAttack": 0.025,
+                            "Attack": 0.025,
+                            "Decay": 0.05
+                        },
+                        "AdsSpread": {
+                            "Minimum": 0.4,
+                            "Maximum": 0.4,
+                            "FirstAttack": 0.025,
+                            "Attack": 0.025,
+                            "Decay": 0.05
+                        }
                     }
                 ],
-                "Ammunition": {
-                    "UUID": "8a3f6c41-c87a-40a3-8596-89f2661f9eda",
-                    "Type": "AmmoParams",
-                    "Speed": 564,
-                    "Range": 6147.6,
-                    "Size": 1,
-                    "ImpactDamage": {
-                        "Physical": 18500,
+                "FireMode": "Single",
+                "Spread": {
+                    "Minimum": 0.4,
+                    "Maximum": 0.4,
+                    "FirstAttack": 0.025,
+                    "Attack": 0.025,
+                    "Decay": 0.05
+                },
+                "Damage": {
+                    "Sustained60s": 5.3,
+                    "Burst": 6400,
+                    "AlphaTotal": 32000,
+                    "DpsTotal": 6400,
+                    "Maximum": 11616000,
+                    "Alpha": {
+                        "Physical": 32000,
                         "Energy": 0,
                         "Distortion": 0,
                         "Thermal": 0,
                         "Biochemical": 0,
                         "Stun": 0
                     },
-                    "DetonationDamage": {
-                        "Physical": 13500,
+                    "Dps": {
+                        "Physical": 6400,
                         "Energy": 0,
                         "Distortion": 0,
                         "Thermal": 0,
                         "Biochemical": 0,
                         "Stun": 0
-                    },
-                    "Capacity": 60
+                    }
+                },
+                "Heat": {
+                    "HeatPerShot": 91125,
+                    "CoolingDelay": 1.21,
+                    "CoolingPerSecond": 24.2,
+                    "OverheatTemperature": 100,
+                    "OverheatFixTime": 6.71,
+                    "ShotsToOverheat": 0,
+                    "TimeToOverheat": 0
                 }
             }
         }

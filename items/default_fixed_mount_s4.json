@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "c2af3f67-3ad7-4214-b502-4d00bb3df0b8",
             "__path": "libs/foundry/records/entities/scitem/ships/weapon_mounts/fixed/default/entityclassdefinition.default_fixed_mount_s4.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": [],
             "Components": {
@@ -141,6 +146,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -244,6 +254,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -291,7 +302,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "SEntityPhysicsControllerParams": {
@@ -302,6 +313,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -322,14 +334,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -399,16 +416,20 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": {
                         "SItemPortDef": {
                             "Name": "hardpoint_size_4",
-                            "DisplayName": "Slot",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 4,
                             "MaxSize": 4,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -416,6 +437,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -521,7 +543,8 @@
         "grade": 1,
         "name": "Size 4 Fixed Mount",
         "tags": "turretMount flightReady",
-        "manufacturer": "ANVL",
+        "required_tags": "",
+        "classification": "Ship.Turret.GunTurret",
         "stdItem": {
             "UUID": "c2af3f67-3ad7-4214-b502-4d00bb3df0b8",
             "ClassName": "Default_Fixed_Mount_S4",
@@ -530,12 +553,31 @@
             "Width": 0.8932018,
             "Height": 1.60379,
             "Length": 6.633023,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.89,
+                    "Length": 6.63,
+                    "Height": 1.6
+                },
+                "UIDimensions": {
+                    "Width": 0.75,
+                    "Length": 0.75,
+                    "Height": 0.75
+                },
+                "Volume": {
+                    "SCU": 0.084,
+                    "SCUConverted": 84000,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 200,
             "Type": "Turret.GunTurret",
             "Name": "Size 4 Fixed Mount",
             "Description": "Size 4 Fixed Mount",
+            "DescriptionText": "Size 4 Fixed Mount",
             "Manufacturer": {
-                "Code": "ANVL",
-                "Name": "Anvil Aerospace"
+                "Name": "Anvil Aerospace",
+                "UUID": "b922abdb-0634-4358-9eee-60118f3cf3a7"
             },
             "Tags": [
                 "turretMount",
@@ -544,9 +586,20 @@
             "Ports": [
                 {
                     "PortName": "hardpoint_size_4",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 4,
+                    "MinSize": 4,
+                    "MaxSize": 4,
                     "Types": [
-                        "WeaponGun"
+                        "WeaponGun.Gun"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponGun",
+                            "SubTypes": [
+                                "Gun"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 }
@@ -554,10 +607,39 @@
             "DimensionOverrides": {
                 "Width": 0.75,
                 "Length": 0.75,
-                "Height": 0.75
+                "Height": 0.75,
+                "Volume": 0.216
             },
             "Durability": {
-                "Health": 400
+                "Health": 400,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
             },
             "HeatConnection": {
                 "TemperatureToIR": 6,

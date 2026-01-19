@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "a1b8ef62-25b0-4ece-a01d-9272219d4a2a",
             "__path": "libs/foundry/records/entities/scitem/ships/weapon_mounts/gimbal/drak_cutlass_red_sensor_turret_s4.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": {
                 "Reference": {
                     "value": "b6f2ae47-9950-46bb-8c18-69cb7d22be74"
@@ -204,6 +209,11 @@
                     "rootOverridePaint": 1,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -613,6 +623,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -633,14 +644,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -682,12 +698,9 @@
                     "defaultMovementTag": "00000000-0000-0000-0000-000000000000",
                     "recenterIfUnused": 0,
                     "healthModifierRecord": "00000000-0000-0000-0000-000000000000",
-                    "powerRequirement": 15,
                     "switchToCachedOperatorModeOnExit": 1,
                     "operatorModeOnEnter": "Turret",
                     "jointConvergence": "",
-                    "fixedAssistRadiusInner": 1,
-                    "fixedAssistRadiusOuter": 6,
                     "intoxicationModifierRef": "da01cefe-07b3-4533-aac4-09d4c624dc2e",
                     "hudParamsOverride": "00000000-0000-0000-0000-000000000000",
                     "autoDeployHelmetTargetingMode": 1,
@@ -944,6 +957,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -991,7 +1005,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "EntityComponentHeatConnection": {
@@ -1031,13 +1045,18 @@
                             "UseAsTimer": 0,
                             "InitialAgeRatio": 0,
                             "InitialUsageRatio": 0,
-                            "BasePowerMultiplier": 0,
-                            "DrawPowerMultiplier": 0,
                             "AtmosphereMultiplier": 1,
                             "DamageConversionRate": 0.01,
                             "HeatMultipliers": {
                                 "NormalTemperatureMultiplier": 1,
                                 "OverheatTemperatureMultiplier": 1
+                            },
+                            "FunctionalityMultiplier": {
+                                "UsePowerRatio": 1,
+                                "FunctionalityMultiplyCurve": {
+                                    "useLUT": 0,
+                                    "points": []
+                                }
                             },
                             "EffectCurve": {
                                 "useLUT": 0,
@@ -1244,6 +1263,7 @@
                                     },
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1268,6 +1288,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1294,6 +1315,7 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": [],
                     "InternalResourceLinks": [],
@@ -1353,7 +1375,8 @@
                     "asopSpawnState": "None",
                     "throttleParams": [],
                     "masterModeExclusionsOverride": []
-                }
+                },
+                "SCItemAimableComponentParams": []
             },
             "ClassName": "DRAK_Cutlass_Red_Sensor_Turret_S4",
             "__type": "TurretBase"
@@ -1369,7 +1392,16 @@
         "grade": 1,
         "name": "Nav-E7 Echo Scanner",
         "tags": "DRAK_Cutlass_Remote_Turret",
-        "manufacturer": "DRAK",
+        "required_tags": "DRAK_Cutlass_Remote_Turret",
+        "entity_tags": [
+            "b6f2ae47-9950-46bb-8c18-69cb7d22be74"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "b6f2ae47-9950-46bb-8c18-69cb7d22be74",
+                "name": "Gimbal"
+            }
+        ],
         "stdItem": {
             "UUID": "a1b8ef62-25b0-4ece-a01d-9272219d4a2a",
             "ClassName": "DRAK_Cutlass_Red_Sensor_Turret_S4",
@@ -1378,23 +1410,80 @@
             "Width": 0.2233005,
             "Height": 0.801895,
             "Length": 2.211008,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.22,
+                    "Length": 2.21,
+                    "Height": 0.8
+                },
+                "UIDimensions": {
+                    "Width": 0.75,
+                    "Length": 0.75,
+                    "Height": 0.75
+                },
+                "Volume": {
+                    "SCU": 0.084,
+                    "SCUConverted": 84000,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 400,
             "Type": "TurretBase.Unmanned",
             "Name": "Nav-E7 Echo Scanner",
             "Description": "Item Type: Turret\\nManufacturer: Nav-E7\\nSize: 4\\n\\nThe Echo scanner from Nav-E7 utilizes enhanced long-range sensor capabilities and the manual precision of a remote turret mount to become an indispensable tool during search operations.",
+            "DescriptionData": {
+                "Item Type": "Turret",
+                "Manufacturer": "Nav-E7 Gadgets",
+                "Size": "4"
+            },
+            "DescriptionText": "The Echo scanner from Nav-E7 utilizes enhanced long-range sensor capabilities and the manual precision of a remote turret mount to become an indispensable tool during search operations.",
             "Manufacturer": {
-                "Code": "DRAK",
-                "Name": "Drake Interplanetary"
+                "Name": "Drake Interplanetary",
+                "UUID": "6116471c-891d-4830-8968-650b6deafc00"
             },
             "Tags": [
+                "DRAK_Cutlass_Remote_Turret"
+            ],
+            "RequiredTags": [
                 "DRAK_Cutlass_Remote_Turret"
             ],
             "DimensionOverrides": {
                 "Width": 0.75,
                 "Length": 0.75,
-                "Height": 0.75
+                "Height": 0.75,
+                "Volume": 0.216
             },
             "Durability": {
-                "Health": 2000
+                "Lifetime": 720,
+                "Health": 2000,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
             },
             "HeatConnection": {
                 "TemperatureToIR": 6,
@@ -1417,6 +1506,10 @@
                 "MisfireMinTemperature": 370,
                 "MisfireMaxTemperature": 600
             },
+            "Interactions": [
+                "Activate remote camera",
+                "Turret_gyro_mode"
+            ],
             "PowerConnection": {
                 "PowerBase": 0,
                 "PowerDraw": 15,
@@ -1431,6 +1524,45 @@
                 "OverclockPerformance": 0,
                 "PowerToEM": 0,
                 "DecayRateOfEM": 0.15
+            },
+            "Turret": {
+                "RotationStyle": "SingleAxis",
+                "MovementList": [
+                    {
+                        "JointName": "Gimbal_Mount_Yaw",
+                        "SlavedOnly": 0,
+                        "RestrictTargetAngles": 0,
+                        "YawAxis": {
+                            "Speed": 95,
+                            "AccelerationTimeToFullSpeed": 0.3,
+                            "JerkTimeToFullAcceleration": 0.1,
+                            "AccelerationDecay": 5,
+                            "AngleLimits": [
+                                {
+                                    "LowestAngle": -180,
+                                    "HighestAngle": 180
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "JointName": "Gimbal_Mount_Pitch",
+                        "SlavedOnly": 0,
+                        "RestrictTargetAngles": 0,
+                        "PitchAxis": {
+                            "Speed": 95,
+                            "AccelerationTimeToFullSpeed": 0.3,
+                            "JerkTimeToFullAcceleration": 0.1,
+                            "AccelerationDecay": 5,
+                            "AngleLimits": [
+                                {
+                                    "LowestAngle": -15,
+                                    "HighestAngle": 80
+                                }
+                            ]
+                        }
+                    }
+                ]
             }
         }
     }

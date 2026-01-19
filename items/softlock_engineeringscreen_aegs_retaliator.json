@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "b2e6f541-e23b-4c76-ae1d-ec444b1c4e4c",
             "__path": "libs/foundry/records/entities/scitem/ships/utility/engineering/softlock_engineeringscreen_aegs_retaliator.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": {
                 "Reference": {
                     "value": "cd007f95-7c11-4329-9b40-2d22d29f9137"
@@ -139,6 +144,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -203,6 +213,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -223,14 +234,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -279,6 +295,11 @@
                         {
                             "name": "proto/resourceNetworkUI/boxout/hover",
                             "defaultValue": -1,
+                            "tasks": []
+                        },
+                        {
+                            "name": "resourcenetworkui/tabListSelectedIndex",
+                            "defaultValue": 0,
                             "tasks": []
                         }
                     ],
@@ -355,6 +376,16 @@
                         },
                         {
                             "name": "proto/resourceNetworkUI/boxout/isVisible",
+                            "defaultValue": 0,
+                            "tasks": []
+                        },
+                        {
+                            "name": "resourceNetworkUI/interiorMapDisplay/showIcons",
+                            "defaultValue": 1,
+                            "tasks": []
+                        },
+                        {
+                            "name": "resourceNetworkUI/notifications/isShowingPopup",
                             "defaultValue": 0,
                             "tasks": []
                         }
@@ -614,28 +645,32 @@
                                     "name": "BB_ScreenOn",
                                     "component": {
                                         "canvas": "c44653e8-8bbf-40bc-a4a0-0b59d2cc1ea6",
-                                        "isSystemViewInstance": 0
+                                        "isSystemViewInstance": 0,
+                                        "canvasInstantiationMode": "RootDeferred"
                                     }
                                 },
                                 {
                                     "name": "BB_ScreenOff",
                                     "component": {
                                         "canvas": "40c2f462-7697-4555-b3ad-09412034c048",
-                                        "isSystemViewInstance": 0
+                                        "isSystemViewInstance": 0,
+                                        "canvasInstantiationMode": "RootDeferred"
                                     }
                                 },
                                 {
                                     "name": "LoggedOut",
                                     "component": {
                                         "canvas": "c44653e8-8bbf-40bc-a4a0-0b59d2cc1ea6",
-                                        "isSystemViewInstance": 0
+                                        "isSystemViewInstance": 0,
+                                        "canvasInstantiationMode": "RootDeferred"
                                     }
                                 },
                                 {
                                     "name": "LoggedIn",
                                     "component": {
                                         "canvas": "c44653e8-8bbf-40bc-a4a0-0b59d2cc1ea6",
-                                        "isSystemViewInstance": 0
+                                        "isSystemViewInstance": 0,
+                                        "canvasInstantiationMode": "RootDeferred"
                                     }
                                 }
                             ]
@@ -666,9 +701,10 @@
                     "interactionDistance": 50
                 },
                 "UIAudioComponentEntityComponentParams": {
-                    "UIAudioDef": "00b11cdd-0673-42e5-bf01-8c18262ec701",
+                    "UIAudioDef": "97721fa1-565e-493b-8b29-4ef6a57600fe",
                     "useEntityClass": "00000000-0000-0000-0000-000000000000",
                     "dialogueContext": "00000000-0000-0000-0000-000000000000",
+                    "bypassRealisticMode": 0,
                     "UIAudioManufacturers": [],
                     "offset": {
                         "UIAudioComponent_ManualOffset": {
@@ -701,23 +737,24 @@
                 },
                 "KioskInteractionEntityComponentParams": {
                     "onlyShowCursorWhenLockedByKiosk": 0,
-                    "initialForceLookAtLerpTime": 0.4,
+                    "initialForceLookAtLerpTime": 0.1,
                     "defaultForceLookAtLerpTime": 0.05,
                     "forceLookAtDecayFactor": 2,
                     "forceLookAtIncreaseFactor": 1,
-                    "forceLookAtThreshold": 0.8,
-                    "FOVSpeedFactor": 0.5,
+                    "forceLookAtThreshold": 0.3,
+                    "FOVSpeedFactor": 0.75,
                     "FOVHaltDistanceMax": 0.1,
                     "FOVHaltDistanceMin": 0.075,
                     "FOVMax": 0.25,
                     "FOVMin": 0.25,
                     "lookInputFactor": 0.8,
                     "inActivityTimer": 999999,
-                    "autoCloseRadiusInNonFoucseMode": 3,
+                    "autoCloseRadiusInNonFoucseMode": 0,
                     "blockLookInputs": 0,
                     "supportWalkToAlign": 1,
                     "openInteraction": "Interactable.SharedInteractions",
                     "isAccessedFromVehicleSeat": 0,
+                    "preventForceReactions": 1,
                     "attractTransitions": {
                         "UIOwnerContextTransitionPair": {
                             "layerName": "Idle",
@@ -799,6 +836,8 @@
                                 "TextScale": 1,
                                 "ShowInteractionTextAtCursorPos": 0,
                                 "ScalePromptOffsetWithEntity": 0,
+                                "PromptStyle": "PromptAndText",
+                                "OverrideControlHintDescription": 0,
                                 "InteractionPromptScale": 1,
                                 "InteractionPromptLabelVerticalOffset": 70,
                                 "InteractionPromptBound": "EntityRoot",
@@ -832,7 +871,9 @@
                                 "PlayerAnimatedInteractionParams": [],
                                 "HighlightBehaviors": {
                                     "SHighlightBehaviorNode": {
-                                        "HighlightBehaviorNodeParams": [],
+                                        "HighlightBehaviorNodeParams": {
+                                            "SEntityHighlightNode": []
+                                        },
                                         "nextNodes": []
                                     }
                                 },
@@ -898,6 +939,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -918,6 +960,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -938,6 +981,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": {
                                         "SStateAutoChange": {
                                             "NextState": "StateTypes[0].SInteractionStateType.States[1]",
@@ -957,14 +1001,14 @@
                             ],
                             "StateModifiers": {
                                 "SKioskInteractionStateModifier": {
-                                    "onKioskInteractionOpen": "StateTypes[0].SInteractionStateType.States[1]",
+                                    "onKioskInteractionOpen": "StateTypes[0].SInteractionStateType.States[0]",
                                     "onKioskInteractionClose": "StateTypes[0].SInteractionStateType.States[2]"
                                 }
                             }
                         },
                         {
                             "StateTypeName": "Powered",
-                            "bindingsMethod": "None",
+                            "bindingsMethod": "States",
                             "DefaultState": "null",
                             "asopReset": 0,
                             "networkAuthority": "Server",
@@ -979,6 +1023,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -999,6 +1044,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1019,6 +1065,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1044,7 +1091,7 @@
                                             "max": 0.9
                                         },
                                         {
-                                            "state": "StateTypes[1].SInteractionStateType.States[1]",
+                                            "state": "StateTypes[1].SInteractionStateType.States[0]",
                                             "min": 0,
                                             "max": 0.2
                                         }
@@ -1070,6 +1117,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -1095,6 +1143,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -1135,6 +1184,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1155,6 +1205,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1170,7 +1221,7 @@
                                 "AggregateStateModifier": {
                                     "aggregateStateParams": [
                                         {
-                                            "state": "StateTypes[3].SInteractionStateType.States[0]",
+                                            "state": "StateTypes[3].SInteractionStateType.States[1]",
                                             "aggregateStates": {
                                                 "WeakPointer": {
                                                     "aggregateStates": "StateTypes[1].SInteractionStateType.States[0]"
@@ -1214,6 +1265,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1234,6 +1286,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1254,6 +1307,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1274,6 +1328,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1294,6 +1349,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1324,6 +1380,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1344,6 +1401,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1364,6 +1422,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1394,6 +1453,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1414,6 +1474,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1434,6 +1495,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1454,6 +1516,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1484,6 +1547,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1504,6 +1568,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1534,6 +1599,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1554,6 +1620,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1573,7 +1640,9 @@
                     "onInteractionStateChangeTriggers": {
                         "SOnInteractionStateChangeTriggers": {
                             "targetState": "StateTypes[0].SInteractionStateType.States[2]",
-                            "gameplayTriggers": []
+                            "gameplayTriggers": {
+                                "SCloseKioskInteractionGameplayTrigger": []
+                            }
                         }
                     },
                     "onInteractionSuccessTriggers": [],
@@ -1589,7 +1658,9 @@
                                     "RootVehicle": 0
                                 }
                             },
-                            "executeNodes": [],
+                            "executeNodes": {
+                                "SEntityTraversingNodeExecuteLinkUIVendor": []
+                            },
                             "nextNodes": []
                         },
                         {
@@ -1610,7 +1681,9 @@
                                             "itemType": "DockingCollar"
                                         }
                                     },
-                                    "executeNodes": [],
+                                    "executeNodes": {
+                                        "SEntityTraversingNodeExecuteLinkUIVendor": []
+                                    },
                                     "nextNodes": []
                                 }
                             }
@@ -1647,13 +1720,34 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 120,
+                        "healthRatio": 0.2
+                    }
                 },
                 "SItemPortContainerComponentParams": {
                     "PortFlags": "",
@@ -1661,6 +1755,7 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": [],
                     "InternalResourceLinks": [],
@@ -1678,6 +1773,7 @@
                     "throttleParams": [],
                     "masterModeExclusionsOverride": []
                 },
+                "SAudioProxyParams": [],
                 "UIMapEntityComponentParams": {
                     "startEnabled": 0,
                     "frameType": "Rectangle2D",
@@ -1699,6 +1795,7 @@
                             "markerRelativeScale": 0.0245,
                             "visibleMarkersCanvas": "c23a6de7-edbc-4dc1-85bb-2e6a32587161",
                             "edgeMarkerCanvas": "eb48b4c4-0fff-426a-b152-8b46810ee0cf",
+                            "allowPanning": 1,
                             "displayPositionOffset": {
                                 "x": 0,
                                 "y": 0,
@@ -1721,17 +1818,25 @@
                                 "visible": 1,
                                 "materialPath": "materials/ui/map/interiormap/renderlayeroverrides/engineering/interiormap_wall.mtl"
                             },
+                            "hangarFloorRenderLayerParams": {
+                                "visible": 1,
+                                "materialPath": "materials/ui/map/interiormap/renderlayeroverrides/default/interiormap_floor.mtl"
+                            },
+                            "hangarWallRenderLayerParams": {
+                                "visible": 1,
+                                "materialPath": "materials/ui/map/interiormap/renderlayeroverrides/default/interiormap_wall.mtl"
+                            },
                             "bulkheadRenderLayerParams": {
                                 "visible": 1,
                                 "materialPath": "Materials/UI/map/InteriorMap/RenderLayerOverrides/Engineering/interiormap_bulkhead.mtl"
                             },
                             "unlockedDoorRenderLayerParams": {
                                 "visible": 1,
-                                "materialPath": "materials/ui/map/interiormap/renderlayeroverrides/engineering/interiormap_floor.mtl"
+                                "materialPath": "Materials/UI/map/InteriorMap/RenderLayerOverrides/Engineering/interiormap_doorunlocked.mtl"
                             },
                             "lockedDoorRenderLayerParams": {
                                 "visible": 1,
-                                "materialPath": "materials/ui/map/interiormap/renderlayeroverrides/engineering/interiormap_floor.mtl"
+                                "materialPath": "materials/ui/map/interiormap/renderlayeroverrides/default/interiormap_nominal.mtl"
                             },
                             "exteriorRenderLayerParams": {
                                 "visible": 1,
@@ -1757,6 +1862,48 @@
                                 "visible": 1,
                                 "materialPath": "materials/ui/map/interiormap/renderlayeroverrides/default/interiormap_disabled.mtl"
                             },
+                            "playerVehicleRenderLayerParams": {
+                                "visible": 0,
+                                "materialPath": "Materials/UI/map/InteriorMap/RenderLayerOverrides/Mobiglas/interiormap_exterior.mtl"
+                            },
+                            "renderLayerGroups": [
+                                {
+                                    "renderLayers": [
+                                        {
+                                            "renderLayer": "Floor",
+                                            "renderLayerParams": {
+                                                "visible": 1,
+                                                "materialPath": "Materials/UI/map/InteriorMap/RenderLayerOverrides/Engineering/interiormap_roomhover_floor.mtl"
+                                            }
+                                        },
+                                        {
+                                            "renderLayer": "Wall",
+                                            "renderLayerParams": {
+                                                "visible": 1,
+                                                "materialPath": "Materials/UI/map/InteriorMap/RenderLayerOverrides/Engineering/interiormap_roomhover_wall.mtl"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "renderLayers": [
+                                        {
+                                            "renderLayer": "Floor",
+                                            "renderLayerParams": {
+                                                "visible": 1,
+                                                "materialPath": "Materials/UI/map/InteriorMap/RenderLayerOverrides/Engineering/interiormap_roomfire_floor.mtl"
+                                            }
+                                        },
+                                        {
+                                            "renderLayer": "Wall",
+                                            "renderLayerParams": {
+                                                "visible": 1,
+                                                "materialPath": "Materials/UI/map/InteriorMap/RenderLayerOverrides/Engineering/interiormap_roomfire_wall.mtl"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
                             "fixedOrientation": {
                                 "DegYPR": {
                                     "yaw": -90,
@@ -1774,8 +1921,10 @@
                             }
                         }
                     },
+                    "radarMapParams": [],
                     "displayParams": {
                         "radius": 0,
+                        "newRadarRadius": 0,
                         "orientation": {
                             "x": 0,
                             "y": 0,
@@ -1803,7 +1952,16 @@
         "grade": 1,
         "name": "Screen",
         "tags": "",
-        "manufacturer": "AEG",
+        "required_tags": "",
+        "entity_tags": [
+            "cd007f95-7c11-4329-9b40-2d22d29f9137"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "cd007f95-7c11-4329-9b40-2d22d29f9137",
+                "name": "Animate_10"
+            }
+        ],
         "stdItem": {
             "UUID": "b2e6f541-e23b-4c76-ae1d-ec444b1c4e4c",
             "ClassName": "SoftLock_EngineeringScreen_AEGS_Retaliator",
@@ -1812,12 +1970,84 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 0,
             "Type": "SeatDashboard.UNDEFINED",
             "Name": "Screen",
             "Description": "",
+            "DescriptionText": "",
             "Manufacturer": {
-                "Code": "AEG",
-                "Name": "Aegis Dynamics"
+                "Name": "Aegis Dynamics",
+                "UUID": "cf4a74bf-eb2c-462a-9b78-f7f2724c31d2"
+            },
+            "Emission": {
+                "Em": {
+                    "Maximum": 0,
+                    "Minimum": 0,
+                    "Decay": 0.15
+                },
+                "Ir": 0
+            },
+            "Interactions": [
+                "Useconsole"
+            ],
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 1,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "NetworkReflection",
+                                "Resource": "Power",
+                                "BinaryEvaluation": 1
+                            }
+                        ],
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 120,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 0
+                    },
+                    "Coolant": {
+                        "Minimum": 0
+                    }
+                }
             }
         }
     }

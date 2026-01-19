@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "5df9fe17-bda5-433d-a2cd-bff6b29eeac9",
             "__path": "libs/foundry/records/entities/scitem/ships/powerplant/powr_amrs_s02_turbodrive_scitem.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [
                 {
                     "value": "467e1acb-657a-4eb0-a5b0-3b1b67f51683"
@@ -156,6 +161,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -220,6 +230,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -240,31 +251,38 @@
                             "temperature": {
                                 "enable": 1,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 500,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationRateAtTemperatureDifference": {
+                                        "coolingEqualizationRate": 3.75,
+                                        "temperatureDifference": 400
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 1,
-                                    "minimumTemperatureForIR": 250,
-                                    "temperatureToIR": 77
+                                    "minimumTemperatureForIR": 333,
+                                    "temperatureToIR": 7
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
-                                    "minCoolingTemperature": 300,
+                                    "minCoolingTemperature": 303,
                                     "enableOverheat": 0,
-                                    "overheatTemperature": 750,
-                                    "overheatWarningTemperature": 525,
-                                    "overheatRecoveryTemperature": 505,
+                                    "overheatTemperature": 423,
+                                    "overheatWarningTemperature": 413,
+                                    "overheatRecoveryTemperature": 418,
                                     "stateHeatGenerationValues": {
                                         "EntityTemperatureResourceHeatGeneration": {
                                             "state": "states",
-                                            "baselineTemperatureChange": 12.5
+                                            "resource": "Power",
+                                            "baselineTemperatureChange": 0.5
                                         }
                                     },
                                     "degradationTemperatureMultipliers": []
                                 },
                                 "misfireTemperatureRange": {
-                                    "minimum": 525,
-                                    "maximum": 750
+                                    "minimum": 420,
+                                    "maximum": 423
                                 },
                                 "fireHazard": {
                                     "enable": 1,
@@ -279,7 +297,7 @@
                     }
                 },
                 "SHealthComponentParams": {
-                    "Health": 1100,
+                    "Health": 750,
                     "DamageCap": 0,
                     "SerializedDamageMapPath": "",
                     "ClientOnly": 0,
@@ -300,6 +318,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -307,14 +326,14 @@
                     "sendOnDestructionEventToMasterRootContainer": 0,
                     "DamageResistances": {
                         "DamageResistance": {
-                            "IgnoreMeleeDamage": 0,
+                            "IgnoreMeleeDamage": 1,
                             "PhysicalResistance": {
-                                "Multiplier": 1,
+                                "Multiplier": 0.85,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             },
                             "EnergyResistance": {
-                                "Multiplier": 1,
+                                "Multiplier": 0.7,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             },
@@ -353,6 +372,7 @@
                             "maxPhysRadius": 2.5,
                             "angle": 0,
                             "angleVertical": 0,
+                            "explosionZone": "AdamHosted",
                             "pressure": 200,
                             "holeSize": 0,
                             "terrainHoleSize": 3,
@@ -387,8 +407,9 @@
                             },
                             "flashbangParams": [],
                             "shockwaveParams": [],
+                            "fragmentParams": [],
                             "effect": {
-                                "path": "Environments\\Generic\\Generic_Explosions.LT_EXPLOSIONS.lt_explosion_single_1m3_once_1"
+                                "path": "14263f7e-cb75-f03d-17e1-f05dd54e5306|Environments/Generic/Generic_Explosions.LT_EXPLOSIONS.lt_explosion_single_1m3_once_1"
                             },
                             "failedEffect": {
                                 "path": ""
@@ -415,7 +436,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "ItemControlComponentParams": {
@@ -464,14 +485,16 @@
                                         "resource": "Coolant",
                                         "resourceAmountPerSecond": {
                                             "SStandardResourceUnit": {
-                                                "standardResourceUnits": 19
+                                                "standardResourceUnits": 0
                                             }
                                         }
                                     },
                                     "consumptionComposition": {
                                         "values": []
                                     },
-                                    "dynamicAmountOverride": []
+                                    "dynamicAmountOverride": {
+                                        "ItemResourceDynamicAmountCoolant": []
+                                    }
                                 }
                             },
                             "linkedInteractionStates": [],
@@ -487,13 +510,34 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 72.8,
+                        "healthRatio": 0.2
+                    }
                 },
                 "EntityComponentMisfireParams": {
                     "itemLocId": "<= PLACEHOLDER =>",
@@ -525,62 +569,20 @@
                             "misfireProbabilityArray": []
                         },
                         {
-                            "misfireProbabilityArray": {
-                                "SMisfireProbabilityParams": {
-                                    "weight": 0.5,
-                                    "misfireArray": {
-                                        "WeakPointer": {
-                                            "misfireArray": "misfires"
-                                        }
-                                    }
-                                }
-                            }
+                            "misfireProbabilityArray": []
                         },
                         {
-                            "misfireProbabilityArray": [
-                                {
-                                    "weight": 1,
-                                    "misfireArray": {
-                                        "WeakPointer": {
-                                            "misfireArray": "misfires"
-                                        }
-                                    }
-                                },
-                                {
-                                    "weight": 0.25,
-                                    "misfireArray": {
-                                        "WeakPointer": {
-                                            "misfireArray": "misfires"
-                                        }
-                                    }
-                                }
-                            ]
+                            "misfireProbabilityArray": []
                         }
                     ],
                     "misfires": {
-                        "SSpreadMisfireEffect": {
-                            "effectTrigger": "00000000-0000-0000-0000-000000000000",
-                            "effectTag": "00000000-0000-0000-0000-000000000000"
-                        },
-                        "SDamageMisfireEffect": {
-                            "effectTrigger": "00000000-0000-0000-0000-000000000000",
-                            "effectTag": "00000000-0000-0000-0000-000000000000",
-                            "damageValue": {
-                                "SMisfireDamageValue": {
-                                    "health": 15
-                                }
-                            }
-                        },
-                        "SFireMisfireEffect": {
-                            "effectTrigger": "00000000-0000-0000-0000-000000000000",
-                            "effectTag": "00000000-0000-0000-0000-000000000000"
-                        },
                         "SHostExplosionEffect": {
                             "effectTrigger": "00000000-0000-0000-0000-000000000000",
                             "effectTag": "00000000-0000-0000-0000-000000000000",
-                            "explosionChance": 0.5,
-                            "explosionCountdown": 60,
-                            "degradationAdditionalRollsFactor": 10,
+                            "explosionChance": 0.05,
+                            "explosionCountdown": 108,
+                            "degradationAdditionalRollsFactor": 0,
+                            "healthCancelRatio": 0.2,
                             "criticalMalfunctionStates": {
                                 "safeState": "StateTypes[1].SInteractionStateType.States[0]",
                                 "selfDestructState": "StateTypes[1].SInteractionStateType.States[1]",
@@ -599,6 +601,7 @@
                         }
                     }
                 },
+                "EntityComponentRoomOccupantParams": [],
                 "SDegradationParams": {
                     "StopDegradingIfDestroyed": 0,
                     "accumulators": {
@@ -611,17 +614,22 @@
                             "AccumulationEventThreshold": 1,
                             "PortTags": "",
                             "RequiredPortTags": "",
-                            "MaxLifetimeHours": 28.9,
+                            "MaxLifetimeHours": 0,
                             "UseAsTimer": 0,
                             "InitialAgeRatio": 0,
                             "InitialUsageRatio": 0,
-                            "BasePowerMultiplier": 0,
-                            "DrawPowerMultiplier": 0,
                             "AtmosphereMultiplier": 1,
-                            "DamageConversionRate": 0.01,
+                            "DamageConversionRate": 0.5,
                             "HeatMultipliers": {
                                 "NormalTemperatureMultiplier": 1,
-                                "OverheatTemperatureMultiplier": 1
+                                "OverheatTemperatureMultiplier": 2
+                            },
+                            "FunctionalityMultiplier": {
+                                "UsePowerRatio": 1,
+                                "FunctionalityMultiplyCurve": {
+                                    "useLUT": 0,
+                                    "points": []
+                                }
                             },
                             "EffectCurve": {
                                 "useLUT": 0,
@@ -635,9 +643,9 @@
                     }
                 },
                 "SDistortionParams": {
-                    "DecayDelay": 5,
-                    "DecayRate": 40,
-                    "Maximum": 12000,
+                    "DecayDelay": 3,
+                    "DecayRate": 433.3333,
+                    "Maximum": 6500,
                     "WarningRatio": 0.75,
                     "RecoveryRatio": 0,
                     "PowerRatioAtMaxDistortion": 0,
@@ -904,6 +912,8 @@
                                 "TextScale": 1,
                                 "ShowInteractionTextAtCursorPos": 0,
                                 "ScalePromptOffsetWithEntity": 0,
+                                "PromptStyle": "PromptAndText",
+                                "OverrideControlHintDescription": 0,
                                 "InteractionPromptScale": 1,
                                 "InteractionPromptLabelVerticalOffset": 70,
                                 "InteractionPromptBound": "EntityRoot",
@@ -965,6 +975,7 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": [],
                     "InternalResourceLinks": [],
@@ -994,6 +1005,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1018,6 +1030,7 @@
                                             "enable": 0
                                         }
                                     },
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1064,6 +1077,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1084,6 +1098,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1104,6 +1119,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -1118,6 +1134,70 @@
                             "StateModifiers": []
                         }
                     ]
+                },
+                "SSCSignatureSystemParams": {
+                    "bindingURLPrefix": "",
+                    "scanCustomData": "00000000-0000-0000-0000-000000000000",
+                    "scanDisplayLayoutOverride": "00000000-0000-0000-0000-000000000000",
+                    "isOverridden": 0,
+                    "enableDetectionOnItemPort": 1,
+                    "ignoreHighlightWhenDetectorInsideBounds": 0,
+                    "ignoreHighlightWhenNoLinkedOrActiveObjectives": 0,
+                    "priorityBoxoutTag": "00000000-0000-0000-0000-000000000000",
+                    "isObjectOfInterest": 0,
+                    "radarProperties": {
+                        "SSCRadarContactProperites": {
+                            "contactType": "bdad3073-c7ad-425d-9542-30918962501f",
+                            "baseSignatureParams": {
+                                "SSCSignatureSystemBaseSignatureParams": {
+                                    "signatures": [
+                                        {
+                                            "value": 0
+                                        },
+                                        {
+                                            "value": 10
+                                        },
+                                        {
+                                            "value": 0
+                                        },
+                                        {
+                                            "value": 0
+                                        },
+                                        {
+                                            "value": 0
+                                        },
+                                        {
+                                            "value": 0
+                                        },
+                                        {
+                                            "value": 0
+                                        },
+                                        {
+                                            "value": 0
+                                        }
+                                    ],
+                                    "signatureCategories": [],
+                                    "taggedSignatures": []
+                                }
+                            },
+                            "crossSectionParams": [],
+                            "emissionModifierParams": [],
+                            "deathParams": [],
+                            "scanBounds": [],
+                            "roomParams": {
+                                "ignoreInteriorVsExteriorCheck": 0
+                            }
+                        }
+                    },
+                    "audioParams": [],
+                    "embeddedScanInfo": [],
+                    "detectionTags": [],
+                    "overriddenSize": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    },
+                    "linkedObjectives": []
                 }
             },
             "ClassName": "POWR_AMRS_S02_TurboDrive_SCItem",
@@ -1134,7 +1214,26 @@
         "grade": 3,
         "name": "TurboDrive",
         "tags": "",
-        "manufacturer": "AMRS",
+        "required_tags": "",
+        "entity_tags": [
+            "467e1acb-657a-4eb0-a5b0-3b1b67f51683",
+            "00ead468-9073-485b-a6df-ca6b94053603",
+            "d87094a4-a566-4a32-8bfc-af9fd70d181d"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "467e1acb-657a-4eb0-a5b0-3b1b67f51683",
+                "name": "Powerplant"
+            },
+            {
+                "tag": "00ead468-9073-485b-a6df-ca6b94053603",
+                "name": "ActionArea"
+            },
+            {
+                "tag": "d87094a4-a566-4a32-8bfc-af9fd70d181d",
+                "name": "Size2"
+            }
+        ],
         "classification": "Ship.PowerPlant.Power",
         "stdItem": {
             "UUID": "5df9fe17-bda5-433d-a2cd-bff6b29eeac9",
@@ -1144,20 +1243,95 @@
             "Width": 0.4466009,
             "Height": 0.801895,
             "Length": 3.316511,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.45,
+                    "Length": 3.32,
+                    "Height": 0.8
+                },
+                "UIDimensions": {
+                    "Width": 2.25,
+                    "Length": 0.75,
+                    "Height": 0.75
+                },
+                "Volume": {
+                    "SCU": 0.252,
+                    "SCUConverted": 252000,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 740,
             "Type": "PowerPlant.Power",
             "Name": "TurboDrive",
             "Description": "Item Type: Power Plant\\nManufacturer:\u00a0Amon & Reese Co.\\nSize: 2\\nGrade: C\\nClass: Military\\n\\nThe TurboDrive is a common military-grade power plant from A&R that slightly favors performance over durability and stealth.",
+            "DescriptionData": {
+                "Item Type": "Power Plant",
+                "Manufacturer": "Amon & Reese Co",
+                "Size": "2",
+                "Grade": "C",
+                "Class": "Military"
+            },
+            "DescriptionText": "The TurboDrive is a common military-grade power plant from A&R that slightly favors performance over durability and stealth.",
             "Manufacturer": {
-                "Code": "AMRS",
-                "Name": "Amon & Reese Co."
+                "Name": "Amon & Reese Co.",
+                "UUID": "eccba58a-f6d9-42e8-95c6-d0a65763e583"
             },
             "DimensionOverrides": {
                 "Width": 2.25,
                 "Length": 0.75,
-                "Height": 0.75
+                "Height": 0.75,
+                "Volume": 0.648
+            },
+            "Distortion": {
+                "DecayDelay": 3,
+                "DecayRate": 433.3333,
+                "Maximum": 6500,
+                "WarningRatio": 0.75,
+                "RecoveryRatio": 0,
+                "PowerRatioAtMaxDistortion": 0,
+                "PowerChangeOnlyAtMaxDistortion": 1,
+                "ShutdownTime": 18.00000115384624
             },
             "Durability": {
-                "Health": 1100
+                "Lifetime": 0,
+                "Health": 750,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 0.85,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 0.7,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
+            },
+            "Emission": {
+                "Em": {
+                    "Maximum": 9900,
+                    "Minimum": 0,
+                    "Decay": 0.15,
+                    "PerSegment": 495
+                },
+                "Ir": 0
             },
             "HeatConnection": {
                 "TemperatureToIR": 5,
@@ -1180,6 +1354,37 @@
                 "MisfireMinTemperature": 300,
                 "MisfireMaxTemperature": 900
             },
+            "Temperature": {
+                "Enable": 1,
+                "InitialTemperature": -1,
+                "InternalTemperatureGeneration": 0,
+                "SignatureParams": {
+                    "Enable": 1,
+                    "MinimumTemperatureForIR": 333,
+                    "TemperatureToIR": 7
+                },
+                "ItemResourceParams": {
+                    "PoweredAmbientCoolingMultiplier": 1,
+                    "MinOperatingTemperature": 0,
+                    "MinCoolingTemperature": 303,
+                    "EnableOverheat": 0,
+                    "OverheatTemperature": 423,
+                    "OverheatWarningTemperature": 413,
+                    "OverheatRecoveryTemperature": 418
+                },
+                "Calculated": {
+                    "Unit": "C",
+                    "CoolingThreshold": 29.9,
+                    "IrThreshold": 59.9,
+                    "Overheat": 139.9,
+                    "Maximum": 149.9,
+                    "Recovery": 144.9
+                }
+            },
+            "Interactions": [
+                "Enablepowerplant",
+                "Disablepowerplant"
+            ],
             "PowerConnection": {
                 "PowerBase": 0,
                 "PowerDraw": 9375,
@@ -1196,7 +1401,76 @@
                 "DecayRateOfEM": 0.3
             },
             "PowerPlant": {
-                "Output": 9375
+                "Output": 9375,
+                "Generation": 20
+            },
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "Generation",
+                                "Resource": "Power",
+                                "Rate": 20,
+                                "NoOverGeneration": 0,
+                                "Composition": [
+                                    {
+                                        "ContainerResource": "bcc8cde9-de58-4e6b-8ee9-37d4aaa507eb",
+                                        "Ratio": 1
+                                    }
+                                ]
+                            },
+                            {
+                                "Type": "Consumption",
+                                "Resource": "Coolant",
+                                "Rate": 0,
+                                "MinimumFraction": 0
+                            }
+                        ],
+                        "Signature": {
+                            "EM": 9900
+                        },
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 72.8,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 20,
+                        "Maximum": 20
+                    },
+                    "Coolant": {
+                        "Minimum": 0,
+                        "Maximum": 20
+                    }
+                },
+                "Generation": {
+                    "Power": 20
+                }
             }
         }
     }

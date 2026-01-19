@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "3ff7371b-9d30-4b12-84be-e01f55f6d189",
             "__path": "libs/foundry/records/entities/scitem/ships/seat/entityclassdefinition.rsi_constellation_scitem_seat_merlin.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [
                 {
                     "value": "d0d29c20-f5e2-46f7-9d53-cc90f6ac63f2"
@@ -47,13 +52,34 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 120,
+                        "healthRatio": 0.2
+                    }
                 },
                 "SAttachableComponentParams": {
                     "attachToTileItemPort": "NoConnection",
@@ -274,6 +300,8 @@
                                 "TextScale": 1,
                                 "ShowInteractionTextAtCursorPos": 0,
                                 "ScalePromptOffsetWithEntity": 0,
+                                "PromptStyle": "PromptAndText",
+                                "OverrideControlHintDescription": 0,
                                 "InteractionPromptScale": 1,
                                 "InteractionPromptLabelVerticalOffset": 70,
                                 "InteractionPromptBound": "EntityRoot",
@@ -350,6 +378,8 @@
                                 "TextScale": 1,
                                 "ShowInteractionTextAtCursorPos": 0,
                                 "ScalePromptOffsetWithEntity": 0,
+                                "PromptStyle": "PromptAndText",
+                                "OverrideControlHintDescription": 0,
                                 "InteractionPromptScale": 1,
                                 "InteractionPromptLabelVerticalOffset": 70,
                                 "InteractionPromptBound": "EntityRoot",
@@ -423,6 +453,11 @@
                     "rootOverridePaint": 1,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -487,6 +522,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -507,14 +543,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -614,6 +655,7 @@
                 },
                 "SCItemSeatDashboardParams": {
                     "canTogglePowerForObservedItems": 0,
+                    "ignorePowerResults": 1,
                     "PowerOnline": 1,
                     "dashboardInteractions": {
                         "flightReady": "null",
@@ -726,6 +768,7 @@
                     "UIAudioDef": "f04d0168-1210-4f2a-93e7-51aacde17513",
                     "useEntityClass": "00000000-0000-0000-0000-000000000000",
                     "dialogueContext": "00000000-0000-0000-0000-000000000000",
+                    "bypassRealisticMode": 0,
                     "UIAudioManufacturers": [],
                     "offset": [],
                     "videoAudioPlayTrigger": {
@@ -746,6 +789,8 @@
                     "fragmentTag": "",
                     "isExterior": 0,
                     "allowDeadOrUnconscious": 0,
+                    "lowEnergyThreshold": 0,
+                    "highEnergyThreshold": 2,
                     "useSlots": {
                         "UsableUseSlot": {
                             "name": "",
@@ -812,6 +857,7 @@
                         }
                     },
                     "exclusivityGroups": [],
+                    "freeItemPortsForDirectInteraction": [],
                     "slottingSetups": [],
                     "views": [],
                     "abilityLocks": [],
@@ -831,7 +877,9 @@
                     "allowTogglePowerObservedItems": 0,
                     "operatorModeDefinitionsOverride": "00000000-0000-0000-0000-000000000000",
                     "additionalItemControlPriorities": []
-                }
+                },
+                "SDialogueComponentParams": [],
+                "SAudioProxyParams": []
             },
             "ClassName": "RSI_Constellation_SCItem_Seat_Merlin",
             "__type": "Seat"
@@ -847,7 +895,21 @@
         "grade": 1,
         "name": "<= PLACEHOLDER =>",
         "tags": "flightReady",
-        "manufacturer": "KRI",
+        "required_tags": "",
+        "entity_tags": [
+            "d0d29c20-f5e2-46f7-9d53-cc90f6ac63f2",
+            "ffea63ba-9234-426f-a9c6-125162309401"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "d0d29c20-f5e2-46f7-9d53-cc90f6ac63f2",
+                "name": "Seat"
+            },
+            {
+                "tag": "ffea63ba-9234-426f-a9c6-125162309401",
+                "name": "Generic"
+            }
+        ],
         "stdItem": {
             "UUID": "3ff7371b-9d30-4b12-84be-e01f55f6d189",
             "ClassName": "RSI_Constellation_SCItem_Seat_Merlin",
@@ -856,16 +918,38 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 10,
             "Type": "Seat.UNDEFINED",
             "Name": "<= PLACEHOLDER =>",
             "Description": "",
+            "DescriptionText": "",
             "Manufacturer": {
-                "Code": "KRI",
-                "Name": "Kruger Intergalatic"
+                "Name": "Kruger Intergalatic",
+                "UUID": "7b5d1ed3-11e7-49e6-9ed3-9d0cb52a3dc2"
             },
             "Tags": [
                 "flightReady"
             ],
+            "Emission": {
+                "Em": {
+                    "Maximum": 0,
+                    "Minimum": 0,
+                    "Decay": 0.15
+                },
+                "Ir": 0
+            },
             "HeatConnection": {
                 "TemperatureToIR": 6,
                 "StartIRTemperature": 250,
@@ -887,6 +971,26 @@
                 "MisfireMinTemperature": 370,
                 "MisfireMaxTemperature": 600
             },
+            "Seat": {
+                "SeatType": "HOTAS_C_L",
+                "Yaw": {
+                    "Minimum": -70,
+                    "Maximum": 70
+                },
+                "Pitch": {
+                    "Minimum": -65,
+                    "Maximum": 65
+                },
+                "SetYawPitchLimits": false,
+                "HasEjection": true,
+                "Ejection": {
+                    "MaxLinearVelocity": 1400,
+                    "MaxLinearAcceleration": 20,
+                    "MaxAngularVelocity": 1400,
+                    "MaxAngularAcceleration": 20,
+                    "EjectionLoopTime": 4
+                }
+            },
             "PowerConnection": {
                 "PowerBase": 1,
                 "PowerDraw": 1,
@@ -901,6 +1005,53 @@
                 "OverclockPerformance": 0,
                 "PowerToEM": 0,
                 "DecayRateOfEM": 0.15
+            },
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "NetworkReflection",
+                                "Resource": "Power",
+                                "BinaryEvaluation": 1
+                            }
+                        ],
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 120,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 0
+                    },
+                    "Coolant": {
+                        "Minimum": 0
+                    }
+                }
             }
         }
     }

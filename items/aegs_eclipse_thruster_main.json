@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "c41f1bf5-34c3-498f-a47f-4a6fdba8cd91",
             "__path": "libs/foundry/records/entities/scitem/ships/thrusters/aegs_eclipse_thruster_main.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": {
                 "ThrusterMFXEntityParams": {
@@ -151,6 +156,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -302,6 +312,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -322,14 +333,19 @@
                             "temperature": {
                                 "enable": 1,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 500,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 1,
@@ -339,6 +355,7 @@
                                     "stateHeatGenerationValues": {
                                         "EntityTemperatureResourceHeatGeneration": {
                                             "state": "states",
+                                            "resource": "Fuel",
                                             "baselineTemperatureChange": 1
                                         }
                                     },
@@ -349,7 +366,7 @@
                                     "maximum": 525
                                 },
                                 "fireHazard": {
-                                    "enable": 1,
+                                    "enable": 0,
                                     "dissolveOnBurn": 0,
                                     "dissolvePercentageRange": {
                                         "minimum": 0,
@@ -382,6 +399,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -429,7 +447,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "ItemControlComponentParams": {
@@ -449,8 +467,8 @@
                     "states": {
                         "ItemResourceState": {
                             "name": "Online",
-                            "deltas": {
-                                "ItemResourceDeltaConsumption": {
+                            "deltas": [
+                                {
                                     "minimumConsumptionFraction": 1,
                                     "consumption": {
                                         "resource": "Fuel",
@@ -463,9 +481,28 @@
                                     "consumptionComposition": {
                                         "values": []
                                     },
-                                    "dynamicAmountOverride": []
+                                    "dynamicAmountOverride": {
+                                        "ItemResourceDynamicAmountThrusterFuel": []
+                                    }
+                                },
+                                {
+                                    "minimumConsumptionFraction": 0,
+                                    "consumption": {
+                                        "resource": "Coolant",
+                                        "resourceAmountPerSecond": {
+                                            "SStandardResourceUnit": {
+                                                "standardResourceUnits": 0
+                                            }
+                                        }
+                                    },
+                                    "consumptionComposition": {
+                                        "values": []
+                                    },
+                                    "dynamicAmountOverride": {
+                                        "ItemResourceDynamicAmountCoolant": []
+                                    }
                                 }
-                            },
+                            ],
                             "linkedInteractionStates": [],
                             "signatureParams": {
                                 "EMSignature": {
@@ -479,13 +516,34 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 120,
+                        "healthRatio": 0.2
+                    }
                 },
                 "SCItemThrusterParams": {
                     "thrustCapacity": 1783000,
@@ -1308,7 +1366,9 @@
                                     "rtpc": {
                                         "rtpc": "Thruster_Thrust_GlacialAttack_FastRelease"
                                     },
-                                    "behavior": []
+                                    "behavior": {
+                                        "SRtpcBehaviour": []
+                                    }
                                 }
                             ]
                         },
@@ -1520,13 +1580,17 @@
                                     "rtpc": {
                                         "rtpc": "GP_Thrusters_Usage"
                                     },
-                                    "behavior": []
+                                    "behavior": {
+                                        "SRtpcBehaviour": []
+                                    }
                                 },
                                 {
                                     "rtpc": {
                                         "rtpc": "GP_Thrusters_Usage_Slow_Lerp"
                                     },
-                                    "behavior": []
+                                    "behavior": {
+                                        "SRtpcBehaviour": []
+                                    }
                                 },
                                 {
                                     "rtpc": {
@@ -1557,6 +1621,7 @@
                         "z": 0
                     }
                 },
+                "EntityComponentFuelConnection": [],
                 "EntityComponentPowerConnection": {
                     "PowerBase": 20,
                     "PowerDraw": 24,
@@ -1704,7 +1769,8 @@
                     "MinTemperature": 0,
                     "MisfireMinTemperature": 400,
                     "MisfireMaxTemperature": 1100
-                }
+                },
+                "EntityComponentRoomOccupantParams": []
             },
             "ClassName": "AEGS_Eclipse_Thruster_Main",
             "__type": "MainThruster"
@@ -1720,7 +1786,7 @@
         "grade": 1,
         "name": "<= PLACEHOLDER =>",
         "tags": "",
-        "manufacturer": "AEG",
+        "required_tags": "AEGS_Eclipse",
         "classification": "Ship.MainThruster.FixedThruster",
         "stdItem": {
             "UUID": "c41f1bf5-34c3-498f-a47f-4a6fdba8cd91",
@@ -1730,15 +1796,68 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 3000,
             "Type": "MainThruster.FixedThruster",
             "Name": "<= PLACEHOLDER =>",
             "Description": "",
+            "DescriptionText": "",
             "Manufacturer": {
-                "Code": "AEG",
-                "Name": "Aegis Dynamics"
+                "Name": "Aegis Dynamics",
+                "UUID": "cf4a74bf-eb2c-462a-9b78-f7f2724c31d2"
             },
+            "RequiredTags": [
+                "AEGS_Eclipse"
+            ],
             "Durability": {
-                "Health": 12500
+                "Health": 12500,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
+            },
+            "Emission": {
+                "Em": {
+                    "Maximum": 0,
+                    "Minimum": 0,
+                    "Decay": 0.15
+                },
+                "Ir": 0
             },
             "HeatConnection": {
                 "TemperatureToIR": 11,
@@ -1761,6 +1880,34 @@
                 "MisfireMinTemperature": 400,
                 "MisfireMaxTemperature": 1100
             },
+            "Temperature": {
+                "Enable": 1,
+                "InitialTemperature": -1,
+                "InternalTemperatureGeneration": 0,
+                "CoolingEqualizationMultiplier": 1,
+                "SignatureParams": {
+                    "Enable": 0,
+                    "MinimumTemperatureForIR": 250,
+                    "TemperatureToIR": 6
+                },
+                "ItemResourceParams": {
+                    "PoweredAmbientCoolingMultiplier": 1,
+                    "MinOperatingTemperature": 0,
+                    "MinCoolingTemperature": 300,
+                    "EnableOverheat": 1,
+                    "OverheatTemperature": 525,
+                    "OverheatWarningTemperature": 370,
+                    "OverheatRecoveryTemperature": 350
+                },
+                "Calculated": {
+                    "Unit": "C",
+                    "CoolingThreshold": 26.9,
+                    "IrThreshold": -23.1,
+                    "Overheat": 96.9,
+                    "Maximum": 251.9,
+                    "Recovery": 76.9
+                }
+            },
             "PowerConnection": {
                 "PowerBase": 20,
                 "PowerDraw": 24,
@@ -1776,23 +1923,78 @@
                 "PowerToEM": 50,
                 "DecayRateOfEM": 0.15
             },
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "Consumption",
+                                "Resource": "Fuel",
+                                "Rate": 0.01,
+                                "MinimumFraction": 1
+                            },
+                            {
+                                "Type": "Consumption",
+                                "Resource": "Coolant",
+                                "Rate": 0,
+                                "MinimumFraction": 0
+                            }
+                        ],
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 120,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 0
+                    },
+                    "Coolant": {
+                        "Minimum": 0
+                    }
+                }
+            },
             "Thruster": {
-                "thrustCapacity": 1783000,
-                "thrustCapacityNew": 0,
-                "maxSupportedAtmosphericEfficiency": 2,
-                "minHealthThrustMultiplier": 0.25,
-                "fuelBurnRatePer10KNewton": 0.0655375,
-                "thrusterType": "Main",
-                "onlyActiveInVTOL": 0,
-                "nozzleAnimation": "",
-                "thrusterAnimDriver": "ThrustWithAfterburner",
-                "thrusterStrengthSmoothing": 0.2,
-                "toggleThrusterBackwash": 1,
-                "automateBackwashSize": 0,
-                "thrusterBackwashMaxSpeed": 75,
-                "thrusterBackwashMaxDensity": 10,
-                "thrusterBackwashMaxResistance": 100,
-                "thrusterBackwashAfterburnerMultiplier": 1.1
+                "ThrustCapacity": 1783000,
+                "ThrustCapacityNew": 0,
+                "MaxSupportedAtmosphericEfficiency": 2,
+                "MinHealthThrustMultiplier": 0.25,
+                "FuelBurnRatePer10KNewton": 0.0655375,
+                "ThrusterType": "Main",
+                "OnlyActiveInVTOL": 0,
+                "ThrusterStrengthSmoothing": 0.2,
+                "ToggleThrusterBackwash": 1,
+                "AutomateBackwashSize": 0,
+                "ThrusterBackwashMaxSpeed": 75,
+                "ThrusterBackwashMaxDensity": 10,
+                "ThrusterBackwashMaxResistance": 100,
+                "ThrusterBackwashAfterburnerMultiplier": 1.1,
+                "BurnRatePerMN": 0.000125,
+                "BurnRatePerMNStandardResourceUnits": 0.000125,
+                "BurnRatePerMNMicroUnits": 125
             }
         }
     }

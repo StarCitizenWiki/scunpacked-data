@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "0e72c7ce-f16a-4150-ba17-f01fe96df6bb",
             "__path": "libs/foundry/records/entities/scitem/vehicles/turret/tmbl_nova_turrets/tmbl_nova_remote_gun_turret.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": [],
             "Components": {
@@ -174,6 +179,11 @@
                     "rootOverridePaint": 1,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -275,6 +285,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -295,14 +306,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -344,12 +360,9 @@
                     "defaultMovementTag": "00000000-0000-0000-0000-000000000000",
                     "recenterIfUnused": 0,
                     "healthModifierRecord": "00000000-0000-0000-0000-000000000000",
-                    "powerRequirement": 1,
                     "switchToCachedOperatorModeOnExit": 1,
                     "operatorModeOnEnter": "Turret",
                     "jointConvergence": "",
-                    "fixedAssistRadiusInner": 1,
-                    "fixedAssistRadiusOuter": 6,
                     "intoxicationModifierRef": "da01cefe-07b3-4533-aac4-09d4c624dc2e",
                     "hudParamsOverride": "00000000-0000-0000-0000-000000000000",
                     "autoDeployHelmetTargetingMode": 1,
@@ -642,6 +655,7 @@
                     "UIAudioDef": "65f9fe57-1163-437b-9049-ff580a90bdf9",
                     "useEntityClass": "00000000-0000-0000-0000-000000000000",
                     "dialogueContext": "00000000-0000-0000-0000-000000000000",
+                    "bypassRealisticMode": 0,
                     "UIAudioManufacturers": [],
                     "offset": [],
                     "videoAudioPlayTrigger": {
@@ -663,23 +677,28 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": [
                         {
                             "Name": "hardpoint_left_weapon",
-                            "DisplayName": "port_NameTurretGunSlot01",
+                            "DisplayName": "Turret Weapon Slot 1",
+                            "__DisplayName": "@port_NameTurretGunSlot01",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "left",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 2,
                             "MaxSize": 2,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
                             "controllableTag": "",
-                            "resourceLinkToParent": 0,
+                            "resourceLinkToParent": 1,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -763,19 +782,23 @@
                         },
                         {
                             "Name": "hardpoint_right_weapon",
-                            "DisplayName": "port_NameTurretGunSlot02",
+                            "DisplayName": "Turret Weapon Slot 2",
+                            "__DisplayName": "@port_NameTurretGunSlot02",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "right",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 2,
                             "MaxSize": 2,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
                             "controllableTag": "",
-                            "resourceLinkToParent": 0,
+                            "resourceLinkToParent": 1,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -1045,6 +1068,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -1092,7 +1116,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "ItemControlComponentParams": {
@@ -1101,7 +1125,10 @@
                     "asopSpawnState": "None",
                     "throttleParams": [],
                     "masterModeExclusionsOverride": []
-                }
+                },
+                "SDialogueComponentParams": [],
+                "SAudioProxyParams": [],
+                "SCItemAimableComponentParams": []
             },
             "ClassName": "TMBL_Nova_Remote_Gun_Turret",
             "__type": "Turret"
@@ -1117,7 +1144,8 @@
         "grade": 1,
         "name": "Turret",
         "tags": "$TMBL_Nova",
-        "manufacturer": "TMBL",
+        "required_tags": "TMBL_Nova",
+        "classification": "Ship.Turret.BallTurret",
         "stdItem": {
             "UUID": "0e72c7ce-f16a-4150-ba17-f01fe96df6bb",
             "ClassName": "TMBL_Nova_Remote_Gun_Turret",
@@ -1126,43 +1154,113 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 80,
             "Type": "Turret.BallTurret",
             "Name": "Turret",
             "Description": "Multitask on the battlefield with this remote turret system. Featuring precise controls and a wide field of fire, the turret allows pilots to add combat support to their resume.",
+            "DescriptionText": "Multitask on the battlefield with this remote turret system. Featuring precise controls and a wide field of fire, the turret allows pilots to add combat support to their resume.",
             "Manufacturer": {
-                "Code": "TMBL",
-                "Name": "Tumbril Land Systems"
+                "Name": "Tumbril Land Systems",
+                "UUID": "bb1024bc-b82e-491c-820c-36662c36feb3"
             },
             "Tags": [
                 "$TMBL_Nova"
             ],
+            "RequiredTags": [
+                "TMBL_Nova"
+            ],
             "Ports": [
                 {
                     "PortName": "hardpoint_left_weapon",
+                    "DisplayName": "@port_NameTurretGunSlot01",
                     "Size": 2,
+                    "MinSize": 2,
+                    "MaxSize": 2,
                     "Flags": [
                         "left"
                     ],
                     "Types": [
-                        "WeaponGun"
+                        "WeaponGun.Gun"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponGun",
+                            "SubTypes": [
+                                "Gun"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 },
                 {
                     "PortName": "hardpoint_right_weapon",
+                    "DisplayName": "@port_NameTurretGunSlot02",
                     "Size": 2,
+                    "MinSize": 2,
+                    "MaxSize": 2,
                     "Flags": [
                         "right"
                     ],
                     "Types": [
-                        "WeaponGun"
+                        "WeaponGun.Gun"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponGun",
+                            "SubTypes": [
+                                "Gun"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 }
             ],
             "Durability": {
-                "Health": 1000
+                "Health": 1000,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
             },
+            "Interactions": [
+                "Activate remote camera"
+            ],
             "PowerConnection": {
                 "PowerBase": 0,
                 "PowerDraw": 1,
@@ -1177,6 +1275,44 @@
                 "OverclockPerformance": 0,
                 "PowerToEM": 0,
                 "DecayRateOfEM": 0.15
+            },
+            "Turret": {
+                "RotationStyle": "SingleAxis",
+                "MovementList": [
+                    {
+                        "JointName": "secondary_turret_yaw",
+                        "SlavedOnly": 0,
+                        "RestrictTargetAngles": 0,
+                        "YawAxis": {
+                            "Speed": 95,
+                            "AccelerationTimeToFullSpeed": 0.3,
+                            "JerkTimeToFullAcceleration": 0.1,
+                            "AccelerationDecay": 5,
+                            "AngleLimits": [
+                                {
+                                    "LowestAngle": -180,
+                                    "HighestAngle": 180
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "JointName": "secondary_turret_pitch",
+                        "SlavedOnly": 0,
+                        "RestrictTargetAngles": 0,
+                        "PitchAxis": {
+                            "Speed": 95,
+                            "AccelerationTimeToFullSpeed": 0.3,
+                            "JerkTimeToFullAcceleration": 0.1,
+                            "AccelerationDecay": 5,
+                            "AngleLimits": [
+                                {
+                                    "RelativeJointName": "secondary_turret_pitch"
+                                }
+                            ]
+                        }
+                    }
+                ]
             }
         }
     }

@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "08f46049-5b2a-4b43-9055-16a6d090a41f",
             "__path": "libs/foundry/records/entities/scitem/ships/quantumenforcementdevice/qdmp_rsi_s03_captor.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": {
                 "Reference": {
                     "value": "980ce6e8-afa2-4084-b13b-b0d01e5d7848"
@@ -762,6 +767,11 @@
                     "rootOverridePaint": 1,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -1781,11 +1791,15 @@
                     "onInteractionSuccessTriggers": [
                         {
                             "targetInteraction": "Interactable.SharedInteractions[0]",
-                            "gameplayTriggers": []
+                            "gameplayTriggers": {
+                                "STurnOnItemGameplayTrigger": []
+                            }
                         },
                         {
                             "targetInteraction": "Interactable.SharedInteractions[1]",
-                            "gameplayTriggers": []
+                            "gameplayTriggers": {
+                                "STurnOffItemGameplayTrigger": []
+                            }
                         }
                     ],
                     "onInteractionFailedTriggers": []
@@ -1801,6 +1815,7 @@
                     },
                     "masterModeExclusionsOverride": []
                 },
+                "SCItemAimableComponentParams": [],
                 "ItemResourceComponentParams": {
                     "isResourceNetworked": 1,
                     "isRelay": 0,
@@ -1841,14 +1856,36 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 120,
+                        "healthRatio": 0.2
+                    }
                 },
+                "SAudioProxyParams": [],
                 "SEntityPhysicsControllerParams": {
                     "PhysType": {
                         "SEntityRigidPhysicsControllerParams": {
@@ -1857,6 +1894,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -1877,14 +1915,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -1932,6 +1975,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -1979,7 +2023,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "SItemPortContainerComponentParams": {
@@ -1988,6 +2032,7 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": [],
                     "InternalResourceLinks": [],
@@ -2013,7 +2058,16 @@
         "grade": 3,
         "name": "Captor QD",
         "tags": "flightReady ",
-        "manufacturer": "RSI",
+        "required_tags": "",
+        "entity_tags": [
+            "980ce6e8-afa2-4084-b13b-b0d01e5d7848"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "980ce6e8-afa2-4084-b13b-b0d01e5d7848",
+                "name": "Static"
+            }
+        ],
         "classification": "Ship.QuantumInterdictionGenerator",
         "stdItem": {
             "UUID": "08f46049-5b2a-4b43-9055-16a6d090a41f",
@@ -2023,18 +2077,73 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 300,
             "Type": "QuantumInterdictionGenerator.UNDEFINED",
             "Name": "Captor QD",
             "Description": "Item Type: Quantum Dampener\\nManufacturer: RSI\\nSize: 3\\n\\nDesigned by Roberts Space Industries in partnership with Mirai exclusively for the Guardian QI, the carefully crafted Captor Quantum Dampener generates a field that prevents quantum drive activation.\\n",
+            "DescriptionData": {
+                "Item Type": "Quantum Dampener",
+                "Manufacturer": "Roberts Space Industries",
+                "Size": "3"
+            },
+            "DescriptionText": "Designed by Roberts Space Industries in partnership with Mirai exclusively for the Guardian QI, the carefully crafted Captor Quantum Dampener generates a field that prevents quantum drive activation.",
             "Manufacturer": {
-                "Code": "RSI",
-                "Name": "Roberts Space Industries"
+                "Name": "Roberts Space Industries",
+                "UUID": "093e6eba-93fa-4dad-b3dd-38966934e34e"
             },
             "Tags": [
                 "flightReady"
             ],
             "Durability": {
-                "Health": 1100
+                "Health": 1100,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
+            },
+            "Emission": {
+                "Em": {
+                    "Maximum": 0,
+                    "Minimum": 0,
+                    "Decay": 0.15
+                },
+                "Ir": 0
             },
             "HeatConnection": {
                 "TemperatureToIR": 2.3,
@@ -2057,6 +2166,12 @@
                 "MisfireMinTemperature": 300,
                 "MisfireMaxTemperature": 900
             },
+            "Interactions": [
+                "Maindeviceswitchon",
+                "Maindeviceswitchoff",
+                "Setjammerswitchon",
+                "Setjammerswitchoff"
+            ],
             "PowerConnection": {
                 "PowerBase": 500,
                 "PowerDraw": 1100,
@@ -2072,32 +2187,82 @@
                 "PowerToEM": 5,
                 "DecayRateOfEM": 0.15
             },
-            "QuantumInterdiction": {
-                "basePowerDrawFraction": 0.2,
-                "pulsePowerFraction": 0.8,
-                "jammerPowerFraction": 0.4,
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "Consumption",
+                                "Resource": "Power",
+                                "Rate": 3,
+                                "MinimumFraction": 1
+                            }
+                        ],
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 120,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 3,
+                        "Maximum": 3
+                    },
+                    "Coolant": {
+                        "Minimum": 0,
+                        "Maximum": 3
+                    }
+                }
+            },
+            "QuantumInterdictionGenerator": {
+                "BasePowerDrawFraction": 0.2,
+                "PulsePowerFraction": 0.8,
+                "JammerPowerFraction": 0.4,
                 "JammingRange": 4500,
                 "InterdictionRange": 1,
                 "Jammer": {
-                    "jammerRange": 4500,
-                    "maxPowerDraw": 200,
-                    "greenZoneCheckRange": 4000
+                    "JammerRange": 4500,
+                    "MaxPowerDraw": 200,
+                    "GreenZoneCheckRange": 4000
                 },
                 "Pulse": {
-                    "chargeTimeSecs": 90,
-                    "dischargeTimeSecs": 30,
-                    "cooldownTimeSecs": 1,
-                    "radiusMeters": 1,
-                    "decreaseChargeRateTimeSeconds": 1.5,
-                    "increaseChargeRateTimeSeconds": 3.5,
-                    "activationPhaseDuration_seconds": 3,
-                    "disperseChargeTimeSeconds": 5,
-                    "maxPowerDraw": 1100,
-                    "stopChargingPowerDrawFraction": 0.2,
-                    "maxChargeRatePowerDrawFraction": 0.85,
-                    "activePowerDrawFraction": 0.95,
-                    "tetheringPowerDrawFraction": 0.8,
-                    "greenZoneCheckRange": 30000
+                    "ChargeTimeSecs": 90,
+                    "DischargeTimeSecs": 30,
+                    "CooldownTimeSecs": 1,
+                    "RadiusMeters": 1,
+                    "DecreaseChargeRateTimeSeconds": 1.5,
+                    "IncreaseChargeRateTimeSeconds": 3.5,
+                    "ActivationPhaseDurationSeconds": 3,
+                    "DisperseChargeTimeSeconds": 5,
+                    "MaxPowerDraw": 1100,
+                    "StopChargingPowerDrawFraction": 0.2,
+                    "MaxChargeRatePowerDrawFraction": 0.85,
+                    "ActivePowerDrawFraction": 0.95,
+                    "TetheringPowerDrawFraction": 0.8,
+                    "GreenZoneCheckRange": 30000
                 }
             }
         }

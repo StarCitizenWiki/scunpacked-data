@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "f23e6207-7841-40a2-9833-55f25ddfddb4",
             "__path": "libs/foundry/records/entities/scitem/ships/seat/anvl_pisces_scitem_seat_pilot.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [
                 {
                     "value": "d0d29c20-f5e2-46f7-9d53-cc90f6ac63f2"
@@ -47,13 +52,34 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 120,
+                        "healthRatio": 0.2
+                    }
                 },
                 "SAttachableComponentParams": {
                     "attachToTileItemPort": "NoConnection",
@@ -290,6 +316,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -354,6 +385,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -374,14 +406,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -596,6 +633,8 @@
                     "fragmentTag": "",
                     "isExterior": 0,
                     "allowDeadOrUnconscious": 0,
+                    "lowEnergyThreshold": 0,
+                    "highEnergyThreshold": 2,
                     "useSlots": {
                         "UsableUseSlot": {
                             "name": "",
@@ -662,6 +701,7 @@
                         }
                     },
                     "exclusivityGroups": [],
+                    "freeItemPortsForDirectInteraction": [],
                     "slottingSetups": [],
                     "views": [],
                     "abilityLocks": [],
@@ -681,7 +721,9 @@
                     "allowTogglePowerObservedItems": 0,
                     "operatorModeDefinitionsOverride": "00000000-0000-0000-0000-000000000000",
                     "additionalItemControlPriorities": []
-                }
+                },
+                "SDialogueComponentParams": [],
+                "SAudioProxyParams": []
             },
             "ClassName": "ANVL_Pisces_SCItem_Seat_Pilot",
             "__type": "Seat"
@@ -697,7 +739,21 @@
         "grade": 1,
         "name": "TRGT. STATUS",
         "tags": "flightReady",
-        "manufacturer": "ANVL",
+        "required_tags": "",
+        "entity_tags": [
+            "d0d29c20-f5e2-46f7-9d53-cc90f6ac63f2",
+            "275db83d-5b41-4ebc-bcd7-d325220af86a"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "d0d29c20-f5e2-46f7-9d53-cc90f6ac63f2",
+                "name": "Seat"
+            },
+            {
+                "tag": "275db83d-5b41-4ebc-bcd7-d325220af86a",
+                "name": "Helmsman"
+            }
+        ],
         "stdItem": {
             "UUID": "f23e6207-7841-40a2-9833-55f25ddfddb4",
             "ClassName": "ANVL_Pisces_SCItem_Seat_Pilot",
@@ -706,16 +762,101 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 10,
             "Type": "Seat.UNDEFINED",
             "Name": "TRGT. STATUS",
             "Description": "",
+            "DescriptionText": "",
             "Manufacturer": {
-                "Code": "ANVL",
-                "Name": "Anvil Aerospace"
+                "Name": "Anvil Aerospace",
+                "UUID": "b922abdb-0634-4358-9eee-60118f3cf3a7"
             },
             "Tags": [
                 "flightReady"
-            ]
+            ],
+            "Emission": {
+                "Em": {
+                    "Maximum": 0,
+                    "Minimum": 0,
+                    "Decay": 0.15
+                },
+                "Ir": 0
+            },
+            "Interactions": [
+                "Ejection"
+            ],
+            "Seat": {
+                "SeatType": "HOTAS_R_L",
+                "Yaw": {
+                    "Minimum": -70,
+                    "Maximum": 70
+                },
+                "Pitch": {
+                    "Minimum": -65,
+                    "Maximum": 65
+                },
+                "SetYawPitchLimits": false,
+                "HasEjection": false
+            },
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "NetworkReflection",
+                                "Resource": "Power",
+                                "BinaryEvaluation": 1
+                            }
+                        ],
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 120,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 0
+                    },
+                    "Coolant": {
+                        "Minimum": 0
+                    }
+                }
+            }
         }
     }
 }

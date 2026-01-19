@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "dc44c0d2-e36f-4053-bcc4-29d0bf8d6d08",
             "__path": "libs/foundry/records/entities/scitem/ships/shippart/argo_mpuv_leg_right.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": [],
             "Components": {
@@ -151,6 +156,11 @@
                                         "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
                                         "__ref": "966f6880-0304-42cc-bd03-d0be907b5741",
                                         "__path": "libs/foundry/records/entities/scitem/ships/thrusters/argo_mpuv_thruster_main_joint.xml",
+                                        "defaultEditorColor": {
+                                            "r": 1,
+                                            "g": 1,
+                                            "b": 0
+                                        },
                                         "tags": [],
                                         "StaticEntityClassData": {
                                             "ThrusterMFXEntityParams": {
@@ -294,6 +304,11 @@
                                                 "rootOverridePaint": 1,
                                                 "inheritModelTagFromHost": 1,
                                                 "ModelTag": [],
+                                                "meshsetup": {
+                                                    "visibilityTags": {
+                                                        "tags": []
+                                                    }
+                                                },
                                                 "Geometry": {
                                                     "Tags": "",
                                                     "ScaleMultiplier": 1,
@@ -358,6 +373,7 @@
                                                         "spawnBoxScale": 0.5,
                                                         "maxLoggedCollisions": 1,
                                                         "Damping": 0.01,
+                                                        "DampingZeroG": 0.01,
                                                         "DampingFreefall": 0.05,
                                                         "PushableByPlayers": 1,
                                                         "NeverAffectTriggers": 0,
@@ -378,14 +394,19 @@
                                                         "temperature": {
                                                             "enable": 1,
                                                             "initialTemperature": -1,
-                                                            "coolingEqualizationMultiplier": 500,
                                                             "internalTemperatureGeneration": 0,
+                                                            "coolingEqualizationParams": {
+                                                                "CoolingEqualizationMultiplier": {
+                                                                    "coolingEqualizationMultiplier": 1
+                                                                }
+                                                            },
                                                             "signatureParams": {
                                                                 "enable": 0,
                                                                 "minimumTemperatureForIR": 250,
                                                                 "temperatureToIR": 6
                                                             },
                                                             "itemResourceParams": {
+                                                                "poweredAmbientCoolingMultiplier": 1,
                                                                 "minOperatingTemperature": 0,
                                                                 "minCoolingTemperature": 300,
                                                                 "enableOverheat": 1,
@@ -395,6 +416,7 @@
                                                                 "stateHeatGenerationValues": {
                                                                     "EntityTemperatureResourceHeatGeneration": {
                                                                         "state": "states",
+                                                                        "resource": "Fuel",
                                                                         "baselineTemperatureChange": 1
                                                                     }
                                                                 },
@@ -405,7 +427,7 @@
                                                                 "maximum": 525
                                                             },
                                                             "fireHazard": {
-                                                                "enable": 1,
+                                                                "enable": 0,
                                                                 "dissolveOnBurn": 0,
                                                                 "dissolvePercentageRange": {
                                                                     "minimum": 0,
@@ -438,6 +460,7 @@
                                                 "ExplosionBone": "",
                                                 "IsSalvagable": 1,
                                                 "IsRepairable": 1,
+                                                "SalvageDamageModifier": 1,
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 0,
@@ -485,7 +508,7 @@
                                                 "DeathGasComposition": [],
                                                 "InteractionLocks": [],
                                                 "sequencerTasks": [],
-                                                "shatterDestroyEvent": [],
+                                                "maelstromEvents": [],
                                                 "craftingData": []
                                             },
                                             "ItemControlComponentParams": {
@@ -505,8 +528,8 @@
                                                 "states": {
                                                     "ItemResourceState": {
                                                         "name": "Online",
-                                                        "deltas": {
-                                                            "ItemResourceDeltaConsumption": {
+                                                        "deltas": [
+                                                            {
                                                                 "minimumConsumptionFraction": 1,
                                                                 "consumption": {
                                                                     "resource": "Fuel",
@@ -519,9 +542,28 @@
                                                                 "consumptionComposition": {
                                                                     "values": []
                                                                 },
-                                                                "dynamicAmountOverride": []
+                                                                "dynamicAmountOverride": {
+                                                                    "ItemResourceDynamicAmountThrusterFuel": []
+                                                                }
+                                                            },
+                                                            {
+                                                                "minimumConsumptionFraction": 0,
+                                                                "consumption": {
+                                                                    "resource": "Coolant",
+                                                                    "resourceAmountPerSecond": {
+                                                                        "SStandardResourceUnit": {
+                                                                            "standardResourceUnits": 0
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "consumptionComposition": {
+                                                                    "values": []
+                                                                },
+                                                                "dynamicAmountOverride": {
+                                                                    "ItemResourceDynamicAmountCoolant": []
+                                                                }
                                                             }
-                                                        },
+                                                        ],
                                                         "linkedInteractionStates": [],
                                                         "signatureParams": {
                                                             "EMSignature": {
@@ -535,13 +577,34 @@
                                                                 "functionalityCurve": []
                                                             }
                                                         },
-                                                        "rangeParams": []
+                                                        "powerRanges": {
+                                                            "low": {
+                                                                "start": 0,
+                                                                "modifier": 1,
+                                                                "registerRange": 0
+                                                            },
+                                                            "medium": {
+                                                                "start": 0,
+                                                                "modifier": 1,
+                                                                "registerRange": 0
+                                                            },
+                                                            "high": {
+                                                                "start": 0,
+                                                                "modifier": 1,
+                                                                "registerRange": 0
+                                                            }
+                                                        }
                                                     }
                                                 },
                                                 "controlParameters": [],
                                                 "controlBlocks": [],
                                                 "functionalityModifiers": [],
-                                                "powerPlantOverride": []
+                                                "powerPlantOverride": [],
+                                                "selfRepair": {
+                                                    "maxRepairCount": 1,
+                                                    "timeToRepair": 120,
+                                                    "healthRatio": 0.2
+                                                }
                                             },
                                             "SCItemThrusterParams": {
                                                 "thrustCapacity": 34000,
@@ -1053,7 +1116,9 @@
                                                                 "rtpc": {
                                                                     "rtpc": "Thruster_Thrust_GlacialAttack_FastRelease"
                                                                 },
-                                                                "behavior": []
+                                                                "behavior": {
+                                                                    "SRtpcBehaviour": []
+                                                                }
                                                             }
                                                         ]
                                                     },
@@ -1149,7 +1214,9 @@
                                                                 "rtpc": {
                                                                     "rtpc": "Thruster_Boost_FastAttack_SlowRelease"
                                                                 },
-                                                                "behavior": []
+                                                                "behavior": {
+                                                                    "SRtpcBehaviour": []
+                                                                }
                                                             }
                                                         ]
                                                     },
@@ -1202,7 +1269,9 @@
                                                                 "rtpc": {
                                                                     "rtpc": ""
                                                                 },
-                                                                "behavior": []
+                                                                "behavior": {
+                                                                    "SRtpcBehaviour": []
+                                                                }
                                                             }
                                                         ]
                                                     },
@@ -1277,13 +1346,17 @@
                                                                 "rtpc": {
                                                                     "rtpc": "GP_Thrusters_Usage"
                                                                 },
-                                                                "behavior": []
+                                                                "behavior": {
+                                                                    "SRtpcBehaviour": []
+                                                                }
                                                             },
                                                             {
                                                                 "rtpc": {
                                                                     "rtpc": "GP_Thrusters_Usage_Slow_Lerp"
                                                                 },
-                                                                "behavior": []
+                                                                "behavior": {
+                                                                    "SRtpcBehaviour": []
+                                                                }
                                                             },
                                                             {
                                                                 "rtpc": {
@@ -1314,6 +1387,7 @@
                                                     "z": 0
                                                 }
                                             },
+                                            "EntityComponentFuelConnection": [],
                                             "EntityComponentPowerConnection": {
                                                 "PowerBase": 10,
                                                 "PowerDraw": 12,
@@ -1461,7 +1535,8 @@
                                                 "MinTemperature": 0,
                                                 "MisfireMinTemperature": 400,
                                                 "MisfireMaxTemperature": 1100
-                                            }
+                                            },
+                                            "EntityComponentRoomOccupantParams": []
                                         }
                                     }
                                 },
@@ -1479,6 +1554,11 @@
                                         "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
                                         "__ref": "2e0a5325-8d81-4cad-8bbd-db96d6cc99e6",
                                         "__path": "libs/foundry/records/entities/scitem/ships/fuel_intakes/intk_argo_mpuv.xml",
+                                        "defaultEditorColor": {
+                                            "r": 1,
+                                            "g": 1,
+                                            "b": 0
+                                        },
                                         "tags": [],
                                         "StaticEntityClassData": [],
                                         "Components": {
@@ -1567,6 +1647,11 @@
                                                 "rootOverridePaint": 0,
                                                 "inheritModelTagFromHost": 1,
                                                 "ModelTag": [],
+                                                "meshsetup": {
+                                                    "visibilityTags": {
+                                                        "tags": []
+                                                    }
+                                                },
                                                 "Geometry": {
                                                     "Tags": "",
                                                     "ScaleMultiplier": 1,
@@ -1631,6 +1716,7 @@
                                                         "spawnBoxScale": 0.5,
                                                         "maxLoggedCollisions": 1,
                                                         "Damping": 0.01,
+                                                        "DampingZeroG": 0.01,
                                                         "DampingFreefall": 0.05,
                                                         "PushableByPlayers": 1,
                                                         "NeverAffectTriggers": 0,
@@ -1651,14 +1737,19 @@
                                                         "temperature": {
                                                             "enable": 0,
                                                             "initialTemperature": -1,
-                                                            "coolingEqualizationMultiplier": 1,
                                                             "internalTemperatureGeneration": 0,
+                                                            "coolingEqualizationParams": {
+                                                                "CoolingEqualizationMultiplier": {
+                                                                    "coolingEqualizationMultiplier": 1
+                                                                }
+                                                            },
                                                             "signatureParams": {
                                                                 "enable": 0,
                                                                 "minimumTemperatureForIR": 250,
                                                                 "temperatureToIR": 6
                                                             },
                                                             "itemResourceParams": {
+                                                                "poweredAmbientCoolingMultiplier": 1,
                                                                 "minOperatingTemperature": 0,
                                                                 "minCoolingTemperature": 300,
                                                                 "enableOverheat": 0,
@@ -1754,6 +1845,11 @@
                                         "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
                                         "__ref": "56186c73-8d0e-4e9b-b123-ba4c3a1e0767",
                                         "__path": "libs/foundry/records/entities/scitem/ships/thrusters/argo_mpuv_thruster_aux_top.xml",
+                                        "defaultEditorColor": {
+                                            "r": 1,
+                                            "g": 1,
+                                            "b": 0
+                                        },
                                         "tags": [],
                                         "StaticEntityClassData": {
                                             "ThrusterMFXEntityParams": {
@@ -1854,6 +1950,11 @@
                                                 "rootOverridePaint": 1,
                                                 "inheritModelTagFromHost": 1,
                                                 "ModelTag": [],
+                                                "meshsetup": {
+                                                    "visibilityTags": {
+                                                        "tags": []
+                                                    }
+                                                },
                                                 "Geometry": {
                                                     "Tags": "",
                                                     "ScaleMultiplier": 1,
@@ -1918,6 +2019,7 @@
                                                         "spawnBoxScale": 0.5,
                                                         "maxLoggedCollisions": 1,
                                                         "Damping": 0.01,
+                                                        "DampingZeroG": 0.01,
                                                         "DampingFreefall": 0.05,
                                                         "PushableByPlayers": 1,
                                                         "NeverAffectTriggers": 0,
@@ -1938,14 +2040,19 @@
                                                         "temperature": {
                                                             "enable": 1,
                                                             "initialTemperature": -1,
-                                                            "coolingEqualizationMultiplier": 500,
                                                             "internalTemperatureGeneration": 0,
+                                                            "coolingEqualizationParams": {
+                                                                "CoolingEqualizationMultiplier": {
+                                                                    "coolingEqualizationMultiplier": 1
+                                                                }
+                                                            },
                                                             "signatureParams": {
                                                                 "enable": 0,
                                                                 "minimumTemperatureForIR": 250,
                                                                 "temperatureToIR": 6
                                                             },
                                                             "itemResourceParams": {
+                                                                "poweredAmbientCoolingMultiplier": 1,
                                                                 "minOperatingTemperature": 0,
                                                                 "minCoolingTemperature": 300,
                                                                 "enableOverheat": 1,
@@ -1955,6 +2062,7 @@
                                                                 "stateHeatGenerationValues": {
                                                                     "EntityTemperatureResourceHeatGeneration": {
                                                                         "state": "states",
+                                                                        "resource": "Fuel",
                                                                         "baselineTemperatureChange": 1
                                                                     }
                                                                 },
@@ -1965,7 +2073,7 @@
                                                                 "maximum": 525
                                                             },
                                                             "fireHazard": {
-                                                                "enable": 1,
+                                                                "enable": 0,
                                                                 "dissolveOnBurn": 0,
                                                                 "dissolvePercentageRange": {
                                                                     "minimum": 0,
@@ -1998,6 +2106,7 @@
                                                 "ExplosionBone": "",
                                                 "IsSalvagable": 1,
                                                 "IsRepairable": 1,
+                                                "SalvageDamageModifier": 1,
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 0,
@@ -2045,7 +2154,7 @@
                                                 "DeathGasComposition": [],
                                                 "InteractionLocks": [],
                                                 "sequencerTasks": [],
-                                                "shatterDestroyEvent": [],
+                                                "maelstromEvents": [],
                                                 "craftingData": []
                                             },
                                             "ItemControlComponentParams": {
@@ -2065,8 +2174,8 @@
                                                 "states": {
                                                     "ItemResourceState": {
                                                         "name": "Online",
-                                                        "deltas": {
-                                                            "ItemResourceDeltaConsumption": {
+                                                        "deltas": [
+                                                            {
                                                                 "minimumConsumptionFraction": 1,
                                                                 "consumption": {
                                                                     "resource": "Fuel",
@@ -2079,9 +2188,28 @@
                                                                 "consumptionComposition": {
                                                                     "values": []
                                                                 },
-                                                                "dynamicAmountOverride": []
+                                                                "dynamicAmountOverride": {
+                                                                    "ItemResourceDynamicAmountThrusterFuel": []
+                                                                }
+                                                            },
+                                                            {
+                                                                "minimumConsumptionFraction": 0,
+                                                                "consumption": {
+                                                                    "resource": "Coolant",
+                                                                    "resourceAmountPerSecond": {
+                                                                        "SStandardResourceUnit": {
+                                                                            "standardResourceUnits": 0
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "consumptionComposition": {
+                                                                    "values": []
+                                                                },
+                                                                "dynamicAmountOverride": {
+                                                                    "ItemResourceDynamicAmountCoolant": []
+                                                                }
                                                             }
-                                                        },
+                                                        ],
                                                         "linkedInteractionStates": [],
                                                         "signatureParams": {
                                                             "EMSignature": {
@@ -2095,13 +2223,34 @@
                                                                 "functionalityCurve": []
                                                             }
                                                         },
-                                                        "rangeParams": []
+                                                        "powerRanges": {
+                                                            "low": {
+                                                                "start": 0,
+                                                                "modifier": 1,
+                                                                "registerRange": 0
+                                                            },
+                                                            "medium": {
+                                                                "start": 0,
+                                                                "modifier": 1,
+                                                                "registerRange": 0
+                                                            },
+                                                            "high": {
+                                                                "start": 0,
+                                                                "modifier": 1,
+                                                                "registerRange": 0
+                                                            }
+                                                        }
                                                     }
                                                 },
                                                 "controlParameters": [],
                                                 "controlBlocks": [],
                                                 "functionalityModifiers": [],
-                                                "powerPlantOverride": []
+                                                "powerPlantOverride": [],
+                                                "selfRepair": {
+                                                    "maxRepairCount": 1,
+                                                    "timeToRepair": 120,
+                                                    "healthRatio": 0.2
+                                                }
                                             },
                                             "SCItemThrusterParams": {
                                                 "thrustCapacity": 97000,
@@ -2574,7 +2723,9 @@
                                                                 "rtpc": {
                                                                     "rtpc": "Thruster_Thrust_GlacialAttack_FastRelease"
                                                                 },
-                                                                "behavior": []
+                                                                "behavior": {
+                                                                    "SRtpcBehaviour": []
+                                                                }
                                                             }
                                                         ]
                                                     },
@@ -2786,13 +2937,17 @@
                                                                 "rtpc": {
                                                                     "rtpc": "GP_Thrusters_Usage"
                                                                 },
-                                                                "behavior": []
+                                                                "behavior": {
+                                                                    "SRtpcBehaviour": []
+                                                                }
                                                             },
                                                             {
                                                                 "rtpc": {
                                                                     "rtpc": "GP_Thrusters_Usage_Slow_Lerp"
                                                                 },
-                                                                "behavior": []
+                                                                "behavior": {
+                                                                    "SRtpcBehaviour": []
+                                                                }
                                                             },
                                                             {
                                                                 "rtpc": {
@@ -2823,6 +2978,7 @@
                                                     "z": 0
                                                 }
                                             },
+                                            "EntityComponentFuelConnection": [],
                                             "EntityComponentPowerConnection": {
                                                 "PowerBase": 10,
                                                 "PowerDraw": 12,
@@ -2970,7 +3126,8 @@
                                                 "MinTemperature": 0,
                                                 "MisfireMinTemperature": 400,
                                                 "MisfireMaxTemperature": 1100
-                                            }
+                                            },
+                                            "EntityComponentRoomOccupantParams": []
                                         }
                                     }
                                 },
@@ -2988,6 +3145,11 @@
                                         "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
                                         "__ref": "58bc7ce5-de69-404a-be7c-b2153b976053",
                                         "__path": "libs/foundry/records/entities/scitem/ships/thrusters/argo_mpuv_thruster_aux_bottom.xml",
+                                        "defaultEditorColor": {
+                                            "r": 1,
+                                            "g": 1,
+                                            "b": 0
+                                        },
                                         "tags": [],
                                         "StaticEntityClassData": {
                                             "ThrusterMFXEntityParams": {
@@ -3088,6 +3250,11 @@
                                                 "rootOverridePaint": 1,
                                                 "inheritModelTagFromHost": 1,
                                                 "ModelTag": [],
+                                                "meshsetup": {
+                                                    "visibilityTags": {
+                                                        "tags": []
+                                                    }
+                                                },
                                                 "Geometry": {
                                                     "Tags": "",
                                                     "ScaleMultiplier": 1,
@@ -3152,6 +3319,7 @@
                                                         "spawnBoxScale": 0.5,
                                                         "maxLoggedCollisions": 1,
                                                         "Damping": 0.01,
+                                                        "DampingZeroG": 0.01,
                                                         "DampingFreefall": 0.05,
                                                         "PushableByPlayers": 1,
                                                         "NeverAffectTriggers": 0,
@@ -3172,14 +3340,19 @@
                                                         "temperature": {
                                                             "enable": 1,
                                                             "initialTemperature": -1,
-                                                            "coolingEqualizationMultiplier": 500,
                                                             "internalTemperatureGeneration": 0,
+                                                            "coolingEqualizationParams": {
+                                                                "CoolingEqualizationMultiplier": {
+                                                                    "coolingEqualizationMultiplier": 1
+                                                                }
+                                                            },
                                                             "signatureParams": {
                                                                 "enable": 0,
                                                                 "minimumTemperatureForIR": 250,
                                                                 "temperatureToIR": 6
                                                             },
                                                             "itemResourceParams": {
+                                                                "poweredAmbientCoolingMultiplier": 1,
                                                                 "minOperatingTemperature": 0,
                                                                 "minCoolingTemperature": 300,
                                                                 "enableOverheat": 1,
@@ -3189,6 +3362,7 @@
                                                                 "stateHeatGenerationValues": {
                                                                     "EntityTemperatureResourceHeatGeneration": {
                                                                         "state": "states",
+                                                                        "resource": "Fuel",
                                                                         "baselineTemperatureChange": 1
                                                                     }
                                                                 },
@@ -3199,7 +3373,7 @@
                                                                 "maximum": 525
                                                             },
                                                             "fireHazard": {
-                                                                "enable": 1,
+                                                                "enable": 0,
                                                                 "dissolveOnBurn": 0,
                                                                 "dissolvePercentageRange": {
                                                                     "minimum": 0,
@@ -3232,6 +3406,7 @@
                                                 "ExplosionBone": "",
                                                 "IsSalvagable": 1,
                                                 "IsRepairable": 1,
+                                                "SalvageDamageModifier": 1,
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 0,
@@ -3279,7 +3454,7 @@
                                                 "DeathGasComposition": [],
                                                 "InteractionLocks": [],
                                                 "sequencerTasks": [],
-                                                "shatterDestroyEvent": [],
+                                                "maelstromEvents": [],
                                                 "craftingData": []
                                             },
                                             "ItemControlComponentParams": {
@@ -3299,8 +3474,8 @@
                                                 "states": {
                                                     "ItemResourceState": {
                                                         "name": "Online",
-                                                        "deltas": {
-                                                            "ItemResourceDeltaConsumption": {
+                                                        "deltas": [
+                                                            {
                                                                 "minimumConsumptionFraction": 1,
                                                                 "consumption": {
                                                                     "resource": "Fuel",
@@ -3313,9 +3488,28 @@
                                                                 "consumptionComposition": {
                                                                     "values": []
                                                                 },
-                                                                "dynamicAmountOverride": []
+                                                                "dynamicAmountOverride": {
+                                                                    "ItemResourceDynamicAmountThrusterFuel": []
+                                                                }
+                                                            },
+                                                            {
+                                                                "minimumConsumptionFraction": 0,
+                                                                "consumption": {
+                                                                    "resource": "Coolant",
+                                                                    "resourceAmountPerSecond": {
+                                                                        "SStandardResourceUnit": {
+                                                                            "standardResourceUnits": 0
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "consumptionComposition": {
+                                                                    "values": []
+                                                                },
+                                                                "dynamicAmountOverride": {
+                                                                    "ItemResourceDynamicAmountCoolant": []
+                                                                }
                                                             }
-                                                        },
+                                                        ],
                                                         "linkedInteractionStates": [],
                                                         "signatureParams": {
                                                             "EMSignature": {
@@ -3329,13 +3523,34 @@
                                                                 "functionalityCurve": []
                                                             }
                                                         },
-                                                        "rangeParams": []
+                                                        "powerRanges": {
+                                                            "low": {
+                                                                "start": 0,
+                                                                "modifier": 1,
+                                                                "registerRange": 0
+                                                            },
+                                                            "medium": {
+                                                                "start": 0,
+                                                                "modifier": 1,
+                                                                "registerRange": 0
+                                                            },
+                                                            "high": {
+                                                                "start": 0,
+                                                                "modifier": 1,
+                                                                "registerRange": 0
+                                                            }
+                                                        }
                                                     }
                                                 },
                                                 "controlParameters": [],
                                                 "controlBlocks": [],
                                                 "functionalityModifiers": [],
-                                                "powerPlantOverride": []
+                                                "powerPlantOverride": [],
+                                                "selfRepair": {
+                                                    "maxRepairCount": 1,
+                                                    "timeToRepair": 120,
+                                                    "healthRatio": 0.2
+                                                }
                                             },
                                             "SCItemThrusterParams": {
                                                 "thrustCapacity": 60992.78,
@@ -3847,7 +4062,9 @@
                                                                 "rtpc": {
                                                                     "rtpc": "Thruster_Thrust_GlacialAttack_FastRelease"
                                                                 },
-                                                                "behavior": []
+                                                                "behavior": {
+                                                                    "SRtpcBehaviour": []
+                                                                }
                                                             }
                                                         ]
                                                     },
@@ -4059,13 +4276,17 @@
                                                                 "rtpc": {
                                                                     "rtpc": "GP_Thrusters_Usage"
                                                                 },
-                                                                "behavior": []
+                                                                "behavior": {
+                                                                    "SRtpcBehaviour": []
+                                                                }
                                                             },
                                                             {
                                                                 "rtpc": {
                                                                     "rtpc": "GP_Thrusters_Usage_Slow_Lerp"
                                                                 },
-                                                                "behavior": []
+                                                                "behavior": {
+                                                                    "SRtpcBehaviour": []
+                                                                }
                                                             },
                                                             {
                                                                 "rtpc": {
@@ -4096,6 +4317,7 @@
                                                     "z": 0
                                                 }
                                             },
+                                            "EntityComponentFuelConnection": [],
                                             "EntityComponentPowerConnection": {
                                                 "PowerBase": 10,
                                                 "PowerDraw": 12,
@@ -4243,7 +4465,8 @@
                                                 "MinTemperature": 0,
                                                 "MisfireMinTemperature": 400,
                                                 "MisfireMaxTemperature": 1100
-                                            }
+                                            },
+                                            "EntityComponentRoomOccupantParams": []
                                         }
                                     }
                                 },
@@ -4261,6 +4484,11 @@
                                         "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
                                         "__ref": "cd725a73-e024-450a-8133-e2849e6aea56",
                                         "__path": "libs/foundry/records/entities/scitem/ships/thrusters/argo_mpuv_thruster_aux_side_rear.xml",
+                                        "defaultEditorColor": {
+                                            "r": 1,
+                                            "g": 1,
+                                            "b": 0
+                                        },
                                         "tags": [],
                                         "StaticEntityClassData": {
                                             "ThrusterMFXEntityParams": {
@@ -4361,6 +4589,11 @@
                                                 "rootOverridePaint": 1,
                                                 "inheritModelTagFromHost": 1,
                                                 "ModelTag": [],
+                                                "meshsetup": {
+                                                    "visibilityTags": {
+                                                        "tags": []
+                                                    }
+                                                },
                                                 "Geometry": {
                                                     "Tags": "",
                                                     "ScaleMultiplier": 1,
@@ -4425,6 +4658,7 @@
                                                         "spawnBoxScale": 0.5,
                                                         "maxLoggedCollisions": 1,
                                                         "Damping": 0.01,
+                                                        "DampingZeroG": 0.01,
                                                         "DampingFreefall": 0.05,
                                                         "PushableByPlayers": 1,
                                                         "NeverAffectTriggers": 0,
@@ -4445,14 +4679,19 @@
                                                         "temperature": {
                                                             "enable": 1,
                                                             "initialTemperature": -1,
-                                                            "coolingEqualizationMultiplier": 500,
                                                             "internalTemperatureGeneration": 0,
+                                                            "coolingEqualizationParams": {
+                                                                "CoolingEqualizationMultiplier": {
+                                                                    "coolingEqualizationMultiplier": 1
+                                                                }
+                                                            },
                                                             "signatureParams": {
                                                                 "enable": 0,
                                                                 "minimumTemperatureForIR": 250,
                                                                 "temperatureToIR": 6
                                                             },
                                                             "itemResourceParams": {
+                                                                "poweredAmbientCoolingMultiplier": 1,
                                                                 "minOperatingTemperature": 0,
                                                                 "minCoolingTemperature": 300,
                                                                 "enableOverheat": 1,
@@ -4462,6 +4701,7 @@
                                                                 "stateHeatGenerationValues": {
                                                                     "EntityTemperatureResourceHeatGeneration": {
                                                                         "state": "states",
+                                                                        "resource": "Fuel",
                                                                         "baselineTemperatureChange": 1
                                                                     }
                                                                 },
@@ -4472,7 +4712,7 @@
                                                                 "maximum": 525
                                                             },
                                                             "fireHazard": {
-                                                                "enable": 1,
+                                                                "enable": 0,
                                                                 "dissolveOnBurn": 0,
                                                                 "dissolvePercentageRange": {
                                                                     "minimum": 0,
@@ -4505,6 +4745,7 @@
                                                 "ExplosionBone": "",
                                                 "IsSalvagable": 1,
                                                 "IsRepairable": 1,
+                                                "SalvageDamageModifier": 1,
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 0,
@@ -4552,7 +4793,7 @@
                                                 "DeathGasComposition": [],
                                                 "InteractionLocks": [],
                                                 "sequencerTasks": [],
-                                                "shatterDestroyEvent": [],
+                                                "maelstromEvents": [],
                                                 "craftingData": []
                                             },
                                             "ItemControlComponentParams": {
@@ -4572,8 +4813,8 @@
                                                 "states": {
                                                     "ItemResourceState": {
                                                         "name": "Online",
-                                                        "deltas": {
-                                                            "ItemResourceDeltaConsumption": {
+                                                        "deltas": [
+                                                            {
                                                                 "minimumConsumptionFraction": 1,
                                                                 "consumption": {
                                                                     "resource": "Fuel",
@@ -4586,9 +4827,28 @@
                                                                 "consumptionComposition": {
                                                                     "values": []
                                                                 },
-                                                                "dynamicAmountOverride": []
+                                                                "dynamicAmountOverride": {
+                                                                    "ItemResourceDynamicAmountThrusterFuel": []
+                                                                }
+                                                            },
+                                                            {
+                                                                "minimumConsumptionFraction": 0,
+                                                                "consumption": {
+                                                                    "resource": "Coolant",
+                                                                    "resourceAmountPerSecond": {
+                                                                        "SStandardResourceUnit": {
+                                                                            "standardResourceUnits": 0
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "consumptionComposition": {
+                                                                    "values": []
+                                                                },
+                                                                "dynamicAmountOverride": {
+                                                                    "ItemResourceDynamicAmountCoolant": []
+                                                                }
                                                             }
-                                                        },
+                                                        ],
                                                         "linkedInteractionStates": [],
                                                         "signatureParams": {
                                                             "EMSignature": {
@@ -4602,13 +4862,34 @@
                                                                 "functionalityCurve": []
                                                             }
                                                         },
-                                                        "rangeParams": []
+                                                        "powerRanges": {
+                                                            "low": {
+                                                                "start": 0,
+                                                                "modifier": 1,
+                                                                "registerRange": 0
+                                                            },
+                                                            "medium": {
+                                                                "start": 0,
+                                                                "modifier": 1,
+                                                                "registerRange": 0
+                                                            },
+                                                            "high": {
+                                                                "start": 0,
+                                                                "modifier": 1,
+                                                                "registerRange": 0
+                                                            }
+                                                        }
                                                     }
                                                 },
                                                 "controlParameters": [],
                                                 "controlBlocks": [],
                                                 "functionalityModifiers": [],
-                                                "powerPlantOverride": []
+                                                "powerPlantOverride": [],
+                                                "selfRepair": {
+                                                    "maxRepairCount": 1,
+                                                    "timeToRepair": 120,
+                                                    "healthRatio": 0.2
+                                                }
                                             },
                                             "SCItemThrusterParams": {
                                                 "thrustCapacity": 98381.8,
@@ -5081,7 +5362,9 @@
                                                                 "rtpc": {
                                                                     "rtpc": "Thruster_Thrust_GlacialAttack_FastRelease"
                                                                 },
-                                                                "behavior": []
+                                                                "behavior": {
+                                                                    "SRtpcBehaviour": []
+                                                                }
                                                             }
                                                         ]
                                                     },
@@ -5293,13 +5576,17 @@
                                                                 "rtpc": {
                                                                     "rtpc": "GP_Thrusters_Usage"
                                                                 },
-                                                                "behavior": []
+                                                                "behavior": {
+                                                                    "SRtpcBehaviour": []
+                                                                }
                                                             },
                                                             {
                                                                 "rtpc": {
                                                                     "rtpc": "GP_Thrusters_Usage_Slow_Lerp"
                                                                 },
-                                                                "behavior": []
+                                                                "behavior": {
+                                                                    "SRtpcBehaviour": []
+                                                                }
                                                             },
                                                             {
                                                                 "rtpc": {
@@ -5330,6 +5617,7 @@
                                                     "z": 0
                                                 }
                                             },
+                                            "EntityComponentFuelConnection": [],
                                             "EntityComponentPowerConnection": {
                                                 "PowerBase": 10,
                                                 "PowerDraw": 12,
@@ -5477,7 +5765,8 @@
                                                 "MinTemperature": 0,
                                                 "MisfireMinTemperature": 400,
                                                 "MisfireMaxTemperature": 1100
-                                            }
+                                            },
+                                            "EntityComponentRoomOccupantParams": []
                                         }
                                     }
                                 },
@@ -5495,6 +5784,11 @@
                                         "entityDensityClass": "00000000-0000-0000-0000-000000000000",
                                         "__ref": "88993b8a-f2bc-4e00-bf27-641db90aa3d6",
                                         "__path": "libs/foundry/records/entities/scitem/ships/seataccess/argo_mpuv_scitem_seataccess_leg_right.xml",
+                                        "defaultEditorColor": {
+                                            "r": 1,
+                                            "g": 1,
+                                            "b": 0
+                                        },
                                         "tags": [],
                                         "StaticEntityClassData": [],
                                         "Components": {
@@ -5734,6 +6028,8 @@
                                                             "TextScale": 1,
                                                             "ShowInteractionTextAtCursorPos": 0,
                                                             "ScalePromptOffsetWithEntity": 0,
+                                                            "PromptStyle": "PromptAndText",
+                                                            "OverrideControlHintDescription": 0,
                                                             "InteractionPromptScale": 1,
                                                             "InteractionPromptLabelVerticalOffset": 70,
                                                             "InteractionPromptBound": "EntityRoot",
@@ -5760,7 +6056,9 @@
                                                             "PlayerAnimatedInteractionParams": [],
                                                             "HighlightBehaviors": {
                                                                 "SHighlightBehaviorNode": {
-                                                                    "HighlightBehaviorNodeParams": [],
+                                                                    "HighlightBehaviorNodeParams": {
+                                                                        "SParentEntityHighlightNode": []
+                                                                    },
                                                                     "nextNodes": {
                                                                         "SHighlightBehaviorNode": {
                                                                             "HighlightBehaviorNodeParams": {
@@ -5829,6 +6127,11 @@
                                                 "rootOverridePaint": 0,
                                                 "inheritModelTagFromHost": 1,
                                                 "ModelTag": [],
+                                                "meshsetup": {
+                                                    "visibilityTags": {
+                                                        "tags": []
+                                                    }
+                                                },
                                                 "Geometry": {
                                                     "Tags": "",
                                                     "ScaleMultiplier": 1,
@@ -5893,6 +6196,7 @@
                                                         "spawnBoxScale": 0.5,
                                                         "maxLoggedCollisions": 1,
                                                         "Damping": 0.01,
+                                                        "DampingZeroG": 0.01,
                                                         "DampingFreefall": 0.05,
                                                         "PushableByPlayers": 1,
                                                         "NeverAffectTriggers": 0,
@@ -5913,14 +6217,19 @@
                                                         "temperature": {
                                                             "enable": 0,
                                                             "initialTemperature": -1,
-                                                            "coolingEqualizationMultiplier": 1,
                                                             "internalTemperatureGeneration": 0,
+                                                            "coolingEqualizationParams": {
+                                                                "CoolingEqualizationMultiplier": {
+                                                                    "coolingEqualizationMultiplier": 1
+                                                                }
+                                                            },
                                                             "signatureParams": {
                                                                 "enable": 0,
                                                                 "minimumTemperatureForIR": 250,
                                                                 "temperatureToIR": 6
                                                             },
                                                             "itemResourceParams": {
+                                                                "poweredAmbientCoolingMultiplier": 1,
                                                                 "minOperatingTemperature": 0,
                                                                 "minCoolingTemperature": 300,
                                                                 "enableOverheat": 0,
@@ -5962,7 +6271,9 @@
                                                                 "id": "8df89814-0681-4843-8bc5-154d3f692ba7"
                                                             }
                                                         },
-                                                        "entityTraversingType": [],
+                                                        "entityTraversingType": {
+                                                            "SEntityTraversingNodeTypeParentEntity": []
+                                                        },
                                                         "executeNodes": [
                                                             {
                                                                 "linkedInteractionName": "PanelOpen",
@@ -6001,6 +6312,7 @@
                                                                 "enterStateEffectTags": [],
                                                                 "exitStateEffectTags": [],
                                                                 "EnterEventDispatchers": [],
+                                                                "ExitEventDispatchers": [],
                                                                 "StateAutoChange": [],
                                                                 "Interactions": [
                                                                     {
@@ -6030,6 +6342,7 @@
                                                                 "enterStateEffectTags": [],
                                                                 "exitStateEffectTags": [],
                                                                 "EnterEventDispatchers": [],
+                                                                "ExitEventDispatchers": [],
                                                                 "StateAutoChange": [],
                                                                 "Interactions": [
                                                                     {
@@ -6106,6 +6419,11 @@
                                         "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
                                         "__ref": "e9451017-f070-4cd8-9ae4-d9edccdd51a4",
                                         "__path": "libs/foundry/records/entities/scitem/ships/objectcontainers/argo_mpuv_lights_leg_right.xml",
+                                        "defaultEditorColor": {
+                                            "r": 1,
+                                            "g": 1,
+                                            "b": 0
+                                        },
                                         "tags": [],
                                         "StaticEntityClassData": [],
                                         "Components": {
@@ -6190,6 +6508,11 @@
                                                 "rootOverridePaint": 0,
                                                 "inheritModelTagFromHost": 1,
                                                 "ModelTag": [],
+                                                "meshsetup": {
+                                                    "visibilityTags": {
+                                                        "tags": []
+                                                    }
+                                                },
                                                 "Geometry": {
                                                     "Tags": "",
                                                     "ScaleMultiplier": 1,
@@ -6254,6 +6577,7 @@
                                                         "spawnBoxScale": 0.5,
                                                         "maxLoggedCollisions": 1,
                                                         "Damping": 0.01,
+                                                        "DampingZeroG": 0.01,
                                                         "DampingFreefall": 0.05,
                                                         "PushableByPlayers": 1,
                                                         "NeverAffectTriggers": 0,
@@ -6290,14 +6614,19 @@
                                                         "temperature": {
                                                             "enable": 0,
                                                             "initialTemperature": -1,
-                                                            "coolingEqualizationMultiplier": 1,
                                                             "internalTemperatureGeneration": 0,
+                                                            "coolingEqualizationParams": {
+                                                                "CoolingEqualizationMultiplier": {
+                                                                    "coolingEqualizationMultiplier": 1
+                                                                }
+                                                            },
                                                             "signatureParams": {
                                                                 "enable": 0,
                                                                 "minimumTemperatureForIR": 250,
                                                                 "temperatureToIR": 6
                                                             },
                                                             "itemResourceParams": {
+                                                                "poweredAmbientCoolingMultiplier": 1,
                                                                 "minOperatingTemperature": 0,
                                                                 "minCoolingTemperature": 300,
                                                                 "enableOverheat": 0,
@@ -6348,6 +6677,7 @@
                                                 "ExplosionBone": "",
                                                 "IsSalvagable": 1,
                                                 "IsRepairable": 1,
+                                                "SalvageDamageModifier": 1,
                                                 "MirrorSalvageHit": 0,
                                                 "DisableMaterialDamage": 0,
                                                 "alwaysPropagateHitToParent": 0,
@@ -6395,7 +6725,7 @@
                                                 "DeathGasComposition": [],
                                                 "InteractionLocks": [],
                                                 "sequencerTasks": [],
-                                                "shatterDestroyEvent": [],
+                                                "maelstromEvents": [],
                                                 "craftingData": []
                                             }
                                         }
@@ -6417,6 +6747,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -6540,16 +6875,20 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": [
                         {
                             "Name": "hardpoint_engine_right",
-                            "DisplayName": "port_NameThrustMain04",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "main uneditable",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -6557,6 +6896,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -6649,12 +6989,15 @@
                         },
                         {
                             "Name": "hardpoint_fuel_intake_right",
-                            "DisplayName": "port_NameFuelIntake01",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "invisible uneditable",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -6662,6 +7005,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -6755,11 +7099,14 @@
                         {
                             "Name": "hardpoint_landing_gear_right",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "uneditable",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 0,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -6767,6 +7114,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -6847,11 +7195,14 @@
                         {
                             "Name": "hardpoint_lights_leg_right",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "uneditable",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -6859,6 +7210,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -6938,12 +7290,15 @@
                         },
                         {
                             "Name": "hardpoint_thruster_rear_right_top",
-                            "DisplayName": "port_NameThrustManoeuv10",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "uneditable maneuver orientation -Z",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -6951,6 +7306,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -7043,12 +7399,15 @@
                         },
                         {
                             "Name": "hardpoint_thruster_rear_right_middle",
-                            "DisplayName": "port_NameThrustManoeuv09",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "uneditable maneuver orientation -X",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -7056,6 +7415,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -7148,12 +7508,15 @@
                         },
                         {
                             "Name": "hardpoint_thruster_rear_right_bottom",
-                            "DisplayName": "port_NameThrustManoeuv12",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "uneditable maneuver orientation +Z",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -7161,6 +7524,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -7254,11 +7618,14 @@
                         {
                             "Name": "hardpoint_seat_access_leg_right",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "uneditable",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -7266,6 +7633,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -7369,6 +7737,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -7389,14 +7758,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -7444,6 +7818,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -7491,7 +7866,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "SInteractionStateMachineParams": {
@@ -7519,6 +7894,7 @@
                                             "overrideInterpolation": []
                                         }
                                     },
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [
                                         {
@@ -7558,6 +7934,7 @@
                                             "overrideInterpolation": []
                                         }
                                     },
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [
                                         {
@@ -7611,6 +7988,7 @@
                                             "overrideInterpolation": []
                                         }
                                     },
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -7650,6 +8028,7 @@
                                             "overrideInterpolation": []
                                         }
                                     },
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -7676,7 +8055,9 @@
                                     "deployed": "StateTypes[1].SInteractionStateType.States[0]",
                                     "retracting": "StateTypes[1].SInteractionStateType.States[1]",
                                     "retracted": "null",
-                                    "context": []
+                                    "context": {
+                                        "AttachableStateModifierContext_Parent": []
+                                    }
                                 }
                             }
                         }
@@ -7854,7 +8235,7 @@
         "grade": 1,
         "name": "<= PLACEHOLDER =>",
         "tags": "",
-        "manufacturer": "ARGO",
+        "required_tags": "",
         "stdItem": {
             "UUID": "dc44c0d2-e36f-4053-bcc4-29d0bf8d6d08",
             "ClassName": "ARGO_MPUV_Leg_Right",
@@ -7863,17 +8244,34 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 350,
             "Type": "Misc.UNDEFINED",
             "Name": "<= PLACEHOLDER =>",
             "Description": "",
+            "DescriptionText": "",
             "Manufacturer": {
-                "Code": "ARGO",
-                "Name": "Argo Astronautics"
+                "Name": "Argo Astronautics",
+                "UUID": "9e1f5a35-edcc-4d19-bede-08e2730043c5"
             },
             "Ports": [
                 {
                     "PortName": "hardpoint_engine_right",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 1,
+                    "MaxSize": 1,
                     "Flags": [
                         "main",
                         "uneditable"
@@ -7881,11 +8279,20 @@
                     "Types": [
                         "MainThruster"
                     ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "MainThruster"
+                        }
+                    ],
+                    "EquippedItem": "966f6880-0304-42cc-bd03-d0be907b5741",
                     "Uneditable": true
                 },
                 {
                     "PortName": "hardpoint_fuel_intake_right",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 1,
+                    "MaxSize": 1,
                     "Flags": [
                         "invisible",
                         "uneditable"
@@ -7893,33 +8300,60 @@
                     "Types": [
                         "FuelIntake"
                     ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "FuelIntake"
+                        }
+                    ],
+                    "EquippedItem": "2e0a5325-8d81-4cad-8bbd-db96d6cc99e6",
                     "Uneditable": true
                 },
                 {
                     "PortName": "hardpoint_landing_gear_right",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 0,
+                    "MaxSize": 1,
                     "Flags": [
                         "uneditable"
                     ],
                     "Types": [
                         "LandingSystem"
                     ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "LandingSystem"
+                        }
+                    ],
+                    "EquippedItem": "af504ba5-934d-430d-99cf-463c1545cfe3",
                     "Uneditable": true
                 },
                 {
                     "PortName": "hardpoint_lights_leg_right",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 1,
+                    "MaxSize": 1,
                     "Flags": [
                         "uneditable"
                     ],
                     "Types": [
                         "Room"
                     ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "Room"
+                        }
+                    ],
+                    "EquippedItem": "e9451017-f070-4cd8-9ae4-d9edccdd51a4",
                     "Uneditable": true
                 },
                 {
                     "PortName": "hardpoint_thruster_rear_right_top",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 1,
+                    "MaxSize": 1,
                     "Flags": [
                         "uneditable",
                         "maneuver",
@@ -7929,11 +8363,20 @@
                     "Types": [
                         "ManneuverThruster"
                     ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "ManneuverThruster"
+                        }
+                    ],
+                    "EquippedItem": "56186c73-8d0e-4e9b-b123-ba4c3a1e0767",
                     "Uneditable": true
                 },
                 {
                     "PortName": "hardpoint_thruster_rear_right_middle",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 1,
+                    "MaxSize": 1,
                     "Flags": [
                         "uneditable",
                         "maneuver",
@@ -7943,11 +8386,20 @@
                     "Types": [
                         "ManneuverThruster"
                     ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "ManneuverThruster"
+                        }
+                    ],
+                    "EquippedItem": "cd725a73-e024-450a-8133-e2849e6aea56",
                     "Uneditable": true
                 },
                 {
                     "PortName": "hardpoint_thruster_rear_right_bottom",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 1,
+                    "MaxSize": 1,
                     "Flags": [
                         "uneditable",
                         "maneuver",
@@ -7957,26 +8409,73 @@
                     "Types": [
                         "ManneuverThruster"
                     ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "ManneuverThruster"
+                        }
+                    ],
+                    "EquippedItem": "58bc7ce5-de69-404a-be7c-b2153b976053",
                     "Uneditable": true
                 },
                 {
                     "PortName": "hardpoint_seat_access_leg_right",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 1,
+                    "MaxSize": 1,
                     "Flags": [
                         "uneditable"
                     ],
                     "Types": [
                         "SeatAccess"
                     ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "SeatAccess"
+                        }
+                    ],
+                    "EquippedItem": "88993b8a-f2bc-4e00-bf27-641db90aa3d6",
                     "Uneditable": true
                 }
             ],
             "Durability": {
-                "Health": 3500
+                "Health": 3500,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
             },
-            "FuelIntake": {
-                "Rate": 0,
-                "MinRate": 0.2
+            "Emission": {
+                "Em": {
+                    "Maximum": 0,
+                    "Minimum": 0,
+                    "Decay": 0.15
+                },
+                "Ir": 0
             },
             "HeatConnection": {
                 "TemperatureToIR": 11,
@@ -7999,6 +8498,39 @@
                 "MisfireMinTemperature": 400,
                 "MisfireMaxTemperature": 1100
             },
+            "Temperature": {
+                "Enable": 1,
+                "InitialTemperature": -1,
+                "InternalTemperatureGeneration": 0,
+                "CoolingEqualizationMultiplier": 1,
+                "SignatureParams": {
+                    "Enable": 0,
+                    "MinimumTemperatureForIR": 250,
+                    "TemperatureToIR": 6
+                },
+                "ItemResourceParams": {
+                    "PoweredAmbientCoolingMultiplier": 1,
+                    "MinOperatingTemperature": 0,
+                    "MinCoolingTemperature": 300,
+                    "EnableOverheat": 1,
+                    "OverheatTemperature": 525,
+                    "OverheatWarningTemperature": 370,
+                    "OverheatRecoveryTemperature": 350
+                },
+                "Calculated": {
+                    "Unit": "C",
+                    "CoolingThreshold": 26.9,
+                    "IrThreshold": -23.1,
+                    "Overheat": 96.9,
+                    "Maximum": 251.9,
+                    "Recovery": 76.9
+                }
+            },
+            "Interactions": [
+                "Panelopen",
+                "Panelclose",
+                "Panelcycle"
+            ],
             "PowerConnection": {
                 "PowerBase": 10,
                 "PowerDraw": 12,
@@ -8014,23 +8546,78 @@
                 "PowerToEM": 50,
                 "DecayRateOfEM": 0.15
             },
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "Consumption",
+                                "Resource": "Fuel",
+                                "Rate": 0.01,
+                                "MinimumFraction": 1
+                            },
+                            {
+                                "Type": "Consumption",
+                                "Resource": "Coolant",
+                                "Rate": 0,
+                                "MinimumFraction": 0
+                            }
+                        ],
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 120,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 0
+                    },
+                    "Coolant": {
+                        "Minimum": 0
+                    }
+                }
+            },
             "Thruster": {
-                "thrustCapacity": 34000,
-                "thrustCapacityNew": 0,
-                "maxSupportedAtmosphericEfficiency": 2,
-                "minHealthThrustMultiplier": 0.25,
-                "fuelBurnRatePer10KNewton": 0.109375,
-                "thrusterType": "Main",
-                "onlyActiveInVTOL": 0,
-                "nozzleAnimation": "",
-                "thrusterAnimDriver": "ThrustWithAfterburner",
-                "thrusterStrengthSmoothing": 0.2,
-                "toggleThrusterBackwash": 1,
-                "automateBackwashSize": 0,
-                "thrusterBackwashMaxSpeed": 100,
-                "thrusterBackwashMaxDensity": 5,
-                "thrusterBackwashMaxResistance": 100,
-                "thrusterBackwashAfterburnerMultiplier": 1.1
+                "ThrustCapacity": 34000,
+                "ThrustCapacityNew": 0,
+                "MaxSupportedAtmosphericEfficiency": 2,
+                "MinHealthThrustMultiplier": 0.25,
+                "FuelBurnRatePer10KNewton": 0.109375,
+                "ThrusterType": "Main",
+                "OnlyActiveInVTOL": 0,
+                "ThrusterStrengthSmoothing": 0.2,
+                "ToggleThrusterBackwash": 1,
+                "AutomateBackwashSize": 0,
+                "ThrusterBackwashMaxSpeed": 100,
+                "ThrusterBackwashMaxDensity": 5,
+                "ThrusterBackwashMaxResistance": 100,
+                "ThrusterBackwashAfterburnerMultiplier": 1.1,
+                "BurnRatePerMN": 0.000125,
+                "BurnRatePerMNStandardResourceUnits": 0.000125,
+                "BurnRatePerMNMicroUnits": 125
             }
         }
     }

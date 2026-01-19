@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "ccd05b20-4042-4c49-a4c0-4a94f6d841ee",
             "__path": "libs/foundry/records/entities/scitem/ships/weapons/klwe_massdriver_s3.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": {
                 "DefaultEntitlementEntityParams": {
@@ -38,6 +43,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -47,7 +53,7 @@
                         "DamageResistance": {
                             "IgnoreMeleeDamage": 0,
                             "PhysicalResistance": {
-                                "Multiplier": 1,
+                                "Multiplier": 0.6,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             },
@@ -85,47 +91,12 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
-                "SDegradationParams": {
-                    "StopDegradingIfDestroyed": 0,
-                    "accumulators": {
-                        "SWearAccumulatorParams": {
-                            "InitialAccumulationRatio": 0,
-                            "AccumulateWhenUnstreamed": 0,
-                            "AccumulateOnlyAfterTractorBeam": 0,
-                            "AccumulateOnlyWhenAttached": 1,
-                            "StopAccumulationWhenAttached": 0,
-                            "AccumulationEventThreshold": 1,
-                            "PortTags": "",
-                            "RequiredPortTags": "",
-                            "MaxLifetimeHours": 20,
-                            "UseAsTimer": 0,
-                            "InitialAgeRatio": 0,
-                            "InitialUsageRatio": 0,
-                            "BasePowerMultiplier": 0,
-                            "DrawPowerMultiplier": 0,
-                            "AtmosphereMultiplier": 1,
-                            "DamageConversionRate": 0.01,
-                            "HeatMultipliers": {
-                                "NormalTemperatureMultiplier": 1,
-                                "OverheatTemperatureMultiplier": 1
-                            },
-                            "EffectCurve": {
-                                "useLUT": 0,
-                                "points": []
-                            },
-                            "degradeFromParentParams": [],
-                            "DegradationPercentageRTPC": {
-                                "rtpc": ""
-                            }
-                        }
-                    }
-                },
                 "SAmmoContainerComponentParams": {
-                    "initialAmmoCount": 70,
-                    "maxAmmoCount": 70,
+                    "initialAmmoCount": 102,
+                    "maxAmmoCount": 102,
                     "maxRestockCount": 3,
                     "lowAmmoWarningPercentage": 0.1,
                     "ammoParamsRecord": "579036ad-5aac-434c-bd30-d3af293f9547",
@@ -262,8 +233,9 @@
                                     "maxPenetrationThickness": 0.5
                                 },
                                 "penetrationParams": {
-                                    "basePenetrationDistance": 50,
-                                    "angle": 14
+                                    "basePenetrationDistance": 6.3,
+                                    "nearRadius": 0.32,
+                                    "farRadius": 0.63
                                 },
                                 "visualParams": {
                                     "maxLength": 15,
@@ -440,7 +412,8 @@
                         "adsReticle": "none"
                     },
                     "weaponAIData": {
-                        "idealCombatRange": 50,
+                        "idealCombatRange": 30,
+                        "maxFiringRange": 50,
                         "CombatRangeCategory": "Medium",
                         "baseAccuracy": 1,
                         "impactRadiusForFriendlyFire": 0,
@@ -495,13 +468,36 @@
                         "aiFiringActionParams": []
                     },
                     "connectionParams": {
-                        "powerActiveCooldown": 0.43,
-                        "heatRateOnline": 31,
+                        "powerActiveCooldown": 1,
+                        "heatRateOnline": 0,
                         "lockOnOnverheat": 0,
                         "maxGlow": 100,
                         "glowTag": "00000000-0000-0000-0000-000000000000",
                         "heatReduceWhenOverheatIsFixed": 100000,
-                        "simplifiedHeatParams": [],
+                        "simplifiedHeatParams": {
+                            "SWeaponSimplifiedHeatParams": {
+                                "minTemperature": 0,
+                                "overheatTemperature": 100,
+                                "coolingPerSecond": 22.2,
+                                "temperatureAfterOverheatFix": 99,
+                                "timeTillCoolingStarts": 1,
+                                "overheatFixTime": 5,
+                                "heatModifierCurve": "00000000-0000-0000-0000-000000000000",
+                                "whitelistFPSOverheat": 0,
+                                "temperatureCurveParams": [],
+                                "glowParams": {
+                                    "glowCurve": "00000000-0000-0000-0000-000000000000",
+                                    "maxGlowValue": 100000,
+                                    "fadeoutTime": 2,
+                                    "glowColor": {
+                                        "r": 1,
+                                        "g": 1,
+                                        "b": 1
+                                    }
+                                },
+                                "heatRangeAudioTriggers": []
+                            }
+                        },
                         "noPowerStats": {
                             "fireRate": 0,
                             "fireRateMultiplier": 0,
@@ -517,6 +513,7 @@
                             "chargeTimeMultiplier": 1,
                             "useAlternateProjectileVisuals": 0,
                             "useAugmentedRealityProjectiles": 0,
+                            "disableMisfire": 0,
                             "recoilModifier": {
                                 "decayMultiplier": 1,
                                 "endDecayMultiplier": 1,
@@ -531,6 +528,7 @@
                                 "frontalOscillationDecayMultiplier": 1,
                                 "frontalOscillationRandomnessMultiplier": 1,
                                 "animatedRecoilMultiplier": 1,
+                                "disableRecoil": 0,
                                 "headRotationMultiplier": {
                                     "x": 1,
                                     "y": 1,
@@ -729,6 +727,7 @@
                             "chargeTimeMultiplier": 1,
                             "useAlternateProjectileVisuals": 0,
                             "useAugmentedRealityProjectiles": 0,
+                            "disableMisfire": 0,
                             "recoilModifier": {
                                 "decayMultiplier": 1,
                                 "endDecayMultiplier": 1,
@@ -743,6 +742,7 @@
                                 "frontalOscillationDecayMultiplier": 1,
                                 "frontalOscillationRandomnessMultiplier": 1,
                                 "animatedRecoilMultiplier": 1,
+                                "disableRecoil": 0,
                                 "headRotationMultiplier": {
                                     "x": 1,
                                     "y": 1,
@@ -941,6 +941,7 @@
                             "chargeTimeMultiplier": 1,
                             "useAlternateProjectileVisuals": 0,
                             "useAugmentedRealityProjectiles": 0,
+                            "disableMisfire": 0,
                             "recoilModifier": {
                                 "decayMultiplier": 1,
                                 "endDecayMultiplier": 1,
@@ -955,6 +956,7 @@
                                 "frontalOscillationDecayMultiplier": 1,
                                 "frontalOscillationRandomnessMultiplier": 1,
                                 "animatedRecoilMultiplier": 1,
+                                "disableRecoil": 0,
                                 "headRotationMultiplier": {
                                     "x": 1,
                                     "y": 1,
@@ -1153,6 +1155,7 @@
                             "chargeTimeMultiplier": 1,
                             "useAlternateProjectileVisuals": 0,
                             "useAugmentedRealityProjectiles": 0,
+                            "disableMisfire": 0,
                             "recoilModifier": {
                                 "decayMultiplier": 1,
                                 "endDecayMultiplier": 1,
@@ -1167,6 +1170,7 @@
                                 "frontalOscillationDecayMultiplier": 1,
                                 "frontalOscillationRandomnessMultiplier": 1,
                                 "animatedRecoilMultiplier": 1,
+                                "disableRecoil": 0,
                                 "headRotationMultiplier": {
                                     "x": 1,
                                     "y": 1,
@@ -1365,6 +1369,7 @@
                             "chargeTimeMultiplier": 1,
                             "useAlternateProjectileVisuals": 0,
                             "useAugmentedRealityProjectiles": 0,
+                            "disableMisfire": 0,
                             "recoilModifier": {
                                 "decayMultiplier": 1,
                                 "endDecayMultiplier": 1,
@@ -1379,6 +1384,7 @@
                                 "frontalOscillationDecayMultiplier": 1,
                                 "frontalOscillationRandomnessMultiplier": 1,
                                 "animatedRecoilMultiplier": 1,
+                                "disableRecoil": 0,
                                 "headRotationMultiplier": {
                                     "x": 1,
                                     "y": 1,
@@ -1594,6 +1600,7 @@
                             "fireAutomaticallyOnFullCharge": 1,
                             "fireOnlyOnFullCharge": 1,
                             "chargeAutomatically": 0,
+                            "adaptiveTriggerParams": "00000000-0000-0000-0000-000000000000",
                             "mannequinTag": {
                                 "tag": ""
                             },
@@ -1620,6 +1627,7 @@
                                 "chargeTimeMultiplier": 1,
                                 "useAlternateProjectileVisuals": 0,
                                 "useAugmentedRealityProjectiles": 0,
+                                "disableMisfire": 0,
                                 "recoilModifier": {
                                     "decayMultiplier": 1,
                                     "endDecayMultiplier": 1,
@@ -1634,6 +1642,7 @@
                                     "frontalOscillationDecayMultiplier": 1,
                                     "frontalOscillationRandomnessMultiplier": 1,
                                     "animatedRecoilMultiplier": 1,
+                                    "disableRecoil": 0,
                                     "headRotationMultiplier": {
                                         "x": 1,
                                         "y": 1,
@@ -1831,6 +1840,7 @@
                                     "wearPerShot": 0,
                                     "recoil": "00000000-0000-0000-0000-000000000000",
                                     "misfire": "00000000-0000-0000-0000-000000000000",
+                                    "adaptiveTriggerParams": "00000000-0000-0000-0000-000000000000",
                                     "mannequinTag": {
                                         "tag": ""
                                     },
@@ -1875,6 +1885,20 @@
                                     "cooldownStopTrigger": {
                                         "audioTrigger": ""
                                     },
+                                    "NLPCAudioTriggers": {
+                                        "fireAudioTrigger": {
+                                            "audioTrigger": ""
+                                        },
+                                        "dryFireAudioTrigger": {
+                                            "audioTrigger": ""
+                                        },
+                                        "cooldownStartTrigger": {
+                                            "audioTrigger": ""
+                                        },
+                                        "cooldownStopTrigger": {
+                                            "audioTrigger": ""
+                                        }
+                                    },
                                     "fireEffects": {
                                         "SWeaponParticleEffectParams": {
                                             "helper": "barrel_1_out",
@@ -1884,12 +1908,14 @@
                                             "scale": 1,
                                             "retriggerOnViewModeChange": 0,
                                             "isMuzzleFlash": 0,
+                                            "allowConditionReEvaluation": 0,
                                             "firstPerson": {
                                                 "path": "e91a4a52-b5b9-da8a-0c90-41558b7dac6a|Spaceships/Weapons/klwe_mass_driver_s3.S1-3.muzzleflash"
                                             },
                                             "thirdPerson": {
                                                 "path": "e91a4a52-b5b9-da8a-0c90-41558b7dac6a|Spaceships/Weapons/klwe_mass_driver_s3.S1-3.muzzleflash"
-                                            }
+                                            },
+                                            "effectCondition": []
                                         }
                                     },
                                     "vibrationParams": {
@@ -1935,12 +1961,14 @@
                                     "scale": 1,
                                     "retriggerOnViewModeChange": 0,
                                     "isMuzzleFlash": 0,
+                                    "allowConditionReEvaluation": 0,
                                     "firstPerson": {
                                         "path": "41333d0e-da5f-3b72-1995-31d8c63d2c09|Spaceships/Weapons/klwe_mass_driver_s10.S10.Charging"
                                     },
                                     "thirdPerson": {
                                         "path": "41333d0e-da5f-3b72-1995-31d8c63d2c09|Spaceships/Weapons/klwe_mass_driver_s10.S10.Charging"
-                                    }
+                                    },
+                                    "effectCondition": []
                                 }
                             },
                             "chargedEffects": {
@@ -1952,12 +1980,14 @@
                                     "scale": 1,
                                     "retriggerOnViewModeChange": 0,
                                     "isMuzzleFlash": 0,
+                                    "allowConditionReEvaluation": 0,
                                     "firstPerson": {
                                         "path": "62f6c6a2-01c6-9073-d9bd-28e524a50e6d|Spaceships/Weapons/klwe_mass_driver_s10.S10.Charged"
                                     },
                                     "thirdPerson": {
                                         "path": "62f6c6a2-01c6-9073-d9bd-28e524a50e6d|Spaceships/Weapons/klwe_mass_driver_s10.S10.Charged"
-                                    }
+                                    },
+                                    "effectCondition": []
                                 }
                             },
                             "overchargedEffects": {
@@ -1969,12 +1999,14 @@
                                     "scale": 1,
                                     "retriggerOnViewModeChange": 0,
                                     "isMuzzleFlash": 0,
+                                    "allowConditionReEvaluation": 0,
                                     "firstPerson": {
                                         "path": "e4ee54b6-4edf-34a9-0f5c-8f59c0d68640|Spaceships/Weapons/klwe_mass_driver_s10.S10.Overcharged"
                                     },
                                     "thirdPerson": {
                                         "path": "e4ee54b6-4edf-34a9-0f5c-8f59c0d68640|Spaceships/Weapons/klwe_mass_driver_s10.S10.Overcharged"
-                                    }
+                                    },
+                                    "effectCondition": []
                                 }
                             },
                             "fireEffects": {
@@ -1986,12 +2018,14 @@
                                     "scale": 1,
                                     "retriggerOnViewModeChange": 0,
                                     "isMuzzleFlash": 0,
+                                    "allowConditionReEvaluation": 0,
                                     "firstPerson": {
                                         "path": "61ba217d-4536-faf9-0908-57cd8d0042d8|Spaceships/Weapons/klwe_mass_driver_s10.S10.Fire"
                                     },
                                     "thirdPerson": {
                                         "path": "61ba217d-4536-faf9-0908-57cd8d0042d8|Spaceships/Weapons/klwe_mass_driver_s10.S10.Fire"
-                                    }
+                                    },
+                                    "effectCondition": []
                                 }
                             },
                             "maxChargeFireEffects": {
@@ -2003,14 +2037,17 @@
                                     "scale": 1,
                                     "retriggerOnViewModeChange": 0,
                                     "isMuzzleFlash": 0,
+                                    "allowConditionReEvaluation": 0,
                                     "firstPerson": {
                                         "path": "4a17e62e-ece0-e294-9644-30a5ba8d63c4|Spaceships/Weapons/klwe_mass_driver_s10.S10.Max_Charge_Fire"
                                     },
                                     "thirdPerson": {
                                         "path": "4a17e62e-ece0-e294-9644-30a5ba8d63c4|Spaceships/Weapons/klwe_mass_driver_s10.S10.Max_Charge_Fire"
-                                    }
+                                    },
+                                    "effectCondition": []
                                 }
-                            }
+                            },
+                            "weaponIdleEffects": []
                         }
                     },
                     "audioParams": {
@@ -2022,6 +2059,9 @@
                             "rtpc": "Weapon_Power_Level"
                         },
                         "switchFireModeAudioTrigger": {
+                            "audioTrigger": ""
+                        },
+                        "switchWeaponPresetAudioTrigger": {
                             "audioTrigger": ""
                         },
                         "weaponHeatRTPC": {
@@ -2242,6 +2282,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -2340,11 +2385,12 @@
                 "SEntityPhysicsControllerParams": {
                     "PhysType": {
                         "SEntityRigidPhysicsControllerParams": {
-                            "Mass": 160,
+                            "Mass": 1200,
                             "compoundingAllowed": 1,
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -2365,14 +2411,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -2447,16 +2498,20 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": [
                         {
                             "Name": "BAR1",
-                            "DisplayName": "Barrel Attachment 1",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 3,
                             "MaxSize": 3,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -2464,6 +2519,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -2569,12 +2625,15 @@
                         },
                         {
                             "Name": "MEC",
-                            "DisplayName": "Firing Mechanism Attachment",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 3,
                             "MaxSize": 3,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -2582,6 +2641,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -2687,12 +2747,15 @@
                         },
                         {
                             "Name": "POW",
-                            "DisplayName": "Power Array Attachment",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 3,
                             "MaxSize": 3,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -2700,6 +2763,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -2805,12 +2869,15 @@
                         },
                         {
                             "Name": "VEN",
-                            "DisplayName": "Ventilation Attachment",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 3,
                             "MaxSize": 3,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -2818,6 +2885,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -2949,6 +3017,7 @@
                     },
                     "masterModeExclusionsOverride": []
                 },
+                "SCItemAimableComponentParams": [],
                 "SEntityComponentDefaultLoadoutParams": {
                     "loadout": {
                         "SItemPortLoadoutManualParams": {
@@ -2970,6 +3039,11 @@
                                         "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
                                         "__ref": "9771e843-52f7-45df-8911-152d0513a8ed",
                                         "__path": "libs/foundry/records/entities/scitem/ships/weapons/parts/klwe_massdriver_barrel_s3.xml",
+                                        "defaultEditorColor": {
+                                            "r": 1,
+                                            "g": 1,
+                                            "b": 0
+                                        },
                                         "tags": [],
                                         "StaticEntityClassData": {
                                             "DefaultEntitlementEntityParams": {
@@ -3059,6 +3133,11 @@
                                                 "rootOverridePaint": 0,
                                                 "inheritModelTagFromHost": 1,
                                                 "ModelTag": [],
+                                                "meshsetup": {
+                                                    "visibilityTags": {
+                                                        "tags": []
+                                                    }
+                                                },
                                                 "Geometry": {
                                                     "Tags": "",
                                                     "ScaleMultiplier": 1,
@@ -3140,6 +3219,7 @@
                                                         "chargeTimeMultiplier": 1,
                                                         "useAlternateProjectileVisuals": 0,
                                                         "useAugmentedRealityProjectiles": 0,
+                                                        "disableMisfire": 0,
                                                         "recoilModifier": {
                                                             "decayMultiplier": 1,
                                                             "endDecayMultiplier": 1,
@@ -3154,6 +3234,7 @@
                                                             "frontalOscillationDecayMultiplier": 1,
                                                             "frontalOscillationRandomnessMultiplier": 1,
                                                             "animatedRecoilMultiplier": 1,
+                                                            "disableRecoil": 0,
                                                             "headRotationMultiplier": {
                                                                 "x": 1,
                                                                 "y": 1,
@@ -3394,6 +3475,7 @@
                                                         "spawnBoxScale": 0.5,
                                                         "maxLoggedCollisions": 1,
                                                         "Damping": 0.01,
+                                                        "DampingZeroG": 0.01,
                                                         "DampingFreefall": 0.05,
                                                         "PushableByPlayers": 1,
                                                         "NeverAffectTriggers": 0,
@@ -3414,14 +3496,19 @@
                                                         "temperature": {
                                                             "enable": 0,
                                                             "initialTemperature": -1,
-                                                            "coolingEqualizationMultiplier": 1,
                                                             "internalTemperatureGeneration": 0,
+                                                            "coolingEqualizationParams": {
+                                                                "CoolingEqualizationMultiplier": {
+                                                                    "coolingEqualizationMultiplier": 1
+                                                                }
+                                                            },
                                                             "signatureParams": {
                                                                 "enable": 0,
                                                                 "minimumTemperatureForIR": 250,
                                                                 "temperatureToIR": 6
                                                             },
                                                             "itemResourceParams": {
+                                                                "poweredAmbientCoolingMultiplier": 1,
                                                                 "minOperatingTemperature": 0,
                                                                 "minCoolingTemperature": 300,
                                                                 "enableOverheat": 0,
@@ -3464,6 +3551,11 @@
                                         "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
                                         "__ref": "eb5e4b66-2b7f-4d7d-a4ab-d3298a34c09d",
                                         "__path": "libs/foundry/records/entities/scitem/ships/weapons/parts/klwe_massdriver_firingmechanism_s3.xml",
+                                        "defaultEditorColor": {
+                                            "r": 1,
+                                            "g": 1,
+                                            "b": 0
+                                        },
                                         "tags": [],
                                         "StaticEntityClassData": {
                                             "DefaultEntitlementEntityParams": {
@@ -3596,6 +3688,11 @@
                                                 "rootOverridePaint": 0,
                                                 "inheritModelTagFromHost": 1,
                                                 "ModelTag": [],
+                                                "meshsetup": {
+                                                    "visibilityTags": {
+                                                        "tags": []
+                                                    }
+                                                },
                                                 "Geometry": {
                                                     "Tags": "",
                                                     "ScaleMultiplier": 1,
@@ -3677,6 +3774,7 @@
                                                         "chargeTimeMultiplier": 1,
                                                         "useAlternateProjectileVisuals": 0,
                                                         "useAugmentedRealityProjectiles": 0,
+                                                        "disableMisfire": 0,
                                                         "recoilModifier": {
                                                             "decayMultiplier": 1,
                                                             "endDecayMultiplier": 1,
@@ -3691,6 +3789,7 @@
                                                             "frontalOscillationDecayMultiplier": 1,
                                                             "frontalOscillationRandomnessMultiplier": 1,
                                                             "animatedRecoilMultiplier": 1,
+                                                            "disableRecoil": 0,
                                                             "headRotationMultiplier": {
                                                                 "x": 1,
                                                                 "y": 1,
@@ -3909,6 +4008,7 @@
                                                         "spawnBoxScale": 0.5,
                                                         "maxLoggedCollisions": 1,
                                                         "Damping": 0.01,
+                                                        "DampingZeroG": 0.01,
                                                         "DampingFreefall": 0.05,
                                                         "PushableByPlayers": 1,
                                                         "NeverAffectTriggers": 0,
@@ -3929,14 +4029,19 @@
                                                         "temperature": {
                                                             "enable": 0,
                                                             "initialTemperature": -1,
-                                                            "coolingEqualizationMultiplier": 1,
                                                             "internalTemperatureGeneration": 0,
+                                                            "coolingEqualizationParams": {
+                                                                "CoolingEqualizationMultiplier": {
+                                                                    "coolingEqualizationMultiplier": 1
+                                                                }
+                                                            },
                                                             "signatureParams": {
                                                                 "enable": 0,
                                                                 "minimumTemperatureForIR": 250,
                                                                 "temperatureToIR": 6
                                                             },
                                                             "itemResourceParams": {
+                                                                "poweredAmbientCoolingMultiplier": 1,
                                                                 "minOperatingTemperature": 0,
                                                                 "minCoolingTemperature": 300,
                                                                 "enableOverheat": 0,
@@ -3979,6 +4084,11 @@
                                         "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
                                         "__ref": "06391919-f026-4e93-9acd-31dc6d7b72a8",
                                         "__path": "libs/foundry/records/entities/scitem/ships/weapons/parts/klwe_massdriver_powerarray_s3.xml",
+                                        "defaultEditorColor": {
+                                            "r": 1,
+                                            "g": 1,
+                                            "b": 0
+                                        },
                                         "tags": [],
                                         "StaticEntityClassData": {
                                             "DefaultEntitlementEntityParams": {
@@ -4111,6 +4221,11 @@
                                                 "rootOverridePaint": 0,
                                                 "inheritModelTagFromHost": 1,
                                                 "ModelTag": [],
+                                                "meshsetup": {
+                                                    "visibilityTags": {
+                                                        "tags": []
+                                                    }
+                                                },
                                                 "Geometry": {
                                                     "Tags": "",
                                                     "ScaleMultiplier": 1,
@@ -4192,6 +4307,7 @@
                                                         "chargeTimeMultiplier": 1,
                                                         "useAlternateProjectileVisuals": 0,
                                                         "useAugmentedRealityProjectiles": 0,
+                                                        "disableMisfire": 0,
                                                         "recoilModifier": {
                                                             "decayMultiplier": 1,
                                                             "endDecayMultiplier": 1,
@@ -4206,6 +4322,7 @@
                                                             "frontalOscillationDecayMultiplier": 1,
                                                             "frontalOscillationRandomnessMultiplier": 1,
                                                             "animatedRecoilMultiplier": 1,
+                                                            "disableRecoil": 0,
                                                             "headRotationMultiplier": {
                                                                 "x": 1,
                                                                 "y": 1,
@@ -4424,6 +4541,7 @@
                                                         "spawnBoxScale": 0.5,
                                                         "maxLoggedCollisions": 1,
                                                         "Damping": 0.01,
+                                                        "DampingZeroG": 0.01,
                                                         "DampingFreefall": 0.05,
                                                         "PushableByPlayers": 1,
                                                         "NeverAffectTriggers": 0,
@@ -4444,14 +4562,19 @@
                                                         "temperature": {
                                                             "enable": 0,
                                                             "initialTemperature": -1,
-                                                            "coolingEqualizationMultiplier": 1,
                                                             "internalTemperatureGeneration": 0,
+                                                            "coolingEqualizationParams": {
+                                                                "CoolingEqualizationMultiplier": {
+                                                                    "coolingEqualizationMultiplier": 1
+                                                                }
+                                                            },
                                                             "signatureParams": {
                                                                 "enable": 0,
                                                                 "minimumTemperatureForIR": 250,
                                                                 "temperatureToIR": 6
                                                             },
                                                             "itemResourceParams": {
+                                                                "poweredAmbientCoolingMultiplier": 1,
                                                                 "minOperatingTemperature": 0,
                                                                 "minCoolingTemperature": 300,
                                                                 "enableOverheat": 0,
@@ -4494,6 +4617,11 @@
                                         "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
                                         "__ref": "c69ad780-94d8-49ba-9cc6-68e307c539a8",
                                         "__path": "libs/foundry/records/entities/scitem/ships/weapons/parts/klwe_massdriver_ventilation_s3.xml",
+                                        "defaultEditorColor": {
+                                            "r": 1,
+                                            "g": 1,
+                                            "b": 0
+                                        },
                                         "tags": [],
                                         "StaticEntityClassData": {
                                             "DefaultEntitlementEntityParams": {
@@ -4626,6 +4754,11 @@
                                                 "rootOverridePaint": 0,
                                                 "inheritModelTagFromHost": 1,
                                                 "ModelTag": [],
+                                                "meshsetup": {
+                                                    "visibilityTags": {
+                                                        "tags": []
+                                                    }
+                                                },
                                                 "Geometry": {
                                                     "Tags": "",
                                                     "ScaleMultiplier": 1,
@@ -4707,6 +4840,7 @@
                                                         "chargeTimeMultiplier": 1,
                                                         "useAlternateProjectileVisuals": 0,
                                                         "useAugmentedRealityProjectiles": 0,
+                                                        "disableMisfire": 0,
                                                         "recoilModifier": {
                                                             "decayMultiplier": 1,
                                                             "endDecayMultiplier": 1,
@@ -4721,6 +4855,7 @@
                                                             "frontalOscillationDecayMultiplier": 1,
                                                             "frontalOscillationRandomnessMultiplier": 1,
                                                             "animatedRecoilMultiplier": 1,
+                                                            "disableRecoil": 0,
                                                             "headRotationMultiplier": {
                                                                 "x": 1,
                                                                 "y": 1,
@@ -4939,6 +5074,7 @@
                                                         "spawnBoxScale": 0.5,
                                                         "maxLoggedCollisions": 1,
                                                         "Damping": 0.01,
+                                                        "DampingZeroG": 0.01,
                                                         "DampingFreefall": 0.05,
                                                         "PushableByPlayers": 1,
                                                         "NeverAffectTriggers": 0,
@@ -4959,14 +5095,19 @@
                                                         "temperature": {
                                                             "enable": 0,
                                                             "initialTemperature": -1,
-                                                            "coolingEqualizationMultiplier": 1,
                                                             "internalTemperatureGeneration": 0,
+                                                            "coolingEqualizationParams": {
+                                                                "CoolingEqualizationMultiplier": {
+                                                                    "coolingEqualizationMultiplier": 1
+                                                                }
+                                                            },
                                                             "signatureParams": {
                                                                 "enable": 0,
                                                                 "minimumTemperatureForIR": 250,
                                                                 "temperatureToIR": 6
                                                             },
                                                             "itemResourceParams": {
+                                                                "poweredAmbientCoolingMultiplier": 1,
                                                                 "minOperatingTemperature": 0,
                                                                 "minCoolingTemperature": 300,
                                                                 "enableOverheat": 0,
@@ -5029,7 +5170,7 @@
                             "linkedInteractionStates": [],
                             "signatureParams": {
                                 "EMSignature": {
-                                    "nominalSignature": 0,
+                                    "nominalSignature": 900,
                                     "decayRate": 0.15,
                                     "functionalityCurve": []
                                 },
@@ -5039,13 +5180,34 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 56,
+                        "healthRatio": 0.2
+                    }
                 },
                 "InteriorMapEntityVisiblityEntityComponentParams": {
                     "show": 1
@@ -5065,7 +5227,7 @@
         "grade": 1,
         "name": "Sledge III Mass Driver Cannon",
         "tags": "KLWE MassDriver flightReady weaponMountUsable",
-        "manufacturer": "KLA",
+        "required_tags": "",
         "classification": "Ship.Weapon.Gun",
         "stdItem": {
             "UUID": "ccd05b20-4042-4c49-a4c0-4a94f6d841ee",
@@ -5075,12 +5237,36 @@
             "Width": 0.6699014,
             "Height": 1.202842,
             "Length": 4.422015,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.67,
+                    "Length": 4.42,
+                    "Height": 1.2
+                },
+                "UIDimensions": {
+                    "Width": 0.75,
+                    "Length": 3,
+                    "Height": 0.75
+                },
+                "Volume": {
+                    "SCU": 0.756,
+                    "SCUConverted": 756000,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 1200,
             "Type": "WeaponGun.Gun",
             "Name": "Sledge III Mass Driver Cannon",
             "Description": "Manufacturer: Klaus & Werner\\nItem Type: Mass Driver Cannon\\nSize: 3\\n\\nThe Sledge III is the size three variant of Klaus & Werner's popular mass driver cannon series. Though slow to fire, the weapon successfully blends the company's philosophy of simple design with cutting edge railgun technology to fire ballistic projectiles with surgical precision at range.",
+            "DescriptionData": {
+                "Manufacturer": "Klaus & Werner",
+                "Item Type": "Mass Driver Cannon",
+                "Size": "3"
+            },
+            "DescriptionText": "The Sledge III is the size three variant of Klaus & Werner's popular mass driver cannon series. Though slow to fire, the weapon successfully blends the company's philosophy of simple design with cutting edge railgun technology to fire ballistic projectiles with surgical precision at range.",
             "Manufacturer": {
-                "Code": "KLA",
-                "Name": "Klaus & Werner"
+                "Name": "Klaus & Werner",
+                "UUID": "1aa076d5-ac29-4c61-a905-d3ea39cf167a"
             },
             "Tags": [
                 "KLWE",
@@ -5091,41 +5277,89 @@
             "Ports": [
                 {
                     "PortName": "BAR1",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 3,
+                    "MinSize": 3,
+                    "MaxSize": 3,
                     "Types": [
-                        "WeaponAttachment"
+                        "WeaponAttachment.Barrel"
                     ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponAttachment",
+                            "SubTypes": [
+                                "Barrel"
+                            ]
+                        }
+                    ],
+                    "EquippedItem": "9771e843-52f7-45df-8911-152d0513a8ed",
                     "Uneditable": false
                 },
                 {
                     "PortName": "MEC",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 3,
+                    "MinSize": 3,
+                    "MaxSize": 3,
                     "Types": [
-                        "WeaponAttachment"
+                        "WeaponAttachment.FiringMechanism"
                     ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponAttachment",
+                            "SubTypes": [
+                                "FiringMechanism"
+                            ]
+                        }
+                    ],
+                    "EquippedItem": "eb5e4b66-2b7f-4d7d-a4ab-d3298a34c09d",
                     "Uneditable": false
                 },
                 {
                     "PortName": "POW",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 3,
+                    "MinSize": 3,
+                    "MaxSize": 3,
                     "Types": [
-                        "WeaponAttachment"
+                        "WeaponAttachment.PowerArray"
                     ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponAttachment",
+                            "SubTypes": [
+                                "PowerArray"
+                            ]
+                        }
+                    ],
+                    "EquippedItem": "06391919-f026-4e93-9acd-31dc6d7b72a8",
                     "Uneditable": false
                 },
                 {
                     "PortName": "VEN",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 3,
+                    "MinSize": 3,
+                    "MaxSize": 3,
                     "Types": [
-                        "WeaponAttachment"
+                        "WeaponAttachment.Ventilation"
                     ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponAttachment",
+                            "SubTypes": [
+                                "Ventilation"
+                            ]
+                        }
+                    ],
+                    "EquippedItem": "c69ad780-94d8-49ba-9cc6-68e307c539a8",
                     "Uneditable": false
                 }
             ],
             "Ammunition": {
                 "UUID": "579036ad-5aac-434c-bd30-d3af293f9547",
-                "Type": "AmmoParams",
                 "Speed": 3000,
+                "Lifetime": 0.5,
                 "Range": 1500,
                 "Size": 3,
                 "ImpactDamage": {
@@ -5136,36 +5370,219 @@
                     "Biochemical": 0,
                     "Stun": 0
                 },
-                "Capacity": 70
+                "InitialCapacity": 102,
+                "Capacity": 102,
+                "ImpulseScale": 1,
+                "BulletType": -1,
+                "DamageFalloffLevel1": 0,
+                "DamageFalloffLevel2": 0,
+                "DamageFalloffLevel3": 0,
+                "MaxPenetrationThickness": 0.5,
+                "Penetration": {
+                    "BasePenetrationDistance": 6.3,
+                    "NearRadius": 0.32,
+                    "FarRadius": 0.63
+                }
             },
             "DimensionOverrides": {
                 "Width": 0.75,
                 "Length": 3,
-                "Height": 0.75
+                "Height": 0.75,
+                "Volume": 0.864
+            },
+            "Distortion": {
+                "DecayDelay": 0,
+                "DecayRate": 500000,
+                "Maximum": 500000,
+                "WarningRatio": 0.75,
+                "RecoveryRatio": 0,
+                "PowerRatioAtMaxDistortion": 0,
+                "PowerChangeOnlyAtMaxDistortion": 0,
+                "ShutdownTime": 1
             },
             "Durability": {
-                "Health": 3050
+                "Health": 3050,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 0.6,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
+            },
+            "Emission": {
+                "Em": {
+                    "Maximum": 900,
+                    "Minimum": 0,
+                    "Decay": 0.15
+                },
+                "Ir": 0
+            },
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "Consumption",
+                                "Resource": "Power",
+                                "Rate": 2,
+                                "MinimumFraction": 0
+                            }
+                        ],
+                        "Signature": {
+                            "EM": 900
+                        },
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 56,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 0,
+                        "Maximum": 2
+                    },
+                    "Coolant": {
+                        "Minimum": 0,
+                        "Maximum": 2
+                    }
+                }
             },
             "Weapon": {
+                "Size": 3,
+                "WeaponType": "WeaponGun",
+                "WeaponClass": "Gun",
+                "EffectiveRange": 1500,
+                "RateOfFire": 24,
+                "Capacity": 102,
+                "Attachments": [
+                    {
+                        "UUID": "9771e843-52f7-45df-8911-152d0513a8ed",
+                        "Port": "BAR1",
+                        "ClassName": "KLWE_MassDriver_Barrel_S3"
+                    },
+                    {
+                        "UUID": "eb5e4b66-2b7f-4d7d-a4ab-d3298a34c09d",
+                        "Port": "MEC",
+                        "ClassName": "KLWE_MassDriver_FiringMechanism_S3"
+                    },
+                    {
+                        "UUID": "06391919-f026-4e93-9acd-31dc6d7b72a8",
+                        "Port": "POW",
+                        "ClassName": "KLWE_MassDriver_PowerArray_S3"
+                    },
+                    {
+                        "UUID": "c69ad780-94d8-49ba-9cc6-68e307c539a8",
+                        "Port": "VEN",
+                        "ClassName": "KLWE_MassDriver_Ventilation_S3"
+                    }
+                ],
                 "Modes": [
                     {
                         "Name": "Charge",
                         "LocalisedName": "[CHARGE]",
-                        "RoundsPerMinute": 30,
+                        "RoundsPerMinute": 24,
                         "FireType": "charged",
                         "AmmoPerShot": 1,
                         "PelletsPerShot": 1,
                         "DamagePerShot": 1125,
-                        "DamagePerSecond": 562.5
+                        "DamagePerSecond": 450,
+                        "Alpha": 1125,
+                        "Dps": 450,
+                        "MaxDamagePerMagazine": 114750,
+                        "DpsPhysical": 450,
+                        "DpsEnergy": 0,
+                        "DpsDistortion": 0,
+                        "DpsThermal": 0,
+                        "DpsBiochemical": 0,
+                        "DpsStun": 0,
+                        "AlphaPhysical": 1125,
+                        "AlphaEnergy": 0,
+                        "AlphaDistortion": 0,
+                        "AlphaThermal": 0,
+                        "AlphaBiochemical": 0,
+                        "AlphaStun": 0,
+                        "Spread": {
+                            "Minimum": 0.2,
+                            "Maximum": 0.2,
+                            "FirstAttack": 0.025,
+                            "Attack": 0.025,
+                            "Decay": 0.05
+                        },
+                        "AdsSpread": {
+                            "Minimum": 0.2,
+                            "Maximum": 0.2,
+                            "FirstAttack": 0.025,
+                            "Attack": 0.025,
+                            "Decay": 0.05
+                        },
+                        "Charge": {
+                            "ChargeTime": 2.5,
+                            "OverchargeTime": 0,
+                            "OverchargedTime": 0,
+                            "CooldownTime": 0
+                        },
+                        "ChargeModifier": {
+                            "Damage": 1,
+                            "FireRate": 1,
+                            "AmmoSpeed": 1,
+                            "AmmoCost": 0,
+                            "AmmoCostMultiplier": 1
+                        }
                     }
                 ],
-                "Ammunition": {
-                    "UUID": "579036ad-5aac-434c-bd30-d3af293f9547",
-                    "Type": "AmmoParams",
-                    "Speed": 3000,
-                    "Range": 1500,
-                    "Size": 3,
-                    "ImpactDamage": {
+                "FireMode": "Charge",
+                "Damage": {
+                    "Sustained60s": 450,
+                    "Burst": 450,
+                    "AlphaTotal": 1125,
+                    "DpsTotal": 450,
+                    "Maximum": 114750,
+                    "Alpha": {
                         "Physical": 1125,
                         "Energy": 0,
                         "Distortion": 0,
@@ -5173,7 +5590,83 @@
                         "Biochemical": 0,
                         "Stun": 0
                     },
-                    "Capacity": 70
+                    "Dps": {
+                        "Physical": 450,
+                        "Energy": 0,
+                        "Distortion": 0,
+                        "Thermal": 0,
+                        "Biochemical": 0,
+                        "Stun": 0
+                    }
+                },
+                "Heat": {
+                    "HeatPerShot": 0,
+                    "CoolingDelay": 1,
+                    "CoolingPerSecond": 22.2,
+                    "OverheatTemperature": 100,
+                    "OverheatFixTime": 5
+                }
+            },
+            "WeaponModifier": {
+                "ActivateOnAttach": 1,
+                "IgnoreWear": 0,
+                "WeaponStats": {
+                    "Base": {
+                        "MuzzleFlashScale": 1,
+                        "FireRateMultiplier": 1,
+                        "DamageMultiplier": 1,
+                        "ProjectileSpeedMultiplier": 1,
+                        "AmmoCostMultiplier": 1,
+                        "HeatGenerationMultiplier": 1,
+                        "SoundRadiusMultiplier": 1,
+                        "ChargeTimeMultiplier": 1
+                    },
+                    "Recoil": {
+                        "DecayMultiplier": 1,
+                        "EndDecayMultiplier": 1,
+                        "FireRecoilTimeMultiplier": 1,
+                        "FireRecoilStrengthFirstMultiplier": 1,
+                        "FireRecoilStrengthMultiplier": 1,
+                        "AngleRecoilStrengthMultiplier": 1,
+                        "RandomnessMultiplier": 1,
+                        "RandomnessBackPushMultiplier": 1,
+                        "FrontalOscillationRotationMultiplier": 1,
+                        "FrontalOscillationStrengthMultiplier": 1,
+                        "FrontalOscillationDecayMultiplier": 1,
+                        "FrontalOscillationRandomnessMultiplier": 1,
+                        "AnimatedRecoilMultiplier": 1,
+                        "AimRecoil": {
+                            "RandomPitchMultiplier": 1,
+                            "RandomYawMultiplier": 1,
+                            "DecayMultiplier": 1,
+                            "EndDecayMultiplier": 1
+                        }
+                    },
+                    "Spread": {
+                        "MinMultiplier": 1,
+                        "MaxMultiplier": 1,
+                        "FirstAttackMultiplier": 1,
+                        "AttackMultiplier": 1,
+                        "DecayMultiplier": 1,
+                        "AdditiveModifier": 0
+                    },
+                    "Aim": {
+                        "ZoomScale": 1,
+                        "SecondZoomScale": 1,
+                        "ZoomTimeScale": 1,
+                        "HideWeaponInAds": 0,
+                        "FstopMultiplier": 1
+                    },
+                    "Regen": {
+                        "PowerRatioMultiplier": 1,
+                        "MaxAmmoLoadMultiplier": 1,
+                        "MaxRegenPerSecMultiplier": 1
+                    },
+                    "Salvage": {
+                        "SalvageSpeedMultiplier": 1,
+                        "RadiusMultiplier": 1,
+                        "ExtractionEfficiency": 1
+                    }
                 }
             }
         }

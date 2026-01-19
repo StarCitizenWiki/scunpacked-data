@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "d2185125-70a1-4f51-a149-527828e9df9e",
             "__path": "libs/foundry/records/entities/scitem/ships/utility/tractorbeam/espr_prowler_utility_tractor_beam_arm.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": [],
             "Components": {
@@ -135,6 +140,11 @@
                     "rootOverridePaint": 1,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -225,6 +235,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -245,14 +256,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -284,16 +300,20 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": {
                         "SItemPortDef": {
                             "Name": "hardpoint_tractor_beam_turret",
-                            "DisplayName": "port_NameTractorTurret",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "$Uneditable",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 2,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -301,6 +321,7 @@
                             "resourceLinkToParent": 1,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -420,6 +441,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -467,9 +489,10 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
-                }
+                },
+                "SAudioProxyParams": []
             },
             "ClassName": "ESPR_Prowler_Utility_Tractor_Beam_Arm",
             "__type": "ToolArm"
@@ -485,7 +508,7 @@
         "grade": 1,
         "name": "Mining Arm",
         "tags": "miningMount",
-        "manufacturer": "ESPR",
+        "required_tags": "",
         "stdItem": {
             "UUID": "d2185125-70a1-4f51-a149-527828e9df9e",
             "ClassName": "ESPR_Prowler_Utility_Tractor_Beam_Arm",
@@ -494,12 +517,26 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 1,
             "Type": "ToolArm.UNDEFINED",
             "Name": "Mining Arm",
             "Description": "",
+            "DescriptionText": "",
             "Manufacturer": {
-                "Code": "ESPR",
-                "Name": "Esperia"
+                "Name": "Esperia",
+                "UUID": "4ecc1a24-d228-4dd5-8857-21ba6145a1d3"
             },
             "Tags": [
                 "miningMount"
@@ -507,18 +544,57 @@
             "Ports": [
                 {
                     "PortName": "hardpoint_tractor_beam_turret",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 2,
+                    "MinSize": 1,
+                    "MaxSize": 2,
                     "Flags": [
                         "$Uneditable"
                     ],
                     "Types": [
-                        "Turret"
+                        "Turret.Utility"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "Turret",
+                            "SubTypes": [
+                                "Utility"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 }
             ],
             "Durability": {
-                "Health": 4000
+                "Health": 4000,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
             }
         }
     }

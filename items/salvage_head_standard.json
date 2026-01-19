@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "f8aabcb1-83b9-4b08-8846-acc77082cd4d",
             "__path": "libs/foundry/records/entities/scitem/ships/utility/salvage/salvagehead/salvage_head_standard.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": {
                 "DefaultEntitlementEntityParams": {
@@ -146,6 +151,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -249,6 +259,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -296,7 +307,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "SEntityPhysicsControllerParams": {
@@ -307,6 +318,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -327,14 +339,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -397,13 +414,18 @@
                             "UseAsTimer": 0,
                             "InitialAgeRatio": 0,
                             "InitialUsageRatio": 0,
-                            "BasePowerMultiplier": 0,
-                            "DrawPowerMultiplier": 0,
                             "AtmosphereMultiplier": 1,
                             "DamageConversionRate": 0.01,
                             "HeatMultipliers": {
                                 "NormalTemperatureMultiplier": 1,
                                 "OverheatTemperatureMultiplier": 1
+                            },
+                            "FunctionalityMultiplier": {
+                                "UsePowerRatio": 1,
+                                "FunctionalityMultiplyCurve": {
+                                    "useLUT": 0,
+                                    "points": []
+                                }
                             },
                             "EffectCurve": {
                                 "useLUT": 0,
@@ -439,16 +461,20 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 1,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": [
                         {
                             "Name": "hardpoint_salvage_subItem01",
-                            "DisplayName": "Sub_Item_Slot",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "salvageMount",
                             "RequiredPortTags": "salvageMount",
-                            "Flags": "invisible",
+                            "Flags": "invisible dont_hide_entity",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -456,6 +482,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -557,12 +584,15 @@
                         },
                         {
                             "Name": "hardpoint_salvage_subItem02",
-                            "DisplayName": "Sub_Item_Slot",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "salvageMount",
                             "RequiredPortTags": "salvageMount",
-                            "Flags": "invisible",
+                            "Flags": "invisible dont_hide_entity",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -570,6 +600,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -719,7 +750,8 @@
                         "adsReticle": "none"
                     },
                     "weaponAIData": {
-                        "idealCombatRange": 50,
+                        "idealCombatRange": 30,
+                        "maxFiringRange": 50,
                         "CombatRangeCategory": "Medium",
                         "baseAccuracy": 1,
                         "impactRadiusForFriendlyFire": 0,
@@ -771,6 +803,7 @@
                             "chargeTimeMultiplier": 1,
                             "useAlternateProjectileVisuals": 0,
                             "useAugmentedRealityProjectiles": 0,
+                            "disableMisfire": 0,
                             "recoilModifier": {
                                 "decayMultiplier": 1,
                                 "endDecayMultiplier": 1,
@@ -785,6 +818,7 @@
                                 "frontalOscillationDecayMultiplier": 1,
                                 "frontalOscillationRandomnessMultiplier": 1,
                                 "animatedRecoilMultiplier": 1,
+                                "disableRecoil": 0,
                                 "headRotationMultiplier": {
                                     "x": 1,
                                     "y": 1,
@@ -983,6 +1017,7 @@
                             "chargeTimeMultiplier": 1,
                             "useAlternateProjectileVisuals": 0,
                             "useAugmentedRealityProjectiles": 0,
+                            "disableMisfire": 0,
                             "recoilModifier": {
                                 "decayMultiplier": 1,
                                 "endDecayMultiplier": 1,
@@ -997,6 +1032,7 @@
                                 "frontalOscillationDecayMultiplier": 1,
                                 "frontalOscillationRandomnessMultiplier": 1,
                                 "animatedRecoilMultiplier": 1,
+                                "disableRecoil": 0,
                                 "headRotationMultiplier": {
                                     "x": 1,
                                     "y": 1,
@@ -1195,6 +1231,7 @@
                             "chargeTimeMultiplier": 1,
                             "useAlternateProjectileVisuals": 0,
                             "useAugmentedRealityProjectiles": 0,
+                            "disableMisfire": 0,
                             "recoilModifier": {
                                 "decayMultiplier": 1,
                                 "endDecayMultiplier": 1,
@@ -1209,6 +1246,7 @@
                                 "frontalOscillationDecayMultiplier": 1,
                                 "frontalOscillationRandomnessMultiplier": 1,
                                 "animatedRecoilMultiplier": 1,
+                                "disableRecoil": 0,
                                 "headRotationMultiplier": {
                                     "x": 1,
                                     "y": 1,
@@ -1407,6 +1445,7 @@
                             "chargeTimeMultiplier": 1,
                             "useAlternateProjectileVisuals": 0,
                             "useAugmentedRealityProjectiles": 0,
+                            "disableMisfire": 0,
                             "recoilModifier": {
                                 "decayMultiplier": 1,
                                 "endDecayMultiplier": 1,
@@ -1421,6 +1460,7 @@
                                 "frontalOscillationDecayMultiplier": 1,
                                 "frontalOscillationRandomnessMultiplier": 1,
                                 "animatedRecoilMultiplier": 1,
+                                "disableRecoil": 0,
                                 "headRotationMultiplier": {
                                     "x": 1,
                                     "y": 1,
@@ -1619,6 +1659,7 @@
                             "chargeTimeMultiplier": 1,
                             "useAlternateProjectileVisuals": 0,
                             "useAugmentedRealityProjectiles": 0,
+                            "disableMisfire": 0,
                             "recoilModifier": {
                                 "decayMultiplier": 1,
                                 "endDecayMultiplier": 1,
@@ -1633,6 +1674,7 @@
                                 "frontalOscillationDecayMultiplier": 1,
                                 "frontalOscillationRandomnessMultiplier": 1,
                                 "animatedRecoilMultiplier": 1,
+                                "disableRecoil": 0,
                                 "headRotationMultiplier": {
                                     "x": 1,
                                     "y": 1,
@@ -1853,6 +1895,7 @@
                             "maxVehicleDamageRatio": 0.9,
                             "repairedMaterialRatio": 1,
                             "maxHealthRepairRate": 10,
+                            "maxDamageMapRepairRate": 10,
                             "healthToAmmoRatio": 0.5,
                             "heatPerSecond": 0,
                             "wearPerSecond": 0,
@@ -2035,6 +2078,7 @@
                                     "beamEffects": []
                                 }
                             },
+                            "beamGroupOnlyHealthTypeItemRepair": [],
                             "updateCondition": [],
                             "beamStrengthValueParams": {
                                 "stable": 1,
@@ -2086,11 +2130,6 @@
                             "hitRadius": 0.1,
                             "ignoreActorStandingOnEntityTag": "00000000-0000-0000-0000-000000000000",
                             "ignoreVolumeTag": "00000000-0000-0000-0000-000000000000",
-                            "ignoreEntityTag": "00000000-0000-0000-0000-000000000000",
-                            "beingTractorBeamedTag": "a6a5e583-ed63-4a1d-8c2f-69357347763e",
-                            "contractedTag": "790ab65e-fdf3-4419-baa5-8f5c758e0ed5",
-                            "showLifetimeTag": "2fa9244b-cd51-4f56-bc77-194ab6ea575e",
-                            "checkParentForIgnoreTag": 0,
                             "mannequinTag": {
                                 "tag": ""
                             },
@@ -2119,11 +2158,6 @@
                                 "rotationSingleAxisDeadzone": 10
                             },
                             "attachDetachParams": {
-                                "minAlignmentValidHolo": 0.85,
-                                "minOutlineWidth": 1,
-                                "maxOutlineWidth": 1,
-                                "outlineOpacity": 0.3,
-                                "holoOpacity": 0.6,
                                 "detachAccelerationPopAmount": 10,
                                 "detachAimRange": 1.5,
                                 "itemPortDetachForceModifier": 1.2,
@@ -2147,30 +2181,6 @@
                                 "useSuitTransformForPlacement": 1,
                                 "useSuitTransformForRotation": 1,
                                 "allowGrappleInDetach": 0,
-                                "validHoloColor": {
-                                    "r": 0.001,
-                                    "g": 0.68,
-                                    "b": 0.02
-                                },
-                                "warningHoloColor": {
-                                    "r": 0.9,
-                                    "g": 0.66,
-                                    "b": 0.1
-                                },
-                                "invalidHoloColor": {
-                                    "r": 0.6,
-                                    "g": 0.05,
-                                    "b": 0.15
-                                },
-                                "cargoHoloPreviewColor": {
-                                    "r": 0.4,
-                                    "g": 0.4,
-                                    "b": 1,
-                                    "a": 0.7
-                                },
-                                "holoMaterial": {
-                                    "path": ""
-                                },
                                 "allowedDetachTypes": [
                                     {
                                         "Type": "WeaponGun",
@@ -2673,12 +2683,14 @@
                                     "scale": 1,
                                     "retriggerOnViewModeChange": 0,
                                     "isMuzzleFlash": 0,
+                                    "allowConditionReEvaluation": 0,
                                     "firstPerson": {
                                         "path": "d45268a8-dcf4-8bd7-6b89-46456c08932f|tractorbeam/fps_tractorbeam.FPS_Tractor_Beam.Muzzleflash_1st"
                                     },
                                     "thirdPerson": {
                                         "path": "d45268a8-dcf4-8bd7-6b89-46456c08932f|tractorbeam/fps_tractorbeam.FPS_Tractor_Beam.Muzzleflash_1st"
-                                    }
+                                    },
+                                    "effectCondition": []
                                 }
                             },
                             "shootTargetEffects": [],
@@ -2773,6 +2785,9 @@
                             "rtpc": "Weapon_Power_Level"
                         },
                         "switchFireModeAudioTrigger": {
+                            "audioTrigger": ""
+                        },
+                        "switchWeaponPresetAudioTrigger": {
                             "audioTrigger": ""
                         },
                         "weaponHeatRTPC": {
@@ -3163,7 +3178,8 @@
                                 },
                                 "penetrationParams": {
                                     "basePenetrationDistance": 0,
-                                    "angle": 0
+                                    "nearRadius": 0.5,
+                                    "farRadius": 5
                                 },
                                 "visualParams": {
                                     "maxLength": 15,
@@ -3200,6 +3216,7 @@
                     "tagsToEnableOnLoad": [],
                     "triggersToEnableOnLoad": []
                 },
+                "SCItemAimableComponentParams": [],
                 "ItemResourceComponentParams": {
                     "isResourceNetworked": 1,
                     "isRelay": 0,
@@ -3240,18 +3257,40 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 120,
+                        "healthRatio": 0.2
+                    }
                 },
                 "UIAudioComponentEntityComponentParams": {
                     "UIAudioDef": "ff29b069-da28-4f04-9d54-1d01aa93ef9f",
                     "useEntityClass": "00000000-0000-0000-0000-000000000000",
                     "dialogueContext": "00000000-0000-0000-0000-000000000000",
+                    "bypassRealisticMode": 0,
                     "UIAudioManufacturers": [],
                     "offset": [],
                     "videoAudioPlayTrigger": {
@@ -3267,6 +3306,7 @@
                         "audioTrigger": ""
                     }
                 },
+                "SAudioProxyParams": [],
                 "SAnimationControllerParams": {
                     "AnimationDatabase": "SCItems\\Weapons\\GATS\\GATS_BallisticGatling.adb",
                     "AnimationController": "SCItems\\Weapons\\WEP_Gatling_ControllerDef.xml",
@@ -3297,7 +3337,7 @@
         "grade": 1,
         "name": "Baler Salvage Head",
         "tags": "flightReady salvageMount",
-        "manufacturer": "GRIN",
+        "required_tags": "salvageMount",
         "stdItem": {
             "UUID": "f8aabcb1-83b9-4b08-8846-acc77082cd4d",
             "ClassName": "Salvage_Head_standard",
@@ -3306,23 +3346,55 @@
             "Width": 0.2233005,
             "Height": 0.801895,
             "Length": 2.211008,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.22,
+                    "Length": 2.21,
+                    "Height": 0.8
+                },
+                "UIDimensions": {
+                    "Width": 0.38,
+                    "Length": 0.38,
+                    "Height": 0.38
+                },
+                "Volume": {
+                    "SCU": 0.084,
+                    "SCUConverted": 84000,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 5,
             "Type": "SalvageHead.UNDEFINED",
             "Name": "Baler Salvage Head",
             "Description": "Manufacturer: Greycat Industrial\\nItem Type: Salvage Head\\nSize: 2\\n\\nModule Capacity: 3\\n\\nGreycat Industrial has spent centuries refining the Baler salvage head into its current form that's both durable and precise even under the harshest of conditions. Designed to swap between three modules, the Baler will be ready to rip apart whatever hull you find. Experience why it's the standard salvage head for countless personal and large-scale industrial operations across the universe.",
+            "DescriptionData": {
+                "Manufacturer": "Greycat Industrial",
+                "Item Type": "Salvage Head",
+                "Size": "2",
+                "Capacity": "3"
+            },
+            "DescriptionText": "Greycat Industrial has spent centuries refining the Baler salvage head into its current form that's both durable and precise even under the harshest of conditions. Designed to swap between three modules, the Baler will be ready to rip apart whatever hull you find. Experience why it's the standard salvage head for countless personal and large-scale industrial operations across the universe.",
             "Manufacturer": {
-                "Code": "GRIN",
-                "Name": "Greycat Industrial"
+                "Name": "Greycat Industrial",
+                "UUID": "819545f4-18af-49a6-814e-ca4fd08f56e5"
             },
             "Tags": [
                 "flightReady",
                 "salvageMount"
             ],
+            "RequiredTags": [
+                "salvageMount"
+            ],
             "Ports": [
                 {
                     "PortName": "hardpoint_salvage_subItem01",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 1,
+                    "MaxSize": 1,
                     "Flags": [
-                        "invisible"
+                        "invisible",
+                        "dont_hide_entity"
                     ],
                     "Tags": [
                         "salvageMount"
@@ -3333,13 +3405,22 @@
                     "Types": [
                         "SalvageModifier"
                     ],
-                    "Uneditable": false
+                    "CompatibleTypes": [
+                        {
+                            "Type": "SalvageModifier"
+                        }
+                    ],
+                    "Uneditable": true
                 },
                 {
                     "PortName": "hardpoint_salvage_subItem02",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 1,
+                    "MaxSize": 1,
                     "Flags": [
-                        "invisible"
+                        "invisible",
+                        "dont_hide_entity"
                     ],
                     "Tags": [
                         "salvageMount"
@@ -3350,13 +3431,18 @@
                     "Types": [
                         "SalvageModifier"
                     ],
-                    "Uneditable": false
+                    "CompatibleTypes": [
+                        {
+                            "Type": "SalvageModifier"
+                        }
+                    ],
+                    "Uneditable": true
                 }
             ],
             "Ammunition": {
                 "UUID": "ee8f19ed-edd8-44ce-baa1-743afd10d5ce",
-                "Type": "AmmoParams",
                 "Speed": 1200,
+                "Lifetime": 4,
                 "Range": 4800,
                 "Size": 1,
                 "ImpactDamage": {
@@ -3367,13 +3453,9 @@
                     "Biochemical": 0,
                     "Stun": 0
                 },
+                "InitialCapacity": 0,
                 "Capacity": 2147483647,
                 "BulletImpulseFalloff": {
-                    "MinDistance": 0,
-                    "DropFalloff": 0.0025,
-                    "MaxFalloff": 0.5
-                },
-                "BulletElectron": {
                     "MinDistance": 0,
                     "DropFalloff": 0.0025,
                     "MaxFalloff": 0.5
@@ -3401,15 +3483,64 @@
                     "Thermal": 0,
                     "Biochemical": 0,
                     "Stun": 0
+                },
+                "ImpulseScale": 1,
+                "BulletType": 2,
+                "DamageFalloffLevel1": 0,
+                "DamageFalloffLevel2": 0,
+                "DamageFalloffLevel3": 0,
+                "MaxPenetrationThickness": 0.3,
+                "Penetration": {
+                    "BasePenetrationDistance": 0,
+                    "NearRadius": 0.5,
+                    "FarRadius": 5
                 }
             },
             "DimensionOverrides": {
                 "Width": 0.38,
                 "Length": 0.38,
-                "Height": 0.38
+                "Height": 0.38,
+                "Volume": 0.028094464000000003
             },
             "Durability": {
-                "Health": 5000
+                "Lifetime": 720,
+                "Health": 5000,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
+            },
+            "Emission": {
+                "Em": {
+                    "Maximum": 0,
+                    "Minimum": 0,
+                    "Decay": 0.15
+                },
+                "Ir": 0
             },
             "HeatConnection": {
                 "TemperatureToIR": 6,
@@ -3447,73 +3578,108 @@
                 "PowerToEM": 0,
                 "DecayRateOfEM": 0.15
             },
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "Consumption",
+                                "Resource": "Power",
+                                "Rate": 1,
+                                "MinimumFraction": 1
+                            }
+                        ],
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 120,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 1,
+                        "Maximum": 1
+                    },
+                    "Coolant": {
+                        "Minimum": 0,
+                        "Maximum": 1
+                    }
+                }
+            },
             "Weapon": {
+                "Size": 2,
+                "WeaponType": "SalvageHead",
+                "WeaponClass": "UNDEFINED",
+                "EffectiveRange": 4800,
+                "Capacity": 2147483647,
                 "Modes": [
                     {
                         "Name": "Beam",
                         "LocalisedName": "<= PLACEHOLDER =>",
                         "FireType": "Salvage",
                         "DamagePerShot": 0,
-                        "DamagePerSecond": 0
+                        "DamagePerSecond": 0,
+                        "Alpha": 0,
+                        "Dps": 0,
+                        "MaxDamagePerMagazine": 0,
+                        "DpsPhysical": 0,
+                        "DpsEnergy": 0,
+                        "DpsDistortion": 0,
+                        "DpsThermal": 0,
+                        "DpsBiochemical": 0,
+                        "DpsStun": 0,
+                        "AlphaPhysical": 0,
+                        "AlphaEnergy": 0,
+                        "AlphaDistortion": 0,
+                        "AlphaThermal": 0,
+                        "AlphaBiochemical": 0,
+                        "AlphaStun": 0
                     },
                     {
                         "Name": "TractorBeam",
                         "LocalisedName": "Tractor Beam",
                         "FireType": "tractorbeam",
                         "DamagePerShot": 0,
-                        "DamagePerSecond": 0
+                        "DamagePerSecond": 0,
+                        "Alpha": 0,
+                        "Dps": 0,
+                        "MaxDamagePerMagazine": 0,
+                        "DpsPhysical": 0,
+                        "DpsEnergy": 0,
+                        "DpsDistortion": 0,
+                        "DpsThermal": 0,
+                        "DpsBiochemical": 0,
+                        "DpsStun": 0,
+                        "AlphaPhysical": 0,
+                        "AlphaEnergy": 0,
+                        "AlphaDistortion": 0,
+                        "AlphaThermal": 0,
+                        "AlphaBiochemical": 0,
+                        "AlphaStun": 0
                     }
-                ],
-                "Ammunition": {
-                    "UUID": "ee8f19ed-edd8-44ce-baa1-743afd10d5ce",
-                    "Type": "AmmoParams",
-                    "Speed": 1200,
-                    "Range": 4800,
-                    "Size": 1,
-                    "ImpactDamage": {
-                        "Physical": 0,
-                        "Energy": 21,
-                        "Distortion": 0,
-                        "Thermal": 0,
-                        "Biochemical": 0,
-                        "Stun": 0
-                    },
-                    "Capacity": 2147483647,
-                    "BulletImpulseFalloff": {
-                        "MinDistance": 0,
-                        "DropFalloff": 0.0025,
-                        "MaxFalloff": 0.5
-                    },
-                    "BulletElectron": {
-                        "MinDistance": 0,
-                        "DropFalloff": 0.0025,
-                        "MaxFalloff": 0.5
-                    },
-                    "DamageDropMinDistance": {
-                        "Physical": 0,
-                        "Energy": 0,
-                        "Distortion": 0,
-                        "Thermal": 0,
-                        "Biochemical": 0,
-                        "Stun": 0
-                    },
-                    "DamageDropPerMeter": {
-                        "Physical": 0,
-                        "Energy": 0,
-                        "Distortion": 0,
-                        "Thermal": 0,
-                        "Biochemical": 0,
-                        "Stun": 0
-                    },
-                    "DamageDropMinDamage": {
-                        "Physical": 0,
-                        "Energy": 0,
-                        "Distortion": 0,
-                        "Thermal": 0,
-                        "Biochemical": 0,
-                        "Stun": 0
-                    }
-                }
+                ]
             }
         }
     }

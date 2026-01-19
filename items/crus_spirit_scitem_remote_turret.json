@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "a7174c39-5d6e-4176-80f2-719e14dda858",
             "__path": "libs/foundry/records/entities/scitem/ships/turret/crus_spirit_scitem_remote_turret.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": {
                 "Reference": {
                     "value": "61d439f9-0bef-43e0-8ecc-fe96c9793d66"
@@ -144,6 +149,11 @@
                     "rootOverridePaint": 1,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -206,17 +216,18 @@
                     "defaultMovementTag": "3f7c67c2-29fd-4493-8424-d49d8055794a",
                     "recenterIfUnused": 0,
                     "healthModifierRecord": "00000000-0000-0000-0000-000000000000",
-                    "powerRequirement": 1,
                     "switchToCachedOperatorModeOnExit": 1,
                     "operatorModeOnEnter": "Turret",
                     "jointConvergence": "",
-                    "fixedAssistRadiusInner": 1,
-                    "fixedAssistRadiusOuter": 6,
                     "intoxicationModifierRef": "da01cefe-07b3-4533-aac4-09d4c624dc2e",
                     "hudParamsOverride": "00000000-0000-0000-0000-000000000000",
                     "autoDeployHelmetTargetingMode": 1,
-                    "recenterTask": [],
-                    "resumeControlTask": [],
+                    "recenterTask": {
+                        "SSequencerTurretRecenterTaskParams": []
+                    },
+                    "resumeControlTask": {
+                        "SSequencerTurretResumeControlTaskParams": []
+                    },
                     "setMovementTagTasks": [
                         {
                             "movementTag": "3f7c67c2-29fd-4493-8424-d49d8055794a"
@@ -689,6 +700,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -763,6 +775,7 @@
                             "maxPhysRadius": 3,
                             "angle": 0,
                             "angleVertical": 0,
+                            "explosionZone": "AdamHosted",
                             "pressure": 5,
                             "holeSize": 0,
                             "terrainHoleSize": 1,
@@ -813,6 +826,7 @@
                                     }
                                 }
                             },
+                            "fragmentParams": [],
                             "effect": {
                                 "path": "14263f7e-cb75-f03d-17e1-f05dd54e5306|Environments/Generic/Generic_Explosions.LT_EXPLOSIONS.lt_explosion_single_1m3_once_1"
                             },
@@ -841,7 +855,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "SEntityPhysicsControllerParams": {
@@ -852,6 +866,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -872,14 +887,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -1112,16 +1132,20 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": [
                         {
                             "Name": "turret_left",
-                            "DisplayName": "port_NameTurretGunSlot01",
+                            "DisplayName": "Turret Weapon Slot 1",
+                            "__DisplayName": "@port_NameTurretGunSlot01",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 2,
                             "MaxSize": 2,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -1129,6 +1153,7 @@
                             "resourceLinkToParent": 1,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -1220,12 +1245,15 @@
                         },
                         {
                             "Name": "turret_right",
-                            "DisplayName": "port_NameTurretGunSlot02",
+                            "DisplayName": "Turret Weapon Slot 2",
+                            "__DisplayName": "@port_NameTurretGunSlot02",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 2,
                             "MaxSize": 2,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -1233,6 +1261,7 @@
                             "resourceLinkToParent": 1,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -1545,6 +1574,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [
                                         {
@@ -1574,6 +1604,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [
                                         {
@@ -1911,13 +1942,17 @@
                                     "id": "545a926c-8b01-49e6-b83a-7df9f39c6f8a"
                                 }
                             },
-                            "entityTraversingType": [],
+                            "entityTraversingType": {
+                                "SEntityTraversingNodeTypeRootEntity": []
+                            },
                             "executeNodes": [],
                             "nextNodes": []
                         }
                     },
                     "TraversingTargets": []
-                }
+                },
+                "SCItemAimableComponentParams": [],
+                "SAudioProxyParams": []
             },
             "ClassName": "CRUS_Spirit_SCItem_Remote_Turret",
             "__type": "Turret"
@@ -1933,7 +1968,17 @@
         "grade": 1,
         "name": "Remote Turret",
         "tags": "CRUS_Spirit_Turret",
-        "manufacturer": "CRUS",
+        "required_tags": "CRUS_Spirit_Turret",
+        "entity_tags": [
+            "61d439f9-0bef-43e0-8ecc-fe96c9793d66"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "61d439f9-0bef-43e0-8ecc-fe96c9793d66",
+                "name": "Turret"
+            }
+        ],
+        "classification": "Ship.Turret.GunTurret",
         "stdItem": {
             "UUID": "a7174c39-5d6e-4176-80f2-719e14dda858",
             "ClassName": "CRUS_Spirit_SCItem_Remote_Turret",
@@ -1942,38 +1987,117 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 0,
             "Type": "Turret.GunTurret",
             "Name": "Remote Turret",
             "Description": "Remote Turret",
+            "DescriptionText": "Remote Turret",
             "Manufacturer": {
-                "Code": "CRUS",
-                "Name": "Crusader Industries"
+                "Name": "Crusader Industries",
+                "UUID": "63685f47-b0cc-4ebe-8f16-72793a5cd6e0"
             },
             "Tags": [
+                "CRUS_Spirit_Turret"
+            ],
+            "RequiredTags": [
                 "CRUS_Spirit_Turret"
             ],
             "Ports": [
                 {
                     "PortName": "turret_left",
+                    "DisplayName": "@port_NameTurretGunSlot01",
                     "Size": 2,
+                    "MinSize": 2,
+                    "MaxSize": 2,
                     "Types": [
-                        "WeaponGun",
-                        "Turret"
+                        "WeaponGun.Gun",
+                        "Turret.GunTurret"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponGun",
+                            "SubTypes": [
+                                "Gun"
+                            ]
+                        },
+                        {
+                            "Type": "Turret",
+                            "SubTypes": [
+                                "GunTurret"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 },
                 {
                     "PortName": "turret_right",
+                    "DisplayName": "@port_NameTurretGunSlot02",
                     "Size": 2,
+                    "MinSize": 2,
+                    "MaxSize": 2,
                     "Types": [
-                        "WeaponGun",
-                        "Turret"
+                        "WeaponGun.Gun",
+                        "Turret.GunTurret"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponGun",
+                            "SubTypes": [
+                                "Gun"
+                            ]
+                        },
+                        {
+                            "Type": "Turret",
+                            "SubTypes": [
+                                "GunTurret"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 }
             ],
             "Durability": {
-                "Health": 6000
+                "Health": 6000,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
             },
             "HeatConnection": {
                 "TemperatureToIR": 6,
@@ -1996,6 +2120,15 @@
                 "MisfireMinTemperature": 370,
                 "MisfireMaxTemperature": 600
             },
+            "Interactions": [
+                "Activate remote camera",
+                "Turret_gyro_mode",
+                "Toptobottom",
+                "Bottomtotop",
+                "Snaptobottomstate",
+                "Snaptotopstate",
+                "Cycleturretposition"
+            ],
             "PowerConnection": {
                 "PowerBase": 0,
                 "PowerDraw": 2,
@@ -2010,6 +2143,77 @@
                 "OverclockPerformance": 0,
                 "PowerToEM": 0,
                 "DecayRateOfEM": 0.15
+            },
+            "Turret": {
+                "RotationStyle": "SingleAxis",
+                "MovementList": [
+                    {
+                        "JointName": "turret_yaw",
+                        "SlavedOnly": 0,
+                        "RestrictTargetAngles": 0,
+                        "YawAxis": {
+                            "Speed": 95,
+                            "AccelerationTimeToFullSpeed": 0.3,
+                            "JerkTimeToFullAcceleration": 0.1,
+                            "AccelerationDecay": 18,
+                            "AngleLimits": [
+                                {
+                                    "LowestAngle": -180,
+                                    "HighestAngle": 180
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "JointName": "turret_pitch",
+                        "SlavedOnly": 0,
+                        "RestrictTargetAngles": 0,
+                        "PitchAxis": {
+                            "Speed": 95,
+                            "AccelerationTimeToFullSpeed": 0.3,
+                            "JerkTimeToFullAcceleration": 0.1,
+                            "AccelerationDecay": 18,
+                            "AngleLimits": [
+                                {
+                                    "RelativeJointName": "turret_yaw"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "JointName": "turret_yaw",
+                        "SlavedOnly": 0,
+                        "RestrictTargetAngles": 0,
+                        "YawAxis": {
+                            "Speed": 95,
+                            "AccelerationTimeToFullSpeed": 0.3,
+                            "JerkTimeToFullAcceleration": 0.1,
+                            "AccelerationDecay": 18,
+                            "AngleLimits": [
+                                {
+                                    "LowestAngle": -75,
+                                    "HighestAngle": 75
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "JointName": "turret_pitch",
+                        "SlavedOnly": 0,
+                        "RestrictTargetAngles": 0,
+                        "PitchAxis": {
+                            "Speed": 95,
+                            "AccelerationTimeToFullSpeed": 0.3,
+                            "JerkTimeToFullAcceleration": 0.1,
+                            "AccelerationDecay": 18,
+                            "AngleLimits": [
+                                {
+                                    "RelativeJointName": "turret_yaw"
+                                }
+                            ]
+                        }
+                    }
+                ]
             }
         }
     }

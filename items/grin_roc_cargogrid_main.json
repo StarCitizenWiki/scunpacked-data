@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "a3ea3ede-23a3-410d-a576-175d25949c17",
             "__path": "libs/foundry/records/entities/scitem/vehicles/cargogrid/grin_roc_cargogrid_main.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [
                 {
                     "value": "6720a467-90cd-479d-9b0f-897bc30c26be"
@@ -102,6 +107,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -122,14 +128,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -160,6 +171,11 @@
                     "rootOverridePaint": 1,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -368,6 +384,8 @@
                                 "TextScale": 1,
                                 "ShowInteractionTextAtCursorPos": 0,
                                 "ScalePromptOffsetWithEntity": 0,
+                                "PromptStyle": "PromptAndText",
+                                "OverrideControlHintDescription": 0,
                                 "InteractionPromptScale": 1,
                                 "InteractionPromptLabelVerticalOffset": 70,
                                 "InteractionPromptBound": "EntityRoot",
@@ -484,6 +502,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [
                                         {
@@ -517,6 +536,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -556,6 +576,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -576,6 +597,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -852,7 +874,9 @@
                     "DestructionBehavior": "BreakDoor",
                     "idleState": "null",
                     "activeState": "null",
-                    "CollisionReaction": [],
+                    "CollisionReaction": {
+                        "SDoorCollisionReactionNoneParams": []
+                    },
                     "AnimationParams": {
                         "SCItemDoorSimpleOpenCloseParams": {
                             "DefaultAnimationDurationScale": 1,
@@ -908,6 +932,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -955,7 +980,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "RParticleFieldNodeComponentParams": {
@@ -1043,6 +1068,7 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": [],
                     "InternalResourceLinks": [],
@@ -1068,6 +1094,21 @@
         "grade": 1,
         "name": "<= PLACEHOLDER =>",
         "tags": "",
+        "required_tags": "",
+        "entity_tags": [
+            "6720a467-90cd-479d-9b0f-897bc30c26be",
+            "02af2eee-b979-40e5-b999-68b976c05bbf"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "6720a467-90cd-479d-9b0f-897bc30c26be",
+                "name": "EnableCustomDefaultActions"
+            },
+            {
+                "tag": "02af2eee-b979-40e5-b999-68b976c05bbf",
+                "name": "ExternalStorage"
+            }
+        ],
         "classification": "Ship.Container.Cargo",
         "stdItem": {
             "UUID": "a3ea3ede-23a3-410d-a576-175d25949c17",
@@ -1077,23 +1118,76 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 100,
             "Type": "Container.Cargo",
             "Name": "<= PLACEHOLDER =>",
             "Description": "",
-            "Durability": {
-                "Health": 1000
+            "DescriptionText": "",
+            "Manufacturer": {
+                "Name": "Unknown Manufacturer",
+                "Code": "UNKN",
+                "UUID": "00000000-0000-0000-0000-000000000000"
             },
+            "Durability": {
+                "Health": 1000,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
+            },
+            "Interactions": [
+                "Openinventory",
+                "Loot",
+                "Opendoor",
+                "Closedoor"
+            ],
             "InventoryContainer": {
                 "SCU": 1.2,
-                "unit": 2,
-                "unitName": "cSCU",
+                "Unit": 2,
+                "UnitName": "cSCU",
                 "x": 2,
                 "y": 1,
                 "z": 1,
-                "isOpenContainer": false,
-                "isExternalContainer": false,
-                "isClosedContainer": true,
-                "uuid": "e56a8a93-0006-4ffa-aed0-f961bae01c41"
+                "IsOpenContainer": false,
+                "IsExternalContainer": false,
+                "IsClosedContainer": true,
+                "UUID": "e56a8a93-0006-4ffa-aed0-f961bae01c41"
             }
         }
     }

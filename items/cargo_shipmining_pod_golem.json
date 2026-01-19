@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "4c2d5e75-598a-4854-a301-7bbffeb9794e",
             "__path": "libs/foundry/records/entities/scitem/ships/utility/mining/miningpods/cargo_shipmining_pod_golem.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": [],
             "Components": {
@@ -135,6 +140,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -397,6 +407,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -417,14 +428,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -482,6 +498,7 @@
                     "exclusiveGroups": [],
                     "defaultComposition": []
                 },
+                "ResourceHealthHandlerParams": [],
                 "SHealthComponentParams": {
                     "Health": 5000,
                     "DamageCap": 0,
@@ -504,6 +521,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -557,6 +575,7 @@
                             "maxPhysRadius": 15,
                             "angle": 0,
                             "angleVertical": 0,
+                            "explosionZone": "AdamHosted",
                             "pressure": 20000,
                             "holeSize": 0,
                             "terrainHoleSize": 3,
@@ -591,6 +610,7 @@
                             },
                             "flashbangParams": [],
                             "shockwaveParams": [],
+                            "fragmentParams": [],
                             "effect": {
                                 "path": "1b3e9966-094c-3815-8ea3-744af9968be5|Vehicles/tmbl_nova.nova_gun_fire.explosion"
                             },
@@ -619,9 +639,10 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
+                "SAudioProxyParams": [],
                 "SCItemPurchasableParams": {
                     "displayName": "Drake Ore Pod",
                     "__displayName": "@item_Mining_MiningSack_DRAK_Name",
@@ -688,7 +709,7 @@
         "grade": 1,
         "name": "Drake Ore Pod",
         "tags": "$DRAK_Golem",
-        "manufacturer": "DRAK",
+        "required_tags": "DRAK_Golem",
         "classification": "Ship.Container.Cargo",
         "stdItem": {
             "UUID": "4c2d5e75-598a-4854-a301-7bbffeb9794e",
@@ -698,18 +719,89 @@
             "Width": 2.5,
             "Height": 2.5,
             "Length": 5,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 2.5,
+                    "Length": 5,
+                    "Height": 2.5
+                },
+                "Volume": {
+                    "SCU": 16,
+                    "SCUConverted": 16000000,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 500,
             "Type": "Container.Cargo",
             "Name": "Drake Ore Pod",
             "Description": "Capacity: 16 SCU\\n\\nDurable and designed to work with any compatible mining ship, the Drake ore pod holds an impressive 16 SCU. Providing miners with the space to hold more ore than standard containers.",
+            "DescriptionData": {
+                "Capacity": "16 SCU"
+            },
+            "DescriptionText": "Durable and designed to work with any compatible mining ship, the Drake ore pod holds an impressive 16 SCU. Providing miners with the space to hold more ore than standard containers.",
             "Manufacturer": {
-                "Code": "DRAK",
-                "Name": "Drake Interplanetary"
+                "Name": "Drake Interplanetary",
+                "UUID": "6116471c-891d-4830-8968-650b6deafc00"
             },
             "Tags": [
                 "$DRAK_Golem"
             ],
+            "RequiredTags": [
+                "DRAK_Golem"
+            ],
             "Durability": {
-                "Health": 5000
+                "Health": 5000,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
+            },
+            "Interactions": [
+                "Ejectcargo"
+            ],
+            "ResourceContainer": {
+                "Mass": 0,
+                "Immutable": false,
+                "DefaultFillFraction": 1,
+                "Capacity": {
+                    "Unit": "SStandardCargoUnit",
+                    "Value": 16,
+                    "UnitName": "SCU",
+                    "SCU": 16
+                },
+                "InclusiveResources": [
+                    "b8029480-f171-4a88-a44d-4323e021f82a",
+                    "d137b905-b3bc-4721-a790-830499263c0c",
+                    "d9653427-af7f-4fea-bbd6-ae89393524b7"
+                ],
+                "InclusiveGroups": [
+                    "81637dc5-e451-4e67-beb6-88d3c5db94e0",
+                    "36623177-cbc4-48a2-b95e-f893a861ca42"
+                ]
             }
         }
     }

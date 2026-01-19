@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "337d09e9-8bdd-49cd-9493-4d808adda7ec",
             "__path": "libs/foundry/records/entities/scitem/storage/weaponpersonal/weapon_rack_mule_single.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": [],
             "Components": {
@@ -207,6 +212,8 @@
                                 "TextScale": 1,
                                 "ShowInteractionTextAtCursorPos": 0,
                                 "ScalePromptOffsetWithEntity": 0,
+                                "PromptStyle": "PromptAndText",
+                                "OverrideControlHintDescription": 0,
                                 "InteractionPromptScale": 1,
                                 "InteractionPromptLabelVerticalOffset": 70,
                                 "InteractionPromptBound": "EntityRoot",
@@ -302,6 +309,11 @@
                     "rootOverridePaint": 1,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -426,7 +438,9 @@
                     "DestructionBehavior": "UnlockDoor",
                     "idleState": "null",
                     "activeState": "null",
-                    "CollisionReaction": [],
+                    "CollisionReaction": {
+                        "SDoorCollisionReactionNoneParams": []
+                    },
                     "AnimationParams": {
                         "SCItemDoorSingleProceduralParams": {
                             "DefaultAnimationDurationScale": 1,
@@ -541,16 +555,20 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": {
                         "SItemPortDef": {
                             "Name": "$proxy_weapon_01",
-                            "DisplayName": "hardpoint_Weapon_Cabinet_01",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 2,
                             "MaxSize": 4,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -558,6 +576,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -710,6 +729,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -757,9 +777,10 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
-                }
+                },
+                "SAudioProxyParams": []
             },
             "ClassName": "Weapon_Rack_Mule_Single",
             "__type": "Door"
@@ -775,6 +796,7 @@
         "grade": 1,
         "name": "Weapon Rack",
         "tags": "",
+        "required_tags": "",
         "stdItem": {
             "UUID": "337d09e9-8bdd-49cd-9493-4d808adda7ec",
             "ClassName": "Weapon_Rack_Mule_Single",
@@ -783,22 +805,84 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 0,
             "Type": "Door.UNDEFINED",
             "Name": "Weapon Rack",
             "Description": "",
+            "DescriptionText": "",
+            "Manufacturer": {
+                "Name": "Unknown Manufacturer",
+                "Code": "UNKN",
+                "UUID": "00000000-0000-0000-0000-000000000000"
+            },
             "Ports": [
                 {
                     "PortName": "$proxy_weapon_01",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 4,
+                    "MinSize": 2,
+                    "MaxSize": 4,
                     "Types": [
                         "WeaponPersonal"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponPersonal"
+                        }
                     ],
                     "Uneditable": false
                 }
             ],
             "Durability": {
-                "Health": 100
-            }
+                "Health": 100,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
+            },
+            "Interactions": [
+                "Place",
+                "Open",
+                "Close",
+                "Opencomplete",
+                "Closecomplete"
+            ]
         }
     }
 }

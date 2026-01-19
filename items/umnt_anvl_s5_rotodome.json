@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "02934e18-0210-4789-887c-1efcc8fc5008",
             "__path": "libs/foundry/records/entities/scitem/ships/weapon_mounts/fixed/anvl/entityclassdefinition.umnt_anvl_s5_rotodome.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": [],
             "Components": {
@@ -141,6 +146,11 @@
                     "rootOverridePaint": 1,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -244,6 +254,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -291,7 +302,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "SEntityPhysicsControllerParams": {
@@ -302,6 +313,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -322,14 +334,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -399,6 +416,7 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": [],
                     "InternalResourceLinks": [],
@@ -467,7 +485,7 @@
         "grade": 1,
         "name": "WillsOp Long Look Radar",
         "tags": "ANVL_Hornet_Center flightReady ANVL_Hornet_Base",
-        "manufacturer": "ANVL",
+        "required_tags": "ANVL_Hornet_Base",
         "stdItem": {
             "UUID": "02934e18-0210-4789-887c-1efcc8fc5008",
             "ClassName": "UMNT_ANVL_S5_Rotodome",
@@ -476,25 +494,81 @@
             "Width": 0.2233005,
             "Height": 0.801895,
             "Length": 2.211008,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.22,
+                    "Length": 2.21,
+                    "Height": 0.8
+                },
+                "UIDimensions": {
+                    "Width": 1.5,
+                    "Length": 1.5,
+                    "Height": 0.75
+                },
+                "Volume": {
+                    "SCU": 0.084,
+                    "SCUConverted": 84000,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 100,
             "Type": "Module.UNDEFINED",
             "Name": "WillsOp Long Look Radar",
             "Description": "Manufacturer: WillsOp\\nItem Type: Radar\\nSize: 5\\n\\nWhen the UEEN came to Anvil needing a ship to handle mobile C&C, Anvil turned to WillsOp, one of the most trusted names in scanning and deep-space radar. Together they developed the Long Look Radar (LLR) system as a way to upgrade the modern Hornets rather than developing an entirely new ship. Fully loaded with WillsOp\u2019s suite of scan systems, the LLR now brings its raw analytical power to the civilian market, turning an already dependable vessel into a perfect scanning fighter.",
+            "DescriptionData": {
+                "Manufacturer": "WillsOp",
+                "Item Type": "Radar",
+                "Size": "5"
+            },
+            "DescriptionText": "When the UEEN came to Anvil needing a ship to handle mobile C&C, Anvil turned to WillsOp, one of the most trusted names in scanning and deep-space radar. Together they developed the Long Look Radar (LLR) system as a way to upgrade the modern Hornets rather than developing an entirely new ship. Fully loaded with WillsOp's suite of scan systems, the LLR now brings its raw analytical power to the civilian market, turning an already dependable vessel into a perfect scanning fighter.",
             "Manufacturer": {
-                "Code": "ANVL",
-                "Name": "Anvil Aerospace"
+                "Name": "Anvil Aerospace",
+                "UUID": "b922abdb-0634-4358-9eee-60118f3cf3a7"
             },
             "Tags": [
                 "ANVL_Hornet_Center",
                 "flightReady",
                 "ANVL_Hornet_Base"
             ],
+            "RequiredTags": [
+                "ANVL_Hornet_Base"
+            ],
             "DimensionOverrides": {
                 "Width": 1.5,
                 "Length": 1.5,
-                "Height": 0.75
+                "Height": 0.75,
+                "Volume": 0.864
             },
             "Durability": {
-                "Health": 100
+                "Health": 100,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
             },
             "HeatConnection": {
                 "TemperatureToIR": 6,

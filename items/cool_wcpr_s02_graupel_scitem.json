@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "8d2c7d2d-7359-474b-90cd-c0ba9c31ac7f",
             "__path": "libs/foundry/records/entities/scitem/ships/cooler/cool_wcpr_s02_graupel_scitem.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [
                 {
                     "value": "e79738b7-5305-46a3-b906-98176f9c125e"
@@ -23,6 +28,14 @@
                 "DefaultEntitlementEntityParams": {
                     "entitlementPolicy": "6df1749c-48ea-43e5-bae5-8084d9fe5aca",
                     "canEntitleThroughWebsite": 1
+                },
+                "CustomMaterialsEntityParams": {
+                    "customMaterials": {
+                        "CustomMaterialEntryParams": {
+                            "percentage": 100,
+                            "surfaceType": "metal_atlasium"
+                        }
+                    }
                 }
             },
             "Components": {
@@ -156,6 +169,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -220,6 +238,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -240,14 +259,20 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationRateAtTemperatureDifference": {
+                                        "coolingEqualizationRate": 3.75,
+                                        "temperatureDifference": 400
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 0
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -274,7 +299,7 @@
                     }
                 },
                 "SHealthComponentParams": {
-                    "Health": 540,
+                    "Health": 350,
                     "DamageCap": 0,
                     "SerializedDamageMapPath": "",
                     "ClientOnly": 0,
@@ -295,6 +320,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -302,14 +328,14 @@
                     "sendOnDestructionEventToMasterRootContainer": 0,
                     "DamageResistances": {
                         "DamageResistance": {
-                            "IgnoreMeleeDamage": 0,
+                            "IgnoreMeleeDamage": 1,
                             "PhysicalResistance": {
-                                "Multiplier": 1,
+                                "Multiplier": 0.9,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             },
                             "EnergyResistance": {
-                                "Multiplier": 1,
+                                "Multiplier": 0.9,
                                 "Threshold": 0,
                                 "DamageCap": 0
                             },
@@ -342,7 +368,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "ItemControlComponentParams": {
@@ -350,8 +376,8 @@
                     "forceOn": 0,
                     "asopSpawnState": "On",
                     "throttleParams": {
-                        "ItemPowerSegmentThrottleParams": {
-                            "default": 0
+                        "ItemPowerSimpleSegmentThrottleParams": {
+                            "defaultFull": 0
                         }
                     },
                     "masterModeExclusionsOverride": []
@@ -361,7 +387,7 @@
                     "isRelay": 0,
                     "isConnectedToRoom": 0,
                     "wirelessConnection": 0,
-                    "defaultPriority": 50,
+                    "defaultPriority": 30,
                     "filterParams": [],
                     "states": {
                         "ItemResourceState": {
@@ -382,7 +408,7 @@
                                         "resource": "Coolant",
                                         "resourceAmountPerSecond": {
                                             "SStandardResourceUnit": {
-                                                "standardResourceUnits": 22
+                                                "standardResourceUnits": 34
                                             }
                                         }
                                     },
@@ -410,13 +436,34 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 0.7,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 1,
+                                    "modifier": 0.85,
+                                    "registerRange": 1
+                                },
+                                "high": {
+                                    "start": 3,
+                                    "modifier": 1,
+                                    "registerRange": 1
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 59.5,
+                        "healthRatio": 0.2
+                    }
                 },
                 "EntityComponentMisfireParams": {
                     "itemLocId": "<= PLACEHOLDER =>",
@@ -436,57 +483,10 @@
                             "misfireProbabilityArray": []
                         },
                         {
-                            "misfireProbabilityArray": {
-                                "SMisfireProbabilityParams": {
-                                    "weight": 0.5,
-                                    "misfireArray": {
-                                        "WeakPointer": {
-                                            "misfireArray": "misfires"
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "misfireProbabilityArray": [
-                                {
-                                    "weight": 1,
-                                    "misfireArray": {
-                                        "WeakPointer": {
-                                            "misfireArray": "misfires"
-                                        }
-                                    }
-                                },
-                                {
-                                    "weight": 0.25,
-                                    "misfireArray": {
-                                        "WeakPointer": {
-                                            "misfireArray": "misfires"
-                                        }
-                                    }
-                                }
-                            ]
+                            "misfireProbabilityArray": []
                         }
                     ],
-                    "misfires": {
-                        "SSpreadMisfireEffect": {
-                            "effectTrigger": "00000000-0000-0000-0000-000000000000",
-                            "effectTag": "00000000-0000-0000-0000-000000000000"
-                        },
-                        "SDamageMisfireEffect": {
-                            "effectTrigger": "00000000-0000-0000-0000-000000000000",
-                            "effectTag": "00000000-0000-0000-0000-000000000000",
-                            "damageValue": {
-                                "SMisfireDamageValue": {
-                                    "health": 15
-                                }
-                            }
-                        },
-                        "SFireMisfireEffect": {
-                            "effectTrigger": "00000000-0000-0000-0000-000000000000",
-                            "effectTag": "00000000-0000-0000-0000-000000000000"
-                        }
-                    }
+                    "misfires": []
                 },
                 "EntityComponentFireIgniter": {
                     "igniteOnLoad": 0,
@@ -498,6 +498,7 @@
                         }
                     }
                 },
+                "EntityComponentRoomOccupantParams": [],
                 "SDegradationParams": {
                     "StopDegradingIfDestroyed": 0,
                     "accumulators": {
@@ -510,17 +511,22 @@
                             "AccumulationEventThreshold": 1,
                             "PortTags": "",
                             "RequiredPortTags": "",
-                            "MaxLifetimeHours": 36.1,
+                            "MaxLifetimeHours": 0,
                             "UseAsTimer": 0,
                             "InitialAgeRatio": 0,
                             "InitialUsageRatio": 0,
-                            "BasePowerMultiplier": 0,
-                            "DrawPowerMultiplier": 0,
                             "AtmosphereMultiplier": 1,
-                            "DamageConversionRate": 0.01,
+                            "DamageConversionRate": 0.5,
                             "HeatMultipliers": {
                                 "NormalTemperatureMultiplier": 1,
-                                "OverheatTemperatureMultiplier": 1
+                                "OverheatTemperatureMultiplier": 2
+                            },
+                            "FunctionalityMultiplier": {
+                                "UsePowerRatio": 1,
+                                "FunctionalityMultiplyCurve": {
+                                    "useLUT": 0,
+                                    "points": []
+                                }
                             },
                             "EffectCurve": {
                                 "useLUT": 0,
@@ -534,11 +540,11 @@
                     }
                 },
                 "SDistortionParams": {
-                    "DecayDelay": 1.5,
-                    "DecayRate": 40,
-                    "Maximum": 1000,
+                    "DecayDelay": 3,
+                    "DecayRate": 196.6667,
+                    "Maximum": 2950,
                     "WarningRatio": 0.75,
-                    "RecoveryRatio": 0.7,
+                    "RecoveryRatio": 0,
                     "PowerRatioAtMaxDistortion": 0,
                     "PowerChangeOnlyAtMaxDistortion": 0
                 },
@@ -620,6 +626,8 @@
                                 "TextScale": 1,
                                 "ShowInteractionTextAtCursorPos": 0,
                                 "ScalePromptOffsetWithEntity": 0,
+                                "PromptStyle": "PromptAndText",
+                                "OverrideControlHintDescription": 0,
                                 "InteractionPromptScale": 1,
                                 "InteractionPromptLabelVerticalOffset": 70,
                                 "InteractionPromptBound": "EntityRoot",
@@ -842,6 +850,7 @@
                                     "enterStateEffectTags": [],
                                     "exitStateEffectTags": [],
                                     "EnterEventDispatchers": [],
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -868,7 +877,7 @@
                                         "FireHazardIgniteEvent": {
                                             "ignitionStrength": 100,
                                             "ignitionRadius": 1,
-                                            "ignitionChance": 100,
+                                            "ignitionChance": 20,
                                             "offset": {
                                                 "x": 0,
                                                 "y": 0,
@@ -876,6 +885,7 @@
                                             }
                                         }
                                     },
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": [],
                                     "interactionPoints": [],
@@ -906,6 +916,70 @@
                             }
                         }
                     }
+                },
+                "SSCSignatureSystemParams": {
+                    "bindingURLPrefix": "",
+                    "scanCustomData": "00000000-0000-0000-0000-000000000000",
+                    "scanDisplayLayoutOverride": "00000000-0000-0000-0000-000000000000",
+                    "isOverridden": 0,
+                    "enableDetectionOnItemPort": 1,
+                    "ignoreHighlightWhenDetectorInsideBounds": 0,
+                    "ignoreHighlightWhenNoLinkedOrActiveObjectives": 0,
+                    "priorityBoxoutTag": "00000000-0000-0000-0000-000000000000",
+                    "isObjectOfInterest": 0,
+                    "radarProperties": {
+                        "SSCRadarContactProperites": {
+                            "contactType": "bdad3073-c7ad-425d-9542-30918962501f",
+                            "baseSignatureParams": {
+                                "SSCSignatureSystemBaseSignatureParams": {
+                                    "signatures": [
+                                        {
+                                            "value": 0
+                                        },
+                                        {
+                                            "value": 0
+                                        },
+                                        {
+                                            "value": 0
+                                        },
+                                        {
+                                            "value": 0
+                                        },
+                                        {
+                                            "value": 0
+                                        },
+                                        {
+                                            "value": 0
+                                        },
+                                        {
+                                            "value": 0
+                                        },
+                                        {
+                                            "value": 10
+                                        }
+                                    ],
+                                    "signatureCategories": [],
+                                    "taggedSignatures": []
+                                }
+                            },
+                            "crossSectionParams": [],
+                            "emissionModifierParams": [],
+                            "deathParams": [],
+                            "scanBounds": [],
+                            "roomParams": {
+                                "ignoreInteriorVsExteriorCheck": 0
+                            }
+                        }
+                    },
+                    "audioParams": [],
+                    "embeddedScanInfo": [],
+                    "detectionTags": [],
+                    "overriddenSize": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    },
+                    "linkedObjectives": []
                 }
             },
             "ClassName": "COOL_WCPR_S02_Graupel_SCItem",
@@ -922,7 +996,26 @@
         "grade": 3,
         "name": "Graupel",
         "tags": "",
-        "manufacturer": "WCPR",
+        "required_tags": "",
+        "entity_tags": [
+            "e79738b7-5305-46a3-b906-98176f9c125e",
+            "00ead468-9073-485b-a6df-ca6b94053603",
+            "d87094a4-a566-4a32-8bfc-af9fd70d181d"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "e79738b7-5305-46a3-b906-98176f9c125e",
+                "name": "Cooler"
+            },
+            {
+                "tag": "00ead468-9073-485b-a6df-ca6b94053603",
+                "name": "ActionArea"
+            },
+            {
+                "tag": "d87094a4-a566-4a32-8bfc-af9fd70d181d",
+                "name": "Size2"
+            }
+        ],
         "classification": "Ship.Cooler",
         "stdItem": {
             "UUID": "8d2c7d2d-7359-474b-90cd-c0ba9c31ac7f",
@@ -932,12 +1025,38 @@
             "Width": 0.4466009,
             "Height": 0.801895,
             "Length": 3.316511,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.45,
+                    "Length": 3.32,
+                    "Height": 0.8
+                },
+                "UIDimensions": {
+                    "Width": 2.25,
+                    "Length": 2.25,
+                    "Height": 0.75
+                },
+                "Volume": {
+                    "SCU": 0.252,
+                    "SCUConverted": 252000,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 380,
             "Type": "Cooler.UNDEFINED",
             "Name": "Graupel",
             "Description": "Item Type: Cooler\\nManufacturer:\u00a0Wen/Cassel Propulsion\\nSize: 2\\nGrade: C\\nClass: Civilian\\n\\nThe Graupel not only provides the top of the line cooling technology that larger ships need to maintain optimal performance, it does it with Wen/Cassel\u2019s signature craftsmanship.",
+            "DescriptionData": {
+                "Item Type": "Cooler",
+                "Manufacturer": "Wen/Cassel Propulsion",
+                "Size": "2",
+                "Grade": "C",
+                "Class": "Civilian"
+            },
+            "DescriptionText": "The Graupel not only provides the top of the line cooling technology that larger ships need to maintain optimal performance, it does it with Wen/Cassel's signature craftsmanship.",
             "Manufacturer": {
-                "Code": "WCPR",
-                "Name": "Wen/Cassel Propulsion"
+                "Name": "Wen/Cassel Propulsion",
+                "UUID": "d8ef0f35-e196-4d18-affa-750f6cdf8cb4"
             },
             "Cooler": {
                 "CoolingRate": 3720000,
@@ -947,10 +1066,58 @@
             "DimensionOverrides": {
                 "Width": 2.25,
                 "Length": 2.25,
-                "Height": 0.75
+                "Height": 0.75,
+                "Volume": 1.944
+            },
+            "Distortion": {
+                "DecayDelay": 3,
+                "DecayRate": 196.6667,
+                "Maximum": 2950,
+                "WarningRatio": 0.75,
+                "RecoveryRatio": 0,
+                "PowerRatioAtMaxDistortion": 0,
+                "PowerChangeOnlyAtMaxDistortion": 0,
+                "ShutdownTime": 17.99999745762755
             },
             "Durability": {
-                "Health": 540
+                "Lifetime": 0,
+                "Health": 350,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 0.9,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 0.9,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
+            },
+            "Emission": {
+                "Em": {
+                    "Maximum": 1130,
+                    "Minimum": 640,
+                    "Decay": 0.15
+                },
+                "Ir": 5500
             },
             "HeatConnection": {
                 "TemperatureToIR": 15,
@@ -987,6 +1154,66 @@
                 "OverclockPerformance": 0.05,
                 "PowerToEM": 10,
                 "DecayRateOfEM": 0.25
+            },
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 30,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "Conversion",
+                                "Resource": "Power",
+                                "Rate": 3,
+                                "GeneratedResource": "Coolant",
+                                "GeneratedRate": 34,
+                                "MinimumFraction": 0.6666667,
+                                "NoOverGeneration": 0
+                            }
+                        ],
+                        "Signature": {
+                            "EM": 1130,
+                            "IR": 5500
+                        },
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 0.7,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 1,
+                                "Modifier": 0.85,
+                                "RegisterRange": 1
+                            },
+                            {
+                                "Start": 3,
+                                "Modifier": 1,
+                                "RegisterRange": 1
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 59.5,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 2.0000001,
+                        "Maximum": 3
+                    },
+                    "Coolant": {
+                        "Minimum": 2,
+                        "Maximum": 3
+                    }
+                },
+                "Generation": {
+                    "Coolant": 34
+                }
             }
         }
     }

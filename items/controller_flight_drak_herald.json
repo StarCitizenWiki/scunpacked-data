@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "c5f57b5f-86f3-4f33-9fb6-bfc0bdc4dc73",
             "__path": "libs/foundry/records/entities/scitem/ships/controller/controller_flight_drak_herald.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [
                 {
                     "value": "68b3fe59-d53f-4e20-8c82-92dca83846ad"
@@ -883,9 +888,6 @@
                             "stallSpeedModifier": 1,
                             "thrusterControlSurfaceMixRatioLerpTime": 0.5,
                             "hoverMaxRange": 20,
-                            "pitchAnimationVariable": "pitchDeflection",
-                            "yawAnimationVariable": "yawDeflection",
-                            "rollAnimationVariable": "rollDeflection",
                             "dampingTorqueDerivative": {
                                 "x": 50000,
                                 "y": 22000,
@@ -1209,6 +1211,15 @@
                                 "x": 0,
                                 "y": 0,
                                 "z": 0
+                            },
+                            "surfaceAnimations": {
+                                "pitchVariable": "pitchDeflection",
+                                "yawVariable": "yawDeflection",
+                                "rollVariable": "rollDeflection",
+                                "pitchAddRollVariable": "pitchAddRollDeflection",
+                                "pitchMinusRollVariable": "pitchMinusRollDeflection",
+                                "pitchAddYawVariable": "pitchAddYawDeflection",
+                                "pitchMinusYawVariable": "pitchMinusYawDeflection"
                             },
                             "turbulence": {
                                 "groundTurbulenceAmplitude": 0.4,
@@ -1852,8 +1863,8 @@
                     "forceOn": 0,
                     "asopSpawnState": "Off",
                     "throttleParams": {
-                        "ItemPowerSegmentThrottleParams": {
-                            "default": 4
+                        "ItemPowerSimpleSegmentThrottleParams": {
+                            "defaultFull": 0
                         }
                     },
                     "masterModeExclusionsOverride": []
@@ -1903,19 +1914,45 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 120,
+                        "healthRatio": 0.2
+                    }
                 },
                 "SGeometryResourceParams": {
                     "cacheResources": 0,
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -1987,6 +2024,27 @@
         "grade": 1,
         "name": "Flight Blade",
         "tags": "",
+        "required_tags": "",
+        "entity_tags": [
+            "68b3fe59-d53f-4e20-8c82-92dca83846ad",
+            "9a46e2f3-6651-4283-8447-c01e6dd778e8",
+            "d1fc00f6-b7d3-4a32-bad6-0599490db488"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "68b3fe59-d53f-4e20-8c82-92dca83846ad",
+                "name": "FlightBlade"
+            },
+            {
+                "tag": "9a46e2f3-6651-4283-8447-c01e6dd778e8",
+                "name": "Uncommon"
+            },
+            {
+                "tag": "d1fc00f6-b7d3-4a32-bad6-0599490db488",
+                "name": "CannotGenerateAsLoot"
+            }
+        ],
+        "classification": "Ship.FlightController",
         "stdItem": {
             "UUID": "c5f57b5f-86f3-4f33-9fb6-bfc0bdc4dc73",
             "ClassName": "Controller_Flight_DRAK_Herald",
@@ -1995,46 +2053,219 @@
             "Width": 0.2575701,
             "Height": 0.02177711,
             "Length": 0.1729496,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.26,
+                    "Length": 0.17,
+                    "Height": 0.02
+                },
+                "UIDimensions": {
+                    "Width": 0.75,
+                    "Length": 0.75,
+                    "Height": 0.75
+                },
+                "Volume": {
+                    "SCU": 0.001,
+                    "SCUConverted": 970,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 0,
             "Type": "FlightController.UNDEFINED",
             "Name": "Flight Blade",
             "Description": "",
+            "DescriptionText": "",
+            "Manufacturer": {
+                "Name": "Unknown Manufacturer",
+                "Code": "UNKN",
+                "UUID": "00000000-0000-0000-0000-000000000000"
+            },
             "DimensionOverrides": {
                 "Width": 0.75,
                 "Length": 0.75,
-                "Height": 0.75
+                "Height": 0.75,
+                "Volume": 0.216
+            },
+            "Emission": {
+                "Em": {
+                    "Maximum": 0,
+                    "Minimum": 0,
+                    "Decay": 0.15
+                },
+                "Ir": 0
+            },
+            "FlightController": {
+                "RecallParams": {
+                    "HoverHeightAtDestination": 30,
+                    "ForwardOffset": 20,
+                    "ObstructionDetectionRange": 1.2,
+                    "DefaultPlatformDetectionRange": 50,
+                    "MinimumRecallDistance": 400,
+                    "BrakingDistanceOffset": 30
+                },
+                "CollisionDetection": {
+                    "CollisionWarnSpeed": 6,
+                    "CollisionWarnTime": 4,
+                    "CollisionDangerCloseWarnTime": 2
+                }
             },
             "Ifcs": {
-                "scmSpeed": 245,
-                "boostSpeedForward": 670,
-                "boostSpeedBackward": 260,
-                "maxSpeed": 1450,
-                "maxSpeedPrecisionModeFullProximityAssist": 10,
-                "maxSpeedPrecisionModeZeroProximityAssist": 30,
-                "torqueDistanceThreshold": -1,
-                "torqueImbalanceMultiplier": 0.35,
-                "refreshCachesOnLandingMode": 0,
-                "liftMultiplier": 7,
-                "dragMultiplier": 5,
-                "precisionMinDistance": 5,
-                "precisionMaxDistance": 60,
-                "precisionLandingMultiplier": 0.7,
-                "linearAccelDecay": 2.25,
-                "angularAccelDecay": 9.5,
-                "scmMaxDragMultiplier": 4,
+                "ScmSpeed": 245,
+                "BoostSpeedForward": 670,
+                "BoostSpeedBackward": 260,
+                "MaxSpeed": 1450,
+                "MaxSpeedPrecisionModeFullProximityAssist": 10,
+                "MaxSpeedPrecisionModeZeroProximityAssist": 30,
+                "TorqueDistanceThreshold": -1,
+                "TorqueImbalanceMultiplier": 0.35,
+                "RefreshCachesOnLandingMode": 0,
+                "LiftMultiplier": 7,
+                "DragMultiplier": 5,
+                "PrecisionMinDistance": 5,
+                "PrecisionMaxDistance": 60,
+                "PrecisionLandingMultiplier": 0.7,
+                "LinearAccelDecay": 2.25,
+                "AngularAccelDecay": 9.5,
+                "ScmMaxDragMultiplier": 4,
                 "Pitch": 47,
                 "Yaw": 40,
                 "Roll": 150,
+                "PitchBoosted": 47,
+                "YawBoosted": 40,
+                "RollBoosted": 150,
                 "Afterburner": {
-                    "PreDelayTime": 0,
-                    "RampUpTime": 0.4,
-                    "RampDownTime": 0.2,
-                    "CapacitorThresholdRatio": 0.25,
+                    "AfterburnerAngCapacitorScaling": 1,
+                    "AfterburnerPreDelayTime": 0,
+                    "AfterburnerRampUpTime": 0.4,
+                    "AfterburnerRampDownTime": 0.2,
+                    "AfterburnerCapacitorThresholdRatio": 0.25,
                     "CapacitorMax": 20,
                     "CapacitorAfterburnerIdleCost": 1,
                     "CapacitorAfterburnerLinearCost": 0,
                     "CapacitorAfterburnerAngularCost": 0,
                     "CapacitorRegenDelayAfterUse": 0.4,
-                    "CapacitorRegenPerSec": 0.75
+                    "CapacitorRegenPerSec": 0.75,
+                    "AccelerationMultiplierPositive": {
+                        "x": 1.35,
+                        "y": 1.8,
+                        "z": 1.35
+                    },
+                    "AccelerationMultiplierNegative": {
+                        "x": 1.35,
+                        "y": 1.3,
+                        "z": 1.35
+                    },
+                    "AngularMultiplier": {
+                        "Pitch": 1.2,
+                        "Roll": 1.2,
+                        "Yaw": 1.2
+                    },
+                    "AngularAccelerationMultiplier": {
+                        "Pitch": 1.3,
+                        "Roll": 1.2,
+                        "Yaw": 1.2
+                    },
+                    "RegenTime": 27
+                },
+                "AfterburnerNew": {
+                    "AfterburnerAngCapacitorScaling": 1,
+                    "AfterburnerPreDelayTime": 0,
+                    "AfterburnerRampUpTime": 0.6,
+                    "AfterburnerRampDownTime": 0.3,
+                    "AfterburnerCapacitorThresholdRatio": 0.25,
+                    "CapacitorMax": 20,
+                    "CapacitorAfterburnerIdleCost": 1,
+                    "CapacitorAfterburnerLinearCost": 0,
+                    "CapacitorAfterburnerAngularCost": 0,
+                    "CapacitorRegenDelayAfterUse": 0.2,
+                    "CapacitorRegenPerSec": 0.75,
+                    "AccelerationMultiplierPositive": {
+                        "x": 1.35,
+                        "y": 1.5,
+                        "z": 1.35
+                    },
+                    "AccelerationMultiplierNegative": {
+                        "x": 1.35,
+                        "y": 1.2,
+                        "z": 1.35
+                    },
+                    "AngularMultiplier": {
+                        "Pitch": 1.15,
+                        "Roll": 1,
+                        "Yaw": 1.15
+                    },
+                    "AngularAccelerationMultiplier": {
+                        "Pitch": 1.15,
+                        "Roll": 1,
+                        "Yaw": 1.15
+                    },
+                    "RegenTime": 27
+                }
+            },
+            "Interactions": [
+                "Engineon",
+                "Engineoff",
+                "Enabledecoupled",
+                "Disabledecoupled",
+                "Enablegsafe",
+                "Disablegsafe",
+                "Enableesp",
+                "Disableesp",
+                "Enablecruise",
+                "Disablecruise",
+                "Enablevtol",
+                "Disablevtol",
+                "Enableproximityassist",
+                "Disableproximityassist"
+            ],
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "Consumption",
+                                "Resource": "Power",
+                                "Rate": 4,
+                                "MinimumFraction": 0.25
+                            }
+                        ],
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 120,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 1,
+                        "Maximum": 4
+                    },
+                    "Coolant": {
+                        "Minimum": 0,
+                        "Maximum": 4
+                    }
                 }
             }
         }

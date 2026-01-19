@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "c0ca41fe-c58e-4827-bb3e-b87b98c488b6",
             "__path": "libs/foundry/records/entities/scitem/ships/thrusters/aegs_javelin_thruster_main_01.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": {
                 "ThrusterMFXEntityParams": {
@@ -151,6 +156,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -215,6 +225,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -235,14 +246,19 @@
                             "temperature": {
                                 "enable": 1,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 500,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 1,
@@ -252,6 +268,7 @@
                                     "stateHeatGenerationValues": {
                                         "EntityTemperatureResourceHeatGeneration": {
                                             "state": "states",
+                                            "resource": "Fuel",
                                             "baselineTemperatureChange": 1
                                         }
                                     },
@@ -262,7 +279,7 @@
                                     "maximum": 525
                                 },
                                 "fireHazard": {
-                                    "enable": 1,
+                                    "enable": 0,
                                     "dissolveOnBurn": 0,
                                     "dissolvePercentageRange": {
                                         "minimum": 0,
@@ -295,6 +312,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -369,6 +387,7 @@
                             "maxPhysRadius": 5,
                             "angle": 0,
                             "angleVertical": 0,
+                            "explosionZone": "AdamHosted",
                             "pressure": 200,
                             "holeSize": 0,
                             "terrainHoleSize": 3,
@@ -403,8 +422,9 @@
                             },
                             "flashbangParams": [],
                             "shockwaveParams": [],
+                            "fragmentParams": [],
                             "effect": {
-                                "path": "Environments\\Generic\\Generic_Explosions.LT_EXPLOSIONS.lt_explosion_single_1m3_once_1"
+                                "path": "14263f7e-cb75-f03d-17e1-f05dd54e5306|Environments/Generic/Generic_Explosions.LT_EXPLOSIONS.lt_explosion_single_1m3_once_1"
                             },
                             "failedEffect": {
                                 "path": ""
@@ -431,7 +451,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "ItemControlComponentParams": {
@@ -451,8 +471,8 @@
                     "states": {
                         "ItemResourceState": {
                             "name": "Online",
-                            "deltas": {
-                                "ItemResourceDeltaConsumption": {
+                            "deltas": [
+                                {
                                     "minimumConsumptionFraction": 1,
                                     "consumption": {
                                         "resource": "Fuel",
@@ -465,9 +485,28 @@
                                     "consumptionComposition": {
                                         "values": []
                                     },
-                                    "dynamicAmountOverride": []
+                                    "dynamicAmountOverride": {
+                                        "ItemResourceDynamicAmountThrusterFuel": []
+                                    }
+                                },
+                                {
+                                    "minimumConsumptionFraction": 0,
+                                    "consumption": {
+                                        "resource": "Coolant",
+                                        "resourceAmountPerSecond": {
+                                            "SStandardResourceUnit": {
+                                                "standardResourceUnits": 0
+                                            }
+                                        }
+                                    },
+                                    "consumptionComposition": {
+                                        "values": []
+                                    },
+                                    "dynamicAmountOverride": {
+                                        "ItemResourceDynamicAmountCoolant": []
+                                    }
                                 }
-                            },
+                            ],
                             "linkedInteractionStates": [],
                             "signatureParams": {
                                 "EMSignature": {
@@ -481,13 +520,34 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 120,
+                        "healthRatio": 0.2
+                    }
                 },
                 "SCItemThrusterParams": {
                     "thrustCapacity": 135147700,
@@ -1286,7 +1346,9 @@
                                     "rtpc": {
                                         "rtpc": "Thruster_Thrust_GlacialAttack_FastRelease"
                                     },
-                                    "behavior": []
+                                    "behavior": {
+                                        "SRtpcBehaviour": []
+                                    }
                                 }
                             ]
                         },
@@ -1498,13 +1560,17 @@
                                     "rtpc": {
                                         "rtpc": "GP_Thrusters_Usage"
                                     },
-                                    "behavior": []
+                                    "behavior": {
+                                        "SRtpcBehaviour": []
+                                    }
                                 },
                                 {
                                     "rtpc": {
                                         "rtpc": "GP_Thrusters_Usage_Slow_Lerp"
                                     },
-                                    "behavior": []
+                                    "behavior": {
+                                        "SRtpcBehaviour": []
+                                    }
                                 },
                                 {
                                     "rtpc": {
@@ -1535,6 +1601,7 @@
                         "z": 0
                     }
                 },
+                "EntityComponentFuelConnection": [],
                 "EntityComponentPowerConnection": {
                     "PowerBase": 20,
                     "PowerDraw": 24,
@@ -1785,16 +1852,20 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": [
                         {
                             "Name": "hardpoint_mav_thruster_left",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "uneditable",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 2,
                             "MaxSize": 2,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -1802,6 +1873,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -1895,11 +1967,14 @@
                         {
                             "Name": "hardpoint_mav_thruster_right",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "uneditable",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 2,
                             "MaxSize": 2,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -1907,6 +1982,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -2000,11 +2076,14 @@
                         {
                             "Name": "hardpoint_mav_thruster_top_left",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "uneditable",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 2,
                             "MaxSize": 2,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -2012,6 +2091,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -2105,11 +2185,14 @@
                         {
                             "Name": "hardpoint_mav_thruster_top_right",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "uneditable",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 2,
                             "MaxSize": 2,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -2117,6 +2200,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -2210,11 +2294,14 @@
                         {
                             "Name": "hardpoint_mav_thruster_bottom_right",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "uneditable",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 2,
                             "MaxSize": 2,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -2222,6 +2309,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -2315,11 +2403,14 @@
                         {
                             "Name": "hardpoint_mav_thruster_bottom_left",
                             "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "uneditable",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 2,
                             "MaxSize": 2,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -2327,6 +2418,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -2441,7 +2533,7 @@
         "grade": 1,
         "name": "<= PLACEHOLDER =>",
         "tags": "flightReady",
-        "manufacturer": "AEG",
+        "required_tags": "AEGS_Javelin_Base",
         "classification": "Ship.MainThruster.FixedThruster",
         "stdItem": {
             "UUID": "c0ca41fe-c58e-4827-bb3e-b87b98c488b6",
@@ -2451,86 +2543,187 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 10,
             "Type": "MainThruster.FixedThruster",
             "Name": "<= PLACEHOLDER =>",
             "Description": "",
+            "DescriptionText": "",
             "Manufacturer": {
-                "Code": "AEG",
-                "Name": "Aegis Dynamics"
+                "Name": "Aegis Dynamics",
+                "UUID": "cf4a74bf-eb2c-462a-9b78-f7f2724c31d2"
             },
             "Tags": [
                 "flightReady"
             ],
+            "RequiredTags": [
+                "AEGS_Javelin_Base"
+            ],
             "Ports": [
                 {
                     "PortName": "hardpoint_mav_thruster_left",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 2,
+                    "MinSize": 2,
+                    "MaxSize": 2,
                     "Flags": [
                         "uneditable"
                     ],
                     "Types": [
                         "ManneuverThruster"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "ManneuverThruster"
+                        }
                     ],
                     "Uneditable": true
                 },
                 {
                     "PortName": "hardpoint_mav_thruster_right",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 2,
+                    "MinSize": 2,
+                    "MaxSize": 2,
                     "Flags": [
                         "uneditable"
                     ],
                     "Types": [
                         "ManneuverThruster"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "ManneuverThruster"
+                        }
                     ],
                     "Uneditable": true
                 },
                 {
                     "PortName": "hardpoint_mav_thruster_top_left",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 2,
+                    "MinSize": 2,
+                    "MaxSize": 2,
                     "Flags": [
                         "uneditable"
                     ],
                     "Types": [
                         "ManneuverThruster"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "ManneuverThruster"
+                        }
                     ],
                     "Uneditable": true
                 },
                 {
                     "PortName": "hardpoint_mav_thruster_top_right",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 2,
+                    "MinSize": 2,
+                    "MaxSize": 2,
                     "Flags": [
                         "uneditable"
                     ],
                     "Types": [
                         "ManneuverThruster"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "ManneuverThruster"
+                        }
                     ],
                     "Uneditable": true
                 },
                 {
                     "PortName": "hardpoint_mav_thruster_bottom_right",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 2,
+                    "MinSize": 2,
+                    "MaxSize": 2,
                     "Flags": [
                         "uneditable"
                     ],
                     "Types": [
                         "ManneuverThruster"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "ManneuverThruster"
+                        }
                     ],
                     "Uneditable": true
                 },
                 {
                     "PortName": "hardpoint_mav_thruster_bottom_left",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 2,
+                    "MinSize": 2,
+                    "MaxSize": 2,
                     "Flags": [
                         "uneditable"
                     ],
                     "Types": [
                         "ManneuverThruster"
                     ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "ManneuverThruster"
+                        }
+                    ],
                     "Uneditable": true
                 }
             ],
             "Durability": {
-                "Health": 20000
+                "Health": 20000,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
+            },
+            "Emission": {
+                "Em": {
+                    "Maximum": 0,
+                    "Minimum": 0,
+                    "Decay": 0.15
+                },
+                "Ir": 0
             },
             "HeatConnection": {
                 "TemperatureToIR": 6,
@@ -2553,6 +2746,34 @@
                 "MisfireMinTemperature": 500,
                 "MisfireMaxTemperature": 1100
             },
+            "Temperature": {
+                "Enable": 1,
+                "InitialTemperature": -1,
+                "InternalTemperatureGeneration": 0,
+                "CoolingEqualizationMultiplier": 1,
+                "SignatureParams": {
+                    "Enable": 0,
+                    "MinimumTemperatureForIR": 250,
+                    "TemperatureToIR": 6
+                },
+                "ItemResourceParams": {
+                    "PoweredAmbientCoolingMultiplier": 1,
+                    "MinOperatingTemperature": 0,
+                    "MinCoolingTemperature": 300,
+                    "EnableOverheat": 1,
+                    "OverheatTemperature": 525,
+                    "OverheatWarningTemperature": 370,
+                    "OverheatRecoveryTemperature": 350
+                },
+                "Calculated": {
+                    "Unit": "C",
+                    "CoolingThreshold": 26.9,
+                    "IrThreshold": -23.1,
+                    "Overheat": 96.9,
+                    "Maximum": 251.9,
+                    "Recovery": 76.9
+                }
+            },
             "PowerConnection": {
                 "PowerBase": 20,
                 "PowerDraw": 24,
@@ -2568,23 +2789,76 @@
                 "PowerToEM": 0,
                 "DecayRateOfEM": 0.15
             },
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "Consumption",
+                                "Resource": "Fuel",
+                                "Rate": 0.01,
+                                "MinimumFraction": 1
+                            },
+                            {
+                                "Type": "Consumption",
+                                "Resource": "Coolant",
+                                "Rate": 0,
+                                "MinimumFraction": 0
+                            }
+                        ],
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 120,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 0
+                    },
+                    "Coolant": {
+                        "Minimum": 0
+                    }
+                }
+            },
             "Thruster": {
-                "thrustCapacity": 135147700,
-                "thrustCapacityNew": 0,
-                "maxSupportedAtmosphericEfficiency": 2,
-                "minHealthThrustMultiplier": 0.25,
-                "fuelBurnRatePer10KNewton": 0.125,
-                "thrusterType": "Main",
-                "onlyActiveInVTOL": 0,
-                "nozzleAnimation": "",
-                "thrusterAnimDriver": "ThrustWithAfterburner",
-                "thrusterStrengthSmoothing": 0.2,
-                "toggleThrusterBackwash": 1,
-                "automateBackwashSize": 0,
-                "thrusterBackwashMaxSpeed": 50,
-                "thrusterBackwashMaxDensity": 20,
-                "thrusterBackwashMaxResistance": 100,
-                "thrusterBackwashAfterburnerMultiplier": 1.1
+                "ThrustCapacity": 135147700,
+                "ThrustCapacityNew": 0,
+                "MaxSupportedAtmosphericEfficiency": 2,
+                "MinHealthThrustMultiplier": 0.25,
+                "FuelBurnRatePer10KNewton": 0.125,
+                "ThrusterType": "Main",
+                "OnlyActiveInVTOL": 0,
+                "ThrusterStrengthSmoothing": 0.2,
+                "ToggleThrusterBackwash": 1,
+                "AutomateBackwashSize": 0,
+                "ThrusterBackwashMaxSpeed": 50,
+                "ThrusterBackwashMaxDensity": 20,
+                "ThrusterBackwashMaxResistance": 100,
+                "ThrusterBackwashAfterburnerMultiplier": 1.1,
+                "BurnRatePerMN": 12.5
             }
         }
     }

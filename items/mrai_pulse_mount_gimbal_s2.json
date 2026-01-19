@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "595b8f46-2037-43f8-bfb8-6cbd984f2212",
             "__path": "libs/foundry/records/entities/scitem/ships/weapon_mounts/gimbal/mrai_pulse_mount_gimbal_s2.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": {
                 "Reference": {
                     "value": "b6f2ae47-9950-46bb-8c18-69cb7d22be74"
@@ -150,6 +155,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -226,12 +236,9 @@
                     "defaultMovementTag": "00000000-0000-0000-0000-000000000000",
                     "recenterIfUnused": 0,
                     "healthModifierRecord": "00000000-0000-0000-0000-000000000000",
-                    "powerRequirement": 15,
                     "switchToCachedOperatorModeOnExit": 1,
                     "operatorModeOnEnter": "Turret",
                     "jointConvergence": "",
-                    "fixedAssistRadiusInner": 1,
-                    "fixedAssistRadiusOuter": 6,
                     "intoxicationModifierRef": "da01cefe-07b3-4533-aac4-09d4c624dc2e",
                     "hudParamsOverride": "00000000-0000-0000-0000-000000000000",
                     "autoDeployHelmetTargetingMode": 1,
@@ -484,6 +491,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -531,7 +539,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "SEntityPhysicsControllerParams": {
@@ -542,6 +550,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -562,14 +571,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -632,13 +646,18 @@
                             "UseAsTimer": 0,
                             "InitialAgeRatio": 0,
                             "InitialUsageRatio": 0,
-                            "BasePowerMultiplier": 0,
-                            "DrawPowerMultiplier": 0,
                             "AtmosphereMultiplier": 1,
                             "DamageConversionRate": 0.01,
                             "HeatMultipliers": {
                                 "NormalTemperatureMultiplier": 1,
                                 "OverheatTemperatureMultiplier": 1
+                            },
+                            "FunctionalityMultiplier": {
+                                "UsePowerRatio": 1,
+                                "FunctionalityMultiplyCurve": {
+                                    "useLUT": 0,
+                                    "points": []
+                                }
                             },
                             "EffectCurve": {
                                 "useLUT": 0,
@@ -674,23 +693,28 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": {
                         "SItemPortDef": {
                             "Name": "hardpoint_weapon_mount_pos",
-                            "DisplayName": "Slot",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "MRAI_Pulse",
                             "RequiredPortTags": "MRAI_Pulse",
                             "Flags": "uneditable",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 2,
                             "MaxSize": 2,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
                             "controllableTag": "",
-                            "resourceLinkToParent": 0,
+                            "resourceLinkToParent": 1,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -788,6 +812,7 @@
                     "throttleParams": [],
                     "masterModeExclusionsOverride": []
                 },
+                "SCItemAimableComponentParams": [],
                 "SInteractionStateMachineParams": {
                     "StateTypes": []
                 },
@@ -843,7 +868,17 @@
         "grade": 1,
         "name": "San'tok.y\u0101i Gimbal Mount",
         "tags": "gimbalMount flightReady MRAI_Pulse",
-        "manufacturer": "MIS",
+        "required_tags": "MRAI_Pulse",
+        "entity_tags": [
+            "b6f2ae47-9950-46bb-8c18-69cb7d22be74"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "b6f2ae47-9950-46bb-8c18-69cb7d22be74",
+                "name": "Gimbal"
+            }
+        ],
+        "classification": "Ship.Turret.GunTurret",
         "stdItem": {
             "UUID": "595b8f46-2037-43f8-bfb8-6cbd984f2212",
             "ClassName": "MRAI_Pulse_Mount_Gimbal_S2",
@@ -852,22 +887,52 @@
             "Width": 0.6699014,
             "Height": 1.202842,
             "Length": 4.422015,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.67,
+                    "Length": 4.42,
+                    "Height": 1.2
+                },
+                "UIDimensions": {
+                    "Width": 0.75,
+                    "Length": 0.75,
+                    "Height": 0.75
+                },
+                "Volume": {
+                    "SCU": 0.756,
+                    "SCUConverted": 756000,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 75,
             "Type": "Turret.GunTurret",
             "Name": "San'tok.y\u0101i Gimbal Mount",
             "Description": "Manufacturer: Aopoa\\nItem Type: Weapon Mount\\nSize: 3\\n\\nLine up the perfect shot with help from this S3 gimbal mount. Made by Aopoa specifically for the San'tok.y\u0101i, this gimbal can handle weapons up to S3.",
+            "DescriptionData": {
+                "Manufacturer": "Aopoa",
+                "Item Type": "Weapon Mount",
+                "Size": "3"
+            },
+            "DescriptionText": "Line up the perfect shot with help from this S3 gimbal mount. Made by Aopoa specifically for the San'tok.y\u0101i, this gimbal can handle weapons up to S3.",
             "Manufacturer": {
-                "Code": "MIS",
-                "Name": "Mirai"
+                "Name": "Mirai",
+                "UUID": "cdf6ea1e-7de3-4b58-bf9d-13c5fbafc49a"
             },
             "Tags": [
                 "gimbalMount",
                 "flightReady",
                 "MRAI_Pulse"
             ],
+            "RequiredTags": [
+                "MRAI_Pulse"
+            ],
             "Ports": [
                 {
                     "PortName": "hardpoint_weapon_mount_pos",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 2,
+                    "MinSize": 2,
+                    "MaxSize": 2,
                     "Flags": [
                         "uneditable"
                     ],
@@ -878,7 +943,15 @@
                         "MRAI_Pulse"
                     ],
                     "Types": [
-                        "WeaponGun"
+                        "WeaponGun.Gun"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponGun",
+                            "SubTypes": [
+                                "Gun"
+                            ]
+                        }
                     ],
                     "Uneditable": true
                 }
@@ -886,10 +959,40 @@
             "DimensionOverrides": {
                 "Width": 0.75,
                 "Length": 0.75,
-                "Height": 0.75
+                "Height": 0.75,
+                "Volume": 0.216
             },
             "Durability": {
-                "Health": 850
+                "Lifetime": 720,
+                "Health": 850,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
             },
             "HeatConnection": {
                 "TemperatureToIR": 6,
@@ -926,6 +1029,45 @@
                 "OverclockPerformance": 0,
                 "PowerToEM": 0,
                 "DecayRateOfEM": 0.15
+            },
+            "Turret": {
+                "RotationStyle": "SingleAxis",
+                "MovementList": [
+                    {
+                        "JointName": "turret_yaw",
+                        "SlavedOnly": 0,
+                        "RestrictTargetAngles": 0,
+                        "YawAxis": {
+                            "Speed": 35,
+                            "AccelerationTimeToFullSpeed": 0.3,
+                            "JerkTimeToFullAcceleration": 0.1,
+                            "AccelerationDecay": 5,
+                            "AngleLimits": [
+                                {
+                                    "LowestAngle": -8,
+                                    "HighestAngle": 8
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "JointName": "turret_pitch",
+                        "SlavedOnly": 0,
+                        "RestrictTargetAngles": 0,
+                        "PitchAxis": {
+                            "Speed": 35,
+                            "AccelerationTimeToFullSpeed": 0.3,
+                            "JerkTimeToFullAcceleration": 0.1,
+                            "AccelerationDecay": 13,
+                            "AngleLimits": [
+                                {
+                                    "LowestAngle": -10,
+                                    "HighestAngle": 10
+                                }
+                            ]
+                        }
+                    }
+                ]
             }
         }
     }

@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "b0f5b06f-bdd9-4534-af68-b91e8cfb61c0",
             "__path": "libs/foundry/records/entities/scitem/ships/weapon_mounts/gimbal/rsi_salvation_salvage_arm_left.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": {
                 "Reference": {
                     "value": "b6f2ae47-9950-46bb-8c18-69cb7d22be74"
@@ -35,7 +40,7 @@
                         "ignoredAttachAxis": "None",
                         "attachCheckCenterOfMass": 0,
                         "Localization": {
-                            "Name": "Salvage Arm Left",
+                            "Name": "@itemPort_port_SalvageArmL",
                             "__Name": "@itemPort_port_SalvageArmL",
                             "ShortName": "",
                             "__ShortName": "@LOC_EMPTY",
@@ -62,7 +67,8 @@
                             },
                             "English": {
                                 "Locale": "english",
-                                "Name": "Salvage Arm Left",
+                                "Name": "@itemPort_port_SalvageArmL",
+                                "__Name": "@itemPort_port_SalvageArmL",
                                 "ShortName": "",
                                 "Description": ""
                             }
@@ -107,6 +113,11 @@
                     "rootOverridePaint": 1,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -169,12 +180,9 @@
                     "defaultMovementTag": "00000000-0000-0000-0000-000000000000",
                     "recenterIfUnused": 0,
                     "healthModifierRecord": "00000000-0000-0000-0000-000000000000",
-                    "powerRequirement": 10,
                     "switchToCachedOperatorModeOnExit": 1,
                     "operatorModeOnEnter": "Turret",
                     "jointConvergence": "",
-                    "fixedAssistRadiusInner": 1,
-                    "fixedAssistRadiusOuter": 6,
                     "intoxicationModifierRef": "da01cefe-07b3-4533-aac4-09d4c624dc2e",
                     "hudParamsOverride": "00000000-0000-0000-0000-000000000000",
                     "autoDeployHelmetTargetingMode": 1,
@@ -517,6 +525,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -564,7 +573,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "SEntityPhysicsControllerParams": {
@@ -575,6 +584,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -595,14 +605,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -665,13 +680,18 @@
                             "UseAsTimer": 0,
                             "InitialAgeRatio": 0,
                             "InitialUsageRatio": 0,
-                            "BasePowerMultiplier": 0,
-                            "DrawPowerMultiplier": 0,
                             "AtmosphereMultiplier": 1,
                             "DamageConversionRate": 0.01,
                             "HeatMultipliers": {
                                 "NormalTemperatureMultiplier": 1,
                                 "OverheatTemperatureMultiplier": 1
+                            },
+                            "FunctionalityMultiplier": {
+                                "UsePowerRatio": 1,
+                                "FunctionalityMultiplyCurve": {
+                                    "useLUT": 0,
+                                    "points": []
+                                }
                             },
                             "EffectCurve": {
                                 "useLUT": 0,
@@ -702,21 +722,25 @@
                     "interactionPoints": []
                 },
                 "SItemPortContainerComponentParams": {
-                    "PortFlags": "",
+                    "PortFlags": "$uneditable",
                     "PortTags": "salvageMount",
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 1,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": {
                         "SItemPortDef": {
                             "Name": "hardpoint_salvage_arm_head",
-                            "DisplayName": "port_SalvageHead",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "salvageMount",
                             "RequiredPortTags": "salvageMount",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 2,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -724,6 +748,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -842,7 +867,9 @@
                     "fragmentRun": "",
                     "fragmentDeactivate": "",
                     "deployConditions": []
-                }
+                },
+                "SCItemAimableComponentParams": [],
+                "SAudioProxyParams": []
             },
             "ClassName": "RSI_Salvation_Salvage_Arm_Left",
             "__type": "ToolArm"
@@ -856,8 +883,18 @@
         "subType": "UNDEFINED",
         "size": 1,
         "grade": 1,
-        "name": "Salvage Arm Left",
+        "name": "@itemPort_port_SalvageArmL",
         "tags": "salvageMount",
+        "required_tags": "salvageMount RSI_Salvation",
+        "entity_tags": [
+            "b6f2ae47-9950-46bb-8c18-69cb7d22be74"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "b6f2ae47-9950-46bb-8c18-69cb7d22be74",
+                "name": "Gimbal"
+            }
+        ],
         "stdItem": {
             "UUID": "b0f5b06f-bdd9-4534-af68-b91e8cfb61c0",
             "ClassName": "RSI_Salvation_Salvage_Arm_Left",
@@ -866,16 +903,47 @@
             "Width": 0.2233005,
             "Height": 0.801895,
             "Length": 2.211008,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.22,
+                    "Length": 2.21,
+                    "Height": 0.8
+                },
+                "UIDimensions": {
+                    "Width": 0.38,
+                    "Length": 0.38,
+                    "Height": 0.38
+                },
+                "Volume": {
+                    "SCU": 0.084,
+                    "SCUConverted": 84000,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 20,
             "Type": "ToolArm.UNDEFINED",
-            "Name": "Salvage Arm Left",
+            "Name": "@itemPort_port_SalvageArmL",
             "Description": "",
+            "DescriptionText": "",
+            "Manufacturer": {
+                "Name": "Unknown Manufacturer",
+                "Code": "UNKN",
+                "UUID": "00000000-0000-0000-0000-000000000000"
+            },
             "Tags": [
                 "salvageMount"
+            ],
+            "RequiredTags": [
+                "salvageMount",
+                "RSI_Salvation"
             ],
             "Ports": [
                 {
                     "PortName": "hardpoint_salvage_arm_head",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 2,
+                    "MinSize": 1,
+                    "MaxSize": 2,
                     "Tags": [
                         "salvageMount"
                     ],
@@ -885,16 +953,51 @@
                     "Types": [
                         "SalvageHead"
                     ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "SalvageHead"
+                        }
+                    ],
                     "Uneditable": false
                 }
             ],
             "DimensionOverrides": {
                 "Width": 0.38,
                 "Length": 0.38,
-                "Height": 0.38
+                "Height": 0.38,
+                "Volume": 0.028094464000000003
             },
             "Durability": {
-                "Health": 5000
+                "Lifetime": 720,
+                "Health": 5000,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
             },
             "HeatConnection": {
                 "TemperatureToIR": 6,
@@ -931,6 +1034,74 @@
                 "OverclockPerformance": 0,
                 "PowerToEM": 0,
                 "DecayRateOfEM": 0.15
+            },
+            "Turret": {
+                "RotationStyle": "SingleAxis",
+                "MovementList": [
+                    {
+                        "JointName": "yaw_joint_left",
+                        "SlavedOnly": 0,
+                        "RestrictTargetAngles": 1,
+                        "YawAxis": {
+                            "Speed": 15,
+                            "AccelerationTimeToFullSpeed": 0.3,
+                            "JerkTimeToFullAcceleration": 0.1,
+                            "AccelerationDecay": 5,
+                            "AngleLimits": [
+                                {
+                                    "LowestAngle": -20,
+                                    "HighestAngle": 20
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "JointName": "pitch_joint_left",
+                        "SlavedOnly": 0,
+                        "RestrictTargetAngles": 1,
+                        "PitchAxis": {
+                            "Speed": 15,
+                            "AccelerationTimeToFullSpeed": 0.3,
+                            "JerkTimeToFullAcceleration": 0.1,
+                            "AccelerationDecay": 5,
+                            "AngleLimits": [
+                                {
+                                    "LowestAngle": -25,
+                                    "HighestAngle": 25
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "JointName": "ball_joint_left",
+                        "SlavedOnly": 0,
+                        "RestrictTargetAngles": 0,
+                        "PitchAxis": {
+                            "Speed": 270,
+                            "AccelerationTimeToFullSpeed": 0.3,
+                            "JerkTimeToFullAcceleration": 0.1,
+                            "AccelerationDecay": 5,
+                            "AngleLimits": [
+                                {
+                                    "LowestAngle": -40,
+                                    "HighestAngle": 40
+                                }
+                            ]
+                        },
+                        "YawAxis": {
+                            "Speed": 270,
+                            "AccelerationTimeToFullSpeed": 0.3,
+                            "JerkTimeToFullAcceleration": 0.1,
+                            "AccelerationDecay": 5,
+                            "AngleLimits": [
+                                {
+                                    "LowestAngle": -40,
+                                    "HighestAngle": 40
+                                }
+                            ]
+                        }
+                    }
+                ]
             }
         }
     }

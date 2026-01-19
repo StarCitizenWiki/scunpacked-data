@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "142e6235-9f9d-4e5a-b0c9-0a2338f70901",
             "__path": "libs/foundry/records/entities/scitem/ships/missile_racks/behr/mrck_s01_behr_single_s01.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": {
                 "DefaultEntitlementEntityParams": {
@@ -45,13 +50,34 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 120,
+                        "healthRatio": 0.2
+                    }
                 },
                 "ItemControlComponentParams": {
                     "turnedOnByDefault": 0,
@@ -203,6 +229,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -360,6 +391,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -407,7 +439,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "SEntityPhysicsControllerParams": {
@@ -418,6 +450,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -438,14 +471,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -515,16 +553,20 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": {
                         "SItemPortDef": {
                             "Name": "missile_01_attach",
-                            "DisplayName": "port_NameMissileRackSlot01",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -532,6 +574,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -637,7 +680,7 @@
         "grade": 1,
         "name": "MSD-111 Missile Rack",
         "tags": "flightReady",
-        "manufacturer": "BEH",
+        "required_tags": "",
         "classification": "Ship.MissileLauncher.MissileRack",
         "stdItem": {
             "UUID": "142e6235-9f9d-4e5a-b0c9-0a2338f70901",
@@ -647,12 +690,37 @@
             "Width": 0.2233005,
             "Height": 0.801895,
             "Length": 2.211008,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.22,
+                    "Length": 2.21,
+                    "Height": 0.8
+                },
+                "UIDimensions": {
+                    "Width": 0.75,
+                    "Length": 2.25,
+                    "Height": 0.75
+                },
+                "Volume": {
+                    "SCU": 0.252,
+                    "SCUConverted": 252000,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 20,
             "Type": "MissileLauncher.MissileRack",
             "Name": "MSD-111 Missile Rack",
             "Description": "Item Type: Missile Rack\\nManufacturer: Behring\\nSize: 1\\nMissiles: 1xS1\\n\\nBehring\u2019s MSD-111 \"Marsden\" is a complete ordnance storage and deployment system that can be mounted on any compatible size 1 hardpoint for the reliable and effective launch of one S1 missile.",
+            "DescriptionData": {
+                "Item Type": "Missile Rack",
+                "Manufacturer": "Behring",
+                "Size": "1",
+                "Missiles": "1xS1"
+            },
+            "DescriptionText": "Behring's MSD-111 \"Marsden\" is a complete ordnance storage and deployment system that can be mounted on any compatible size 1 hardpoint for the reliable and effective launch of one S1 missile.",
             "Manufacturer": {
-                "Code": "BEH",
-                "Name": "Behring"
+                "Name": "Behring",
+                "UUID": "65a5d887-3b21-4046-a718-6912c0c7c3be"
             },
             "Tags": [
                 "flightReady"
@@ -660,9 +728,20 @@
             "Ports": [
                 {
                     "PortName": "missile_01_attach",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
+                    "MinSize": 1,
+                    "MaxSize": 1,
                     "Types": [
-                        "Missile"
+                        "Missile.Missile"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "Missile",
+                            "SubTypes": [
+                                "Missile"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 }
@@ -670,10 +749,39 @@
             "DimensionOverrides": {
                 "Width": 0.75,
                 "Length": 2.25,
-                "Height": 0.75
+                "Height": 0.75,
+                "Volume": 0.648
             },
             "Durability": {
-                "Health": 200
+                "Health": 200,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
             },
             "HeatConnection": {
                 "TemperatureToIR": 0.5,
@@ -697,7 +805,7 @@
                 "MisfireMaxTemperature": 600
             },
             "MissileRack": {
-                "Count": 6
+                "MissileCount": 6
             },
             "PowerConnection": {
                 "PowerBase": 20,
@@ -713,6 +821,45 @@
                 "OverclockPerformance": 0,
                 "PowerToEM": 2.5,
                 "DecayRateOfEM": 0.15
+            },
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Idle",
+                        "Deltas": [
+                            {
+                                "Type": "NetworkReflection",
+                                "Resource": "Power",
+                                "BinaryEvaluation": 0
+                            }
+                        ],
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 120,
+                    "HealthRatio": 0.2
+                }
             }
         }
     }

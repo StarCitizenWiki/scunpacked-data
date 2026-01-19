@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "c51b1b42-5f63-4658-8ee8-a7e45484d490",
             "__path": "libs/foundry/records/entities/scitem/ships/seat/entityclassdefinition.vncl_stinger_scitem_seat_pilot.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [
                 {
                     "value": "dc4f5796-93c5-4634-9399-5e3937e1444f"
@@ -47,13 +52,34 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 120,
+                        "healthRatio": 0.2
+                    }
                 },
                 "SAttachableComponentParams": {
                     "attachToTileItemPort": "NoConnection",
@@ -326,6 +352,8 @@
                                 "TextScale": 1,
                                 "ShowInteractionTextAtCursorPos": 0,
                                 "ScalePromptOffsetWithEntity": 0,
+                                "PromptStyle": "PromptAndText",
+                                "OverrideControlHintDescription": 0,
                                 "InteractionPromptScale": 1,
                                 "InteractionPromptLabelVerticalOffset": 70,
                                 "InteractionPromptBound": "EntityRoot",
@@ -399,6 +427,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -463,6 +496,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -483,14 +517,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -598,6 +637,8 @@
                     "fragmentTag": "",
                     "isExterior": 0,
                     "allowDeadOrUnconscious": 0,
+                    "lowEnergyThreshold": 0,
+                    "highEnergyThreshold": 2,
                     "useSlots": {
                         "UsableUseSlot": {
                             "name": "",
@@ -664,6 +705,7 @@
                         }
                     },
                     "exclusivityGroups": [],
+                    "freeItemPortsForDirectInteraction": [],
                     "slottingSetups": [],
                     "views": [],
                     "abilityLocks": [],
@@ -683,7 +725,9 @@
                     "allowTogglePowerObservedItems": 0,
                     "operatorModeDefinitionsOverride": "00000000-0000-0000-0000-000000000000",
                     "additionalItemControlPriorities": []
-                }
+                },
+                "SDialogueComponentParams": [],
+                "SAudioProxyParams": []
             },
             "ClassName": "VNCL_Stinger_SCItem_Seat_Pilot",
             "__type": "Seat"
@@ -699,7 +743,21 @@
         "grade": 1,
         "name": "TRGT. STATUS",
         "tags": "flightReady",
-        "manufacturer": "ESPR",
+        "required_tags": "",
+        "entity_tags": [
+            "dc4f5796-93c5-4634-9399-5e3937e1444f",
+            "275db83d-5b41-4ebc-bcd7-d325220af86a"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "dc4f5796-93c5-4634-9399-5e3937e1444f",
+                "name": "Seat"
+            },
+            {
+                "tag": "275db83d-5b41-4ebc-bcd7-d325220af86a",
+                "name": "Helmsman"
+            }
+        ],
         "stdItem": {
             "UUID": "c51b1b42-5f63-4658-8ee8-a7e45484d490",
             "ClassName": "VNCL_Stinger_SCItem_Seat_Pilot",
@@ -708,16 +766,103 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 10,
             "Type": "Seat.UNDEFINED",
             "Name": "TRGT. STATUS",
             "Description": "",
+            "DescriptionText": "",
             "Manufacturer": {
-                "Code": "ESPR",
-                "Name": "Esperia"
+                "Name": "Esperia",
+                "UUID": "4ecc1a24-d228-4dd5-8857-21ba6145a1d3"
             },
             "Tags": [
                 "flightReady"
-            ]
+            ],
+            "Emission": {
+                "Em": {
+                    "Maximum": 0,
+                    "Minimum": 0,
+                    "Decay": 0.15
+                },
+                "Ir": 0
+            },
+            "Interactions": [
+                "Enterdefaultmode",
+                "Enterscanmode",
+                "Enterquantummode"
+            ],
+            "Seat": {
+                "SeatType": "DUAL_STICK",
+                "Yaw": {
+                    "Minimum": -70,
+                    "Maximum": 70
+                },
+                "Pitch": {
+                    "Minimum": -75,
+                    "Maximum": 65
+                },
+                "SetYawPitchLimits": false,
+                "HasEjection": false
+            },
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Online",
+                        "Deltas": [
+                            {
+                                "Type": "NetworkReflection",
+                                "Resource": "Power",
+                                "BinaryEvaluation": 1
+                            }
+                        ],
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 120,
+                    "HealthRatio": 0.2
+                },
+                "Usage": {
+                    "Power": {
+                        "Minimum": 0
+                    },
+                    "Coolant": {
+                        "Minimum": 0
+                    }
+                }
+            }
         }
     }
 }

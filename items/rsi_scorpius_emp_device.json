@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "3d521e8c-4249-4987-b544-d32634ab0d2a",
             "__path": "libs/foundry/records/entities/scitem/ships/weapons/emp/rsi_scorpius_emp_device.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": {
                 "Reference": {
                     "value": "980ce6e8-afa2-4084-b13b-b0d01e5d7848"
@@ -656,6 +661,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -720,6 +730,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -740,14 +751,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -795,6 +811,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -842,7 +859,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "SDegradationParams": {
@@ -861,13 +878,18 @@
                             "UseAsTimer": 0,
                             "InitialAgeRatio": 0,
                             "InitialUsageRatio": 0,
-                            "BasePowerMultiplier": 0,
-                            "DrawPowerMultiplier": 0,
                             "AtmosphereMultiplier": 1,
                             "DamageConversionRate": 0.01,
                             "HeatMultipliers": {
                                 "NormalTemperatureMultiplier": 1,
                                 "OverheatTemperatureMultiplier": 1
+                            },
+                            "FunctionalityMultiplier": {
+                                "UsePowerRatio": 1,
+                                "FunctionalityMultiplyCurve": {
+                                    "useLUT": 0,
+                                    "points": []
+                                }
                             },
                             "EffectCurve": {
                                 "useLUT": 0,
@@ -933,6 +955,7 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": [],
                     "InternalResourceLinks": [],
@@ -954,6 +977,8 @@
                     },
                     "masterModeExclusionsOverride": []
                 },
+                "SCItemAimableComponentParams": [],
+                "SAudioProxyParams": [],
                 "ItemResourceComponentParams": {
                     "isResourceNetworked": 1,
                     "isRelay": 0,
@@ -994,13 +1019,34 @@
                                     "functionalityCurve": []
                                 }
                             },
-                            "rangeParams": []
+                            "powerRanges": {
+                                "low": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "medium": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                },
+                                "high": {
+                                    "start": 0,
+                                    "modifier": 1,
+                                    "registerRange": 0
+                                }
+                            }
                         }
                     },
                     "controlParameters": [],
                     "controlBlocks": [],
                     "functionalityModifiers": [],
-                    "powerPlantOverride": []
+                    "powerPlantOverride": [],
+                    "selfRepair": {
+                        "maxRepairCount": 1,
+                        "timeToRepair": 120,
+                        "healthRatio": 0.2
+                    }
                 }
             },
             "ClassName": "RSI_Scorpius_EMP_Device",
@@ -1017,6 +1063,16 @@
         "grade": 1,
         "name": "Magstrand EMP Generator",
         "tags": "flightReady ",
+        "required_tags": "Scorpius_EMP",
+        "entity_tags": [
+            "980ce6e8-afa2-4084-b13b-b0d01e5d7848"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "980ce6e8-afa2-4084-b13b-b0d01e5d7848",
+                "name": "Static"
+            }
+        ],
         "classification": "Ship.EMP",
         "stdItem": {
             "UUID": "3d521e8c-4249-4987-b544-d32634ab0d2a",
@@ -1026,42 +1082,102 @@
             "Width": 0.4466009,
             "Height": 0.801895,
             "Length": 1.105504,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.45,
+                    "Length": 1.11,
+                    "Height": 0.8
+                },
+                "UIDimensions": {
+                    "Width": 0.75,
+                    "Length": 1.5,
+                    "Height": 0.75
+                },
+                "Volume": {
+                    "SCU": 0.084,
+                    "SCUConverted": 84000,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 4000,
             "Type": "EMP.UNDEFINED",
             "Name": "Magstrand EMP Generator",
             "Description": "Item Type: Burst Generator\\nManufacturer: RSI\\nSize: 4\\n\\nThe Magstrand from RSI is an EMP burst generator designed specifically for the Scorpius Antares. When fully charged, the device creates a powerful wave of distortion damage that can disable electric components within its blast radius.",
+            "DescriptionData": {
+                "Item Type": "Burst Generator",
+                "Manufacturer": "Roberts Space Industries",
+                "Size": "4"
+            },
+            "DescriptionText": "The Magstrand from RSI is an EMP burst generator designed specifically for the Scorpius Antares. When fully charged, the device creates a powerful wave of distortion damage that can disable electric components within its blast radius.",
+            "Manufacturer": {
+                "Name": "Unknown Manufacturer",
+                "Code": "UNKN",
+                "UUID": "00000000-0000-0000-0000-000000000000"
+            },
             "Tags": [
                 "flightReady"
+            ],
+            "RequiredTags": [
+                "Scorpius_EMP"
             ],
             "DimensionOverrides": {
                 "Width": 0.75,
                 "Length": 1.5,
-                "Height": 0.75
+                "Height": 0.75,
+                "Volume": 0.432
+            },
+            "Distortion": {
+                "DecayDelay": 0,
+                "DecayRate": 500000,
+                "Maximum": 500000,
+                "WarningRatio": 0.75,
+                "RecoveryRatio": 0,
+                "PowerRatioAtMaxDistortion": 0,
+                "PowerChangeOnlyAtMaxDistortion": 0,
+                "ShutdownTime": 1
             },
             "Durability": {
-                "Health": 150
+                "Lifetime": 1440,
+                "Health": 150,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
             },
             "Emp": {
-                "chargeTime": 22,
-                "distortionDamage": 3300,
-                "empRadius": 1100,
-                "minEmpRadius": 250,
-                "physRadius": 1001,
-                "minPhysRadius": 250,
-                "pressure": 0,
-                "unleashTime": 1.5,
-                "cooldownTime": 16,
-                "ChargingTag": "6cb00110-45ac-4aa4-9849-9397bdcba9fd",
-                "ChargedTag": "8c5793b2-e85a-48af-990b-402cd133bb8a",
-                "StartChargingTrigger": "d4483e2b-5a98-4be8-85c3-87949f7dfef6",
-                "StopChargingTrigger": "f72cac30-b2ab-4e20-9d5e-56d04691f88f",
-                "StartChargedTrigger": "bed0d358-1681-45b8-b0b9-7d6730d86f59",
-                "StopChargedTrigger": "94b1b24c-6ccb-488b-9dbb-5ba1f95bfdf4",
-                "StartUnleashTrigger": "d814cd18-8685-415b-9f5b-d9e204100fab",
-                "StopUnleashTrigger": "a06c88f8-79da-4425-81fa-6f4550a5d82f",
-                "idleState": "states",
-                "chargingState": "states",
-                "chargedState": "states",
-                "releasingState": "states"
+                "ChargeTime": 22,
+                "DistortionDamage": 3300,
+                "EmpRadius": 1100,
+                "MinEmpRadius": 250,
+                "PhysRadius": 1001,
+                "MinPhysRadius": 250,
+                "Pressure": 0,
+                "UnleashTime": 1.5,
+                "CooldownTime": 16
             },
             "HeatConnection": {
                 "TemperatureToIR": 6,
@@ -1098,6 +1214,46 @@
                 "OverclockPerformance": 0.2,
                 "PowerToEM": 2,
                 "DecayRateOfEM": 0.15
+            },
+            "ResourceNetwork": {
+                "IsNetworked": true,
+                "IsRelay": false,
+                "DefaultPriority": 50,
+                "States": [
+                    {
+                        "Name": "Idle",
+                        "Deltas": [
+                            {
+                                "Type": "Consumption",
+                                "Resource": "Power",
+                                "Rate": 1,
+                                "MinimumFraction": 1
+                            }
+                        ],
+                        "PowerRanges": [
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            },
+                            {
+                                "Start": 0,
+                                "Modifier": 1,
+                                "RegisterRange": 0
+                            }
+                        ]
+                    }
+                ],
+                "Repair": {
+                    "MaxRepairCount": 1,
+                    "TimeToRepair": 120,
+                    "HealthRatio": 0.2
+                }
             }
         }
     }

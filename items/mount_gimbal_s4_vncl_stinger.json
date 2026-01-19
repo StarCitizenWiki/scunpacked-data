@@ -8,6 +8,11 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "0bff5ad1-931a-4d4d-83b9-a312b1404a97",
             "__path": "libs/foundry/records/entities/scitem/ships/weapon_mounts/gimbal/mount_gimbal_s4_vncl_stinger.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": {
                 "Reference": {
                     "value": "b6f2ae47-9950-46bb-8c18-69cb7d22be74"
@@ -150,6 +155,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -212,12 +222,9 @@
                     "defaultMovementTag": "00000000-0000-0000-0000-000000000000",
                     "recenterIfUnused": 0,
                     "healthModifierRecord": "00000000-0000-0000-0000-000000000000",
-                    "powerRequirement": 22.5,
                     "switchToCachedOperatorModeOnExit": 1,
                     "operatorModeOnEnter": "Turret",
                     "jointConvergence": "",
-                    "fixedAssistRadiusInner": 1,
-                    "fixedAssistRadiusOuter": 6,
                     "intoxicationModifierRef": "da01cefe-07b3-4533-aac4-09d4c624dc2e",
                     "hudParamsOverride": "00000000-0000-0000-0000-000000000000",
                     "autoDeployHelmetTargetingMode": 1,
@@ -463,6 +470,7 @@
                     "ExplosionBone": "",
                     "IsSalvagable": 1,
                     "IsRepairable": 1,
+                    "SalvageDamageModifier": 1,
                     "MirrorSalvageHit": 0,
                     "DisableMaterialDamage": 0,
                     "alwaysPropagateHitToParent": 0,
@@ -510,7 +518,7 @@
                     "DeathGasComposition": [],
                     "InteractionLocks": [],
                     "sequencerTasks": [],
-                    "shatterDestroyEvent": [],
+                    "maelstromEvents": [],
                     "craftingData": []
                 },
                 "SEntityPhysicsControllerParams": {
@@ -521,6 +529,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -541,14 +550,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -611,13 +625,18 @@
                             "UseAsTimer": 0,
                             "InitialAgeRatio": 0,
                             "InitialUsageRatio": 0,
-                            "BasePowerMultiplier": 0,
-                            "DrawPowerMultiplier": 0,
                             "AtmosphereMultiplier": 1,
                             "DamageConversionRate": 0.01,
                             "HeatMultipliers": {
                                 "NormalTemperatureMultiplier": 1,
                                 "OverheatTemperatureMultiplier": 1
+                            },
+                            "FunctionalityMultiplier": {
+                                "UsePowerRatio": 1,
+                                "FunctionalityMultiplyCurve": {
+                                    "useLUT": 0,
+                                    "points": []
+                                }
                             },
                             "EffectCurve": {
                                 "useLUT": 0,
@@ -653,16 +672,20 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": {
                         "SItemPortDef": {
                             "Name": "hardpoint_class_2",
-                            "DisplayName": "Slot",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 3,
                             "MaxSize": 4,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -670,6 +693,7 @@
                             "resourceLinkToParent": 1,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -766,7 +790,8 @@
                     "asopSpawnState": "None",
                     "throttleParams": [],
                     "masterModeExclusionsOverride": []
-                }
+                },
+                "SCItemAimableComponentParams": []
             },
             "ClassName": "Mount_Gimbal_S4_VNCL_Stinger",
             "__type": "Turret"
@@ -782,7 +807,17 @@
         "grade": 1,
         "name": "VariPuck S4 Gimbal Mount",
         "tags": "gimbalMount flightReady",
-        "manufacturer": "VNC",
+        "required_tags": "",
+        "entity_tags": [
+            "b6f2ae47-9950-46bb-8c18-69cb7d22be74"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "b6f2ae47-9950-46bb-8c18-69cb7d22be74",
+                "name": "Gimbal"
+            }
+        ],
+        "classification": "Ship.Turret.GunTurret",
         "stdItem": {
             "UUID": "0bff5ad1-931a-4d4d-83b9-a312b1404a97",
             "ClassName": "Mount_Gimbal_S4_VNCL_Stinger",
@@ -791,12 +826,36 @@
             "Width": 0.8932018,
             "Height": 1.60379,
             "Length": 6.633023,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.89,
+                    "Length": 6.63,
+                    "Height": 1.6
+                },
+                "UIDimensions": {
+                    "Width": 0.75,
+                    "Length": 0.75,
+                    "Height": 0.75
+                },
+                "Volume": {
+                    "SCU": 2.1,
+                    "SCUConverted": 2100000,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 125,
             "Type": "Turret.GunTurret",
             "Name": "VariPuck S4 Gimbal Mount",
             "Description": "Manufacturer: Flashfire Systems\\nItem Type: Weapon Mount\\nSize: 4\\n\\nThe VariPuck fits between your weapon and the ship hardpoint to transform a fixed weapon mount into a gimballed mount, allowing the pilot to independently aim their weapon\u2019s fire. VariPucks will accept any weapon the same size as the hardpoint it is mounting to.",
+            "DescriptionData": {
+                "Manufacturer": "Flashfire Systems",
+                "Item Type": "Weapon Mount",
+                "Size": "4"
+            },
+            "DescriptionText": "The VariPuck fits between your weapon and the ship hardpoint to transform a fixed weapon mount into a gimballed mount, allowing the pilot to independently aim their weapon's fire. VariPucks will accept any weapon the same size as the hardpoint it is mounting to.",
             "Manufacturer": {
-                "Code": "VNC",
-                "Name": "Vanduul"
+                "Name": "Vanduul",
+                "UUID": "4668760a-d8a1-48d0-be4d-42304b702de0"
             },
             "Tags": [
                 "gimbalMount",
@@ -805,9 +864,20 @@
             "Ports": [
                 {
                     "PortName": "hardpoint_class_2",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 4,
+                    "MinSize": 3,
+                    "MaxSize": 4,
                     "Types": [
-                        "WeaponGun"
+                        "WeaponGun.Gun"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponGun",
+                            "SubTypes": [
+                                "Gun"
+                            ]
+                        }
                     ],
                     "Uneditable": false
                 }
@@ -815,10 +885,40 @@
             "DimensionOverrides": {
                 "Width": 0.75,
                 "Length": 0.75,
-                "Height": 0.75
+                "Height": 0.75,
+                "Volume": 0.216
             },
             "Durability": {
-                "Health": 1650
+                "Lifetime": 720,
+                "Health": 1650,
+                "Salvageable": 1,
+                "Repairable": 1,
+                "Resistance": {
+                    "Physical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Energy": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Distortion": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Thermal": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Biochemical": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    },
+                    "Stun": {
+                        "Multiplier": 1,
+                        "Threshold": 0
+                    }
+                }
             },
             "HeatConnection": {
                 "TemperatureToIR": 6,
@@ -855,6 +955,45 @@
                 "OverclockPerformance": 0,
                 "PowerToEM": 0,
                 "DecayRateOfEM": 0.15
+            },
+            "Turret": {
+                "RotationStyle": "SingleAxis",
+                "MovementList": [
+                    {
+                        "JointName": "yaw_part",
+                        "SlavedOnly": 0,
+                        "RestrictTargetAngles": 0,
+                        "YawAxis": {
+                            "Speed": 80,
+                            "AccelerationTimeToFullSpeed": 0.3,
+                            "JerkTimeToFullAcceleration": 0.1,
+                            "AccelerationDecay": 5,
+                            "AngleLimits": [
+                                {
+                                    "LowestAngle": -40,
+                                    "HighestAngle": 40
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "JointName": "pitch_part",
+                        "SlavedOnly": 0,
+                        "RestrictTargetAngles": 0,
+                        "PitchAxis": {
+                            "Speed": 80,
+                            "AccelerationTimeToFullSpeed": 0.3,
+                            "JerkTimeToFullAcceleration": 0.1,
+                            "AccelerationDecay": 5,
+                            "AngleLimits": [
+                                {
+                                    "LowestAngle": -20,
+                                    "HighestAngle": 20
+                                }
+                            ]
+                        }
+                    }
+                ]
             }
         }
     }

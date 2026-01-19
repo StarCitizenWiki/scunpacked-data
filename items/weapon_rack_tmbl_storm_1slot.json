@@ -8,6 +8,11 @@
             "entityDensityClass": "00000000-0000-0000-0000-000000000000",
             "__ref": "1b248191-4b26-4a6f-a38f-c97c8f71e2a4",
             "__path": "libs/foundry/records/entities/scitem/usables/weapon_rack_tmbl_storm_1slot.xml",
+            "defaultEditorColor": {
+                "r": 1,
+                "g": 1,
+                "b": 0
+            },
             "tags": [],
             "StaticEntityClassData": [],
             "Components": {
@@ -206,6 +211,11 @@
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
                     "ModelTag": [],
+                    "meshsetup": {
+                        "visibilityTags": {
+                            "tags": []
+                        }
+                    },
                     "Geometry": {
                         "Tags": "",
                         "ScaleMultiplier": 1,
@@ -270,6 +280,7 @@
                             "spawnBoxScale": 0.5,
                             "maxLoggedCollisions": 1,
                             "Damping": 0.01,
+                            "DampingZeroG": 0.01,
                             "DampingFreefall": 0.05,
                             "PushableByPlayers": 1,
                             "NeverAffectTriggers": 0,
@@ -290,14 +301,19 @@
                             "temperature": {
                                 "enable": 0,
                                 "initialTemperature": -1,
-                                "coolingEqualizationMultiplier": 1,
                                 "internalTemperatureGeneration": 0,
+                                "coolingEqualizationParams": {
+                                    "CoolingEqualizationMultiplier": {
+                                        "coolingEqualizationMultiplier": 1
+                                    }
+                                },
                                 "signatureParams": {
                                     "enable": 0,
                                     "minimumTemperatureForIR": 250,
                                     "temperatureToIR": 6
                                 },
                                 "itemResourceParams": {
+                                    "poweredAmbientCoolingMultiplier": 1,
                                     "minOperatingTemperature": 0,
                                     "minCoolingTemperature": 300,
                                     "enableOverheat": 0,
@@ -328,6 +344,8 @@
                     "fragmentTag": "weapon_rack",
                     "isExterior": 0,
                     "allowDeadOrUnconscious": 0,
+                    "lowEnergyThreshold": 0,
+                    "highEnergyThreshold": 2,
                     "useSlots": {
                         "UsableUseSlot": {
                             "name": "Slot_01",
@@ -511,6 +529,7 @@
                         }
                     },
                     "exclusivityGroups": [],
+                    "freeItemPortsForDirectInteraction": [],
                     "slottingSetups": {
                         "UsableSlottingSetup": {
                             "name": "",
@@ -551,16 +570,20 @@
                     "RequiredItemTags": "",
                     "LinkAllItemsToResourceNetwork": 0,
                     "cheatResourceNetworkUpdate": 0,
+                    "doorsIgnorePower": 0,
                     "masterController": [],
                     "Ports": {
                         "SItemPortDef": {
                             "Name": "$proxy_weapon_01",
-                            "DisplayName": "hardpoint_Weapon_Cabinet_01",
+                            "DisplayName": "",
+                            "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "weapon_port_01",
                             "RequiredPortTags": "",
                             "Flags": "",
+                            "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 2,
                             "MaxSize": 2,
+                            "MaxAggregateAttachmentHeight": -1,
                             "gridBehavior": "Both",
                             "InteractionPointSize": -1,
                             "DefaultWeaponGroup": "UNDEFINED",
@@ -568,6 +591,7 @@
                             "resourceLinkToParent": 0,
                             "useHelperAsInteractionPointName": 0,
                             "Tags": [],
+                            "OnAttachTags": [],
                             "defaultItem": {
                                 "itemPort": "",
                                 "entityClass": "00000000-0000-0000-0000-000000000000",
@@ -716,6 +740,7 @@
                                             "overrideInterpolation": []
                                         }
                                     },
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -751,6 +776,7 @@
                                             "overrideInterpolation": []
                                         }
                                     },
+                                    "ExitEventDispatchers": [],
                                     "StateAutoChange": [],
                                     "Interactions": {
                                         "SInteractionStateTransition": {
@@ -866,7 +892,7 @@
         "grade": 1,
         "name": "<= PLACEHOLDER =>",
         "tags": "",
-        "manufacturer": "TMBL",
+        "required_tags": "",
         "stdItem": {
             "UUID": "1b248191-4b26-4a6f-a38f-c97c8f71e2a4",
             "ClassName": "Weapon_Rack_TMBL_Storm_1Slot",
@@ -875,25 +901,52 @@
             "Width": 0.15,
             "Height": 0.15,
             "Length": 0.15,
+            "InventoryOccupancy": {
+                "Dimensions": {
+                    "Width": 0.15,
+                    "Length": 0.15,
+                    "Height": 0.15
+                },
+                "Volume": {
+                    "SCU": 0,
+                    "SCUConverted": 1,
+                    "Unit": "\u00b5SCU"
+                }
+            },
+            "Mass": 500,
             "Type": "Usable.UNDEFINED",
             "Name": "<= PLACEHOLDER =>",
             "Description": "",
+            "DescriptionText": "",
             "Manufacturer": {
-                "Code": "TMBL",
-                "Name": "Tumbril Land Systems"
+                "Name": "Tumbril Land Systems",
+                "UUID": "bb1024bc-b82e-491c-820c-36662c36feb3"
             },
             "Ports": [
                 {
                     "PortName": "$proxy_weapon_01",
+                    "DisplayName": "@LOC_EMPTY",
                     "Size": 2,
+                    "MinSize": 2,
+                    "MaxSize": 2,
                     "Tags": [
                         "weapon_port_01"
                     ],
                     "Types": [
                         "WeaponPersonal"
                     ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "WeaponPersonal"
+                        }
+                    ],
                     "Uneditable": false
                 }
+            ],
+            "Interactions": [
+                "Place",
+                "Deploy",
+                "Retract"
             ]
         }
     }
