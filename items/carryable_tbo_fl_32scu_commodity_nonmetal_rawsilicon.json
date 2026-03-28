@@ -180,10 +180,14 @@
                         },
                         "inventoryOccupancyDimensionsUIOverride": {
                             "Vec3": {
-                                "x": 1.5,
-                                "y": 3.75,
-                                "z": 1.5
+                                "x": 0.75,
+                                "y": 0.75,
+                                "z": 0.75
                             }
+                        },
+                        "inventoryOccupancyFixedGridDimensionsUIV4": {
+                            "x": 1,
+                            "y": 1
                         }
                     }
                 },
@@ -191,26 +195,11 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "Close",
-                                "LinkingTag": "61cc8167-9013-4534-b4fc-3d7f60e752b7",
-                                "DisplayName": "Close",
-                                "__DisplayName": "@ui_interactor_close",
+                                "Name": "GimbalType_SetAimAssist",
+                                "DisplayName": "Engage Aim Assist",
+                                "__DisplayName": "@vehicle_interactor_GimbalType_AimAssist",
                                 "DisplayType": "Show",
                                 "GenericCursor": "Button",
-                                "FocusModeOnly": 0,
-                                "Sendable": 1,
-                                "Linkable": 0,
-                                "LockedByLinks": 1,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
-                            },
-                            {
-                                "Name": "Hack",
-                                "DisplayName": "Hack",
-                                "__DisplayName": "@sm_ui_CTRL_Prompt_Hack",
-                                "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 1,
                                 "Linkable": 1,
@@ -220,11 +209,25 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "Repair",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "FirePattern_SetStaggered",
+                                "DisplayName": "Use Staggered Fire",
+                                "__DisplayName": "@vehicle_interactor_FirePattern_Staggered",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
+                                "GenericCursor": "Button",
+                                "FocusModeOnly": 0,
+                                "Sendable": 1,
+                                "Linkable": 1,
+                                "LockedByLinks": 1,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "FirePattern_SetSynchronized",
+                                "DisplayName": "Use Synchronized Fire",
+                                "__DisplayName": "@vehicle_interactor_FirePattern_Synchronized",
+                                "DisplayType": "Show",
+                                "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
                                 "Sendable": 1,
                                 "Linkable": 1,
@@ -264,7 +267,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[C620]"
+                                            "value": "SSharedInteractionParams[CFA5]"
                                         }
                                     },
                                     {
@@ -272,7 +275,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[C61F]"
+                                            "value": "SSharedInteractionParams[CFA6]"
                                         }
                                     },
                                     {
@@ -280,7 +283,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[C620]"
+                                            "value": "SSharedInteractionParams[CFA7]"
                                         }
                                     }
                                 ],
@@ -380,26 +383,77 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[745F]"
+                                "value": "SInteractionState[7F7A]"
                             },
                             "States": [
                                 {
-                                    "StateName": "ClaimComplete"
+                                    "StateName": "DoorOpened",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[88B3]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "9057a388-8ac5-40e2-9b0f-657bfab9ff60"
+                                            }
+                                        }
+                                    }
                                 },
                                 {
-                                    "StateName": "ImpoundFine"
+                                    "StateName": "DoorClosing",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[88B2]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "19e014c7-a1cc-4255-b206-94a9d85a3dac"
+                                            }
+                                        }
+                                    }
                                 },
                                 {
-                                    "StateName": "Deimpounded"
+                                    "StateName": "DoorUnlocked",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "e5e348ca-7752-4930-8a50-874f34dca55e"
+                                            }
+                                        }
+                                    }
                                 },
                                 {
-                                    "StateName": "DeliverVehicle"
+                                    "StateName": "DoorAccessGranted",
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 1.5,
+                                            "RunWhenStreamedOut": 0,
+                                            "NextState": {
+                                                "value": "SInteractionState[7F7C]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "00000000-0000-0000-0000-000000000000"
+                                            }
+                                        }
+                                    }
                                 }
                             ],
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[7462]"
+                                        "value": "SInteractionState[7F7D]"
                                     }
                                 }
                             }
@@ -479,6 +533,7 @@
                     "alwaysPropagateHitToParent": 0,
                     "duplicateHitToParent": 0,
                     "sendOnDestructionEventToMasterRootContainer": 0,
+                    "applyExplosionFalloffFromOrigin": 1,
                     "DamageResistances": {
                         "DamageResistance": {
                             "IgnoreMeleeDamage": 0,
@@ -580,9 +635,11 @@
                     }
                 },
                 "ResourceContainer": {
-                    "mass": 0,
                     "immutable": 0,
+                    "mutabilityLevel": "ReadWrite",
+                    "generateRandomQuality": 0,
                     "defaultCompositionFillFactor": 1,
+                    "hideFromUI": 0,
                     "capacity": {
                         "SStandardCargoUnit": {
                             "standardCargoUnits": 32
@@ -668,9 +725,9 @@
                     "Height": 2.5
                 },
                 "UIDimensions": {
-                    "Width": 1.5,
-                    "Length": 3.75,
-                    "Height": 1.5
+                    "Width": 0.75,
+                    "Length": 0.75,
+                    "Height": 0.75
                 },
                 "Volume": {
                     "SCU": 32,
@@ -689,10 +746,10 @@
                 "UUID": "00000000-0000-0000-0000-000000000000"
             },
             "DimensionOverrides": {
-                "Width": 1.5,
-                "Length": 3.75,
-                "Height": 1.5,
-                "Volume": 4.32
+                "Width": 0.75,
+                "Length": 0.75,
+                "Height": 0.75,
+                "Volume": 0.216
             },
             "Durability": {
                 "Health": 1000,
@@ -754,12 +811,11 @@
                 }
             },
             "Interactions": [
-                "Close",
-                "Hack",
-                "Repair"
+                "Gimbaltype_setaimassist",
+                "Firepattern_setstaggered",
+                "Firepattern_setsynchronized"
             ],
             "ResourceContainer": {
-                "Mass": 0,
                 "Immutable": false,
                 "DefaultFillFraction": 1,
                 "Capacity": {
