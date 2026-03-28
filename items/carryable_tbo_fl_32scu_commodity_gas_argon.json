@@ -180,10 +180,14 @@
                         },
                         "inventoryOccupancyDimensionsUIOverride": {
                             "Vec3": {
-                                "x": 1.5,
-                                "y": 3.75,
-                                "z": 1.5
+                                "x": 0.75,
+                                "y": 0.75,
+                                "z": 0.75
                             }
+                        },
+                        "inventoryOccupancyFixedGridDimensionsUIV4": {
+                            "x": 1,
+                            "y": 1
                         }
                     }
                 },
@@ -191,11 +195,25 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "DeactivatingPanel",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "PipType_SetLag",
+                                "DisplayName": "Use Lag Pips",
+                                "__DisplayName": "@vehicle_interactor_PipType_Lag",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
+                                "GenericCursor": "Button",
+                                "FocusModeOnly": 0,
+                                "Sendable": 1,
+                                "Linkable": 1,
+                                "LockedByLinks": 1,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "LandingGear_Invalid",
+                                "DisplayName": "---",
+                                "__DisplayName": "@Test_InvalidInteraction",
+                                "DisplayType": "Show",
+                                "GenericCursor": "Invalid",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
                                 "Linkable": 0,
@@ -205,23 +223,9 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "RebootRequired_Reboot",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
-                                "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
-                                "FocusModeOnly": 0,
-                                "Sendable": 0,
-                                "Linkable": 0,
-                                "LockedByLinks": 0,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
-                            },
-                            {
-                                "Name": "RebootRequired_ShuttingDown",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "SelfDestruct_Engage",
+                                "DisplayName": "Self Destruct",
+                                "__DisplayName": "@ui_CISelfDestruct",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -263,7 +267,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[C68F]"
+                                            "value": "SSharedInteractionParams[D04F]"
                                         }
                                     },
                                     {
@@ -271,15 +275,15 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[C68F]"
+                                            "value": "SSharedInteractionParams[D050]"
                                         }
                                     },
                                     {
-                                        "DisplayName": "Sit",
-                                        "__DisplayName": "@ui_interactor_generic_seat",
+                                        "DisplayName": "",
+                                        "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[C695]"
+                                            "value": "SSharedInteractionParams[D04D]"
                                         }
                                     }
                                 ],
@@ -379,45 +383,88 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[750F]"
+                                "value": "SInteractionState[8032]"
                             },
                             "States": [
                                 {
-                                    "StateName": "QuantumSpoolIdle",
+                                    "StateName": "PressureNormalizing",
+                                    "ExitStatePlaySequence": {
+                                        "value": "SReplicatedSequencerDefSequenceParams[0C7A]"
+                                    },
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[899E]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[8030]"
+                                            }
+                                        }
+                                    },
                                     "stateTags": {
                                         "tags": {
                                             "Reference": {
-                                                "value": "59f2105f-2d0f-4074-9049-71fc152a0d62"
+                                                "value": "0c2dcc60-f463-4643-862e-90bbe606b7aa"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "QuantumSpoolInProgress",
+                                    "StateName": "PressureDifferentializing",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[899E]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[8031]"
+                                            }
+                                        }
+                                    },
                                     "stateTags": {
                                         "tags": {
                                             "Reference": {
-                                                "value": "74721f1f-ffc6-43a7-a2fc-b8fc7ee8f522"
+                                                "value": "6d92f3ae-5f13-4b77-b7b1-1b51a334916c"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "QuantumSpoolComplete",
+                                    "StateName": "PowerNormal",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[8998]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[8035]"
+                                            }
+                                        }
+                                    },
                                     "stateTags": {
                                         "tags": {
                                             "Reference": {
-                                                "value": "312775d5-9b4b-40cf-a115-1fc315763baf"
+                                                "value": "7e6a2f02-480d-4f86-9ee6-b19dbc778f76"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "QuantumTravelIdle",
+                                    "StateName": "PowerLost",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[8997]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[8034]"
+                                            }
+                                        }
+                                    },
                                     "stateTags": {
                                         "tags": {
                                             "Reference": {
-                                                "value": "bc91383d-9f64-4327-abf9-dc6001dc6067"
+                                                "value": "aff7a3ed-a8bf-4b91-b07a-462f57003211"
                                             }
                                         }
                                     }
@@ -426,7 +473,7 @@
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[7512]"
+                                        "value": "SInteractionState[8035]"
                                     }
                                 }
                             }
@@ -506,6 +553,7 @@
                     "alwaysPropagateHitToParent": 0,
                     "duplicateHitToParent": 0,
                     "sendOnDestructionEventToMasterRootContainer": 0,
+                    "applyExplosionFalloffFromOrigin": 1,
                     "DamageResistances": {
                         "DamageResistance": {
                             "IgnoreMeleeDamage": 0,
@@ -607,9 +655,11 @@
                     }
                 },
                 "ResourceContainer": {
-                    "mass": 0,
-                    "immutable": 1,
+                    "immutable": 0,
+                    "mutabilityLevel": "ReadWrite",
+                    "generateRandomQuality": 0,
                     "defaultCompositionFillFactor": 1,
+                    "hideFromUI": 0,
                     "capacity": {
                         "SStandardCargoUnit": {
                             "standardCargoUnits": 32
@@ -695,9 +745,9 @@
                     "Height": 2.5
                 },
                 "UIDimensions": {
-                    "Width": 1.5,
-                    "Length": 3.75,
-                    "Height": 1.5
+                    "Width": 0.75,
+                    "Length": 0.75,
+                    "Height": 0.75
                 },
                 "Volume": {
                     "SCU": 32,
@@ -716,10 +766,10 @@
                 "UUID": "00000000-0000-0000-0000-000000000000"
             },
             "DimensionOverrides": {
-                "Width": 1.5,
-                "Length": 3.75,
-                "Height": 1.5,
-                "Volume": 4.32
+                "Width": 0.75,
+                "Length": 0.75,
+                "Height": 0.75,
+                "Volume": 0.216
             },
             "Durability": {
                 "Health": 1000,
@@ -781,13 +831,12 @@
                 }
             },
             "Interactions": [
-                "Deactivatingpanel",
-                "Rebootrequired_reboot",
-                "Rebootrequired_shuttingdown"
+                "Piptype_setlag",
+                "Landinggear_invalid",
+                "Selfdestruct_engage"
             ],
             "ResourceContainer": {
-                "Mass": 0,
-                "Immutable": true,
+                "Immutable": false,
                 "DefaultFillFraction": 1,
                 "Capacity": {
                     "Unit": "SStandardCargoUnit",

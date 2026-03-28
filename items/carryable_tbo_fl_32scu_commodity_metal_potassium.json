@@ -180,10 +180,14 @@
                         },
                         "inventoryOccupancyDimensionsUIOverride": {
                             "Vec3": {
-                                "x": 1.5,
-                                "y": 3.75,
-                                "z": 1.5
+                                "x": 0.75,
+                                "y": 0.75,
+                                "z": 0.75
                             }
+                        },
+                        "inventoryOccupancyFixedGridDimensionsUIV4": {
+                            "x": 1,
+                            "y": 1
                         }
                     }
                 },
@@ -191,13 +195,13 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "Exit",
-                                "DisplayName": "Get Up",
-                                "__DisplayName": "@interaction_getup",
+                                "Name": "Signal_PowerOn",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 0,
+                                "Sendable": 1,
                                 "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
@@ -205,13 +209,13 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "Type",
-                                "DisplayName": "Type",
-                                "__DisplayName": "@ui_Type",
+                                "Name": "Signal_PowerOff",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 0,
+                                "Sendable": 1,
                                 "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
@@ -219,15 +223,15 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "Order",
-                                "DisplayName": "Order",
-                                "__DisplayName": "@interaction_order",
+                                "Name": "OpenAccessPoints",
+                                "DisplayName": "Open Exterior",
+                                "__DisplayName": "@ui_interactor_open_exterior",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
+                                "GenericCursor": "MultiAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 0,
+                                "Sendable": 1,
                                 "Linkable": 0,
-                                "LockedByLinks": 0,
+                                "LockedByLinks": 1,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
@@ -261,25 +265,19 @@
                                     {
                                         "DisplayName": "",
                                         "__DisplayName": "@LOC_EMPTY",
-                                        "IsPrimary": 0,
-                                        "Interaction": {
-                                            "value": "SSharedInteractionParams[C6FF]"
-                                        }
-                                    },
-                                    {
-                                        "DisplayName": "Sit",
-                                        "__DisplayName": "@ui_interactor_generic_seat",
-                                        "IsPrimary": 1,
-                                        "Interaction": {
-                                            "value": "SSharedInteractionParams[C700]"
-                                        }
+                                        "IsPrimary": 0
                                     },
                                     {
                                         "DisplayName": "",
                                         "__DisplayName": "@LOC_EMPTY",
-                                        "IsPrimary": 0,
+                                        "IsPrimary": 0
+                                    },
+                                    {
+                                        "DisplayName": "",
+                                        "__DisplayName": "@LOC_EMPTY",
+                                        "IsPrimary": 1,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[C701]"
+                                            "value": "SSharedInteractionParams[D190]"
                                         }
                                     }
                                 ],
@@ -379,45 +377,88 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[764F]"
+                                "value": "SInteractionState[8176]"
                             },
                             "States": [
                                 {
-                                    "StateName": "QuantumCalibrationInProgress",
+                                    "StateName": "PressureNormalizing",
+                                    "ExitStatePlaySequence": {
+                                        "value": "SReplicatedSequencerDefSequenceParams[0CF2]"
+                                    },
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[8B36]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[8174]"
+                                            }
+                                        }
+                                    },
                                     "stateTags": {
                                         "tags": {
                                             "Reference": {
-                                                "value": "7ff957f6-6a4d-47c1-9e77-792ce98b82b8"
+                                                "value": "0c2dcc60-f463-4643-862e-90bbe606b7aa"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "QuantumCalibrationComplete",
+                                    "StateName": "PressureDifferentializing",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[8B36]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[8175]"
+                                            }
+                                        }
+                                    },
                                     "stateTags": {
                                         "tags": {
                                             "Reference": {
-                                                "value": "1df73bbe-259c-4b58-909e-bd68586b3104"
+                                                "value": "6d92f3ae-5f13-4b77-b7b1-1b51a334916c"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "QuantumSpoolIdle",
+                                    "StateName": "PowerNormal",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[8B30]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[8179]"
+                                            }
+                                        }
+                                    },
                                     "stateTags": {
                                         "tags": {
                                             "Reference": {
-                                                "value": "59f2105f-2d0f-4074-9049-71fc152a0d62"
+                                                "value": "7e6a2f02-480d-4f86-9ee6-b19dbc778f76"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "QuantumSpoolInProgress",
+                                    "StateName": "PowerLost",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[8B2F]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[8178]"
+                                            }
+                                        }
+                                    },
                                     "stateTags": {
                                         "tags": {
                                             "Reference": {
-                                                "value": "74721f1f-ffc6-43a7-a2fc-b8fc7ee8f522"
+                                                "value": "aff7a3ed-a8bf-4b91-b07a-462f57003211"
                                             }
                                         }
                                     }
@@ -426,7 +467,7 @@
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[7652]"
+                                        "value": "SInteractionState[8179]"
                                     }
                                 }
                             }
@@ -506,6 +547,7 @@
                     "alwaysPropagateHitToParent": 0,
                     "duplicateHitToParent": 0,
                     "sendOnDestructionEventToMasterRootContainer": 0,
+                    "applyExplosionFalloffFromOrigin": 1,
                     "DamageResistances": {
                         "DamageResistance": {
                             "IgnoreMeleeDamage": 0,
@@ -607,9 +649,11 @@
                     }
                 },
                 "ResourceContainer": {
-                    "mass": 0,
-                    "immutable": 1,
+                    "immutable": 0,
+                    "mutabilityLevel": "ReadWrite",
+                    "generateRandomQuality": 0,
                     "defaultCompositionFillFactor": 1,
+                    "hideFromUI": 0,
                     "capacity": {
                         "SStandardCargoUnit": {
                             "standardCargoUnits": 32
@@ -695,9 +739,9 @@
                     "Height": 2.5
                 },
                 "UIDimensions": {
-                    "Width": 1.5,
-                    "Length": 3.75,
-                    "Height": 1.5
+                    "Width": 0.75,
+                    "Length": 0.75,
+                    "Height": 0.75
                 },
                 "Volume": {
                     "SCU": 32,
@@ -716,10 +760,10 @@
                 "UUID": "00000000-0000-0000-0000-000000000000"
             },
             "DimensionOverrides": {
-                "Width": 1.5,
-                "Length": 3.75,
-                "Height": 1.5,
-                "Volume": 4.32
+                "Width": 0.75,
+                "Length": 0.75,
+                "Height": 0.75,
+                "Volume": 0.216
             },
             "Durability": {
                 "Health": 1000,
@@ -781,13 +825,12 @@
                 }
             },
             "Interactions": [
-                "Exit",
-                "Type",
-                "Order"
+                "Signal_poweron",
+                "Signal_poweroff",
+                "Openaccesspoints"
             ],
             "ResourceContainer": {
-                "Mass": 0,
-                "Immutable": true,
+                "Immutable": false,
                 "DefaultFillFraction": 1,
                 "Capacity": {
                     "Unit": "SStandardCargoUnit",
