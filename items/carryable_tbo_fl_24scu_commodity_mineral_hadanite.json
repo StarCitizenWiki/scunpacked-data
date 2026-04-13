@@ -195,9 +195,9 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "VTOL_SetActive",
-                                "DisplayName": "Enable VTOL",
-                                "__DisplayName": "@vehicle_interactor_VTOL_Enable",
+                                "Name": "IFCS_Coupled_SetDecoupled",
+                                "DisplayName": "Disable Coupled Flight",
+                                "__DisplayName": "@vehicle_interactor_Decoupled_Enable",
                                 "DisplayType": "Show",
                                 "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
@@ -209,9 +209,9 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "VTOL_SetInactive",
-                                "DisplayName": "Disable VTOL",
-                                "__DisplayName": "@vehicle_interactor_VTOL_Disable",
+                                "Name": "IFCS_GSafe_SetActive",
+                                "DisplayName": "Enable G-Safe Limiters",
+                                "__DisplayName": "@vehicle_interactor_GSafe_Enable",
                                 "DisplayType": "Show",
                                 "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
@@ -223,9 +223,9 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "ProximityAssist_SetActive",
-                                "DisplayName": "Enable Proximity Flight Assist",
-                                "__DisplayName": "@vehicle_interactor_ProximityAssist_Enable",
+                                "Name": "IFCS_GSafe_SetInactive",
+                                "DisplayName": "Disable G-Safe Limiters",
+                                "__DisplayName": "@vehicle_interactor_GSafe_Disable",
                                 "DisplayType": "Show",
                                 "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
@@ -267,15 +267,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D203]"
-                                        }
-                                    },
-                                    {
-                                        "DisplayName": "",
-                                        "__DisplayName": "@LOC_EMPTY",
-                                        "IsPrimary": 1,
-                                        "Interaction": {
-                                            "value": "SSharedInteractionParams[D1FF]"
+                                            "value": "SSharedInteractionParams[D2CF]"
                                         }
                                     },
                                     {
@@ -283,7 +275,15 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D202]"
+                                            "value": "SSharedInteractionParams[D2D3]"
+                                        }
+                                    },
+                                    {
+                                        "DisplayName": "",
+                                        "__DisplayName": "@LOC_EMPTY",
+                                        "IsPrimary": 0,
+                                        "Interaction": {
+                                            "value": "SSharedInteractionParams[D2D4]"
                                         }
                                     }
                                 ],
@@ -383,47 +383,68 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[820E]"
+                                "value": "SInteractionState[8422]"
                             },
                             "States": [
                                 {
-                                    "StateName": "DoorInoperable"
-                                },
-                                {
-                                    "StateName": "AirlockControl_NoAirlockConnected",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[8C03]"
-                                            },
+                                    "StateName": "DoorAccessGranted",
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 1.5,
+                                            "RunWhenStreamedOut": 0,
                                             "NextState": {
-                                                "value": "SInteractionState[8210]"
+                                                "value": "SInteractionState[8421]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "00000000-0000-0000-0000-000000000000"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "AirlockControl_AirlockConnected",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[8BF3]"
-                                            },
+                                    "StateName": "DoorAccessDenied",
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 1.5,
+                                            "RunWhenStreamedOut": 0,
                                             "NextState": {
-                                                "value": "SInteractionState[8211]"
+                                                "value": "SInteractionState[8424]"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "AirlockControl_OpenRequested",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
+                                    "StateName": "DoorLocked",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "60daf4c5-91c1-4900-aac2-1eb57f9de62f"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "DoorOperable",
+                                    "Interactions": [
+                                        {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[8BEE]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[8210]"
+                                                "value": "SSharedInteractionParams[8EA9]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[8EA0]"
+                                            }
+                                        }
+                                    ],
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "63128da1-d91e-4395-a69b-e19e81a376cc"
                                             }
                                         }
                                     }
@@ -432,7 +453,7 @@
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[8211]"
+                                        "value": "SInteractionState[8425]"
                                     }
                                 }
                             }
@@ -785,9 +806,9 @@
                 }
             },
             "Interactions": [
-                "Vtol_setactive",
-                "Vtol_setinactive",
-                "Proximityassist_setactive"
+                "Ifcs_coupled_setdecoupled",
+                "Ifcs_gsafe_setactive",
+                "Ifcs_gsafe_setinactive"
             ],
             "ResourceContainer": {
                 "Immutable": false,
