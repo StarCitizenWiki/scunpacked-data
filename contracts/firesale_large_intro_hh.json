@@ -2,6 +2,10 @@
     "UUID": "ce9aacc4-41da-47bc-a770-0448144eaa2c",
     "DebugName": "Firesale_Large_Intro_HH",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "9c585972-95b7-4408-ad72-aa9858545958",
+        "Name": "Priority"
+    },
     "MissionGiver": "Headhunters",
     "Title": "Out of Detatrine \u2013 Large Resupply",
     "Description": "Kicking the crap out of those Frontier Fighter bastards seriously depleted our supplies and now our stash of detatrine is practically out of stock. \n\nThat\u2019s why you\u2019re going to put together a full fleet to do a detatrine resupply run to<EM4> ~mission(Destination|Address). </EM4>\n\nNot sure if you\u2019re familiar with it, but the chemical\u2019s what we use to make our batches of sludge. We can\u2019t really afford to let our sales of the stuff dry up right now. Not when we need credits so bad.\n\nThe good news is that <EM4>depots</EM4> across the system are offering detatrine and rock-bottom prices. Hell if I know why they\u2019re doing it, all I know is that everyone with a lick of sense is trying to get their hands on the stuff so be ready for fierce competition. \n\nI\u2019m trustin\u2019 you to get it done,\nStows",
@@ -129,5 +133,83 @@
         "Name": "Headhunters"
     },
     "ReputationScope": "FactionReputation",
+    "Template": {
+        "Ref": "8fd35d1f-7fb8-4cd5-8c97-78a277df580e",
+        "SubtypeName": "HaulCargo_AtoB_Firesale_LiquidOpium_Large",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineSeconds": 300,
+            "DeadlineAutoEnd": true
+        },
+        "Objectives": [
+            {
+                "Id": "21838a1b-9a27-49fc-944d-b1d5d6a87055",
+                "DebugName": "Hauling",
+                "StartsActive": true,
+                "HandlerType": "Hauling",
+                "Handler": {
+                    "HideMarkers": false,
+                    "HaulingOrders": [
+                        {
+                            "Type": "Resource",
+                            "Resource": "8bc60017-e4b6-47b1-bbe0-f2eb944fdeaf",
+                            "MaxContainerSize": 16,
+                            "MinScu": 2500,
+                            "MaxScu": 2500,
+                            "DropoffLocation": "ObjectiveProperty_Referenced[0FF1]"
+                        }
+                    ]
+                },
+                "RewardContribution": {
+                    "Percent": 100,
+                    "DoPartialRewardPayout": true
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When [Hauling] completed -&gt; Mission Completed",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[021F]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            },
+            {
+                "Description": "When [Hauling] failed -&gt; Mission Failed",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Failed",
+                    "ObjectiveToken": "ObjectiveToken[021F]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Failed"
+                }
+            },
+            {
+                "Description": "When [Hauling] abandoned -&gt; Mission Abandoned",
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Abandoned",
+                    "ObjectiveToken": "ObjectiveToken[021F]"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

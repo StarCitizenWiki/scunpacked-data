@@ -2,6 +2,10 @@
     "UUID": "f0a6adc6-ef64-4d4f-bf35-5368c870d7ad",
     "DebugName": "Foxwell_OLP_HaulCargo_AtoB_Small_Carbon",
     "Type": "ContractGeneratorHandler_List",
+    "MissionType": {
+        "UUID": "93f265dd-c971-49fe-b87b-96cccaae9362",
+        "Name": "Hauling"
+    },
     "MissionGiver": "Foxwell Enforcement",
     "Title": "Red Level Contract: Retrieve Cargo Haul",
     "Description": "Looking for a contractor with the right skills and ship for an important mission. Outlaws ambushed a Hull C carrying a <EM4>~mission(CargoGradeToken)</EM4> load of cargo and took it to <EM4>~mission(Location|Address)</EM4>. We\u2019ve been hired to get it all back.  \n\nThe cargo is being stored somewhere at a defunct Hathor facility. The place is big and crawling with outlaws. Need someone to retrieve the goods from the freight elevator there and deliver it all back to the <EM4>freight elevator at ~mission(Destination|Address)</EM4>. Don\u2019t think this will be a walk in the park. Bring lots of ammo and a ship that can handle <EM4>~mission(MissionMaxSCUSize) cargo containers</EM4>. \n\nIt also wouldn't hurt to bring a <EM4>handheld tractor beam</EM4> with you.   \n\n\nMarcus Clenn\nFoxwell Enforcement\n'Security, Your Way'\n\nFoxwell Enforcement is a bonded security specialist licensed to operate throughout the UEE. We are always looking for new operators to join our family. If you or anyone you know is interested, please reach out to one of our contract representatives.",
@@ -2929,5 +2933,130 @@
         "Name": "<= UNINITIALIZED =>"
     },
     "ReputationScope": "Security",
+    "Template": {
+        "Ref": "b40ba53b-1dbe-4d1d-925c-be07fcf0cf14",
+        "SubtypeName": "HaulCargo_AtoB_Small_Carbon",
+        "ContractClass": {
+            "HasCompleteButton": true,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineSeconds": 300,
+            "DeadlineAutoEnd": true
+        },
+        "Objectives": [
+            {
+                "Id": "cf549904-fe95-4bab-bc35-a26719970ea5",
+                "DebugName": "Hauling",
+                "StartsActive": true,
+                "HandlerType": "Hauling",
+                "Handler": {
+                    "HideMarkers": false,
+                    "HaulingOrders": [
+                        {
+                            "Type": "Resource",
+                            "Resource": "9dc16af8-bfb9-4119-9e54-6db11b0a7ed2",
+                            "MaxContainerSize": 4,
+                            "MinScu": 6,
+                            "MaxScu": 32,
+                            "PickupLocation": "ObjectiveProperty_Referenced[0CB6]",
+                            "DropoffLocation": "ObjectiveProperty_Referenced[0CB7]"
+                        }
+                    ]
+                },
+                "RewardContribution": {
+                    "Percent": 100,
+                    "DoPartialRewardPayout": true
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When [Hauling] completed -&gt; Mission Completed",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[0167]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            },
+            {
+                "Description": "When [Hauling] failed -&gt; Mission Failed",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Failed",
+                    "ObjectiveToken": "ObjectiveToken[0167]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Failed"
+                }
+            },
+            {
+                "Description": "When [Hauling] abandoned -&gt; Mission Abandoned",
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Abandoned",
+                    "ObjectiveToken": "ObjectiveToken[0167]"
+                }
+            }
+        ],
+        "PartialRewardPayout": [
+            {
+                "MinPercentage": 76,
+                "MaxPercentage": 99,
+                "CurrencyRewardMultiplier": 0.76,
+                "ReputationAdjustments": [
+                    {
+                        "ReputationScope": "4c086729-2be5-4c08-870f-2bfe1f170083",
+                        "ReputationRewardMultiplier": 0.8
+                    }
+                ]
+            },
+            {
+                "MinPercentage": 51,
+                "MaxPercentage": 75,
+                "CurrencyRewardMultiplier": 0.45,
+                "ReputationAdjustments": [
+                    {
+                        "ReputationScope": "4c086729-2be5-4c08-870f-2bfe1f170083",
+                        "ReputationRewardMultiplier": 0.25
+                    }
+                ]
+            },
+            {
+                "MinPercentage": 26,
+                "MaxPercentage": 50,
+                "CurrencyRewardMultiplier": 0.15,
+                "ReputationAdjustments": [
+                    {
+                        "ReputationScope": "4c086729-2be5-4c08-870f-2bfe1f170083",
+                        "ReputationRewardMultiplier": 0
+                    }
+                ]
+            },
+            {
+                "MinPercentage": 0,
+                "MaxPercentage": 25,
+                "CurrencyRewardMultiplier": 0,
+                "ReputationAdjustments": [
+                    {
+                        "ReputationScope": "4c086729-2be5-4c08-870f-2bfe1f170083",
+                        "ReputationRewardMultiplier": 0
+                    }
+                ]
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

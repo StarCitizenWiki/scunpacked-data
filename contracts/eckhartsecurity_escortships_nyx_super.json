@@ -2,6 +2,10 @@
     "UUID": "511b35e2-8dd8-46d7-9ee3-3bb173db4bb3",
     "DebugName": "EckhartSecurity_EscortShips_Nyx_Super",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Eckhart Security",
     "Title": "Top Tier Operator Needed",
     "Description": "ECKHART SECURITY, LLC.\nCONTRACTS & DISPATCH\n\nCONTRACT TYPE: Escort Ship\nApproval code: = ~mission(ApprovalCode)\n\nFOR IMMEDIATE PROCESSING\n\nThis contract should only be considered by the most capable of pilots. A highly valued client is currently under attack at <EM4>~mission(Location|Address)</EM4> and requires immediate extraction. They\u2019re sitting in the hangar ready to leave, but are unable to move until the hostile ships in the area have been neutralized. \n\nI don\u2019t see the outlaws stopping any time soon and our client\u2019s reporting they\u2019re packing high-grade weaponry on their ships. This will be a test of your skill as much as your endurance. Assemble whoever you need and head there immediately to assist them.\n\nThis contract is non-negotiable.\n\nThis message may contain confidential, proprietary, privileged and/or private information. The information is intended to be for the use of the individual or entity designated above.",
@@ -655,5 +659,91 @@
             ]
         }
     ],
+    "Template": {
+        "Ref": "24dcd037-fa77-48f7-9be7-d8e7b53d9901",
+        "SubtypeName": "DefendLocationSpace_Hangar",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "125d1616-f73e-4050-8bc0-d0979cdb828a",
+                "DebugName": "DefendLocationWrapper",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/DefendLocation/DefendLocationWrapper.xml",
+                    "TravelRadiusKm": 30,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "3aa9b92a-ce80-4982-a8d4-9272846a7dc1"
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "IF all complete then complete mission",
+                "Condition": {
+                    "Type": "AND",
+                    "Conditions": [
+                        {
+                            "Type": "objectiveToken"
+                        },
+                        {
+                            "Type": "objectiveToken"
+                        }
+                    ]
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            },
+            {
+                "Description": "If any fail then fail all",
+                "Condition": {
+                    "Type": "OR",
+                    "Conditions": [
+                        {
+                            "Type": "objectiveToken"
+                        },
+                        {
+                            "Type": "objectiveToken"
+                        },
+                        {
+                            "Type": "objectiveToken"
+                        }
+                    ]
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Failed"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

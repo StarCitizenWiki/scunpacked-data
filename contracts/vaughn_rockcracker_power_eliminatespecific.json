@@ -2,6 +2,10 @@
     "UUID": "38a1dfde-22f0-46a2-80de-ea4949a409c6",
     "DebugName": "Vaughn_Rockcracker_Power_EliminateSpecific",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Vaughn",
     "Title": "A Well Deserved Break",
     "Description": "A request has made its way to my desk regarding the untimely end of one ~mission(TargetName), a member of the Claw Salamander who is currently scuttling around an old QV Breaker Station. \n\nIt is highly likely that you will find them at ~mission(Location|Address).  Be mindful though that with a station this large it may take a bit of searching to track them down. \n\nHope you enjoy your time in Nyx,\nVaughn",
@@ -255,6 +259,65 @@
         "GivenName": "@LOC_UNINITIALIZED",
         "LastName": "@LOC_UNINITIALIZED",
         "NickName": "@LOC_UNINITIALIZED"
+    },
+    "Template": {
+        "Ref": "613d8332-559d-49b8-848e-13557fdcc386",
+        "SubtypeName": "EliminateSpecific_ParentLocation_MarkerToGuide",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "b9025214-885a-48d3-8b6e-2100b5e541bd",
+                "DebugName": "GoToParentLocation",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/FacilityDelve/GoToObjective.xml",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "cd706bf4-dcec-4e66-ab96-2ef629f73ff6"
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When Target Eliminated, complete the mission",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ChildMissionPhase[0006]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            }
+        ]
     },
     "entry_type": "contracts"
 }

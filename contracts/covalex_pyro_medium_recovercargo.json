@@ -2,6 +2,10 @@
     "UUID": "5c424b45-9aa7-4c00-b55c-aeccba0d377b",
     "DebugName": "Covalex_Pyro_Medium_RecoverCargo",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Covalex Independent Contractors",
     "Title": "Med. Covalex Shipment Needs Recovering",
     "Description": "Hey El here,\n\nGot a weird one for you. I was checking the delivery stats for the past week and noticed some discrepancies. Seems we have a couple of deliveries marked as fulfilled but the cargo trackers are still showing as active.\n\nOne of these is located at <EM4>~mission(Location|Address)</EM4> so I was hoping you could fly over and get to the bottom of this. The order says the hauler was using a ship that could carry <EM4>~mission(MissionMaxSCUSize) cargo containers</EM4> so make sure you have the same. A <EM4>heavy-duty tractor beam</EM4> is a must for this one too.\n\nThat cargo needs to be delivered yesterday, so as soon as you've got it take it to a freight elevator at <EM4>~mission(Destination|Address)</EM4> and I'll get your payment sorted for you.\n\n~mission(Contractor|SignOff)\n\nElla Tieno \nJr. Logistics Coordinator \nCovalex Shipping   \n'Anything you need, anywhere you need it.' \n\n\n\n\n\n\n\nCovalex Shipping is a limited liability corporation. To encourage timely deliveries and prevent fraud on cargo hauls, Covalex Shipping will set a delivery time limit and upon expiration, any undelivered cargo will be considered stolen and treated as such. Total payment will be prorated according to the percentage of cargo successfully delivered.",
@@ -235,5 +239,102 @@
         "Name": "Covalex"
     },
     "ReputationScope": "Hauling",
+    "Template": {
+        "Ref": "cf76d034-32fe-492c-b0bc-ca1dfc74919d",
+        "SubtypeName": "RecoverCargo",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "b371a1da-3927-4ee0-a9e8-39336632f532",
+                "DebugName": "RetrieveCargo",
+                "StartsActive": true,
+                "HandlerType": "NearLocation",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/RecoverCargo.xml",
+                    "ModuleHierarchy": "fd49bf6a-e760-4dee-acdf-10745a2739bc",
+                    "TravelRadiusKm": 25,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Marker_1",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Marker_1",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "262335a7-051a-4f00-ad1a-9b55c1d1df5f",
+                    "MaxDistance": 15000,
+                    "MinDistance": 10000
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            },
+            {
+                "Id": "e3f702b6-61ba-4c9a-8feb-63d6940f7f9b",
+                "DebugName": "DeliverRecoveredCargo",
+                "StartsActive": false,
+                "HandlerType": "Hauling",
+                "Handler": {
+                    "HideMarkers": false,
+                    "HaulingOrders": [
+                        {
+                            "Type": "HaulingOrder_DropOff",
+                            "DropoffLocation": "ObjectiveProperty_Referenced[0176]"
+                        }
+                    ]
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": true
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "TurnOnDeliver",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[0022]"
+                },
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Active",
+                    "ObjectiveToken": "ObjectiveToken[0023]"
+                }
+            },
+            {
+                "Description": "CompleteOnAllDelivered",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[0023]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

@@ -2,6 +2,10 @@
     "UUID": "3e41dd86-88d1-4f15-9c71-7cd1ed215bd7",
     "DebugName": "CFP_Pyro_RegionB_H_MissingPerson_Theft_XTXS",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Citizens for Prosperity",
     "Title": "Search a XenoThreat Remote Outpost",
     "Description": "Hi,\n\nGot a tough assignment here. There\u2019s a small, satellite outpost near ~mission(Location|Address) that needs to be investigated. I received intel that it\u2019s housing some of our stolen supplies and sent ~mission(TargetName) to retrieve them. Haven\u2019t heard anything from them in a while and am worried they ran into trouble.\n\nXenoThreat controls that location, but I hoped ~mission(TargetName|First) could slip in and out without getting noticed. Seems like that spot might be more heavily guarded than expected. Looking for someone to take a look and see what happened to ~mission(TargetName|First). Also, if any of our supplies are found there, I need them taken to ~mission(Destination|Address). \n\nDo you think you can give it a shot? I\u2019m guessing that the Xenos are entrenched there. Prepare accordingly and don\u2019t expect them to make this easy on you.  \n\nThanks, \n\nLima Endicott\nLead Dispatcher\nCitizens for Prosperity",
@@ -308,6 +312,144 @@
         "GivenName": "@LOC_UNINITIALIZED",
         "LastName": "@LOC_UNINITIALIZED",
         "NickName": "@LOC_UNINITIALIZED"
+    },
+    "Template": {
+        "Ref": "0c1d2345-8143-4dde-9be6-a4e920f3368d",
+        "SubtypeName": "MissingPerson_Courier",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "626f6ba7-4d03-4342-bd3f-8798276f73ba",
+                "DebugName": "Find Missing Person",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/MissingPerson.xml",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@searchbody_cave_obj_short_01",
+                        "LongDescription": "@searchbody_cave_obj_long_01",
+                        "ObjectiveMarkerLabel": "@searchbody_cave_obj_marker_01",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "3aa9b92a-ce80-4982-a8d4-9272846a7dc1"
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            },
+            {
+                "Id": "8cdde637-f0cd-405f-a99b-50c4f6938d21",
+                "DebugName": "CollectItemFromEnvironment",
+                "StartsActive": false,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Modules/CollectItemFromEnvironment.xml",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": true,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    }
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            },
+            {
+                "Id": "1ed50c5c-3f60-43a9-afa4-4ead69340073",
+                "DebugName": "Deliver Item",
+                "StartsActive": false,
+                "HandlerType": "Hauling",
+                "Handler": {
+                    "HideMarkers": false,
+                    "HaulingOrders": [
+                        {
+                            "Type": "HaulingOrder_EntityClasses",
+                            "DropoffLocation": "ObjectiveProperty_Referenced[0708]"
+                        }
+                    ]
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When MissingPerson is complete, activate CollectItemFromEnvironment",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[00A8]"
+                },
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Active",
+                    "ObjectiveToken": "ObjectiveToken[00A9]"
+                }
+            },
+            {
+                "Description": "When CollectItemFromBody is complete, activate DeliverItem",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[00A9]"
+                },
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Active",
+                    "ObjectiveToken": "ObjectiveToken[00AA]"
+                }
+            },
+            {
+                "Description": "When DeliverItem is complete, Complete Mission",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[00AA]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            }
+        ]
     },
     "entry_type": "contracts"
 }

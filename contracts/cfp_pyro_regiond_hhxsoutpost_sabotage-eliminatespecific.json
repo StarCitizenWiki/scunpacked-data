@@ -2,6 +2,10 @@
     "UUID": "04eabfdd-ab02-43d9-864d-1d5163e870e5",
     "DebugName": "CFP_Pyro_RegionD_HHXSOutpost_Sabotage-EliminateSpecific",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Citizens for Prosperity",
     "Title": "Eradicate All Traces of Headhunter Data",
     "Description": "We're just putting the full picture together now, but so far we've learned that a Headhunter by the name of ~mission(TargetName) recently stole some sensitive data that if exposed will be detrimental to Citizens for Prosperity's cause. \n\nWe need to ensure that all traces of the stolen data are eradicated. This means taking out all the Headhunter servers at ~mission(Location|Address) as well as tracking down ~mission(TargetName|Last) to stop them from further disseminating the information.\n\nYour help is much appreciated,\n \nLima Endicott\nLead Dispatcher\nCitizens for Prosperity",
@@ -381,5 +385,107 @@
             "Value": true
         }
     ],
+    "Template": {
+        "Ref": "1be445c4-5943-4109-b12a-18aff16a5b2e",
+        "SubtypeName": "DestroyItems_EliminateSpecific",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": false,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "f6b26605-361f-4bed-8c5c-849db0455cbb",
+                "DebugName": "ItemsToDestroy",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/DestroyItems.xml",
+                    "ModuleHierarchy": "594270d4-990e-4921-b6df-4ad9ac66257f",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "3aa9b92a-ce80-4982-a8d4-9272846a7dc1"
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            },
+            {
+                "Id": "281d952f-d235-4479-bef9-916b21570d1e",
+                "DebugName": "Main Target",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/InfiltrateAndDefend/PU_EliminateSpecific.xml",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@bounty_obj_short_01",
+                        "LongDescription": "@bounty_obj_long_01",
+                        "ObjectiveMarkerLabel": "@bounty_obj_marker_01a",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    }
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When DestroyItems is complete, Complete Mission",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[00F4]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            },
+            {
+                "Description": "When Destroy Items and Eliminate Specific are completed, Complete Mission",
+                "Condition": {
+                    "Type": "AllTokensState",
+                    "TokenState": "Completed"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

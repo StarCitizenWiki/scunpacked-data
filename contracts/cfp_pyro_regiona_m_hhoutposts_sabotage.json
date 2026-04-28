@@ -2,6 +2,10 @@
     "UUID": "0697c275-c36e-4592-a78b-687bdff4597e",
     "DebugName": "CFP_Pyro_RegionA_M_HHOutposts_Sabotage",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Citizens for Prosperity",
     "Title": "Destroy Headhunter Stolen Data",
     "Description": "The Headhunters recently attacked one of our transports and were sadly able to get their hands on some secure data. Although the encryption on it is strong, its only a matter of time before they'll be able to access it.\n\nBefore that happens, we need you to go to ~mission(Location|Address) and destroy all traces of the information from their servers.\n\nYou'd really be helping Citizens for Prosperity out if you can pull this off.\n \nLima Endicott\nLead Dispatcher\nCitizens for Prosperity",
@@ -336,5 +340,65 @@
             "Value": false
         }
     ],
+    "Template": {
+        "Ref": "f59ba5ce-6374-464e-8b7d-bd3781c7c837",
+        "SubtypeName": "DestroyItems",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": false,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "c4a586b3-6535-400f-9bb6-ea5f44a0ab74",
+                "DebugName": "ItemsToDestroy",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/DestroyItems.xml",
+                    "ModuleHierarchy": "594270d4-990e-4921-b6df-4ad9ac66257f",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "3aa9b92a-ce80-4982-a8d4-9272846a7dc1"
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When DestroyItems is complete, Complete Mission",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[0039]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

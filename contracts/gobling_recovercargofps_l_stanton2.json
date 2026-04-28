@@ -582,5 +582,109 @@
             ]
         }
     ],
+    "Template": {
+        "Ref": "537cf290-c0cc-4010-b5ec-a3a0bcc14cec",
+        "SubtypeName": "RecoverCargoFPS_MultiDropOff",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": false,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "f56fa6e6-4eaa-4fca-8635-a53764e59451",
+                "DebugName": "RetrieveCargo",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/RecoverCargoFPS.xml",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Marker_1",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Marker_1",
+                        "Category": "Primary"
+                    }
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            },
+            {
+                "Id": "5a37374a-062f-49e0-bcdf-682e66bcd458",
+                "DebugName": "DeliverRecoveredCargo",
+                "StartsActive": false,
+                "HandlerType": "Hauling",
+                "Handler": {
+                    "HideMarkers": false,
+                    "HaulingOrders": [
+                        {
+                            "Type": "HaulingOrder_DropOff",
+                            "DropoffLocation": "ObjectiveProperty_Referenced[08B4]"
+                        }
+                    ]
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": true
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "TurnOnDeliver",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[00D9]"
+                },
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Active",
+                    "ObjectiveToken": "ObjectiveToken[00DA]"
+                }
+            },
+            {
+                "Description": "CompleteOnAllDelivered",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[00DA]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            },
+            {
+                "Description": "AllObjectivesComplete",
+                "Condition": {
+                    "Type": "AllTokensState",
+                    "TokenState": "Completed"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

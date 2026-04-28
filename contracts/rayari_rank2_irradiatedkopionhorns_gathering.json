@@ -2,6 +2,10 @@
     "UUID": "504b3587-bd86-4ed4-9673-36f944537b33",
     "DebugName": "Rayari_Rank2_IrradiatedKopionHorns_Gathering",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "4823e235-5206-452f-6977-b6c26cc47486",
+        "Name": "Collection"
+    },
     "MissionGiver": "Rayari Incorporated",
     "Title": "Collect Irradiated Kopion Horns",
     "Description": "To all available contractors,\n\nWe at Rayari are dedicating all our energy to stopping the regeneration technology crisis in its tracks, but for our scientists to continue their efforts they need resources that the company's suppliers have been unable to deliver. \n\nThere is a sizeable population of kopions that have been exposed to radiation near <EM4>~mission(Location)</EM4>. Rayari is seeking an contractor to collect <EM4>irradiated kopion horns</EM4> and deliver them to <EM4>~mission(Destination|Address)</EM4>. Due to the scarcity of this resource, we are prepared to pay a high service fee. \n\nTogether we can make the universe better for all.\n\nNarina Lerrem\nSenior Manager\nClinical Research Outsourcing",
@@ -184,5 +188,82 @@
         "Name": "<= UNINITIALIZED =>"
     },
     "ReputationScope": "FactionReputation",
+    "Template": {
+        "Ref": "43756d77-6898-945d-52a2-0a1406f7e490",
+        "SubtypeName": "ItemResourceGathering_Generic",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineSeconds": 300,
+            "DeadlineAutoEnd": true
+        },
+        "Objectives": [
+            {
+                "Id": "eacd0014-8c17-4950-b0bc-c483ef44a459",
+                "DebugName": "ItemResourceGathering",
+                "StartsActive": true,
+                "HandlerType": "Hauling",
+                "Handler": {
+                    "HideMarkers": false,
+                    "HaulingOrders": [
+                        {
+                            "Type": "Property",
+                            "PickUpTargetTypes": [],
+                            "DropOffTargetTypes": [],
+                            "HaulingOrdersProperty": "ObjectiveProperty_Referenced[0949]",
+                            "DropoffLocation": "ObjectiveProperty_Referenced[0947]"
+                        }
+                    ]
+                },
+                "RewardContribution": {
+                    "Percent": 100,
+                    "DoPartialRewardPayout": true
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When [ItemResourceGathering] completed -> Mission Completed",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[00EF]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            },
+            {
+                "Description": "When [ItemResourceGathering] failed -> Mission Failed",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Failed",
+                    "ObjectiveToken": "ObjectiveToken[00EF]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Failed"
+                }
+            },
+            {
+                "Description": "When [ItemResourceGathering] abandoned -> Mission Abandoned",
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Abandoned",
+                    "ObjectiveToken": "ObjectiveToken[00EF]"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

@@ -2,6 +2,10 @@
     "UUID": "4cfe6e6b-9528-43eb-ab7a-1c1e14942173",
     "DebugName": "Eckhart_FacilityDelve_ResearchWing_GravityAnomaly_DestroyServers",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Eckhart Security",
     "Title": "INFILITRATE ASD SITE AND DESTROY SERVERS",
     "Description": "ECKHART SECURITY, LLC.\nCONTRACTS & DISPATCH\n\nCONTRACT TYPE: Destroy Server\nAPPROVAL CODE = VS-14\n\nFOR IMMEDIATE PROCESSING\n\nOur client has requested the immediate destruction of a group of servers located at a long-shuttered ASD research site. The servers in question contain information that our client considers extremely damaging and is eager to see the data completely eliminated.\n\nInitial surveillance indicates the servers are within the facility\u2019s <EM4>Energy Lab, located in the Research wing</EM4>. We\u2019ve also picked up on a number of hostile forces, so be on alert.\n\nPayment will be issued upon successful completion of contract.\n\nThis contract is non-negotiable.\n\nThis message may contain confidential, proprietary, privileged and/or private information. The information is intended to be for the use of the individual or entity designated above.",
@@ -147,5 +151,108 @@
             "Value": true
         }
     ],
+    "Template": {
+        "Ref": "16786160-63dd-40fc-8391-a9f36c89bf53",
+        "SubtypeName": "DestroyItems_ParentLocation",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": false,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "6b3d40e3-c01b-41a9-abca-8e223b0f1f8e",
+                "DebugName": "GotoParentLocation",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/FacilityDelve/GoToObjective.xml",
+                    "TravelRadiusKm": 2,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "f5ac7bb4-6377-4e8e-a2b5-d490830b7dc0"
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            },
+            {
+                "Id": "7c4b106b-bfa3-4478-a4be-487347d69bbf",
+                "DebugName": "ItemsToDestroy",
+                "StartsActive": false,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/DestroyItems.xml",
+                    "ModuleHierarchy": "594270d4-990e-4921-b6df-4ad9ac66257f",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    }
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When players arrive at parent location, activate Destroy Item phase",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[00CA]"
+                },
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Active",
+                    "ObjectiveToken": "ObjectiveToken[00CB]"
+                }
+            },
+            {
+                "Description": "When all mission phases are completed, complete the mission",
+                "Condition": {
+                    "Type": "AllTokensState",
+                    "TokenState": "Completed"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

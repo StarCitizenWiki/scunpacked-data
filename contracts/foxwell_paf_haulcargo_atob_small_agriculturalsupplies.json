@@ -2,6 +2,10 @@
     "UUID": "b0d47978-50bb-404a-b529-4084f6e6ac38",
     "DebugName": "Foxwell_PAF_HaulCargo_AtoB_Small_AgriculturalSupplies",
     "Type": "ContractGeneratorHandler_List",
+    "MissionType": {
+        "UUID": "93f265dd-c971-49fe-b87b-96cccaae9362",
+        "Name": "Hauling"
+    },
     "MissionGiver": "Foxwell Enforcement",
     "Title": "Red Level Contract: Recoup Stolen Cargo Haul",
     "Description": "A crew recently raided a distribution center and made off with <EM4>~mission(CargoGradeToken) load of cargo</EM4>. Foxwell has been hired to get all those goods back. We\u2019re getting reports of these outlaws using old Hathor facilities as stash houses and we believe the stolen items are currently at <EM4>~mission(Location|Address)</EM4>.\n\nIf interested, you\u2019ll need a ship that can handle <EM4>~mission(MissionMaxSCUSize) cargo containers</EM4>. Doubt you\u2019ll be able to slip in and out of that PAF without being noticed either, so best be prepared to clear the location. Once safe, grab the goods from the freight elevator and deliver them to the <EM4>freight elevator at ~mission(Destination|Address)</EM4>. \n\nIt also wouldn't hurt to bring a <EM4>handheld tractor beam</EM4> with you.   \n\n\nMarcus Clenn\nFoxwell Enforcement\n'Security, Your Way'\n\nFoxwell Enforcement is a bonded security specialist licensed to operate throughout the UEE. We are always looking for new operators to join our family. If you or anyone you know is interested, please reach out to one of our contract representatives.",
@@ -2981,5 +2985,130 @@
         "Name": "<= UNINITIALIZED =>"
     },
     "ReputationScope": "Security",
+    "Template": {
+        "Ref": "16d18b1b-0bef-4591-85a6-ceacddf3c1d8",
+        "SubtypeName": "HaulCargo_AtoB_Small_AgriculturalSupplies",
+        "ContractClass": {
+            "HasCompleteButton": true,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineSeconds": 300,
+            "DeadlineAutoEnd": true
+        },
+        "Objectives": [
+            {
+                "Id": "6bd949a9-5179-482d-80de-06fae4ad28c3",
+                "DebugName": "Hauling",
+                "StartsActive": true,
+                "HandlerType": "Hauling",
+                "Handler": {
+                    "HideMarkers": false,
+                    "HaulingOrders": [
+                        {
+                            "Type": "Resource",
+                            "Resource": "9c09556c-a9c7-4af8-893d-7a3cd6152746",
+                            "MaxContainerSize": 4,
+                            "MinScu": 6,
+                            "MaxScu": 32,
+                            "PickupLocation": "ObjectiveProperty_Referenced[0CC2]",
+                            "DropoffLocation": "ObjectiveProperty_Referenced[0CC3]"
+                        }
+                    ]
+                },
+                "RewardContribution": {
+                    "Percent": 100,
+                    "DoPartialRewardPayout": true
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When [Hauling] completed -&gt; Mission Completed",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[016B]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            },
+            {
+                "Description": "When [Hauling] failed -&gt; Mission Failed",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Failed",
+                    "ObjectiveToken": "ObjectiveToken[016B]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Failed"
+                }
+            },
+            {
+                "Description": "When [Hauling] abandoned -&gt; Mission Abandoned",
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Abandoned",
+                    "ObjectiveToken": "ObjectiveToken[016B]"
+                }
+            }
+        ],
+        "PartialRewardPayout": [
+            {
+                "MinPercentage": 76,
+                "MaxPercentage": 99,
+                "CurrencyRewardMultiplier": 0.76,
+                "ReputationAdjustments": [
+                    {
+                        "ReputationScope": "4c086729-2be5-4c08-870f-2bfe1f170083",
+                        "ReputationRewardMultiplier": 0.8
+                    }
+                ]
+            },
+            {
+                "MinPercentage": 51,
+                "MaxPercentage": 75,
+                "CurrencyRewardMultiplier": 0.45,
+                "ReputationAdjustments": [
+                    {
+                        "ReputationScope": "4c086729-2be5-4c08-870f-2bfe1f170083",
+                        "ReputationRewardMultiplier": 0.25
+                    }
+                ]
+            },
+            {
+                "MinPercentage": 26,
+                "MaxPercentage": 50,
+                "CurrencyRewardMultiplier": 0.15,
+                "ReputationAdjustments": [
+                    {
+                        "ReputationScope": "4c086729-2be5-4c08-870f-2bfe1f170083",
+                        "ReputationRewardMultiplier": 0
+                    }
+                ]
+            },
+            {
+                "MinPercentage": 0,
+                "MaxPercentage": 25,
+                "CurrencyRewardMultiplier": 0,
+                "ReputationAdjustments": [
+                    {
+                        "ReputationScope": "4c086729-2be5-4c08-870f-2bfe1f170083",
+                        "ReputationRewardMultiplier": 0
+                    }
+                ]
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

@@ -2,6 +2,10 @@
     "UUID": "92e538af-c256-412a-98c8-d75115f8f39c",
     "DebugName": "BitZeros_BlackBoxRecovery_Nyx_Super",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "8abbd704-6207-4ca4-9cd4-d9f0362cec64",
+        "Name": "Delivery"
+    },
     "MissionGiver": "Bit Zeros",
     "Title": "~mission(Contractor|BlackBoxRecoverTitleSuper)",
     "Description": "~mission(Contractor|BlackBoxRecoverDescriptionSuper)",
@@ -320,6 +324,157 @@
     "ItemCounts": {
         "MinItems": 1,
         "MaxItems": 1
+    },
+    "Template": {
+        "Ref": "0adc7854-9916-4f9c-be66-b3c73b88f08d",
+        "SubtypeName": "Courier_Goto_ShipCombatEncounter_ExcLocker_Unlawful",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": false,
+            "FailIfBecameCriminal": false,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "b45f7931-a214-48fd-baae-7a93de290bf2",
+                "DebugName": "Courier",
+                "StartsActive": false,
+                "HandlerType": "Hauling",
+                "Handler": {
+                    "HideMarkers": false,
+                    "HaulingOrders": [
+                        {
+                            "Type": "Property",
+                            "PickUpTargetTypes": [
+                                "e3dd5d27-7dce-4cd3-b35b-471763bc08c0",
+                                "e545ec62-d937-430b-870a-a211ab40aeb3",
+                                "61bca4cf-95a1-49b3-ae5b-cf9dc9ee3127",
+                                "adbcbf25-3569-4113-bdb9-6ffc9ca13edb"
+                            ],
+                            "DropOffTargetTypes": [
+                                "49b389be-8ad9-482d-bb03-ca4bd66b0c79",
+                                "e545ec62-d937-430b-870a-a211ab40aeb3",
+                                "adbcbf25-3569-4113-bdb9-6ffc9ca13edb"
+                            ],
+                            "HaulingOrdersProperty": "ObjectiveProperty_Referenced[1175]",
+                            "PickupLocation": "ObjectiveProperty_Referenced[1170]",
+                            "DropoffLocation": "ObjectiveProperty_Referenced[1171]"
+                        }
+                    ]
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            },
+            {
+                "Id": "83e48e1c-6442-40c9-a585-975e5ab30a63",
+                "DebugName": "GoToLocation",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/FacilityDelve/GoToObjective.xml",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "262335a7-051a-4f00-ad1a-9b55c1d1df5f"
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            },
+            {
+                "Id": "b5acf762-08bd-47b9-ba7e-c01c59dfead5",
+                "DebugName": "ShipCombatEncounter",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Modules/SpawnShipCombatEncounter/SpawnShipCombatEncounter_ShipLocationDefence.xml",
+                    "ModuleHierarchy": "f004c00a-5431-432b-8843-7b5fb3662dfa",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": true,
+                    "DisableReturnObjectives": true,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    }
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When Player arrives at Location Start Mission",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[028E]"
+                },
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Active",
+                    "ObjectiveToken": "ObjectiveToken[028D]"
+                }
+            },
+            {
+                "Description": "When Courier is complete, complete mission",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[028D]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            },
+            {
+                "Description": "When Courier Phase fails, fail mission",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Failed",
+                    "ObjectiveToken": "ObjectiveToken[028D]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Failed"
+                }
+            }
+        ]
     },
     "entry_type": "contracts"
 }

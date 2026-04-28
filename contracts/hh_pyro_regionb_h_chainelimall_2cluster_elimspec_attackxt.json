@@ -2,6 +2,10 @@
     "UUID": "61134fca-1af9-48dc-802b-1886b8269ca3",
     "DebugName": "HH_Pyro_RegionB_H_ChainElimAll_2Cluster_ElimSpec_AttackXT",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Headhunters",
     "Title": "Taking XenoThreat Turf",
     "Description": "Need some good soldiers with a taste for violence to hit some XenoThreat hideouts located around ~mission(Location|Address). I'll get you the specifics if you're down, but you'll have to wipe out two separate clusters of hideouts. \n\nWe've also gotten word that ~mission(TargetName) is lurking around down there. If you take out enough XenoThreat dirtbags, they'll pop they're head up. \n\nWhen they do, put a round in it.\n\nStows out.",
@@ -697,6 +701,145 @@
         "GivenName": "@LOC_UNINITIALIZED",
         "LastName": "@LOC_UNINITIALIZED",
         "NickName": "@LOC_UNINITIALIZED"
+    },
+    "Template": {
+        "Ref": "e03860a9-3644-4f88-b887-965d83f49925",
+        "SubtypeName": "ChainEliminateAll_2Locations_EliminateSpecific",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "307098e2-1051-41c5-a146-d278fec4fec7",
+                "DebugName": "EliminateAll-Location1",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/InfiltrateAndDefend/PU_EliminateAll.xml",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    }
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            },
+            {
+                "Id": "eb5d6acc-bda9-488b-abe7-752e49bf0a0c",
+                "DebugName": "EliminateAll-Location2",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/InfiltrateAndDefend/PU_EliminateAll.xml",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    }
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            },
+            {
+                "Id": "1a4c47aa-7fe7-47b3-b8c5-ff65fb88e56a",
+                "DebugName": "EliminateSpecific",
+                "StartsActive": false,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/InfiltrateAndDefend/PU_EliminateSpecific.xml",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    }
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When all EliminateAll have been Completed, Activate EliminateSpecific",
+                "Condition": {
+                    "Type": "AND",
+                    "Conditions": [
+                        {
+                            "Type": "objectiveToken"
+                        },
+                        {
+                            "Type": "objectiveToken"
+                        }
+                    ]
+                },
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Active",
+                    "ObjectiveToken": "ObjectiveToken[0070]"
+                }
+            },
+            {
+                "Description": "When EliminateSpecific has been completed, Complete mission",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[0070]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            }
+        ]
     },
     "entry_type": "contracts"
 }

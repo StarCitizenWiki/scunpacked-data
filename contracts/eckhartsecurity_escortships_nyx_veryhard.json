@@ -2,6 +2,10 @@
     "UUID": "67d23e1e-b328-42b9-9d90-685a1f78ba39",
     "DebugName": "EckhartSecurity_EscortShips_Nyx_VeryHard",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Eckhart Security",
     "Title": "Protection Detail Needed. High Risk.",
     "Description": "ECKHART SECURITY, LLC.\nCONTRACTS & DISPATCH\n\nCONTRACT TYPE: Escort Ship\nApproval code: = ~mission(ApprovalCode)\n\nFOR IMMEDIATE PROCESSING\n\nI\u2019m in need of a highly competent pilot who can gather a crew of equally capable pilots for an escort mission. The mining base at <EM4>~mission(Location|Address)</EM4> is currently under attack from a group of outlaws and the crew there is unable to leave without assistance. Our scouts have reported that the attackers are armed with exceptional weaponry and ships.\n\nThis contract is non-negotiable.\n\nThis message may contain confidential, proprietary, privileged and/or private information. The information is intended to be for the use of the individual or entity designated above.",
@@ -648,5 +652,91 @@
             ]
         }
     ],
+    "Template": {
+        "Ref": "24dcd037-fa77-48f7-9be7-d8e7b53d9901",
+        "SubtypeName": "DefendLocationSpace_Hangar",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "125d1616-f73e-4050-8bc0-d0979cdb828a",
+                "DebugName": "DefendLocationWrapper",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/DefendLocation/DefendLocationWrapper.xml",
+                    "TravelRadiusKm": 30,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "3aa9b92a-ce80-4982-a8d4-9272846a7dc1"
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "IF all complete then complete mission",
+                "Condition": {
+                    "Type": "AND",
+                    "Conditions": [
+                        {
+                            "Type": "objectiveToken"
+                        },
+                        {
+                            "Type": "objectiveToken"
+                        }
+                    ]
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            },
+            {
+                "Description": "If any fail then fail all",
+                "Condition": {
+                    "Type": "OR",
+                    "Conditions": [
+                        {
+                            "Type": "objectiveToken"
+                        },
+                        {
+                            "Type": "objectiveToken"
+                        },
+                        {
+                            "Type": "objectiveToken"
+                        }
+                    ]
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Failed"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

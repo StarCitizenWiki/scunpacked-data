@@ -2,6 +2,10 @@
     "UUID": "a0f0d3d5-b4c3-4330-8cd8-67b30ced54f2",
     "DebugName": "HH_Pyro_RegionD_M_2AsteroidBase_Criminals_BombingRun_Killship",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Headhunters",
     "Title": "Convince Upstarts to Abandon Sector",
     "Description": "Everyone has been talking about a new player named ~mission(TargetName) who is operating out of ~mission(Location|Address). They've become a real concern for the Headhunters. \n\nIt's time to shut them down. \n\nHead over, take out ~mission(TargetName|Last) and then clear out any fuel stores they have there to convince anyone remaining to leave. \n\nFigure after you pull this off, nobody will even remember their name.\n\n-Stows",
@@ -231,5 +235,109 @@
             ]
         }
     ],
+    "Template": {
+        "Ref": "04fbffba-a13d-40ec-845d-1010f37a36d7",
+        "SubtypeName": "DestroyItems_KillShip",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": false,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "ff6a471b-db0f-472b-887c-b24098a986ac",
+                "DebugName": "DestroyItems",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/DestroyItems.xml",
+                    "ModuleHierarchy": "594270d4-990e-4921-b6df-4ad9ac66257f",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@destroystash_obj_short_01",
+                        "LongDescription": "@destroystash_obj_long_01",
+                        "ObjectiveMarkerLabel": "@destroystash_subobj_marker_01",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    }
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@destroystash_obj_short_01",
+                    "LongDescription": "@destroystash_obj_long_01",
+                    "ObjectiveMarkerLabel": "@destroystash_subobj_marker_01",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            },
+            {
+                "Id": "3f14c64f-412c-4853-9260-f81d0f88f2e1",
+                "DebugName": "DestroyShips",
+                "StartsActive": false,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/KillShip/KillShip.xml",
+                    "ModuleHierarchy": "c02b3399-1faa-4163-979a-fa357fff02c4",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@bounty_obj_short_01",
+                        "LongDescription": "@bounty_obj_long_01",
+                        "ObjectiveMarkerLabel": "@KillShip_Reach_Marker_01",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    }
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When DestroyItems is complete, Activate Destroy Ships",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[00BE]"
+                },
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Active",
+                    "ObjectiveToken": "ObjectiveToken[00BF]"
+                }
+            },
+            {
+                "Description": "When Destroy Ships is complete, Complete Mission",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[00BF]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

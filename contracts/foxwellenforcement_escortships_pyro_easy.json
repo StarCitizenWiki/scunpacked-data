@@ -2,6 +2,10 @@
     "UUID": "adb32bca-f7d2-4182-a697-d36cc5467183",
     "DebugName": "FoxwellEnforcement_EscortShips_Pyro_Easy",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Foxwell Enforcement",
     "Title": "Yellow Level Contract: Defend ~mission(DefendLocationWrapperLocation)",
     "Description": "Ships coming and going from <EM4>~mission(DefendLocationWrapperLocation|Address)</EM4> are being targeted by hostile forces. The folks there have hired us to deal with this problem immediately.\n\nNeed someone to get there pronto and start fighting off these ships. The situation appears to be constantly evolving, so I\u2019ll keep you updated on where you\u2019re needed most. \n\nFor the hustle and effort, we\u2019ll also be paying a bonus of <EM4>~mission(ScripAmount) MG Scrip</EM4> to the main contractor for dealing with this.\n\nGood luck,\n\nKevin Walton\nDispatcher, Foxwell Enforcement\n'Security, Your Way'\n\nFoxwell Enforcement is a bonded security specialist licensed to operate throughout the UEE. We are always looking for new operators to join our family. If you or anyone you know is interested, please reach out to one of our contract representatives.",
@@ -747,5 +751,91 @@
             ]
         }
     ],
+    "Template": {
+        "Ref": "24dcd037-fa77-48f7-9be7-d8e7b53d9901",
+        "SubtypeName": "DefendLocationSpace_Hangar",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "125d1616-f73e-4050-8bc0-d0979cdb828a",
+                "DebugName": "DefendLocationWrapper",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/DefendLocation/DefendLocationWrapper.xml",
+                    "TravelRadiusKm": 30,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "3aa9b92a-ce80-4982-a8d4-9272846a7dc1"
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "IF all complete then complete mission",
+                "Condition": {
+                    "Type": "AND",
+                    "Conditions": [
+                        {
+                            "Type": "objectiveToken"
+                        },
+                        {
+                            "Type": "objectiveToken"
+                        }
+                    ]
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            },
+            {
+                "Description": "If any fail then fail all",
+                "Condition": {
+                    "Type": "OR",
+                    "Conditions": [
+                        {
+                            "Type": "objectiveToken"
+                        },
+                        {
+                            "Type": "objectiveToken"
+                        },
+                        {
+                            "Type": "objectiveToken"
+                        }
+                    ]
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Failed"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

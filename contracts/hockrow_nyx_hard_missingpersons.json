@@ -2,6 +2,10 @@
     "UUID": "7deb1fa3-c216-4452-a2c8-d765ac85ee2e",
     "DebugName": "Hockrow_Nyx_Hard_MissingPersons",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "0505e20d-d7d9-482e-ba79-875d3c3a03b2",
+        "Name": "Investigation"
+    },
     "MissionGiver": "Hockrow Agency",
     "Title": "Locate Missing Family Member",
     "Description": "Hockrow Agency \nCase File #MP45648\nLead Investigator: Arken Mallor\n\nCase Summary: \nA client has tasked us with tracking down with one of their family members who has gone missing. After exhibiting erratic behavior, they cut off all communications and left for ~mission(System). We were able to track down their general whereabouts but need an investigator to head there in person to assess the situation.\n\nContract Investigator Actions:\nLocate <EM4>~mission(MissingPersonList)</EM4> at <EM4>~mission(Location|Address)</EM4> and confirm their status. \n\nIf they are deceased, examine the body closely so we can verify their death via your mobiGlas.\n\nAdditional Notes:\nThere is a high chance that you will encounter hostiles while conducting your search. We recommend considering bringing along backup to support you.",
@@ -164,6 +168,65 @@
         "GivenName": "@LOC_UNINITIALIZED",
         "LastName": "@LOC_UNINITIALIZED",
         "NickName": "@LOC_UNINITIALIZED"
+    },
+    "Template": {
+        "Ref": "778b31fe-c1e5-4e06-aac3-40586bcfff97",
+        "SubtypeName": "MissingPerson_ParentLocation_MarkerToGuide",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "6bb79adf-6682-48d8-b8ce-84dba4d70521",
+                "DebugName": "GoToParentLocation",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/FacilityDelve/GoToObjective.xml",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@searchbody_cave_obj_short_01",
+                        "LongDescription": "@searchbody_cave_obj_long_01",
+                        "ObjectiveMarkerLabel": "@searchbody_cave_obj_marker_01",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "cd706bf4-dcec-4e66-ab96-2ef629f73ff6"
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When Missing Person is found, Complete the mission",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ChildMissionPhase[0004]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            }
+        ]
     },
     "entry_type": "contracts"
 }

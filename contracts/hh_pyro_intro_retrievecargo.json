@@ -2,6 +2,10 @@
     "UUID": "4bc0634e-d79c-4279-a8b5-0a3b9149d45a",
     "DebugName": "HH_Pyro_Intro_RetrieveCargo",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Headhunters",
     "Title": "Test Your Mettle",
     "Description": "Heahunters are on the lookout for motivated and competent contractors who can be trusted to do a wide range of work supporting our operations. If you think you have what it takes, I\u2019ve got a mission here that\u2019ll test your skills in several ways. \n\nA ~mission(Ship) transporting cargo for us is currently under attack at ~mission(Location|Address). Don\u2019t think it\u2019s looking good for our ship, but that cargo is too important to let fall into someone else\u2019s hands. Need you to head to the location and deal with the attackers before they get away, then collect our cargo and take it to ~mission(Destination|Address). \n\nIf you can handle this, then there'll be lots more work I can send your way.  \n\nStows out.",
@@ -191,5 +195,102 @@
         "Name": "Headhunters"
     },
     "ReputationScope": "FactionReputation",
+    "Template": {
+        "Ref": "cf76d034-32fe-492c-b0bc-ca1dfc74919d",
+        "SubtypeName": "RecoverCargo",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "b371a1da-3927-4ee0-a9e8-39336632f532",
+                "DebugName": "RetrieveCargo",
+                "StartsActive": true,
+                "HandlerType": "NearLocation",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/RecoverCargo.xml",
+                    "ModuleHierarchy": "fd49bf6a-e760-4dee-acdf-10745a2739bc",
+                    "TravelRadiusKm": 25,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Marker_1",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Marker_1",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "262335a7-051a-4f00-ad1a-9b55c1d1df5f",
+                    "MaxDistance": 15000,
+                    "MinDistance": 10000
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            },
+            {
+                "Id": "e3f702b6-61ba-4c9a-8feb-63d6940f7f9b",
+                "DebugName": "DeliverRecoveredCargo",
+                "StartsActive": false,
+                "HandlerType": "Hauling",
+                "Handler": {
+                    "HideMarkers": false,
+                    "HaulingOrders": [
+                        {
+                            "Type": "HaulingOrder_DropOff",
+                            "DropoffLocation": "ObjectiveProperty_Referenced[0176]"
+                        }
+                    ]
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": true
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "TurnOnDeliver",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[0022]"
+                },
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Active",
+                    "ObjectiveToken": "ObjectiveToken[0023]"
+                }
+            },
+            {
+                "Description": "CompleteOnAllDelivered",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[0023]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }
