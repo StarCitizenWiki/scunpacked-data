@@ -2,6 +2,10 @@
     "UUID": "5f9e875e-575a-4630-90f8-2a3b45d6da1c",
     "DebugName": "HeadHunters_EscortShips_Stanton_Medium",
     "Type": "ContractGeneratorHandler_List",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Headhunters",
     "Title": "Secure Our Airspace",
     "Description": "Our airspace around <EM4>~mission(DefendLocationWrapperLocation|Address)</EM4> has been compromised. Enemy ships are threatening the base and any of our ships in the area. Gotta put a stop to this immediately, so get your shit in order and get over there. Just get going and I\u2019ll update you with any relevant info on where you\u2019re needed. \n \nIf you need any extra motivation, I\u2019m adding a bonus <EM4>~mission(ScripAmount) Council Scrip</EM4> for the main contractor.\n\n- Stows",
@@ -714,5 +718,91 @@
             ]
         }
     ],
+    "Template": {
+        "Ref": "24dcd037-fa77-48f7-9be7-d8e7b53d9901",
+        "SubtypeName": "DefendLocationSpace_Hangar",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "125d1616-f73e-4050-8bc0-d0979cdb828a",
+                "DebugName": "DefendLocationWrapper",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/DefendLocation/DefendLocationWrapper.xml",
+                    "TravelRadiusKm": 30,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "3aa9b92a-ce80-4982-a8d4-9272846a7dc1"
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "IF all complete then complete mission",
+                "Condition": {
+                    "Type": "AND",
+                    "Conditions": [
+                        {
+                            "Type": "objectiveToken"
+                        },
+                        {
+                            "Type": "objectiveToken"
+                        }
+                    ]
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            },
+            {
+                "Description": "If any fail then fail all",
+                "Condition": {
+                    "Type": "OR",
+                    "Conditions": [
+                        {
+                            "Type": "objectiveToken"
+                        },
+                        {
+                            "Type": "objectiveToken"
+                        },
+                        {
+                            "Type": "objectiveToken"
+                        }
+                    ]
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Failed"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

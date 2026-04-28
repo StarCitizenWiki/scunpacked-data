@@ -2,6 +2,10 @@
     "UUID": "1ce004d9-ad80-49ff-8465-9fa08f040b8f",
     "DebugName": "CFP_Pyro_RegionD_M_2AsteroidBase_Criminals_DefendShip_BombingRun",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Citizens for Prosperity",
     "Title": "Assist Retreating Ship",
     "Description": "One of our people is currently under attack at ~mission(Location|Address). They have attempted to elude their attackers to get to safely, but the outlaws have proven too skilled for them to break away. \n\nWe need you to fly there, engage with the attackers, and then destroy the nearby fuel reserves. The hope is that this display of destruction will dissuade them from continuing pursuit.\n\nLima Endicott\nLead Dispatcher\nCitizens for Prosperity",
@@ -273,5 +277,94 @@
             "Value": true
         }
     ],
+    "Template": {
+        "Ref": "6e4bdb0d-40d1-4e90-b430-24badffce2d2",
+        "SubtypeName": "DefendShip_DestroyItems",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": false,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "6ade2e43-df56-46d4-9168-95174a3154c8",
+                "DebugName": "DefendShip",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/SupportAttackedShip/SupportAttackedShip.xml",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "bd7b6359-0aa5-4d0a-b37c-38a6ad5d0ef6"
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            },
+            {
+                "Id": "d0f725ae-1c7b-478b-a822-4b32cf8b02b0",
+                "DebugName": "ItemsToDestroy",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/DestroyItems.xml",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    }
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@destroystash_obj_short_01",
+                    "LongDescription": "@destroystash_obj_long_01",
+                    "ObjectiveMarkerLabel": "@destroystash_subobj_marker_01",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When DefendShip &amp; Items To Destroy are complete, Complete Mission",
+                "Condition": {
+                    "Type": "AllTokensState",
+                    "TokenState": "Completed"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

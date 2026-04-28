@@ -2,6 +2,10 @@
     "UUID": "a534ac75-dd82-4473-9422-aec7d8722c19",
     "DebugName": "EchhartSecurity_Stanton_Medium_RecoverCargo",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Eckhart Security",
     "Title": "Standard Cargo Recovery Op.",
     "Description": "ECKHART SECURITY, LLC.\nCONTRACTS & DISPATCH\n\nCONTRACT TYPE: Recover Cargo\nApproval code: = ~mission(ApprovalCode)\n\nFOR IMMEDIATE PROCESSING\n\nLooking for a competent contractor who can salvage a messy situation. A client's trusted pilot apparently wasn't so trustworthy and made off with a shipment. But thankfully our trackers are reporting the shipment's static for the moment, waiting to be picked up. If we play our cards right, there's still time to resolve this.\n\nThe abandoned ship is located at <EM4>~mission(Location|Address)</EM4> and will need a <EM4>heavy-duty tractor beam</EM4> to transport the goods. A ship that can handle <EM4>~mission(MissionMaxSCUSize) cargo containers</EM4> is a necessity, and expect contact from whatever outlaws this double-crossing pilot was hoping to sell to. \n\nOnce recovered, deliver the cargo to the freight elevator at <EM4>~mission(Destination|Address)</EM4>.\n\nThis contract is non-negotiable.\n\nThis message may contain confidential, proprietary, privileged and/or private information. The information is intended to be for the use of the individual or entity designated above.",
@@ -288,5 +292,102 @@
             ]
         }
     ],
+    "Template": {
+        "Ref": "cf76d034-32fe-492c-b0bc-ca1dfc74919d",
+        "SubtypeName": "RecoverCargo",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "b371a1da-3927-4ee0-a9e8-39336632f532",
+                "DebugName": "RetrieveCargo",
+                "StartsActive": true,
+                "HandlerType": "NearLocation",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/RecoverCargo.xml",
+                    "ModuleHierarchy": "fd49bf6a-e760-4dee-acdf-10745a2739bc",
+                    "TravelRadiusKm": 25,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Marker_1",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Marker_1",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "262335a7-051a-4f00-ad1a-9b55c1d1df5f",
+                    "MaxDistance": 15000,
+                    "MinDistance": 10000
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            },
+            {
+                "Id": "e3f702b6-61ba-4c9a-8feb-63d6940f7f9b",
+                "DebugName": "DeliverRecoveredCargo",
+                "StartsActive": false,
+                "HandlerType": "Hauling",
+                "Handler": {
+                    "HideMarkers": false,
+                    "HaulingOrders": [
+                        {
+                            "Type": "HaulingOrder_DropOff",
+                            "DropoffLocation": "ObjectiveProperty_Referenced[0176]"
+                        }
+                    ]
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": true
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "TurnOnDeliver",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[0022]"
+                },
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Active",
+                    "ObjectiveToken": "ObjectiveToken[0023]"
+                }
+            },
+            {
+                "Description": "CompleteOnAllDelivered",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[0023]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

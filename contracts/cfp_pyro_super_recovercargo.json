@@ -2,6 +2,10 @@
     "UUID": "0337e122-6643-4a48-a405-01fd1706b45a",
     "DebugName": "CFP_Pyro_Super_RecoverCargo",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Citizens for Prosperity",
     "Title": "Special Recovery Operation",
     "Description": "I wouldn't normally ask someone to do something so risky, but these are exceptional circumstances.\n\nOur pilot was transporting some vital cargo when they were targeted by a group of outlaws. Under no circumstances can we allow them to get their hands on the cargo.\n\nWith the size of the hostile force who attacked, you won't be able to do this on your own, you'll need to bring a skilled crew with you to  <EM4>~mission(Location|Address)</EM4> in order to  take out these outlaws and get the cargo back. Make sure at least one of you has a ship that can store <EM4>~mission(MissionMaxSCUSize) cargo containers</EM4> and a <EM4>heavy-duty tractor beam</EM4>.\n\nIf by some miracle you can get that cargo back, take it to the freight elevator located at <EM4>~mission(Destination|Address)</EM4>.\n\nIt's a lot to ask, but if you can pull this off you'll have my and the whole organizations appreciation.\n\nBest of luck,\n\nLima Endicott\nLead Dispatcher\nCitizens for Prosperity",
@@ -434,5 +438,102 @@
             ]
         }
     ],
+    "Template": {
+        "Ref": "cf76d034-32fe-492c-b0bc-ca1dfc74919d",
+        "SubtypeName": "RecoverCargo",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "b371a1da-3927-4ee0-a9e8-39336632f532",
+                "DebugName": "RetrieveCargo",
+                "StartsActive": true,
+                "HandlerType": "NearLocation",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/RecoverCargo.xml",
+                    "ModuleHierarchy": "fd49bf6a-e760-4dee-acdf-10745a2739bc",
+                    "TravelRadiusKm": 25,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Marker_1",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Marker_1",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "262335a7-051a-4f00-ad1a-9b55c1d1df5f",
+                    "MaxDistance": 15000,
+                    "MinDistance": 10000
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            },
+            {
+                "Id": "e3f702b6-61ba-4c9a-8feb-63d6940f7f9b",
+                "DebugName": "DeliverRecoveredCargo",
+                "StartsActive": false,
+                "HandlerType": "Hauling",
+                "Handler": {
+                    "HideMarkers": false,
+                    "HaulingOrders": [
+                        {
+                            "Type": "HaulingOrder_DropOff",
+                            "DropoffLocation": "ObjectiveProperty_Referenced[0176]"
+                        }
+                    ]
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": true
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "TurnOnDeliver",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[0022]"
+                },
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Active",
+                    "ObjectiveToken": "ObjectiveToken[0023]"
+                }
+            },
+            {
+                "Description": "CompleteOnAllDelivered",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[0023]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

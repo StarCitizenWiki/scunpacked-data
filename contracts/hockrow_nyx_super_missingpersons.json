@@ -2,6 +2,10 @@
     "UUID": "8003a1c6-d4e5-4c72-9ede-630c36f629ca",
     "DebugName": "Hockrow_Nyx_Super_MissingPersons",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "0505e20d-d7d9-482e-ba79-875d3c3a03b2",
+        "Name": "Investigation"
+    },
     "MissionGiver": "Hockrow Agency",
     "Title": "Locate Missing Crew",
     "Description": "Hockrow Agency \nCase File #MP65648\nLead Investigator: Arken Mallor\n\nCase Summary: \nA whole crew has gone missing while undertaking a contract in ~mission(System) for a client that I'm unfortunately not allowed to disclose the full details of to you. Lets just say that it wasn't the safest job and the fact the crew is not responding comms is not surprising but it is concerning. It's vital that we ascertain what happened to them. \n\nContract Investigator Actions:\nLocate <EM4>~mission(MissingPersonList)</EM4> at <EM4>~mission(Location|Address)</EM4> and confirm their status. \n\nIf they are deceased, examine the body closely so we can verify their death via your mobiGlas.\n\nAdditional Notes:\nThis investigation has high potential for there to be aggressive and dangerous hostiles on site. Arm yourself accordingly and consider bringing other skilled associates with you.",
@@ -190,6 +194,65 @@
         "GivenName": "@LOC_UNINITIALIZED",
         "LastName": "@LOC_UNINITIALIZED",
         "NickName": "@LOC_UNINITIALIZED"
+    },
+    "Template": {
+        "Ref": "f5778aa6-3941-4894-a497-9d0b93bc77cd",
+        "SubtypeName": "MissingPersons_ParentLocation_MarkerToGuide",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "1f41c20d-173b-477b-ab72-7ad9c91d2a1a",
+                "DebugName": "GoToParentLocation",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/FacilityDelve/GoToObjective.xml",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@TravelObjective_Short",
+                        "LongDescription": "@TravelObjective_Long",
+                        "ObjectiveMarkerLabel": "@TravelObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    },
+                    "NavPointEntityClass": "cd706bf4-dcec-4e66-ab96-2ef629f73ff6"
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": true
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When Missing Persons is found, Complete the mission",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ChildMissionPhase[0002]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            }
+        ]
     },
     "entry_type": "contracts"
 }

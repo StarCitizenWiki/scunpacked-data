@@ -2,6 +2,10 @@
     "UUID": "50b65c1a-14ad-4e69-bba6-efac087a3735",
     "DebugName": "Foxwell_PAF_HaulCargo_Multi2ToSingle_Small_Aluminum",
     "Type": "ContractGeneratorHandler_List",
+    "MissionType": {
+        "UUID": "93f265dd-c971-49fe-b87b-96cccaae9362",
+        "Name": "Hauling"
+    },
     "MissionGiver": "Foxwell Enforcement",
     "Title": "Red Level Contract: Clear PAFs, Recover Cargo, and Deliver to OLP",
     "Description": "Something weird is going on at the old Hathor mining facilities. Both the platform alignment facilities and orbital laser platforms have been abandoned and gathering dust for decades, but outlaws have started using them as a base of operations.\n\nWe\u2019ve been hired by a concerned party who\u2019s recently lost a lot of important cargo to one such gang. Currently, their stuff is stashed at <EM4>~mission(Location1|Address)</EM4> and <EM4>~mission(Location2|Address)</EM4>, but there\u2019s a growing fear that the gang may be offloading their goods soon. That\u2019s why we\u2019ve been hired to hit both of those Hathor facilities, retrieve the cargo from the freight elevators, and bring it to the freight elevator at <EM4>~mission(Destination|Address)</EM4>. \n\nHere\u2019s the specifics on what to grab from each location. Doesn\u2019t matter in what order you do this, as long as it all gets collected and delivered. Just be sure to bring a ship that can handle <EM4>~mission(MissionMaxSCUSize) cargo containers</EM4>.  It also wouldn't hurt to bring a <EM4>handheld tractor beam</EM4> with you.   \n\n~mission(MultiToSingleToken)\n\nFoxwell hasn\u2019t been able to scout these locations, but if I were you, I\u2019d expect to face some serious armed resistance. Best bring a bunch of gear and some friends.\n\n\nMarcus Clenn\nFoxwell Enforcement\n'Security, Your Way'\n\nFoxwell Enforcement is a bonded security specialist licensed to operate throughout the UEE. We are always looking for new operators to join our family. If you or anyone you know is interested, please reach out to one of our contract representatives.",
@@ -3056,5 +3060,139 @@
         "Name": "<= UNINITIALIZED =>"
     },
     "ReputationScope": "Security",
+    "Template": {
+        "Ref": "8322078e-350a-4443-a113-4fb446ad0e6a",
+        "SubtypeName": "HaulCargo_Multi2ToSingle_Small_Aluminum",
+        "ContractClass": {
+            "HasCompleteButton": true,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineSeconds": 300,
+            "DeadlineAutoEnd": true
+        },
+        "Objectives": [
+            {
+                "Id": "92b154b1-50de-4171-8004-39370b82c227",
+                "DebugName": "Hauling",
+                "StartsActive": true,
+                "HandlerType": "Hauling",
+                "Handler": {
+                    "HideMarkers": false,
+                    "HaulingOrders": [
+                        {
+                            "Type": "Resource",
+                            "Resource": "48c7080a-bbef-43d2-901a-698321ed4340",
+                            "MaxContainerSize": 4,
+                            "MinScu": 4,
+                            "MaxScu": 16,
+                            "PickupLocation": "ObjectiveProperty_Referenced[0F14]",
+                            "DropoffLocation": "ObjectiveProperty_Referenced[0F16]"
+                        },
+                        {
+                            "Type": "Resource",
+                            "Resource": "48c7080a-bbef-43d2-901a-698321ed4340",
+                            "MaxContainerSize": 4,
+                            "MinScu": 4,
+                            "MaxScu": 16,
+                            "PickupLocation": "ObjectiveProperty_Referenced[0F15]",
+                            "DropoffLocation": "ObjectiveProperty_Referenced[0F16]"
+                        }
+                    ]
+                },
+                "RewardContribution": {
+                    "Percent": 100,
+                    "DoPartialRewardPayout": true
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When [Hauling] completed -&gt; Mission Completed",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[01E0]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            },
+            {
+                "Description": "When [Hauling] failed -&gt; Mission Failed",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Failed",
+                    "ObjectiveToken": "ObjectiveToken[01E0]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Failed"
+                }
+            },
+            {
+                "Description": "When [Hauling] abandoned -&gt; Mission Abandoned",
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Abandoned",
+                    "ObjectiveToken": "ObjectiveToken[01E0]"
+                }
+            }
+        ],
+        "PartialRewardPayout": [
+            {
+                "MinPercentage": 76,
+                "MaxPercentage": 99,
+                "CurrencyRewardMultiplier": 0.76,
+                "ReputationAdjustments": [
+                    {
+                        "ReputationScope": "4c086729-2be5-4c08-870f-2bfe1f170083",
+                        "ReputationRewardMultiplier": 0.8
+                    }
+                ]
+            },
+            {
+                "MinPercentage": 51,
+                "MaxPercentage": 75,
+                "CurrencyRewardMultiplier": 0.45,
+                "ReputationAdjustments": [
+                    {
+                        "ReputationScope": "4c086729-2be5-4c08-870f-2bfe1f170083",
+                        "ReputationRewardMultiplier": 0.25
+                    }
+                ]
+            },
+            {
+                "MinPercentage": 26,
+                "MaxPercentage": 50,
+                "CurrencyRewardMultiplier": 0.15,
+                "ReputationAdjustments": [
+                    {
+                        "ReputationScope": "4c086729-2be5-4c08-870f-2bfe1f170083",
+                        "ReputationRewardMultiplier": 0
+                    }
+                ]
+            },
+            {
+                "MinPercentage": 0,
+                "MaxPercentage": 25,
+                "CurrencyRewardMultiplier": 0,
+                "ReputationAdjustments": [
+                    {
+                        "ReputationScope": "4c086729-2be5-4c08-870f-2bfe1f170083",
+                        "ReputationRewardMultiplier": 0
+                    }
+                ]
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

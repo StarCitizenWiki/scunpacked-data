@@ -2,6 +2,10 @@
     "UUID": "f8bec22e-ad6e-482f-88c4-8dad178f8efe",
     "DebugName": "YardRush_Salvage_MediumDonation_Intro_CFP",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "9c585972-95b7-4408-ad72-aa9858545958",
+        "Name": "Priority"
+    },
     "MissionGiver": "Citizens For Prosperity",
     "Title": "Strategic Salvage Reserve \u2013 Medium Resupply",
     "Description": "Following the brutal attack on Pyro and our efforts to combat the vigilante group the Frontier Fighters, our strategic reserves across the system are at an all-time low. Citizens for Prosperity are eager to replenish our stocks before we reach a point of desperation. \n\nTo that end, we were hoping that you and a team of your choosing could resupply<EM4> ~mission(Destination|Address) with salvaged materials.</EM4> It would go a long way in helping us rebuild what was lost in the attacks.\n\nI leave it up to you to decide how best to acquire what we need, but should be able to find some wrecks to scavenge orbiting around most planets. \n\nYour support of our efforts is much appreciated,\n\nLima Endicott\nLead Dispatcher\nCitizens for Prosperity",
@@ -129,5 +133,91 @@
         "Name": "Citizens For Prosperity"
     },
     "ReputationScope": "FactionReputation",
+    "Template": {
+        "Ref": "67d142f5-9df6-40ed-a177-59056ddcab00",
+        "SubtypeName": "HaulCargo_AtoB_YardRush_Salvage_Medium",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineSeconds": 300,
+            "DeadlineAutoEnd": true
+        },
+        "Objectives": [
+            {
+                "Id": "44cfd71c-2661-4ec9-8e95-e0e841c3f5bc",
+                "DebugName": "Hauling",
+                "StartsActive": true,
+                "HandlerType": "Hauling",
+                "Handler": {
+                    "HideMarkers": false,
+                    "HaulingOrders": [
+                        {
+                            "Type": "Resource",
+                            "Resource": "a0e6c4cf-face-4f52-a020-dfa869607901",
+                            "MaxContainerSize": -1,
+                            "MinScu": 56,
+                            "MaxScu": 56,
+                            "DropoffLocation": "ObjectiveProperty_Referenced[0FED]"
+                        },
+                        {
+                            "Type": "Resource",
+                            "Resource": "98aa6a70-80e7-41d7-9128-9692053d57a2",
+                            "MaxContainerSize": -1,
+                            "MinScu": 105,
+                            "MaxScu": 105,
+                            "DropoffLocation": "ObjectiveProperty_Referenced[0FED]"
+                        }
+                    ]
+                },
+                "RewardContribution": {
+                    "Percent": 100,
+                    "DoPartialRewardPayout": true
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When [Hauling] completed -&gt; Mission Completed",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[021D]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            },
+            {
+                "Description": "When [Hauling] failed -&gt; Mission Failed",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Failed",
+                    "ObjectiveToken": "ObjectiveToken[021D]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Failed"
+                }
+            },
+            {
+                "Description": "When [Hauling] abandoned -&gt; Mission Abandoned",
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Abandoned",
+                    "ObjectiveToken": "ObjectiveToken[021D]"
+                }
+            }
+        ]
+    },
     "entry_type": "contracts"
 }

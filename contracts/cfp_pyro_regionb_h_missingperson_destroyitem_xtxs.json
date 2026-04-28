@@ -2,6 +2,10 @@
     "UUID": "3e7eb7bf-b525-4404-bfdd-570d1eb1d5b0",
     "DebugName": "CFP_Pyro_RegionB_H_MissingPerson_DestroyItem_XTXS",
     "Type": "ContractGeneratorHandler_Career",
+    "MissionType": {
+        "UUID": "62f92440-202a-43d3-9cb8-b917d4e4a102",
+        "Name": "Mercenary"
+    },
     "MissionGiver": "Citizens for Prosperity",
     "Title": "Find XenoThreat Captive and Stolen Data",
     "Description": "The family of ~mission(TargetName), a Citizens for Prosperity courier, has been in contact with me with the terrible news that they never arrived back home. We learned that ~mission(TargetName|First) was captured by XenoThreat while transporting some critical data. \n\nWe need you to search ~mission(Location|Address) and see if you can learn what has become of ~mission(TargetName|First) and then destroy any XenoThreat servers that may contain stolen data.\n\nThank you,\n \nLima Endicott\nLead Dispatcher\nCitizens for Prosperity",
@@ -293,6 +297,108 @@
         "GivenName": "@LOC_UNINITIALIZED",
         "LastName": "@LOC_UNINITIALIZED",
         "NickName": "@LOC_UNINITIALIZED"
+    },
+    "Template": {
+        "Ref": "f9f2a8cb-00af-4fa8-b94e-1ba6a493599b",
+        "SubtypeName": "MissingPerson_DestroyItems_2Locations",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": true,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineAutoEnd": false
+        },
+        "Objectives": [
+            {
+                "Id": "ab95ce54-d7b9-428e-8c55-689393463feb",
+                "DebugName": "Find Missing Person",
+                "StartsActive": true,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/MissingPerson.xml",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@searchbody_cave_obj_short_01",
+                        "LongDescription": "@searchbody_cave_obj_long_01",
+                        "ObjectiveMarkerLabel": "@searchbody_cave_obj_marker_01",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    }
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            },
+            {
+                "Id": "c90199fe-c691-4d44-8ac2-ca5a01a20d9e",
+                "DebugName": "DestroyItems",
+                "StartsActive": false,
+                "HandlerType": "Local",
+                "Handler": {
+                    "Module": "Libs/Subsumption/Missions/PU/Missions/DestroyItems.xml",
+                    "TravelRadiusKm": 0,
+                    "DisableTravelObjectives": false,
+                    "DisableReturnObjectives": false,
+                    "TravelObjective": {
+                        "ShortDescription": "@destroystash_obj_short_01",
+                        "LongDescription": "@destroystash_obj_long_01",
+                        "ObjectiveMarkerLabel": "@destroystash_subobj_marker_01",
+                        "Category": "Primary"
+                    },
+                    "ReturnObjective": {
+                        "ShortDescription": "@ReturnObjective_Short",
+                        "LongDescription": "@ReturnObjective_Long",
+                        "ObjectiveMarkerLabel": "@ReturnObjective_Short",
+                        "Category": "Primary"
+                    }
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@destroystash_obj_short_01",
+                    "LongDescription": "@destroystash_obj_long_01",
+                    "ObjectiveMarkerLabel": "@destroystash_subobj_marker_01",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When Missing Person Completes Activate Destroy Items",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[00E7]"
+                },
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Active",
+                    "ObjectiveToken": "ObjectiveToken[00E8]"
+                }
+            },
+            {
+                "Description": "When Destroy Items Completes, Complete Mission",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[00E8]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            }
+        ]
     },
     "entry_type": "contracts"
 }

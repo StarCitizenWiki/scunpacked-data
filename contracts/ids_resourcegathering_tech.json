@@ -2,6 +2,10 @@
     "UUID": "0a3c40b0-f0e7-473f-bf75-fc7f4f0b5ffc",
     "DebugName": "IDS_ResourceGathering_Tech",
     "Type": "ContractGeneratorHandler_List",
+    "MissionType": {
+        "UUID": "4823e235-5206-452f-6977-b6c26cc47486",
+        "Name": "Collection"
+    },
     "MissionGiver": "InterSec Defense Solutions",
     "Title": "Recover Vanduul Tech",
     "Description": "MISSION SPECS\n\nArea of Operation: Nyx System\nHostile Forces: Outlaws present and armed\nEquipment Specs: Combat-rated Ship, Personal Arms\nBriefing: \nTo prevent the Shattered Blade from flooding the black market with xeno-contraband, the UEE has charged InterSec with <EM4>recovering a stash of Vanduul Plating and Metal.</EM4> from the old <EM4>QV Logistics station</EM4> the gang has been occupying. Once you have the materials in your posession, deliver them to the freight elevator at <EM4>~mission(Destination|Address)</EM4>.\n\nFollowing from your previous experience, it would not be surprising if the Shattered Blade offer resistance, but ensure that your focus is on recovering the materials.\n\nRespectfully,\n\nDeacon Tobin\nOperations Manager\nInterSec Defense Solutions\n\nThis communication consists of confidential information solely intended for the recipient. Please disregard if received in error and notify sender. All operations are conducted at the contractor\u2019s own personal risk and must adhere to UEE and system law where applicable.",
@@ -179,6 +183,83 @@
         "GameKnowledge": "Pro_understanding_of_optimal_tactics_6",
         "DifficultyProfile": "General",
         "DifficultyProfileUUID": "27f773a1-7c17-4a1e-a91f-8fb3c53bae01"
+    },
+    "Template": {
+        "Ref": "4be727d4-9060-ad47-0b8d-f4d0921c64ab",
+        "SubtypeName": "ItemResourceGathering",
+        "ContractClass": {
+            "HasCompleteButton": false,
+            "CanBeShared": false,
+            "FailIfSentToPrison": true,
+            "FailIfBecameCriminal": true,
+            "DeadlineSeconds": 300,
+            "DeadlineAutoEnd": true
+        },
+        "Objectives": [
+            {
+                "Id": "8f41f5b4-f0b8-438b-a252-8a8515b0ac7a",
+                "DebugName": "ItemResourceGathering",
+                "StartsActive": true,
+                "HandlerType": "Hauling",
+                "Handler": {
+                    "HideMarkers": false,
+                    "HaulingOrders": [
+                        {
+                            "Type": "Property",
+                            "PickUpTargetTypes": [],
+                            "DropOffTargetTypes": [],
+                            "HaulingOrdersProperty": "ObjectiveProperty_Referenced[01E1]",
+                            "DropoffLocation": "ObjectiveProperty_Referenced[01DF]"
+                        }
+                    ]
+                },
+                "RewardContribution": {
+                    "Percent": 100,
+                    "DoPartialRewardPayout": true
+                },
+                "DisplayInfo": {
+                    "ShortDescription": "@LOC_UNINITIALIZED",
+                    "LongDescription": "@LOC_UNINITIALIZED",
+                    "ObjectiveMarkerLabel": "@LOC_UNINITIALIZED",
+                    "Category": "Primary",
+                    "HideOnHud": false
+                }
+            }
+        ],
+        "MissionFlow": [
+            {
+                "Description": "When [ItemResourceGathering] completed -> Mission Completed",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Completed",
+                    "ObjectiveToken": "ObjectiveToken[0034]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Completed"
+                }
+            },
+            {
+                "Description": "When [ItemResourceGathering] failed -> Mission Failed",
+                "Condition": {
+                    "Type": "TokenState",
+                    "TokenState": "Failed",
+                    "ObjectiveToken": "ObjectiveToken[0034]"
+                },
+                "Action": {
+                    "Type": "StateChange",
+                    "ToState": "Failed"
+                }
+            },
+            {
+                "Description": "When [ItemResourceGathering] abandoned -> Mission Abandoned",
+                "Action": {
+                    "Type": "TokenStateChange",
+                    "ToState": "Abandoned",
+                    "ObjectiveToken": "ObjectiveToken[0034]"
+                }
+            }
+        ]
     },
     "entry_type": "contracts"
 }
