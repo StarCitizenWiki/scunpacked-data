@@ -8,6 +8,7 @@
             "entityDensityClass": "b6cc39fd-7c14-4568-b261-197834e51116",
             "__ref": "349fd8af-0305-4f73-b087-8d1b4293cf81",
             "__path": "libs/foundry/records/entities/spaceships/probe_comms_1_a_psec.xml",
+            "__team": "Unknown",
             "defaultEditorColor": {
                 "r": 1,
                 "g": 1,
@@ -298,13 +299,13 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "Pick up",
-                                "DisplayName": "Refill MedPens",
-                                "__DisplayName": "@usable_refillMedPens",
+                                "Name": "Doors_UnlockAll",
+                                "DisplayName": "Unlock All Doors",
+                                "__DisplayName": "@ui_CICockpitDoorsUnlockAll",
                                 "DisplayType": "Show",
-                                "GenericCursor": "Grab",
+                                "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
-                                "Sendable": 0,
+                                "Sendable": 1,
                                 "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
@@ -312,15 +313,15 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "Activate Remote Camera",
-                                "DisplayName": "Enter Remote Turret",
-                                "__DisplayName": "@ui_interactor_use_remote_turret",
+                                "Name": "DeployWeaponRack",
+                                "DisplayName": "Deploy Weapon Rack",
+                                "__DisplayName": "@vehicle_interactor_WeaponRack_Deploy",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
+                                "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
-                                "Sendable": 0,
+                                "Sendable": 1,
                                 "Linkable": 1,
-                                "LockedByLinks": 0,
+                                "LockedByLinks": 1,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
@@ -428,6 +429,57 @@
                                 },
                                 {
                                     "value": "ejection"
+                                }
+                            ]
+                        },
+                        {
+                            "itemType": "Usable",
+                            "lockedInteractionNames": [
+                                {
+                                    "value": "BespokePlace"
+                                },
+                                {
+                                    "value": "Place"
+                                }
+                            ]
+                        },
+                        {
+                            "itemType": "WeaponPersonal",
+                            "lockedInteractionNames": [
+                                {
+                                    "value": "HoldReady"
+                                },
+                                {
+                                    "value": "Holster"
+                                },
+                                {
+                                    "value": "Store"
+                                },
+                                {
+                                    "value": "OffHandStore"
+                                },
+                                {
+                                    "value": "Inspect"
+                                },
+                                {
+                                    "value": "Customize"
+                                }
+                            ]
+                        },
+                        {
+                            "itemType": "Misc",
+                            "lockedInteractionNames": [
+                                {
+                                    "value": "Carry"
+                                },
+                                {
+                                    "value": "Store"
+                                },
+                                {
+                                    "value": "OffhandStore"
+                                },
+                                {
+                                    "value": "Inspect"
                                 }
                             ]
                         }
@@ -787,10 +839,10 @@
                                         "name": "ShipExplosion",
                                         "enabled": 1,
                                         "multiPosition": 0,
-                                        "useDefaultProxy": 0,
-                                        "trigger": "d01ee89c-4358-4004-bb97-04552840efb3",
+                                        "useDefaultProxy": 1,
+                                        "trigger": "c7d52ac4-2a9e-4951-b660-e3c34387ebb0",
                                         "soundEffect": {
-                                            "audioTrigger": "Play_SSDM_Shared_Explosion_HighTech_Medium"
+                                            "audioTrigger": "Play_SSDM_Shared"
                                         },
                                         "attachmentSettings": {
                                             "SEntityEffectSystem_Attachment_EntitySlot": {
@@ -897,6 +949,10 @@
                         {
                             "available": 1,
                             "spoolTime": 0.2
+                        },
+                        {
+                            "available": 0,
+                            "spoolTime": 1
                         },
                         {
                             "available": 0,
@@ -1858,6 +1914,12 @@
                     "shipCollisionTotalDeliverableDamageRtpc": {
                         "rtpc": "GP_Impact_Projectile_Absolute_Damage_Dealt"
                     },
+                    "shipEnginePowerRtpc": {
+                        "rtpc": "Ship_Engine_Power"
+                    },
+                    "shipPowerRtpc": {
+                        "rtpc": "Ship_System_Power"
+                    },
                     "shipCollisionFeedback": {
                         "audioTrigger": "Play_SSVI_Impact_Direct"
                     },
@@ -1970,6 +2032,7 @@
                     "cacheResources": 0,
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 0,
+                    "inheritMaterialFromSpawnHost": 0,
                     "Geometry": {
                         "ScaleMultiplier": 1,
                         "Geometry": {
@@ -2154,48 +2217,85 @@
                             "networkAuthority": "Local",
                             "States": [
                                 {
-                                    "StateName": "DownloadComplete",
-                                    "EnterStatePlaySequence": {
-                                        "value": "SReplicatedSequencerDefSequenceParams[0088]"
+                                    "StateName": "led_slot_01_deactivated",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac"
+                                        }
                                     },
-                                    "StateAutoChange": {
-                                        "SStateAutoChange": {
-                                            "Delay": 3,
-                                            "RunWhenStreamedOut": 0,
+                                    "exitStateEffectTags": {
+                                        "Reference": {
+                                            "value": "33129b2d-d5d2-408b-aacf-342ab92258fb"
+                                        }
+                                    },
+                                    "EnterStatePlaySequence": {
+                                        "value": "SReplicatedSequencerDefSequenceParams[02FD]"
+                                    }
+                                },
+                                {
+                                    "StateName": "ControlAvailable",
+                                    "Interactions": [
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[202F]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[2030]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[202D]"
+                                            },
                                             "NextState": {
-                                                "value": "SInteractionState[02EB]"
+                                                "value": "SInteractionState[10AF]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[202E]"
+                                            }
+                                        }
+                                    ],
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "c9c55c09-23f1-4f9d-859c-5692b986fd5a"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "button_hidden",
-                                    "EnterStatePlaySequence": {
-                                        "value": "SSequencerDefSequenceParams[0018]"
-                                    },
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
+                                    "StateName": "ControlUnavailable",
+                                    "Interactions": [
+                                        {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[0598]"
+                                                "value": "SSharedInteractionParams[202D]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[202E]"
                                             },
                                             "NextState": {
-                                                "value": "SInteractionState[02EF]"
+                                                "value": "SInteractionState[10AE]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[2031]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[10AE]"
                                             }
                                         }
-                                    }
-                                },
-                                {
-                                    "StateName": "button_revealed",
-                                    "EnterStatePlaySequence": {
-                                        "value": "SSequencerDefSequenceParams[0017]"
-                                    },
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[0597]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[02F0]"
+                                    ],
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "78978339-73cc-44d0-a9b9-cbe52b8d3884"
                                             }
                                         }
                                     }
@@ -2451,13 +2551,13 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[02ED]"
+                        "value": "SInteractionState[10AD]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[02EE]"
+                        "value": "SInteractionState[10AE]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[02EF]"
+                        "value": "SInteractionState[10AF]"
                     }
                 }
             },
@@ -2576,8 +2676,8 @@
                 }
             },
             "Interactions": [
-                "Pick up",
-                "Activate remote camera"
+                "Doors_unlockall",
+                "Deployweaponrack"
             ]
         }
     }

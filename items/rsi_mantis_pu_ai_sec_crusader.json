@@ -8,6 +8,7 @@
             "entityDensityClass": "b6cc39fd-7c14-4568-b261-197834e51116",
             "__ref": "6aaf7835-0422-4ccc-a58b-aebcf08bbfbe",
             "__path": "libs/foundry/records/entities/spaceships/rsi_mantis_pu_ai_sec_crusader.xml",
+            "__team": "Unknown",
             "defaultEditorColor": {
                 "r": 1,
                 "g": 1,
@@ -720,23 +721,22 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "PressureCycleComplete",
-                                "LinkingTag": "25f5feca-79ce-4aab-abbd-14a87128b0d4",
+                                "Name": "CloseRequest",
+                                "LinkingTag": "03c490df-45c1-4589-887d-605ffb64fbf5",
                                 "DisplayName": "Use",
                                 "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 0,
-                                "Linkable": 1,
+                                "Sendable": 1,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "Set_AirlockConnected",
-                                "LinkingTag": "0ddd41af-0add-46ba-a1c3-3dacb4a54950",
+                                "Name": "CloseTrigger",
                                 "DisplayName": "Use",
                                 "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
@@ -747,7 +747,22 @@
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "conditionParams": {
+                                            "InteractionConditionInteractionStateMachineTag": {
+                                                "stateTags": {
+                                                    "tags": {
+                                                        "Reference": {
+                                                            "value": "7e6a2f02-480d-4f86-9ee6-b19dbc778f76"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         ]
                     }
@@ -855,6 +870,57 @@
                                 },
                                 {
                                     "value": "ejection"
+                                }
+                            ]
+                        },
+                        {
+                            "itemType": "Usable",
+                            "lockedInteractionNames": [
+                                {
+                                    "value": "BespokePlace"
+                                },
+                                {
+                                    "value": "Place"
+                                }
+                            ]
+                        },
+                        {
+                            "itemType": "WeaponPersonal",
+                            "lockedInteractionNames": [
+                                {
+                                    "value": "HoldReady"
+                                },
+                                {
+                                    "value": "Holster"
+                                },
+                                {
+                                    "value": "Store"
+                                },
+                                {
+                                    "value": "OffHandStore"
+                                },
+                                {
+                                    "value": "Inspect"
+                                },
+                                {
+                                    "value": "Customize"
+                                }
+                            ]
+                        },
+                        {
+                            "itemType": "Misc",
+                            "lockedInteractionNames": [
+                                {
+                                    "value": "Carry"
+                                },
+                                {
+                                    "value": "Store"
+                                },
+                                {
+                                    "value": "OffhandStore"
+                                },
+                                {
+                                    "value": "Inspect"
                                 }
                             ]
                         }
@@ -1695,10 +1761,10 @@
                                         "name": "ShipExplosion",
                                         "enabled": 1,
                                         "multiPosition": 0,
-                                        "useDefaultProxy": 0,
-                                        "trigger": "d01ee89c-4358-4004-bb97-04552840efb3",
+                                        "useDefaultProxy": 1,
+                                        "trigger": "c7d52ac4-2a9e-4951-b660-e3c34387ebb0",
                                         "soundEffect": {
-                                            "audioTrigger": "Play_SSDM_Shared_Explosion_Base_Light"
+                                            "audioTrigger": "Play_SSDM_Shared"
                                         },
                                         "attachmentSettings": {
                                             "SEntityEffectSystem_Attachment_EntitySlot": {
@@ -1805,6 +1871,10 @@
                         {
                             "available": 1,
                             "spoolTime": 0.2
+                        },
+                        {
+                            "available": 0,
+                            "spoolTime": 1
                         },
                         {
                             "available": 0,
@@ -2749,6 +2819,12 @@
                     "shipCollisionTotalDeliverableDamageRtpc": {
                         "rtpc": "GP_Impact_Projectile_Absolute_Damage_Dealt"
                     },
+                    "shipEnginePowerRtpc": {
+                        "rtpc": "Ship_Engine_Power"
+                    },
+                    "shipPowerRtpc": {
+                        "rtpc": "Ship_System_Power"
+                    },
                     "shipCollisionFeedback": {
                         "audioTrigger": "Play_SSVI_Impact_Direct"
                     },
@@ -2861,6 +2937,7 @@
                     "cacheResources": 0,
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 0,
+                    "inheritMaterialFromSpawnHost": 0,
                     "Geometry": {
                         "ScaleMultiplier": 1,
                         "Geometry": {
@@ -3183,9 +3260,85 @@
                             }
                         },
                         {
+                            "Name": "hardpoint_lifesupport",
+                            "DisplayName": "Life Support Generator",
+                            "__DisplayName": "@item_TypeLifeSupportGenerator",
+                            "Flags": "invisible editable",
+                            "PropagateOnAttachTagsToHierarchy": 0,
+                            "MinSize": 1,
+                            "MaxSize": 1,
+                            "MaxAggregateAttachmentHeight": -1,
+                            "gridBehavior": "Both",
+                            "InteractionBaseSize": 2,
+                            "InteractionPointSize": -1,
+                            "OverrideAttachedInteractionPointsSize": 0,
+                            "DefaultWeaponGroup": "UNDEFINED",
+                            "resourceLinkToParent": 0,
+                            "useHelperAsInteractionPointName": 0,
+                            "PitchLimit": {
+                                "x": 0,
+                                "y": 0
+                            },
+                            "YawLimit": {
+                                "x": 0,
+                                "y": 0
+                            },
+                            "RollLimit": {
+                                "x": 0,
+                                "y": 0
+                            },
+                            "InteractionPointOffset": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0
+                            },
+                            "Types": {
+                                "SItemPortDefTypes": {
+                                    "Type": "LifeSupportGenerator"
+                                }
+                            },
+                            "AttachmentImplementation": {
+                                "SItemPortDefAttachmentImplementationBone": {
+                                    "Helper": {
+                                        "Helper": {
+                                            "Offset": {
+                                                "Rotation": {
+                                                    "x": 0,
+                                                    "y": 0,
+                                                    "z": 0
+                                                },
+                                                "Position": {
+                                                    "x": 0,
+                                                    "y": 0,
+                                                    "z": 0
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "Breakable": {
+                                "YoungsModulus": 0,
+                                "BreakStrain": 0,
+                                "YieldStrain": 0,
+                                "Breakable": 0
+                            },
+                            "interactions": {
+                                "allowPlaceInteractionFromInventory": 0,
+                                "placeInteractionBlockText": "No Appropriate Item",
+                                "__placeInteractionBlockText": "@interaction_condition_placeOnItemport_noMatchingItem"
+                            },
+                            "detachDirection": {
+                                "x": 0,
+                                "y": 0,
+                                "z": -1
+                            }
+                        },
+                        {
                             "Name": "hardpoint_controller_fuel",
                             "DisplayName": "",
                             "__DisplayName": "@LOC_EMPTY",
+                            "Flags": "uneditable",
                             "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
@@ -3222,6 +3375,7 @@
                                     "usePhysicalParent": 0,
                                     "useLogicalAttachment": 0,
                                     "hangarPort": 0,
+                                    "createExteriorShadowPhysicalEntity": 0,
                                     "constraintParams": {
                                         "damping": 0,
                                         "noSelfCollisions": 1,
@@ -3278,7 +3432,7 @@
                             "DisplayName": "",
                             "__DisplayName": "@LOC_EMPTY",
                             "PortTags": "Ship_Dock_Refuel",
-                            "Flags": "dockingport1",
+                            "Flags": "dockingport1 uneditable",
                             "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
@@ -3320,6 +3474,7 @@
                                     "usePhysicalParent": 0,
                                     "useLogicalAttachment": 0,
                                     "hangarPort": 0,
+                                    "createExteriorShadowPhysicalEntity": 0,
                                     "constraintParams": {
                                         "damping": 0,
                                         "noSelfCollisions": 1,
@@ -3375,6 +3530,7 @@
                             "Name": "hardpoint_air_traffic_controller",
                             "DisplayName": "",
                             "__DisplayName": "@LOC_EMPTY",
+                            "Flags": "uneditable",
                             "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
@@ -3416,6 +3572,7 @@
                                     "usePhysicalParent": 0,
                                     "useLogicalAttachment": 0,
                                     "hangarPort": 0,
+                                    "createExteriorShadowPhysicalEntity": 0,
                                     "constraintParams": {
                                         "damping": 0,
                                         "noSelfCollisions": 1,
@@ -3471,7 +3628,7 @@
                             "Name": "hardpoint_relay_interior",
                             "DisplayName": "",
                             "__DisplayName": "@LOC_EMPTY",
-                            "Flags": "uneditable",
+                            "Flags": "$uneditable",
                             "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 1,
                             "MaxSize": 1,
@@ -3547,6 +3704,7 @@
                             "Name": "hardpoint_missile_rack_outer_left",
                             "DisplayName": "Missile Rack 3",
                             "__DisplayName": "@port_NameMissileRack03",
+                            "Flags": "$editable",
                             "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 3,
                             "MaxSize": 3,
@@ -3635,6 +3793,7 @@
                             "Name": "hardpoint_missile_rack_outer_right",
                             "DisplayName": "Missile Rack 4",
                             "__DisplayName": "@port_NameMissileRack04",
+                            "Flags": "$editable",
                             "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 3,
                             "MaxSize": 3,
@@ -3993,32 +4152,69 @@
                             "networkAuthority": "Local",
                             "States": [
                                 {
-                                    "StateName": "Dropped"
-                                },
-                                {
-                                    "StateName": "Offered"
+                                    "StateName": "EquippedWorn",
+                                    "Interactions": [
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[A93D]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[A940]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[A941]"
+                                            }
+                                        }
+                                    ]
                                 },
                                 {
                                     "StateName": "Stored",
                                     "Interactions": [
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[95F7]"
+                                                "value": "SSharedInteractionParams[A941]"
                                             }
                                         },
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[95F9]"
+                                                "value": "SSharedInteractionParams[A93D]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[A93E]"
                                             }
                                         }
-                                    ],
-                                    "entityTags": {
-                                        "tags": {
-                                            "Reference": {
-                                                "value": "158faf59-73f2-42e6-a7cf-a55c3e46040d"
+                                    ]
+                                },
+                                {
+                                    "StateName": "Settled",
+                                    "Interactions": [
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[A943]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[A947]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[A948]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[A946]"
                                             }
                                         }
-                                    }
+                                    ]
                                 }
                             ]
                         },
@@ -4028,72 +4224,70 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[8A46]"
+                                "value": "SInteractionState[9D5B]"
                             },
                             "States": [
                                 {
-                                    "StateName": "Settled",
+                                    "StateName": "Carried",
                                     "Interactions": [
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[95FC]"
+                                                "value": "SSharedInteractionParams[A947]"
                                             }
                                         },
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[9600]"
+                                                "value": "SSharedInteractionParams[A948]"
                                             }
                                         },
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[95FE]"
+                                                "value": "SSharedInteractionParams[A944]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[A945]"
                                             }
                                         }
                                     ]
                                 },
                                 {
-                                    "StateName": "CarriedLowered",
+                                    "StateName": "Inspecting",
                                     "Interactions": [
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[9600]"
+                                                "value": "SSharedInteractionParams[A947]"
                                             }
                                         },
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[95FE]"
+                                                "value": "SSharedInteractionParams[A943]"
                                             }
                                         },
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[95FD]"
+                                                "value": "SSharedInteractionParams[A944]"
                                             }
                                         },
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[95FF]"
+                                                "value": "SSharedInteractionParams[A945]"
                                             }
                                         }
-                                    ],
-                                    "entityTags": {
-                                        "tags": {
-                                            "Reference": {
-                                                "value": "ba576025-1c42-4e4e-80d0-1b902f3351b1"
-                                            }
-                                        }
-                                    }
+                                    ]
                                 }
                             ],
                             "StateModifiers": {
                                 "SItemPortEntityOnlineStateModifier": {
                                     "onEntityOnlineState": {
-                                        "value": "SInteractionState[8A45]"
+                                        "value": "SInteractionState[9D5A]"
                                     },
                                     "onEntityOfflineState": {
-                                        "value": "SInteractionState[8A46]"
+                                        "value": "SInteractionState[9D5B]"
                                     },
                                     "itemPort": {
-                                        "value": "SItemPortDef[B841]"
+                                        "value": "SItemPortDef[BFAA]"
                                     }
                                 }
                             }
@@ -4109,7 +4303,7 @@
                                     "postDelay": 0,
                                     "haltOnFailure": 1,
                                     "task": {
-                                        "value": "SSequencerAnimationTaskParams[0256]"
+                                        "value": "SSequencerAnimationTaskParams[026C]"
                                     }
                                 }
                             }
@@ -4121,7 +4315,7 @@
                                     "postDelay": 0,
                                     "haltOnFailure": 1,
                                     "task": {
-                                        "value": "SSequencerAnimationTaskParams[0257]"
+                                        "value": "SSequencerAnimationTaskParams[026D]"
                                     }
                                 }
                             }
@@ -4379,13 +4573,13 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[8A42]"
+                        "value": "SInteractionState[9D57]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[8A43]"
+                        "value": "SInteractionState[9D58]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[8A44]"
+                        "value": "SInteractionState[9D59]"
                     }
                 }
             },
@@ -4543,13 +4737,37 @@
                     "Uneditable": true
                 },
                 {
+                    "PortName": "hardpoint_lifesupport",
+                    "DisplayName": "@item_TypeLifeSupportGenerator",
+                    "Size": 1,
+                    "MinSize": 1,
+                    "MaxSize": 1,
+                    "Flags": [
+                        "invisible",
+                        "editable"
+                    ],
+                    "Types": [
+                        "LifeSupportGenerator"
+                    ],
+                    "CompatibleTypes": [
+                        {
+                            "Type": "LifeSupportGenerator"
+                        }
+                    ],
+                    "EquippedItem": "e947b002-e65e-4637-90b7-c894925d6625",
+                    "Uneditable": true
+                },
+                {
                     "PortName": "hardpoint_controller_fuel",
                     "DisplayName": "@LOC_EMPTY",
                     "Size": 1,
                     "MinSize": 1,
                     "MaxSize": 1,
+                    "Flags": [
+                        "uneditable"
+                    ],
                     "EquippedItem": "9925488b-127a-4fc3-b7bb-9e4f5a46bbbd",
-                    "Uneditable": false
+                    "Uneditable": true
                 },
                 {
                     "PortName": "hardpoint_fuel_port",
@@ -4558,7 +4776,8 @@
                     "MinSize": 1,
                     "MaxSize": 1,
                     "Flags": [
-                        "dockingport1"
+                        "dockingport1",
+                        "uneditable"
                     ],
                     "Tags": [
                         "Ship_Dock_Refuel"
@@ -4572,7 +4791,7 @@
                         }
                     ],
                     "EquippedItem": "bf39b743-ec3d-436b-9f23-81bcb296ca46",
-                    "Uneditable": false
+                    "Uneditable": true
                 },
                 {
                     "PortName": "hardpoint_air_traffic_controller",
@@ -4580,6 +4799,9 @@
                     "Size": 1,
                     "MinSize": 1,
                     "MaxSize": 1,
+                    "Flags": [
+                        "uneditable"
+                    ],
                     "Types": [
                         "AirTrafficController"
                     ],
@@ -4589,7 +4811,7 @@
                         }
                     ],
                     "EquippedItem": "0ec662b6-ab65-473a-ba12-b71b4e105b1f",
-                    "Uneditable": false
+                    "Uneditable": true
                 },
                 {
                     "PortName": "hardpoint_relay_interior",
@@ -4598,7 +4820,7 @@
                     "MinSize": 1,
                     "MaxSize": 1,
                     "Flags": [
-                        "uneditable"
+                        "$uneditable"
                     ],
                     "Types": [
                         "Relay"
@@ -4617,6 +4839,9 @@
                     "Size": 3,
                     "MinSize": 3,
                     "MaxSize": 3,
+                    "Flags": [
+                        "$editable"
+                    ],
                     "Types": [
                         "MissileLauncher.MissileRack",
                         "BombLauncher.BombRack"
@@ -4644,6 +4869,9 @@
                     "Size": 3,
                     "MinSize": 3,
                     "MaxSize": 3,
+                    "Flags": [
+                        "$editable"
+                    ],
                     "Types": [
                         "MissileLauncher.MissileRack",
                         "BombLauncher.BombRack"
@@ -4699,8 +4927,8 @@
                 }
             },
             "Interactions": [
-                "Pressurecyclecomplete",
-                "Set_airlockconnected"
+                "Closerequest",
+                "Closetrigger"
             ]
         }
     }

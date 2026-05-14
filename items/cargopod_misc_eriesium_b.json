@@ -8,10 +8,16 @@
             "entityDensityClass": "a153bc13-b348-47a4-8bae-1ce22b0b4023",
             "__ref": "7dc3f399-6659-4d62-919d-be21c4990581",
             "__path": "libs/foundry/records/entities/scitem/ships/utility/refueling/fuelpod/cargopod_misc_eriesium_b.xml",
+            "__team": "SystemsDesign",
             "defaultEditorColor": {
                 "r": 1,
                 "g": 1,
                 "b": 0
+            },
+            "tags": {
+                "Reference": {
+                    "value": "2d67eba5-701f-45e2-99b2-b6cd82aa0b58"
+                }
             },
             "Components": {
                 "SAttachableComponentParams": {
@@ -32,6 +38,7 @@
                             "LightAmplification": "24dca732-04cc-4896-b90f-d304741ab2dd",
                             "__ref": "b28a5c61-63a4-478b-8047-5fba545d5b8a",
                             "__path": "libs/foundry/records/scitemmanufacturer/scitemmanufacturer.misc.xml",
+                            "__team": "Unknown",
                             "Localization": {
                                 "Name": "Musashi Industrial & Starflight Concern",
                                 "__Name": "@manufacturer_NameMISC",
@@ -68,7 +75,7 @@
                             "__Name": "@item_fuelpod_MISC_Standard_Name",
                             "ShortName": "",
                             "__ShortName": "@LOC_EMPTY",
-                            "Description": "Manufacturer: MISC\nItem Type: Fuel Pod\nFlow Rate: 1.15 SCU/s\nCapacity: 60 SCU\n\nThe standard fuel pod of the Starfarer, the CR-60 was designed by MISC to be a well balanced fuel storage option ready to tackle a wide variety of jobs.",
+                            "Description": "Manufacturer: MISC\nItem Type: Fuel Pod\nHydrogen Flow Modifier: 1.16\nQuantum Flow Modifier: 1.16\nMax. Integrity: 22800\nCapacity: 20 SCU\n\nThe standard fuel pod of the Starfarer, the CR-60 was designed by MISC to be a well balanced fuel storage option ready to tackle a wide variety of jobs.",
                             "__Description": "@item_fuelpod_MISC_Standard_Desc",
                             "displayFeatures": {
                                 "History": "",
@@ -85,7 +92,7 @@
                                 "Locale": "english",
                                 "Name": "CR-60",
                                 "ShortName": "",
-                                "Description": "Manufacturer: MISC\nItem Type: Fuel Pod\nFlow Rate: 1.15 SCU/s\nCapacity: 60 SCU\n\nThe standard fuel pod of the Starfarer, the CR-60 was designed by MISC to be a well balanced fuel storage option ready to tackle a wide variety of jobs."
+                                "Description": "Manufacturer: MISC\nItem Type: Fuel Pod\nHydrogen Flow Modifier: 1.16\nQuantum Flow Modifier: 1.16\nMax. Integrity: 22800\nCapacity: 20 SCU\n\nThe standard fuel pod of the Starfarer, the CR-60 was designed by MISC to be a well balanced fuel storage option ready to tackle a wide variety of jobs."
                             }
                         },
                         "inventoryOccupancyVolume": {
@@ -115,14 +122,16 @@
                     }
                 },
                 "SCItemFuelTankParams": {
+                    "hydrogenMaxFlowMultiplier": 1,
+                    "quantumMaxFlowMultiplier": 1,
                     "openState": {
-                        "value": "SInteractionState[45C0]"
+                        "value": "SInteractionState[4667]"
                     },
                     "closedState": {
-                        "value": "SInteractionState[45BF]"
+                        "value": "SInteractionState[4666]"
                     },
                     "pumpingState": {
-                        "value": "SInteractionState[45C1]"
+                        "value": "SInteractionState[4668]"
                     }
                 },
                 "ItemControlComponentParams": {
@@ -131,14 +140,14 @@
                     "asopSpawnState": "None"
                 },
                 "SInteractionStateMachineParams": {
-                    "StateTypes": {
-                        "SInteractionStateType": {
+                    "StateTypes": [
+                        {
                             "StateTypeName": "Tank Status",
                             "bindingsMethod": "States",
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[45BF]"
+                                "value": "SInteractionState[4666]"
                             },
                             "States": [
                                 {
@@ -146,18 +155,18 @@
                                     "Interactions": [
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[5483]"
+                                                "value": "SSharedInteractionParams[56AB]"
                                             },
                                             "NextState": {
-                                                "value": "SInteractionState[45C0]"
+                                                "value": "SInteractionState[4667]"
                                             }
                                         },
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[5485]"
+                                                "value": "SSharedInteractionParams[56AD]"
                                             },
                                             "NextState": {
-                                                "value": "SInteractionState[45C1]"
+                                                "value": "SInteractionState[4668]"
                                             }
                                         }
                                     ]
@@ -167,10 +176,10 @@
                                     "Interactions": {
                                         "SInteractionStateTransition": {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[5484]"
+                                                "value": "SSharedInteractionParams[56AC]"
                                             },
                                             "NextState": {
-                                                "value": "SInteractionState[45BF]"
+                                                "value": "SInteractionState[4666]"
                                             }
                                         }
                                     }
@@ -180,22 +189,61 @@
                                     "Interactions": {
                                         "SInteractionStateTransition": {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[5484]"
+                                                "value": "SSharedInteractionParams[56AC]"
                                             },
                                             "NextState": {
-                                                "value": "SInteractionState[45BF]"
+                                                "value": "SInteractionState[4666]"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "StateTypeName": "Purge",
+                            "bindingsMethod": "None",
+                            "asopReset": 0,
+                            "networkAuthority": "Server",
+                            "States": [
+                                {
+                                    "StateName": "None",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[56AF]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[466A]"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "Purging",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "2ed454aa-54f6-495b-a66f-c700d37e7111"
+                                        }
+                                    },
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 5,
+                                            "RunWhenStreamedOut": 0,
+                                            "NextState": {
+                                                "value": "SInteractionState[4669]"
                                             }
                                         }
                                     }
                                 }
                             ]
                         }
-                    }
+                    ]
                 },
                 "SGeometryResourceParams": {
                     "cacheResources": 0,
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
+                    "inheritMaterialFromSpawnHost": 0,
                     "Geometry": {
                         "ScaleMultiplier": 1,
                         "Geometry": {
@@ -298,6 +346,34 @@
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "Detach",
+                                "DisplayName": "Detach",
+                                "__DisplayName": "@refueling_ui_General_Detach",
+                                "DisplayType": "Show",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 0,
+                                "Linkable": 0,
+                                "LockedByLinks": 0,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "Purge",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
+                                "DisplayType": "Show",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 0,
+                                "Linkable": 0,
+                                "LockedByLinks": 0,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
                             }
                         ],
                         "InteractionPoints": {
@@ -330,7 +406,7 @@
                                         "__DisplayName": "@airlock_OPEN",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[5483]"
+                                            "value": "SSharedInteractionParams[56AB]"
                                         }
                                     },
                                     {
@@ -338,7 +414,7 @@
                                         "__DisplayName": "@usable_close",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[5484]"
+                                            "value": "SSharedInteractionParams[56AC]"
                                         }
                                     },
                                     {
@@ -346,7 +422,23 @@
                                         "__DisplayName": "@usable_activate",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[5485]"
+                                            "value": "SSharedInteractionParams[56AD]"
+                                        }
+                                    },
+                                    {
+                                        "DisplayName": "Detach",
+                                        "__DisplayName": "@refueling_ui_General_Detach",
+                                        "IsPrimary": 0,
+                                        "Interaction": {
+                                            "value": "SSharedInteractionParams[56AE]"
+                                        }
+                                    },
+                                    {
+                                        "DisplayName": "",
+                                        "__DisplayName": "@LOC_EMPTY",
+                                        "IsPrimary": 0,
+                                        "Interaction": {
+                                            "value": "SSharedInteractionParams[56AF]"
                                         }
                                     }
                                 ],
@@ -620,7 +712,7 @@
                                 "ResourceLinkedInteractionState": {
                                     "changeInteractionState": 0,
                                     "linkedInteractionState": {
-                                        "value": "SInteractionState[45BF]"
+                                        "value": "SInteractionState[4666]"
                                     }
                                 }
                             },
@@ -679,7 +771,7 @@
                                 "ResourceLinkedInteractionState": {
                                     "changeInteractionState": 0,
                                     "linkedInteractionState": {
-                                        "value": "SInteractionState[45C0]"
+                                        "value": "SInteractionState[4667]"
                                     }
                                 }
                             },
@@ -738,7 +830,7 @@
                                 "ResourceLinkedInteractionState": {
                                     "changeInteractionState": 0,
                                     "linkedInteractionState": {
-                                        "value": "SInteractionState[45C1]"
+                                        "value": "SInteractionState[4668]"
                                     }
                                 }
                             },
@@ -796,6 +888,294 @@
                             "value": "f4846780-182f-49d1-a711-f08c0172735e"
                         }
                     ]
+                },
+                "SCInteractionStateGameplayTriggerComponentParams": {
+                    "onInteractionSuccessTriggers": [
+                        {
+                            "targetInteraction": {
+                                "value": "SSharedInteractionParams[56AE]"
+                            },
+                            "gameplayTriggers": {
+                                "SUIWarningGameplayTrigger": {
+                                    "warning": {
+                                        "TriggeredWarningAdd": {
+                                            "text": "Part Detached",
+                                            "__text": "@ea_ui_scoring_VehiclePartDetached",
+                                            "messageState": "Normal",
+                                            "duration": 30
+                                        }
+                                    }
+                                },
+                                "SDetachSelfGameplayTrigger": {
+                                    "impulseStrength": 1000,
+                                    "impulseDirection": {
+                                        "x": 0,
+                                        "y": 0,
+                                        "z": -1
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "targetInteraction": {
+                                "value": "SSharedInteractionParams[56AF]"
+                            }
+                        }
+                    ]
+                },
+                "SEntityComponentEffects": {
+                    "entityEffects": {
+                        "particleEffects": {
+                            "SEntityEffectSystem_ParticleCategory": {
+                                "enabled": 1,
+                                "allowMultipleTags": 1,
+                                "tagEffects": [
+                                    {
+                                        "enabled": 1,
+                                        "primed": 0,
+                                        "holographic": 0,
+                                        "updateEntityBounds": 0,
+                                        "clipToVisArea": "Local",
+                                        "gpuVisAreaCullingMode": "Default",
+                                        "tag": "2ed454aa-54f6-495b-a66f-c700d37e7111",
+                                        "particleEffect": {
+                                            "path": "d6a6f5f8-ff8d-687a-c3b2-7d1d67fd4e2d|Spaceships/Refuel/refuel.default.Fuel_Waste_4m_Loop"
+                                        },
+                                        "attachmentSettings": {
+                                            "SEntityEffectSystem_Attachment_EntitySlot": {
+                                                "offset": {
+                                                    "Rotation": {
+                                                        "x": 0,
+                                                        "y": 0,
+                                                        "z": 90
+                                                    },
+                                                    "Position": {
+                                                        "x": -4.7,
+                                                        "y": -3,
+                                                        "z": -0.35
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "propertyLinks": [
+                                            {
+                                                "particleProperty": "strength",
+                                                "modifiers": {
+                                                    "SEntityEffectSystem_PatternModifier": {
+                                                        "startDelay": 0,
+                                                        "maximumValue": 1,
+                                                        "duration": 5.5,
+                                                        "patternCurve": {
+                                                            "useLUT": 0,
+                                                            "points": [
+                                                                {
+                                                                    "x": -0.02709333,
+                                                                    "y": 0.8479467
+                                                                },
+                                                                {
+                                                                    "x": 0,
+                                                                    "y": 1
+                                                                },
+                                                                {
+                                                                    "x": 0.1729067,
+                                                                    "y": 0.8479467
+                                                                },
+                                                                {
+                                                                    "x": 0.2569999,
+                                                                    "y": 0.146
+                                                                },
+                                                                {
+                                                                    "x": 0.357,
+                                                                    "y": 0.146
+                                                                },
+                                                                {
+                                                                    "x": 0.4570001,
+                                                                    "y": 0.146
+                                                                },
+                                                                {
+                                                                    "x": 0.90624,
+                                                                    "y": -0.02565333
+                                                                },
+                                                                {
+                                                                    "x": 1,
+                                                                    "y": 0
+                                                                },
+                                                                {
+                                                                    "x": 1.10624,
+                                                                    "y": -0.02565333
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "particleProperty": "size",
+                                                "modifiers": {
+                                                    "SEntityEffectSystem_OverrideValueModifier": {
+                                                        "overrideValue": 5
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "enabled": 1,
+                                        "primed": 0,
+                                        "holographic": 0,
+                                        "updateEntityBounds": 0,
+                                        "clipToVisArea": "Local",
+                                        "gpuVisAreaCullingMode": "Default",
+                                        "tag": "2ed454aa-54f6-495b-a66f-c700d37e7111",
+                                        "particleEffect": {
+                                            "path": "d6a6f5f8-ff8d-687a-c3b2-7d1d67fd4e2d|Spaceships/Refuel/refuel.default.Fuel_Waste_4m_Loop"
+                                        },
+                                        "attachmentSettings": {
+                                            "SEntityEffectSystem_Attachment_EntitySlot": {
+                                                "offset": {
+                                                    "Rotation": {
+                                                        "x": 0,
+                                                        "y": 0,
+                                                        "z": 90
+                                                    },
+                                                    "Position": {
+                                                        "x": -4.7,
+                                                        "y": 3,
+                                                        "z": -0.35
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "propertyLinks": [
+                                            {
+                                                "particleProperty": "strength",
+                                                "modifiers": {
+                                                    "SEntityEffectSystem_PatternModifier": {
+                                                        "startDelay": 0,
+                                                        "maximumValue": 1,
+                                                        "duration": 5.5,
+                                                        "patternCurve": {
+                                                            "useLUT": 0,
+                                                            "points": [
+                                                                {
+                                                                    "x": -0.02709333,
+                                                                    "y": 0.8479467
+                                                                },
+                                                                {
+                                                                    "x": 0,
+                                                                    "y": 1
+                                                                },
+                                                                {
+                                                                    "x": 0.1729067,
+                                                                    "y": 0.8479467
+                                                                },
+                                                                {
+                                                                    "x": 0.2569999,
+                                                                    "y": 0.146
+                                                                },
+                                                                {
+                                                                    "x": 0.357,
+                                                                    "y": 0.146
+                                                                },
+                                                                {
+                                                                    "x": 0.4570001,
+                                                                    "y": 0.146
+                                                                },
+                                                                {
+                                                                    "x": 0.90624,
+                                                                    "y": -0.02565333
+                                                                },
+                                                                {
+                                                                    "x": 1,
+                                                                    "y": 0
+                                                                },
+                                                                {
+                                                                    "x": 1.10624,
+                                                                    "y": -0.02565333
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "particleProperty": "size",
+                                                "modifiers": {
+                                                    "SEntityEffectSystem_OverrideValueModifier": {
+                                                        "overrideValue": 5
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "soundEffects": {
+                            "SEntityEffectSystem_SoundCategory": {
+                                "enabled": 1,
+                                "allowMultipleTags": 1,
+                                "tagEffects": {
+                                    "SEntityEffectSystem_SoundTagEffect": {
+                                        "enabled": 1,
+                                        "multiPosition": 0,
+                                        "useDefaultProxy": 1,
+                                        "soundEffect": {
+                                            "audioTrigger": "Play_SSSR_Refuelling_Fuel_Flow"
+                                        },
+                                        "attachmentSettings": {
+                                            "SEntityEffectSystem_Attachment_EntitySlot": {
+                                                "offset": {
+                                                    "Rotation": {
+                                                        "x": 0,
+                                                        "y": 0,
+                                                        "z": 0
+                                                    },
+                                                    "Position": {
+                                                        "x": 0,
+                                                        "y": 0,
+                                                        "z": 0
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "propertyLinks": [
+                                            {
+                                                "modifiers": {
+                                                    "SEntityEffectSystem_OverrideValueModifier": {
+                                                        "overrideValue": 69
+                                                    }
+                                                },
+                                                "rtpc": {
+                                                    "rtpc": "Refuelling_Fuel_Flow_Rate"
+                                                }
+                                            },
+                                            {
+                                                "parameterName": "f2977e16-aff3-4c0f-8f77-a2cd1ab88b7f",
+                                                "modifiers": {
+                                                    "SEntityEffectSystem_OverrideValueModifier": {
+                                                        "overrideValue": 1999
+                                                    }
+                                                },
+                                                "rtpc": {
+                                                    "rtpc": "Refuelling_Fuel_Flow_Rate"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "SEntityAudioControllerParams": {
+                    "audioControllerEntityType": "None",
+                    "randomSeedCount": 0,
+                    "fullLODDistance": 9000,
+                    "fullToLowLODDistance": 9050,
+                    "offToLowLODDistance": 10000,
+                    "offLODDistance": 10050,
+                    "occlusionAttenuationScaler": 0.5
                 }
             },
             "ClassName": "CargoPod_MISC_Eriesium_b",
@@ -813,6 +1193,15 @@
         "name": "CR-60",
         "tags": "flightReady",
         "required_tags": "MISC_Starfarer_Base",
+        "entity_tags": [
+            "2d67eba5-701f-45e2-99b2-b6cd82aa0b58"
+        ],
+        "entity_tag_map": [
+            {
+                "tag": "2d67eba5-701f-45e2-99b2-b6cd82aa0b58",
+                "name": "FuelPod"
+            }
+        ],
         "manufacturer": "MIS",
         "stdItem": {
             "UUID": "7dc3f399-6659-4d62-919d-be21c4990581",
@@ -837,11 +1226,11 @@
             "Mass": 200,
             "Type": "ExternalFuelTank.UNDEFINED",
             "Name": "CR-60",
-            "Description": "Manufacturer: MISC\nItem Type: Fuel Pod\nFlow Rate: 1.15 SCU/s\nCapacity: 60 SCU\n\nThe standard fuel pod of the Starfarer, the CR-60 was designed by MISC to be a well balanced fuel storage option ready to tackle a wide variety of jobs.",
+            "Description": "Manufacturer: MISC\nItem Type: Fuel Pod\nHydrogen Flow Modifier: 1.16\nQuantum Flow Modifier: 1.16\nMax. Integrity: 22800\nCapacity: 20 SCU\n\nThe standard fuel pod of the Starfarer, the CR-60 was designed by MISC to be a well balanced fuel storage option ready to tackle a wide variety of jobs.",
             "DescriptionData": {
                 "Manufacturer": "Musashi Industrial & Starflight Concern",
                 "Item Type": "Fuel Pod",
-                "Capacity": "60 SCU"
+                "Capacity": "20 SCU"
             },
             "DescriptionText": "The standard fuel pod of the Starfarer, the CR-60 was designed by MISC to be a well balanced fuel storage option ready to tackle a wide variety of jobs.",
             "Manufacturer": {
@@ -889,7 +1278,9 @@
             "Interactions": [
                 "Open",
                 "Close",
-                "Activate pump"
+                "Activate pump",
+                "Detach",
+                "Purge"
             ],
             "ResourceContainer": {
                 "Immutable": false,

@@ -8,6 +8,7 @@
             "entityDensityClass": "79378cf0-df14-4596-92bf-f4282545754f",
             "__ref": "d02ecfa2-0762-43e7-a457-497fb6ab09d1",
             "__path": "libs/foundry/records/entities/scitem/carryables/tractorbeamonly/carryable_tbo_fl_24scu_commodity_metal_potassium.xml",
+            "__team": "Unknown",
             "defaultEditorColor": {
                 "r": 1,
                 "g": 1,
@@ -195,7 +196,22 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "Disable",
+                                "Name": "Gate_Close",
+                                "LinkingTag": "c39df479-f219-41b8-8de7-67afa06c5ce5",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
+                                "DisplayType": "Show",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 0,
+                                "Linkable": 1,
+                                "LockedByLinks": 0,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "Set_PressureNormalized",
                                 "DisplayName": "Use",
                                 "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
@@ -209,27 +225,13 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "EnablePowerPlant",
+                                "Name": "Set_PressureDifferential",
                                 "DisplayName": "Use",
                                 "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 1,
-                                "Linkable": 0,
-                                "LockedByLinks": 0,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
-                            },
-                            {
-                                "Name": "DisablePowerPlant",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
-                                "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
-                                "FocusModeOnly": 0,
-                                "Sendable": 1,
+                                "Sendable": 0,
                                 "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
@@ -267,7 +269,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D3C3]"
+                                            "value": "SSharedInteractionParams[EC7A]"
                                         }
                                     },
                                     {
@@ -275,7 +277,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D3C4]"
+                                            "value": "SSharedInteractionParams[EC7B]"
                                         }
                                     },
                                     {
@@ -283,7 +285,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D3C7]"
+                                            "value": "SSharedInteractionParams[EC7C]"
                                         }
                                     }
                                 ],
@@ -328,6 +330,7 @@
                     "cacheResources": 0,
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
+                    "inheritMaterialFromSpawnHost": 0,
                     "Geometry": {
                         "ScaleMultiplier": 1,
                         "Geometry": {
@@ -343,7 +346,7 @@
                             "EnableDecalProjection": 0,
                             "BBoxRadius": 0,
                             "Wear": 0.5,
-                            "Dirt": 0.5,
+                            "Dirt": 0.1,
                             "Interference": 0,
                             "Damage": 0,
                             "RenderLayer": "Default",
@@ -383,85 +386,51 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[84BA]"
+                                "value": "SInteractionState[97A3]"
                             },
                             "States": [
                                 {
-                                    "StateName": "PowerLost",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[8F62]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[84B9]"
-                                            }
+                                    "StateName": "Reconnected",
+                                    "exitStateEffectTags": {
+                                        "Reference": {
+                                            "value": "e9f7b15d-ce42-4887-8550-803f73c28fd1"
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "Idle"
+                                },
+                                {
+                                    "StateName": "Inserting",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "a4c2b6d3-4397-45ab-be65-adc4972dc9f2"
                                         }
                                     },
-                                    "stateTags": {
-                                        "tags": {
-                                            "Reference": {
-                                                "value": "aff7a3ed-a8bf-4b91-b07a-462f57003211"
+                                    "ExitStatePlaySequence": {
+                                        "value": "SReplicatedSequencerDefSequenceParams[104A]"
+                                    },
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 2,
+                                            "RunWhenStreamedOut": 0,
+                                            "NextState": {
+                                                "value": "SInteractionState[97A6]"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "DoorUnblocked",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[8F64]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[84BC]"
-                                            }
-                                        }
+                                    "StateName": "Reading",
+                                    "EnterStatePlaySequence": {
+                                        "value": "SReplicatedSequencerDefSequenceParams[104A]"
                                     },
-                                    "stateTags": {
-                                        "tags": {
-                                            "Reference": {
-                                                "value": "630d2bb0-e66c-4dc6-9648-261822326bdb"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "DoorBlocked",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[8F65]"
-                                            },
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 3,
+                                            "RunWhenStreamedOut": 0,
                                             "NextState": {
-                                                "value": "SInteractionState[84BB]"
-                                            }
-                                        }
-                                    },
-                                    "stateTags": {
-                                        "tags": {
-                                            "Reference": {
-                                                "value": "727ccaa9-7cc3-4238-b25d-c4f7633dbdab"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "DoorAccess",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[8F66]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[84BE]"
-                                            }
-                                        }
-                                    },
-                                    "stateTags": {
-                                        "tags": {
-                                            "Reference": {
-                                                "value": "2885c6c4-c1b9-4769-8faf-29b61693b2d1"
+                                                "value": "SInteractionState[97A7]"
                                             }
                                         }
                                     }
@@ -470,7 +439,7 @@
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[84BD]"
+                                        "value": "SInteractionState[97A6]"
                                     }
                                 }
                             }
@@ -828,9 +797,9 @@
                 }
             },
             "Interactions": [
-                "Disable",
-                "Enablepowerplant",
-                "Disablepowerplant"
+                "Gate_close",
+                "Set_pressurenormalized",
+                "Set_pressuredifferential"
             ],
             "ResourceContainer": {
                 "Immutable": false,

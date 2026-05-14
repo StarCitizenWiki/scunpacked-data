@@ -8,6 +8,7 @@
             "entityDensityClass": "41d1b328-7a76-41dc-8c6d-76d9b8249969",
             "__ref": "10831736-4bdf-4465-b517-94281261d317",
             "__path": "libs/foundry/records/entities/scitem/weapons/weapon_modifier/arma_barrel_comp_s2_firerats01.xml",
+            "__team": "Unknown",
             "defaultEditorColor": {
                 "r": 1,
                 "g": 1,
@@ -67,6 +68,7 @@
                             "Code": "ARMA",
                             "__ref": "f2ca879c-deb6-49bf-a4b1-dc3a9cf91e7a",
                             "__path": "libs/foundry/records/scitemmanufacturer/personalweapons/arma.xml",
+                            "__team": "Unknown",
                             "Localization": {
                                 "Name": "ArmaMod",
                                 "__Name": "@manufacturer_NameARMA",
@@ -380,6 +382,12 @@
                                 "salvageSpeedMultiplier": 1,
                                 "radiusMultiplier": 1,
                                 "extractionEfficiency": 1
+                            },
+                            "tractorModifier": {
+                                "forceMultiplier": 1,
+                                "fullStrengthDistMultiplier": 1,
+                                "maxDistMultiplier": 1,
+                                "maxVolumeMultiplier": 1
                             }
                         }
                     },
@@ -427,6 +435,7 @@
                     "cacheResources": 0,
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
+                    "inheritMaterialFromSpawnHost": 0,
                     "Geometry": {
                         "ScaleMultiplier": 1,
                         "Geometry": {
@@ -598,47 +607,44 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[A272]"
+                                "value": "SInteractionState[B7A1]"
                             },
                             "States": [
                                 {
-                                    "StateName": "TargetingSystemMissileLight_CycleEvent"
+                                    "StateName": "TargetingSystemLight_NoTarget"
                                 },
                                 {
-                                    "StateName": "TargetingSystemMissileLight_FireEvent",
+                                    "StateName": "TargetingSystemLight_HostileTarget",
                                     "enterStateEffectTags": {
                                         "Reference": {
-                                            "value": "a6a16f0b-9c5b-4fcf-9241-3ab6f30d501e"
+                                            "value": "00000000-0000-0000-0000-000000000000"
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "TargetingSystemMissileLight_MissilesDepleted"
-                                },
-                                {
-                                    "StateName": "QuantumDriveEvent_Idle"
-                                },
-                                {
-                                    "StateName": "QuantumDriveEvent_Completed",
-                                    "StateAutoChange": {
-                                        "SStateAutoChange": {
-                                            "Delay": 1,
-                                            "RunWhenStreamedOut": 0,
-                                            "NextState": {
-                                                "value": "SInteractionState[A275]"
-                                            }
+                                    "StateName": "TargetingSystemLight_FriendlyTarget",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "00000000-0000-0000-0000-000000000000"
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "QuantumDriveEvent_Interrupted",
-                                    "StateAutoChange": {
-                                        "SStateAutoChange": {
-                                            "Delay": 1,
-                                            "RunWhenStreamedOut": 0,
-                                            "NextState": {
-                                                "value": "SInteractionState[A275]"
-                                            }
+                                    "StateName": "TargetingSystemLight_OtherTarget",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "00000000-0000-0000-0000-000000000000"
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "TargetingSystemSubTargetLight_Off"
+                                },
+                                {
+                                    "StateName": "TargetingSystemSubTargetLight_Engines",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "00000000-0000-0000-0000-000000000000"
                                         }
                                     }
                                 }
@@ -650,10 +656,10 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "Turn On",
-                                "DisplayName": "Power On",
-                                "__DisplayName": "@ui_interactor_power_on",
-                                "DisplayType": "Show",
+                                "Name": "BespokePlace",
+                                "DisplayName": "Place",
+                                "__DisplayName": "@interaction_place",
+                                "DisplayType": "Hide",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
@@ -664,9 +670,9 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "Turn Off",
-                                "DisplayName": "Power Off",
-                                "__DisplayName": "@ui_interactor_power_off",
+                                "Name": "HoldReady",
+                                "DisplayName": "Equip",
+                                "__DisplayName": "@interaction_equip",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -675,7 +681,65 @@
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "presetList": [
+                                            {
+                                                "value": "3370f020-1774-47d5-a75b-5486986e6cea"
+                                            },
+                                            {
+                                                "value": "69128f9d-3fd7-48ee-b9a3-786406626c1c"
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            {
+                                "Name": "Holster",
+                                "DisplayName": "Holster",
+                                "__DisplayName": "@interaction_holster",
+                                "DisplayType": "Show",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 0,
+                                "Linkable": 0,
+                                "LockedByLinks": 0,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "presetList": {
+                                            "Reference": {
+                                                "value": "53fd2b94-69e5-4a49-a9ad-4eae4a70b471"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "Name": "OffHandHolster",
+                                "DisplayName": "Holster",
+                                "__DisplayName": "@interaction_holster",
+                                "DisplayType": "Show",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 0,
+                                "Linkable": 0,
+                                "LockedByLinks": 0,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "presetList": {
+                                            "Reference": {
+                                                "value": "53fd2b94-69e5-4a49-a9ad-4eae4a70b471"
+                                            }
+                                        }
+                                    }
+                                }
                             },
                             {
                                 "Name": "Store",
@@ -701,39 +765,11 @@
                                 }
                             },
                             {
-                                "Name": "Turn On",
-                                "DisplayName": "Power On",
-                                "__DisplayName": "@ui_interactor_power_on",
+                                "Name": "OffHandStore",
+                                "DisplayName": "Store",
+                                "__DisplayName": "@interaction_store",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
-                                "FocusModeOnly": 0,
-                                "Sendable": 0,
-                                "Linkable": 0,
-                                "LockedByLinks": 0,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
-                            },
-                            {
-                                "Name": "Turn Off",
-                                "DisplayName": "Power Off",
-                                "__DisplayName": "@ui_interactor_power_off",
-                                "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
-                                "FocusModeOnly": 0,
-                                "Sendable": 0,
-                                "Linkable": 0,
-                                "LockedByLinks": 0,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
-                            },
-                            {
-                                "Name": "Carry",
-                                "DisplayName": "Carry",
-                                "__DisplayName": "@interaction_carry",
-                                "DisplayType": "Show",
-                                "GenericCursor": "Grab",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
                                 "Linkable": 0,
@@ -745,7 +781,7 @@
                                     "InteractionConditionList": {
                                         "presetList": {
                                             "Reference": {
-                                                "value": "cfbf64fc-515a-4777-835d-4328af0d3003"
+                                                "value": "29323715-dae3-41f0-8680-07aa4307e9ca"
                                             }
                                         }
                                     }
@@ -803,9 +839,9 @@
                                     {
                                         "DisplayName": "",
                                         "__DisplayName": "@LOC_EMPTY",
-                                        "IsPrimary": 1,
+                                        "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[EB13]"
+                                            "value": "SSharedInteractionParams[F711]"
                                         }
                                     },
                                     {
@@ -813,7 +849,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[EB14]"
+                                            "value": "SSharedInteractionParams[F713]"
                                         }
                                     },
                                     {
@@ -821,7 +857,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[EB15]"
+                                            "value": "SSharedInteractionParams[F712]"
                                         }
                                     },
                                     {
@@ -829,7 +865,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[EB16]"
+                                            "value": "SSharedInteractionParams[F714]"
                                         }
                                     },
                                     {
@@ -837,7 +873,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[EB17]"
+                                            "value": "SSharedInteractionParams[F715]"
                                         }
                                     },
                                     {
@@ -845,16 +881,13 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[EB19]"
+                                            "value": "SSharedInteractionParams[F718]"
                                         }
                                     },
                                     {
                                         "DisplayName": "",
                                         "__DisplayName": "@LOC_EMPTY",
-                                        "IsPrimary": 0,
-                                        "Interaction": {
-                                            "value": "SSharedInteractionParams[EB18]"
-                                        }
+                                        "IsPrimary": 0
                                     }
                                 ],
                                 "Offset": {
@@ -919,44 +952,44 @@
                     "canBeCarriedInProne": 1,
                     "disableRotation": 0,
                     "carryInteraction": {
-                        "value": "SSharedInteractionParams[E487]"
+                        "value": "SSharedInteractionParams[F6BE]"
                     },
                     "placeInteraction": {
-                        "value": "SSharedInteractionParams[E48A]"
+                        "value": "SSharedInteractionParams[F6C1]"
                     },
                     "dropInteraction": {
-                        "value": "SSharedInteractionParams[E488]"
+                        "value": "SSharedInteractionParams[F6BF]"
                     },
                     "storeInteraction": {
-                        "value": "SSharedInteractionParams[E48B]"
+                        "value": "SSharedInteractionParams[F6C2]"
                     },
                     "offHandStoreInteraction": {
-                        "value": "SSharedInteractionParams[E48C]"
+                        "value": "SSharedInteractionParams[F6C3]"
                     },
                     "inspectInteraction": {
-                        "value": "SSharedInteractionParams[E489]"
+                        "value": "SSharedInteractionParams[F6C0]"
                     },
                     "attachToHeldItemInteraction": {
-                        "value": "SSharedInteractionParams[E48D]"
+                        "value": "SSharedInteractionParams[F6C4]"
                     },
                     "carryableStatesParams": {
                         "settledState": {
-                            "value": "SInteractionState[A272]"
+                            "value": "SInteractionState[B7A1]"
                         },
                         "carriedState": {
-                            "value": "SInteractionState[A273]"
+                            "value": "SInteractionState[B7A2]"
                         },
                         "inspectingState": {
-                            "value": "SInteractionState[A275]"
+                            "value": "SInteractionState[B7A4]"
                         },
                         "droppedState": {
-                            "value": "SInteractionState[A276]"
+                            "value": "SInteractionState[B7A5]"
                         },
                         "offeredState": {
-                            "value": "SInteractionState[A277]"
+                            "value": "SInteractionState[B7A6]"
                         },
                         "storedState": {
-                            "value": "SInteractionState[A274]"
+                            "value": "SInteractionState[B7A3]"
                         }
                     },
                     "interactionPointOffsets": {
@@ -1359,10 +1392,12 @@
                 "Volume": 0.216
             },
             "Interactions": [
-                "Turn on",
-                "Turn off",
+                "Bespokeplace",
+                "Holdready",
+                "Holster",
+                "Offhandholster",
                 "Store",
-                "Carry",
+                "Offhandstore",
                 "Drop"
             ],
             "WeaponAttachment": {

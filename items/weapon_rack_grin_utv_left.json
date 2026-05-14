@@ -7,6 +7,7 @@
             "BBoxSelection": 0,
             "__ref": "c19de889-f1f1-4240-9d32-8b2053f5ec3f",
             "__path": "libs/foundry/records/entities/scitem/storage/weaponpersonal/weapon_rack_grin_utv_left.xml",
+            "__team": "Unknown",
             "defaultEditorColor": {
                 "r": 1,
                 "g": 1,
@@ -76,8 +77,8 @@
                 },
                 "SEntityInteractableParams": {
                     "Interactable": {
-                        "SharedInteractions": {
-                            "SSharedInteractionParams": {
+                        "SharedInteractions": [
+                            {
                                 "Name": "Place",
                                 "DisplayName": "Place",
                                 "__DisplayName": "@ui_interactor_place",
@@ -90,8 +91,36 @@
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "RackFilled",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
+                                "DisplayType": "Show",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 1,
+                                "Linkable": 0,
+                                "LockedByLinks": 0,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "RackEmpty",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
+                                "DisplayType": "Show",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 1,
+                                "Linkable": 0,
+                                "LockedByLinks": 0,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
                             }
-                        },
+                        ],
                         "InteractionPoints": {
                             "SInteractionPointParams": {
                                 "FirstInteractionPrimary": 1,
@@ -156,6 +185,7 @@
                     "cacheResources": 0,
                     "rootOverridePaint": 1,
                     "inheritModelTagFromHost": 1,
+                    "inheritMaterialFromSpawnHost": 0,
                     "Geometry": {
                         "ScaleMultiplier": 1,
                         "Geometry": {
@@ -266,6 +296,7 @@
                             "Name": "$IP_rifle_01",
                             "DisplayName": "",
                             "__DisplayName": "@LOC_EMPTY",
+                            "Flags": "$editable",
                             "PropagateOnAttachTagsToHierarchy": 0,
                             "MinSize": 2,
                             "MaxSize": 2,
@@ -367,7 +398,7 @@
                         }
                     },
                     "placeIntoPortInteraction": {
-                        "value": "SSharedInteractionParams[0468]"
+                        "value": "SSharedInteractionParams[047C]"
                     }
                 },
                 "ItemControlComponentParams": {
@@ -434,6 +465,93 @@
                             }
                         }
                     }
+                },
+                "SEntityTraversingTreeParams": {
+                    "TraversingNodes": {
+                        "SEntityTraversingNodeBase": {
+                            "name": "VehicleRoot",
+                            "entityTraversingType": {
+                                "SEntityTraversingNodeTypeZoneHostVehicle": {
+                                    "RootVehicle": 0
+                                }
+                            },
+                            "nextNodes": {
+                                "SEntityTraversingNodeBase": {
+                                    "name": "SeatAccess",
+                                    "entityTraversingType": {
+                                        "SEntityTraversingNodeTypeItemPort": {
+                                            "itemPortName": "hardpoint_seat_access_driver"
+                                        }
+                                    },
+                                    "executeNodes": [
+                                        {
+                                            "linkedInteractionName": "WeaponRackBlocking",
+                                            "localInteraction": {
+                                                "value": "SSharedInteractionParams[047D]"
+                                            }
+                                        },
+                                        {
+                                            "linkedInteractionName": "WeaponRackClear",
+                                            "localInteraction": {
+                                                "value": "SSharedInteractionParams[047E]"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "SInteractionStateMachineParams": {
+                    "StateTypes": {
+                        "SInteractionStateType": {
+                            "StateTypeName": "RackState",
+                            "bindingsMethod": "None",
+                            "asopReset": 0,
+                            "networkAuthority": "Server",
+                            "States": [
+                                {
+                                    "StateName": "RackEmpty",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "572adc46-db7b-4f57-991f-d4207e5bec37"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "RackFilled",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "ee63cd13-4b0a-48da-be2e-3dfdd1a6db84"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "RackDead"
+                                }
+                            ],
+                            "StateModifiers": {
+                                "SItemPortStateModifier": {
+                                    "itemPort": {
+                                        "value": "SItemPortDef[0243]"
+                                    },
+                                    "onEntityAttachedState": {
+                                        "value": "SInteractionState[0218]"
+                                    },
+                                    "onEntityDetachedState": {
+                                        "value": "SInteractionState[0217]"
+                                    },
+                                    "onPortDestroyedState": {
+                                        "value": "SInteractionState[0219]"
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             },
             "ClassName": "Weapon_Rack_GRIN_UTV_Left",
@@ -481,6 +599,9 @@
                     "Size": 2,
                     "MinSize": 2,
                     "MaxSize": 2,
+                    "Flags": [
+                        "$editable"
+                    ],
                     "Types": [
                         "WeaponPersonal"
                     ],
@@ -524,7 +645,9 @@
                 }
             },
             "Interactions": [
-                "Place"
+                "Place",
+                "Rackfilled",
+                "Rackempty"
             ]
         }
     }

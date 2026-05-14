@@ -8,6 +8,7 @@
             "entityDensityClass": "79378cf0-df14-4596-92bf-f4282545754f",
             "__ref": "f021d4d1-795d-48ff-b627-dd9b838d436b",
             "__path": "libs/foundry/records/entities/scitem/carryables/tractorbeamonly/carryable_tbo_fl_2scu_commodity_waste_scrap.xml",
+            "__team": "Unknown",
             "defaultEditorColor": {
                 "r": 1,
                 "g": 1,
@@ -195,7 +196,7 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "DoorClosedLightInteraction",
+                                "Name": "Comms_AcceptCall",
                                 "DisplayName": "Use",
                                 "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
@@ -203,15 +204,29 @@
                                 "FocusModeOnly": 0,
                                 "Sendable": 1,
                                 "Linkable": 1,
-                                "LockedByLinks": 0,
+                                "LockedByLinks": 1,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "Open",
-                                "DisplayName": "Open",
-                                "__DisplayName": "@interaction_open",
+                                "Name": "Comms_DeclineCall",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
+                                "DisplayType": "Show",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 1,
+                                "Linkable": 1,
+                                "LockedByLinks": 1,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "ShipTransformExtend",
+                                "DisplayName": "Extend Cargo Spindle",
+                                "__DisplayName": "@vehicle_interactor_ExtendSpindle",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -224,10 +239,15 @@
                                 "conditionList": {
                                     "InteractionConditionList": {
                                         "conditionParams": {
-                                            "InteractionConditionCanOpenExternalInventory": {
+                                            "InteractionConditionInteractionStateMachineTag": {
                                                 "conditionDisplay": {
                                                     "ConditionDisplayParams": {
                                                         "exclusiveDisplay": 0,
+                                                        "blockedCursor": {
+                                                            "BlockedCursorParams": {
+                                                                "blockedCursor": "Invalid"
+                                                            }
+                                                        },
                                                         "blockedColor": {
                                                             "BlockedColorParams": {
                                                                 "selectedColor": "c6688c07-0987-4e85-82b7-04458356db8a",
@@ -236,25 +256,18 @@
                                                             }
                                                         }
                                                     }
+                                                },
+                                                "stateTags": {
+                                                    "tags": {
+                                                        "Reference": {
+                                                            "value": "78134fa1-e42e-4e19-b959-740af92e7f28"
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            },
-                            {
-                                "Name": "Close",
-                                "DisplayName": "Close",
-                                "__DisplayName": "@interaction_close",
-                                "DisplayType": "Hide",
-                                "GenericCursor": "SingleAction",
-                                "FocusModeOnly": 0,
-                                "Sendable": 1,
-                                "Linkable": 1,
-                                "LockedByLinks": 0,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
                             }
                         ],
                         "InteractionPoints": {
@@ -283,24 +296,27 @@
                                 "OnlySelectableInLookDir": 0,
                                 "Interactions": [
                                     {
-                                        "DisplayName": "",
-                                        "__DisplayName": "@LOC_EMPTY",
-                                        "IsPrimary": 0
-                                    },
-                                    {
-                                        "DisplayName": "",
-                                        "__DisplayName": "@LOC_EMPTY",
+                                        "DisplayName": "Release",
+                                        "__DisplayName": "@interaction_release",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[CA78]"
+                                            "value": "SSharedInteractionParams[D4F7]"
                                         }
                                     },
                                     {
-                                        "DisplayName": "",
-                                        "__DisplayName": "@LOC_EMPTY",
+                                        "DisplayName": "Grip",
+                                        "__DisplayName": "@interaction_grip",
+                                        "IsPrimary": 1,
+                                        "Interaction": {
+                                            "value": "SSharedInteractionParams[D4F6]"
+                                        }
+                                    },
+                                    {
+                                        "DisplayName": "Release",
+                                        "__DisplayName": "@interaction_release",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[CA78]"
+                                            "value": "SSharedInteractionParams[D4F7]"
                                         }
                                     }
                                 ],
@@ -345,6 +361,7 @@
                     "cacheResources": 0,
                     "rootOverridePaint": 0,
                     "inheritModelTagFromHost": 1,
+                    "inheritMaterialFromSpawnHost": 0,
                     "Geometry": {
                         "ScaleMultiplier": 1,
                         "Geometry": {
@@ -360,7 +377,7 @@
                             "EnableDecalProjection": 0,
                             "BBoxRadius": 0,
                             "Wear": 0.5,
-                            "Dirt": 0.5,
+                            "Dirt": 0.1,
                             "Interference": 0,
                             "Damage": 0,
                             "RenderLayer": "Default",
@@ -400,45 +417,66 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[78E6]"
+                                "value": "SInteractionState[8B1F]"
                             },
                             "States": [
                                 {
-                                    "StateName": "QuantumTravelInProgress",
+                                    "StateName": "DoorClosed",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[9750]"
+                                            }
+                                        }
+                                    },
                                     "stateTags": {
                                         "tags": {
                                             "Reference": {
-                                                "value": "124f0e61-fd14-4c3e-baac-d6f5df0f8688"
+                                                "value": "6bd67663-b803-4f3b-9c9f-42c591b51b93"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "QuantumTravelComplete",
+                                    "StateName": "DoorOpening",
                                     "stateTags": {
                                         "tags": {
                                             "Reference": {
-                                                "value": "6b5233f7-bb73-40a4-a305-ccda1ca63113"
+                                                "value": "5d7b8e59-552f-407f-9df1-8eb582e9c22b"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "QuantumTravelInterrupted",
+                                    "StateName": "DoorOpened",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[9751]"
+                                            }
+                                        }
+                                    },
                                     "stateTags": {
                                         "tags": {
                                             "Reference": {
-                                                "value": "1bf7ae7e-684e-40bf-b4e0-e238d9d2d3f3"
+                                                "value": "9057a388-8ac5-40e2-9b0f-657bfab9ff60"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "QuantumTravelCooldown",
+                                    "StateName": "DoorClosing",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[9750]"
+                                            }
+                                        }
+                                    },
                                     "stateTags": {
                                         "tags": {
                                             "Reference": {
-                                                "value": "ad8a5548-6c7c-4b7f-b989-3ec19496911a"
+                                                "value": "19e014c7-a1cc-4255-b206-94a9d85a3dac"
                                             }
                                         }
                                     }
@@ -447,7 +485,7 @@
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[78E9]"
+                                        "value": "SInteractionState[8B22]"
                                     }
                                 }
                             }
@@ -810,9 +848,9 @@
                 }
             },
             "Interactions": [
-                "Doorclosedlightinteraction",
-                "Open",
-                "Close"
+                "Comms_acceptcall",
+                "Comms_declinecall",
+                "Shiptransformextend"
             ],
             "ResourceContainer": {
                 "Immutable": true,
