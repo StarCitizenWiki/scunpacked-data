@@ -835,23 +835,23 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "DisableCruise",
-                                "DisplayName": "Disengage Cruise Control",
-                                "__DisplayName": "@vehicle_interactor_CruiseControl_Disable",
+                                "Name": "OpenLootingUI",
+                                "DisplayName": "Loot",
+                                "__DisplayName": "@interaction_loot",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 1,
-                                "Linkable": 1,
+                                "Sendable": 0,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "EnableVTOL",
-                                "DisplayName": "VTOL\n(Enable)",
-                                "__DisplayName": "@ui_CIToggleVTOL_Enable",
+                                "Name": "Open",
+                                "DisplayName": "Open",
+                                "__DisplayName": "@interaction_open",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -860,7 +860,27 @@
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "conditionParams": {
+                                            "InteractionConditionCanOpenExternalInventory": {
+                                                "conditionDisplay": {
+                                                    "ConditionDisplayParams": {
+                                                        "exclusiveDisplay": 0,
+                                                        "blockedColor": {
+                                                            "BlockedColorParams": {
+                                                                "selectedColor": "c6688c07-0987-4e85-82b7-04458356db8a",
+                                                                "unselectedColor": "902844b1-8817-4b46-8770-045beee67ce0",
+                                                                "applyImmediately": 1
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         ]
                     }
@@ -2132,10 +2152,16 @@
                                 "thrusterType": "Maneuver"
                             },
                             {
-                                "thrusterType": "Main"
+                                "thrusterType": "Main",
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                }
                             },
                             {
-                                "thrusterType": "Retro"
+                                "thrusterType": "Retro",
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                }
                             }
                         ]
                     },
@@ -3761,10 +3787,10 @@
                     "InternalResourceLinks": {
                         "SInternalResourceLink": {
                             "port1": {
-                                "value": "SItemPortDef[E57F]"
+                                "value": "SItemPortDef[E685]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[E57C]"
+                                "value": "SItemPortDef[E682]"
                             }
                         }
                     },
@@ -4049,54 +4075,34 @@
                             "networkAuthority": "Local",
                             "States": [
                                 {
-                                    "StateName": "WeaponPowerOff",
+                                    "StateName": "WeaponSystem_FirePattern_Synchronous",
                                     "EnterEventDispatchers": {
                                         "AnimationSetVariable": {
                                             "value": 1,
                                             "variable": {
-                                                "value": "AnimationFloatVariable[08C6]"
+                                                "value": "AnimationFloatVariable[0952]"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "CanopyClosed",
+                                    "StateName": "Shields_SwitchUp",
                                     "EnterEventDispatchers": {
                                         "AnimationSetVariable": {
                                             "value": 0,
                                             "variable": {
-                                                "value": "AnimationFloatVariable[08BB]"
-                                            }
-                                        }
-                                    },
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[D7FE]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[D5D1]"
+                                                "value": "AnimationFloatVariable[0954]"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "CanopyOpened",
+                                    "StateName": "Shields_SwitchDown",
                                     "EnterEventDispatchers": {
                                         "AnimationSetVariable": {
                                             "value": 1,
                                             "variable": {
-                                                "value": "AnimationFloatVariable[08BB]"
-                                            }
-                                        }
-                                    },
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[D7FF]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[D5D0]"
+                                                "value": "AnimationFloatVariable[0954]"
                                             }
                                         }
                                     }
@@ -4356,13 +4362,13 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[D5CF]"
+                        "value": "SInteractionState[DABF]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[D5D0]"
+                        "value": "SInteractionState[DAC0]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[D5D1]"
+                        "value": "SInteractionState[DAC1]"
                     }
                 }
             },
@@ -4594,8 +4600,8 @@
                 }
             },
             "Interactions": [
-                "Disablecruise",
-                "Enablevtol"
+                "Openlootingui",
+                "Open"
             ]
         }
     }

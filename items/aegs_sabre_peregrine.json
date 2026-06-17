@@ -596,9 +596,23 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "CaptainEnter",
-                                "DisplayName": "Enter Captain's Seat",
-                                "__DisplayName": "@ui_interactor_use_captains_seat",
+                                "Name": "Key0",
+                                "DisplayName": "@interaction_chowline_keypad_0",
+                                "__DisplayName": "@interaction_chowline_keypad_0",
+                                "DisplayType": "Show",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 0,
+                                "Linkable": 0,
+                                "LockedByLinks": 0,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "ReserveSlotsAndEnter",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -610,27 +624,34 @@
                                 "InheritsConditionDisplaysThroughLinks": 0,
                                 "conditionList": {
                                     "InteractionConditionList": {
-                                        "presetList": {
-                                            "Reference": {
-                                                "value": "a762cc02-259b-4594-aadf-0b7670be50b6"
+                                        "conditionToHideParams": [
+                                            {
+                                                "condition": {
+                                                    "InteractionConditionHeldItem": {
+                                                        "itemType": "Misc",
+                                                        "itemTag": "Tray"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "condition": {
+                                                    "InteractionConditionUsableAlignmentSlotEmpty": {
+                                                        "alignmentSlot": {
+                                                            "value": "PointAlignmentSlot[00F2]"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "condition": {
+                                                    "InteractionConditionEmptyItemPort": {
+                                                        "itemPortTag": "tray"
+                                                    }
+                                                }
                                             }
-                                        }
+                                        ]
                                     }
                                 }
-                            },
-                            {
-                                "Name": "CaptainExit",
-                                "DisplayName": "Exit",
-                                "__DisplayName": "@ui_interactor_exit",
-                                "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
-                                "FocusModeOnly": 0,
-                                "Sendable": 0,
-                                "Linkable": 1,
-                                "LockedByLinks": 0,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
                             }
                         ]
                     }
@@ -2733,10 +2754,16 @@
                                 "thrusterType": "Maneuver"
                             },
                             {
-                                "thrusterType": "Main"
+                                "thrusterType": "Main",
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                }
                             },
                             {
-                                "thrusterType": "Retro"
+                                "thrusterType": "Retro",
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                }
                             }
                         ]
                     },
@@ -4826,57 +4853,13 @@
                             "networkAuthority": "Local",
                             "States": [
                                 {
-                                    "StateName": "Slot3_Filled",
-                                    "enterStateEffectTags": [
-                                        {
-                                            "value": "ba344b3e-c560-4e8a-a3b0-b76638173d10"
-                                        },
-                                        {
-                                            "value": "75073b3f-85e3-46c8-9158-b69f74f5ae3a"
-                                        }
-                                    ],
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[1D11]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[0DE9]"
-                                            }
-                                        }
-                                    },
-                                    "stateTags": {
-                                        "tags": {
-                                            "Reference": {
-                                                "value": "145269cf-1f57-437a-a4c5-72f8d0eaae5d"
-                                            }
-                                        }
-                                    }
+                                    "StateName": "CollectPackage"
                                 },
                                 {
-                                    "StateName": "Slot3_Broken",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "937d4c40-2071-4837-9ca2-1d5911705631"
-                                        }
-                                    },
-                                    "StateAutoChange": {
-                                        "SStateAutoChange": {
-                                            "Delay": 2,
-                                            "RunWhenStreamedOut": 0,
-                                            "NextState": {
-                                                "value": "SInteractionState[0DEA]"
-                                            }
-                                        }
-                                    }
+                                    "StateName": "DeliverPackage"
                                 },
                                 {
-                                    "StateName": "Slot3_Eject",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "937d4c40-2071-4837-9ca2-1d5911705631"
-                                        }
-                                    }
+                                    "StateName": "TimedOut"
                                 }
                             ]
                         }
@@ -5133,13 +5116,13 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[0DE8]"
+                        "value": "SInteractionState[127F]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[0DE9]"
+                        "value": "SInteractionState[1280]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[0DEA]"
+                        "value": "SInteractionState[1281]"
                     }
                 }
             },
@@ -5347,8 +5330,8 @@
                 }
             },
             "Interactions": [
-                "Captainenter",
-                "Captainexit"
+                "Key",
+                "Reserveslotsandenter"
             ]
         }
     }

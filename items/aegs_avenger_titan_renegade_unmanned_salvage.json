@@ -719,9 +719,10 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "EnableCruise",
-                                "DisplayName": "Engage Cruise Control",
-                                "__DisplayName": "@vehicle_interactor_CruiseControl_Enable",
+                                "Name": "Open",
+                                "RoomTag": "5ed0ade9-51ed-4bed-835c-ada7fbd38738",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -733,9 +734,10 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "DisableCruise",
-                                "DisplayName": "Disengage Cruise Control",
-                                "__DisplayName": "@vehicle_interactor_CruiseControl_Disable",
+                                "Name": "Close",
+                                "RoomTag": "61cc8167-9013-4534-b4fc-3d7f60e752b7",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -2063,6 +2065,9 @@
                                 "afterburnerStopLoop": {
                                     "audioTrigger": "Stop_SSTH_AEGS_Avenger_Primary_Afterburner_LP"
                                 },
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                },
                                 "thrusterFire": {
                                     "ShipAudioThrusterFire": {
                                         "fireOneShotThreshold": 0.25,
@@ -2086,6 +2091,9 @@
                                 },
                                 "afterburnerStopLoop": {
                                     "audioTrigger": "Stop_SSTH_AEGS_Avenger_Retro_Afterburner_LP"
+                                },
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
                                 },
                                 "thrusterFire": {
                                     "ShipAudioThrusterFire": {
@@ -3827,7 +3835,7 @@
                                             "toStartAngle": -25,
                                             "toEndAngle": 25,
                                             "variable": {
-                                                "value": "AnimationFloatVariable[0B36]"
+                                                "value": "AnimationFloatVariable[0BC7]"
                                             }
                                         }
                                     }
@@ -3841,7 +3849,7 @@
                                             "toStartAngle": -25,
                                             "toEndAngle": 25,
                                             "variable": {
-                                                "value": "AnimationFloatVariable[0B36]"
+                                                "value": "AnimationFloatVariable[0BC7]"
                                             }
                                         }
                                     }
@@ -3855,7 +3863,7 @@
                                             "toStartAngle": -25,
                                             "toEndAngle": 25,
                                             "variable": {
-                                                "value": "AnimationFloatVariable[0B37]"
+                                                "value": "AnimationFloatVariable[0BC8]"
                                             }
                                         }
                                     }
@@ -3869,7 +3877,7 @@
                                             "toStartAngle": -25,
                                             "toEndAngle": 25,
                                             "variable": {
-                                                "value": "AnimationFloatVariable[0B37]"
+                                                "value": "AnimationFloatVariable[0BC8]"
                                             }
                                         }
                                     }
@@ -4680,13 +4688,33 @@
                             "networkAuthority": "Local",
                             "States": [
                                 {
-                                    "StateName": "TargetingSystemLight_Off"
+                                    "StateName": "TargetingSystemPinned_PinTarget"
                                 },
                                 {
-                                    "StateName": "TargetingSystemLight_CycleNext"
+                                    "StateName": "TargetingSystemPinned_ClearPinnedTargets"
                                 },
                                 {
-                                    "StateName": "TargetingSystemLight_CyclePrevious"
+                                    "StateName": "TargetingSystemCycle_Next",
+                                    "EnterEventDispatchers": {
+                                        "AnimationSetVariable": {
+                                            "value": 1,
+                                            "overrideInterpolation": {
+                                                "AnimationVariableInterpolation": {
+                                                    "timeRange": 1,
+                                                    "type": "Linear"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 0.2,
+                                            "RunWhenStreamedOut": 0,
+                                            "NextState": {
+                                                "value": "SInteractionState[DC79]"
+                                            }
+                                        }
+                                    }
                                 }
                             ]
                         }
@@ -4943,13 +4971,13 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[D785]"
+                        "value": "SInteractionState[DC75]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[D786]"
+                        "value": "SInteractionState[DC76]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[D787]"
+                        "value": "SInteractionState[DC77]"
                     }
                 }
             },
@@ -5208,8 +5236,8 @@
                 }
             },
             "Interactions": [
-                "Enablecruise",
-                "Disablecruise"
+                "Open",
+                "Close"
             ]
         }
     }

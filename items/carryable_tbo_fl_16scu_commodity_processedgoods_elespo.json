@@ -196,9 +196,23 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "VTOL_SetInactive",
-                                "DisplayName": "Disable VTOL",
-                                "__DisplayName": "@vehicle_interactor_VTOL_Disable",
+                                "Name": "WeaponController_SetInactive",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
+                                "DisplayType": "Show",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 0,
+                                "Linkable": 0,
+                                "LockedByLinks": 0,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "GimbalType_SetFixed",
+                                "DisplayName": "Engage Gimbal Lock",
+                                "__DisplayName": "@vehicle_interactor_GimbalType_Fixed",
                                 "DisplayType": "Show",
                                 "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
@@ -210,23 +224,9 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "ProximityAssist_SetActive",
-                                "DisplayName": "Enable Proximity Flight Assist",
-                                "__DisplayName": "@vehicle_interactor_ProximityAssist_Enable",
-                                "DisplayType": "Show",
-                                "GenericCursor": "Button",
-                                "FocusModeOnly": 0,
-                                "Sendable": 1,
-                                "Linkable": 1,
-                                "LockedByLinks": 1,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
-                            },
-                            {
-                                "Name": "ProximityAssist_SetInactive",
-                                "DisplayName": "Disable Proximity Flight Assist",
-                                "__DisplayName": "@vehicle_interactor_ProximityAssist_Disable",
+                                "Name": "GimbalType_SetGimbal",
+                                "DisplayName": "Engage Free Gimbals",
+                                "__DisplayName": "@vehicle_interactor_GimbalType_Gimbal",
                                 "DisplayType": "Show",
                                 "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
@@ -264,22 +264,22 @@
                                 "OnlySelectableInLookDir": 0,
                                 "Interactions": [
                                     {
-                                        "DisplayName": "Sit",
-                                        "__DisplayName": "@ui_interactor_generic_seat",
-                                        "IsPrimary": 1,
+                                        "DisplayName": "",
+                                        "__DisplayName": "@LOC_EMPTY",
+                                        "IsPrimary": 0
+                                    },
+                                    {
+                                        "DisplayName": "",
+                                        "__DisplayName": "@LOC_EMPTY",
+                                        "IsPrimary": 0
+                                    },
+                                    {
+                                        "DisplayName": "",
+                                        "__DisplayName": "@LOC_EMPTY",
+                                        "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D423]"
+                                            "value": "SSharedInteractionParams[D63B]"
                                         }
-                                    },
-                                    {
-                                        "DisplayName": "",
-                                        "__DisplayName": "@LOC_EMPTY",
-                                        "IsPrimary": 0
-                                    },
-                                    {
-                                        "DisplayName": "",
-                                        "__DisplayName": "@LOC_EMPTY",
-                                        "IsPrimary": 0
                                     }
                                 ],
                                 "Offset": {
@@ -379,58 +379,68 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[8903]"
+                                "value": "SInteractionState[8DC7]"
                             },
                             "States": [
                                 {
-                                    "StateName": "DoorUnlocked",
-                                    "stateTags": {
-                                        "tags": {
-                                            "Reference": {
-                                                "value": "e5e348ca-7752-4930-8a50-874f34dca55e"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "DoorAccessGranted",
-                                    "StateAutoChange": {
-                                        "SStateAutoChange": {
-                                            "Delay": 1.5,
-                                            "RunWhenStreamedOut": 0,
+                                    "StateName": "AirlockControl_NoAirlockConnected",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[99CB]"
+                                            },
                                             "NextState": {
-                                                "value": "SInteractionState[8903]"
+                                                "value": "SInteractionState[8DC8]"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "DoorAccessDenied",
-                                    "StateAutoChange": {
-                                        "SStateAutoChange": {
-                                            "Delay": 1.5,
-                                            "RunWhenStreamedOut": 0,
+                                    "StateName": "AirlockControl_AirlockConnected",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[99BB]"
+                                            },
                                             "NextState": {
-                                                "value": "SInteractionState[8906]"
+                                                "value": "SInteractionState[8DC9]"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "DoorLocked",
-                                    "stateTags": {
-                                        "tags": {
-                                            "Reference": {
-                                                "value": "60daf4c5-91c1-4900-aac2-1eb57f9de62f"
+                                    "StateName": "AirlockControl_OpenRequested",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[99B6]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[8DC8]"
                                             }
                                         }
                                     }
+                                },
+                                {
+                                    "StateName": "LockControl_NoLockConnected",
+                                    "Interactions": [
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[99B9]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[99BA]"
+                                            }
+                                        }
+                                    ]
                                 }
                             ],
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[8906]"
+                                        "value": "SInteractionState[8DCA]"
                                     }
                                 }
                             }
@@ -793,9 +803,9 @@
                 }
             },
             "Interactions": [
-                "Vtol_setinactive",
-                "Proximityassist_setactive",
-                "Proximityassist_setinactive"
+                "Weaponcontroller_setinactive",
+                "Gimbaltype_setfixed",
+                "Gimbaltype_setgimbal"
             ],
             "ResourceContainer": {
                 "Immutable": false,

@@ -196,9 +196,23 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "EnterScanMode",
-                                "DisplayName": "Scanning HUD",
-                                "__DisplayName": "@vehicle_interactor_CycleHud_Scanning",
+                                "Name": "Comms_DeclineCall",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
+                                "DisplayType": "Show",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 1,
+                                "Linkable": 1,
+                                "LockedByLinks": 1,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "ShipTransformExtend",
+                                "DisplayName": "Extend Cargo Spindle",
+                                "__DisplayName": "@vehicle_interactor_ExtendSpindle",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -207,32 +221,50 @@
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "conditionParams": {
+                                            "InteractionConditionInteractionStateMachineTag": {
+                                                "conditionDisplay": {
+                                                    "ConditionDisplayParams": {
+                                                        "exclusiveDisplay": 0,
+                                                        "blockedCursor": {
+                                                            "BlockedCursorParams": {
+                                                                "blockedCursor": "Invalid"
+                                                            }
+                                                        },
+                                                        "blockedColor": {
+                                                            "BlockedColorParams": {
+                                                                "selectedColor": "c6688c07-0987-4e85-82b7-04458356db8a",
+                                                                "unselectedColor": "902844b1-8817-4b46-8770-045beee67ce0",
+                                                                "applyImmediately": 1
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "stateTags": {
+                                                    "tags": {
+                                                        "Reference": {
+                                                            "value": "78134fa1-e42e-4e19-b959-740af92e7f28"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             },
                             {
-                                "Name": "EnterQuantumMode",
-                                "DisplayName": "Quantum HUD",
-                                "__DisplayName": "@vehicle_interactor_CycleHud_Quantum",
+                                "Name": "ShipTransformRetract",
+                                "DisplayName": "Retract Cargo Spindle",
+                                "__DisplayName": "@vehicle_interactor_RetractSpindle",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 0,
-                                "Linkable": 0,
-                                "LockedByLinks": 0,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
-                            },
-                            {
-                                "Name": "Cockpit_Glass_Open",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
-                                "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
-                                "FocusModeOnly": 0,
-                                "Sendable": 0,
+                                "Sendable": 1,
                                 "Linkable": 1,
-                                "LockedByLinks": 1,
+                                "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
@@ -268,7 +300,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D36F]"
+                                            "value": "SSharedInteractionParams[D5C1]"
                                         }
                                     },
                                     {
@@ -276,7 +308,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D36F]"
+                                            "value": "SSharedInteractionParams[D5C1]"
                                         }
                                     },
                                     {
@@ -284,7 +316,7 @@
                                         "__DisplayName": "@ui_interactor_generic_seat",
                                         "IsPrimary": 1,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D370]"
+                                            "value": "SSharedInteractionParams[D5C2]"
                                         }
                                     }
                                 ],
@@ -385,68 +417,112 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[876F]"
+                                "value": "SInteractionState[8C33]"
                             },
                             "States": [
                                 {
-                                    "StateName": "DoorAccessGranted",
-                                    "StateAutoChange": {
-                                        "SStateAutoChange": {
-                                            "Delay": 1.5,
-                                            "RunWhenStreamedOut": 0,
+                                    "StateName": "NoMountedGunConnected",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[97C2]"
+                                            },
                                             "NextState": {
-                                                "value": "SInteractionState[876E]"
+                                                "value": "SInteractionState[8C34]"
                                             }
                                         }
+                                    }
+                                },
+                                {
+                                    "StateName": "RequireMountedGunRetractBeforeClose",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "60887103-4f1f-48e3-bff4-d841fdd09171"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "PressureNormalized",
+                                    "EnterStatePlaySequence": {
+                                        "value": "SReplicatedSequencerDefSequenceParams[0EEC]"
                                     },
-                                    "stateTags": {
-                                        "tags": {
-                                            "Reference": {
-                                                "value": "00000000-0000-0000-0000-000000000000"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "DoorAccessDenied",
-                                    "StateAutoChange": {
-                                        "SStateAutoChange": {
-                                            "Delay": 1.5,
-                                            "RunWhenStreamedOut": 0,
-                                            "NextState": {
-                                                "value": "SInteractionState[8771]"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "DoorLocked",
-                                    "stateTags": {
-                                        "tags": {
-                                            "Reference": {
-                                                "value": "60daf4c5-91c1-4900-aac2-1eb57f9de62f"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "DoorOperable",
+                                    "ExitStatePlaySequence": {
+                                        "value": "SReplicatedSequencerDefSequenceParams[0EED]"
+                                    },
                                     "Interactions": [
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[929D]"
+                                                "value": "SSharedInteractionParams[97C3]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[8C35]"
                                             }
                                         },
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[9294]"
+                                                "value": "SSharedInteractionParams[97C4]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[8C36]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[97CB]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[8C38]"
+                                            }
+                                        }
+                                    ],
+                                    "stateTags": {
+                                        "tags": [
+                                            {
+                                                "value": "25f5feca-79ce-4aab-abbd-14a87128b0d4"
+                                            },
+                                            {
+                                                "value": "ce530509-0c5a-4bc6-a1d9-ed0f08b3dc26"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "StateName": "PressureDifferential",
+                                    "EnterStatePlaySequence": {
+                                        "value": "SReplicatedSequencerDefSequenceParams[0EED]"
+                                    },
+                                    "Interactions": [
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[97C3]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[8C35]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[97C4]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[8C36]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[97CB]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[8C37]"
                                             }
                                         }
                                     ],
                                     "stateTags": {
                                         "tags": {
                                             "Reference": {
-                                                "value": "63128da1-d91e-4395-a69b-e19e81a376cc"
+                                                "value": "a971c1c3-42ee-419c-bcf6-ff565bfdae45"
                                             }
                                         }
                                     }
@@ -455,7 +531,7 @@
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[8772]"
+                                        "value": "SInteractionState[8C36]"
                                     }
                                 }
                             }
@@ -818,9 +894,9 @@
                 }
             },
             "Interactions": [
-                "Enterscanmode",
-                "Enterquantummode",
-                "Cockpit_glass_open"
+                "Comms_declinecall",
+                "Shiptransformextend",
+                "Shiptransformretract"
             ],
             "ResourceContainer": {
                 "Immutable": false,

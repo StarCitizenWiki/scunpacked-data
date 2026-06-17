@@ -909,9 +909,9 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "Inspect",
-                                "DisplayName": "Inspect",
-                                "__DisplayName": "@innerthought_inspect",
+                                "Name": "Disarm",
+                                "DisplayName": "Deactivate",
+                                "__DisplayName": "@usable_deactivate",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -925,17 +925,17 @@
                                     "InteractionConditionList": {
                                         "presetList": {
                                             "Reference": {
-                                                "value": "2f90a95d-d090-447b-9620-125f31599e2c"
+                                                "value": "00000000-0000-0000-0000-000000000000"
                                             }
                                         }
                                     }
                                 }
                             },
                             {
-                                "Name": "Place",
-                                "DisplayName": "Place",
-                                "__DisplayName": "@interaction_place",
-                                "DisplayType": "Show",
+                                "Name": "Boom",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
+                                "DisplayType": "Hide",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
@@ -943,16 +943,7 @@
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0,
-                                "conditionList": {
-                                    "InteractionConditionList": {
-                                        "presetList": {
-                                            "Reference": {
-                                                "value": "9e196f93-d77e-4d6e-80b4-2378dcbbf0bf"
-                                            }
-                                        }
-                                    }
-                                }
+                                "InheritsConditionDisplaysThroughLinks": 0
                             }
                         ]
                     }
@@ -2266,10 +2257,16 @@
                                 "thrusterType": "Maneuver"
                             },
                             {
-                                "thrusterType": "Main"
+                                "thrusterType": "Main",
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                }
                             },
                             {
-                                "thrusterType": "Retro"
+                                "thrusterType": "Retro",
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                }
                             }
                         ]
                     },
@@ -4854,26 +4851,26 @@
                     "InternalResourceLinks": [
                         {
                             "port1": {
-                                "value": "SItemPortDef[7FB8]"
+                                "value": "SItemPortDef[80AE]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[7FB9]"
+                                "value": "SItemPortDef[80AF]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[7FB8]"
+                                "value": "SItemPortDef[80AE]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[7FBA]"
+                                "value": "SItemPortDef[80B0]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[7FB8]"
+                                "value": "SItemPortDef[80AE]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[7FBB]"
+                                "value": "SItemPortDef[80B1]"
                             }
                         }
                     ],
@@ -5194,23 +5191,33 @@
                             "networkAuthority": "Local",
                             "States": [
                                 {
-                                    "StateName": "NoSignal",
+                                    "StateName": "Idle"
+                                },
+                                {
+                                    "StateName": "Closed",
                                     "Interactions": {
                                         "SInteractionStateTransition": {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[1D32]"
+                                                "value": "SSharedInteractionParams[2210]"
                                             },
                                             "NextState": {
-                                                "value": "SInteractionState[0E01]"
+                                                "value": "SInteractionState[129C]"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "Emergency"
-                                },
-                                {
-                                    "StateName": "Auxiliary"
+                                    "StateName": "Opened",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[2211]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[129B]"
+                                            }
+                                        }
+                                    }
                                 }
                             ]
                         },
@@ -5221,53 +5228,34 @@
                             "networkAuthority": "Server",
                             "States": [
                                 {
-                                    "StateName": "CustomOverride"
-                                },
-                                {
-                                    "StateName": "Off",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[1D33]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[0E08]"
-                                            }
+                                    "StateName": "fuse_1_connected",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "33129b2d-d5d2-408b-aacf-342ab92258fb"
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "Normal",
-                                    "StateAutoChange": {
-                                        "SStateAutoChange": {
-                                            "Delay": 600,
-                                            "RunWhenStreamedOut": 0,
-                                            "NextState": {
-                                                "value": "SInteractionState[0E0D]"
-                                            }
-                                        }
-                                    },
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[1D34]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[0E07]"
-                                            }
+                                    "StateName": "fuse_1_disconnected",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac"
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "NoSignal",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[1D34]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[0E07]"
-                                            }
+                                    "StateName": "fuse_2_connected",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "65dbcbfc-422d-425a-a260-695396e478f5"
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "fuse_2_disconnected",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "d222dafe-4ea3-4ba6-8775-fe2ed10e28e9"
                                         }
                                     }
                                 }
@@ -5277,7 +5265,7 @@
                                     "context": {
                                         "SEntityTraversalNodeReferenceContext": {
                                             "traversingNode": {
-                                                "value": "SEntityTraversingNodeBase[07A3]"
+                                                "value": "SEntityTraversingNodeBase[07DC]"
                                             }
                                         }
                                     },
@@ -5293,7 +5281,7 @@
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[0E06]"
+                                                "value": "SInteractionState[129D]"
                                             }
                                         },
                                         {
@@ -5307,7 +5295,7 @@
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[0E07]"
+                                                "value": "SInteractionState[129E]"
                                             }
                                         },
                                         {
@@ -5321,7 +5309,7 @@
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[0E08]"
+                                                "value": "SInteractionState[129F]"
                                             }
                                         },
                                         {
@@ -5335,7 +5323,7 @@
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[0E09]"
+                                                "value": "SInteractionState[12A0]"
                                             }
                                         }
                                     ]
@@ -5349,13 +5337,33 @@
                             "networkAuthority": "Server",
                             "States": [
                                 {
-                                    "StateName": "Emergency"
+                                    "StateName": "fuse_3_connected",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "83ccad4f-98b0-4049-8f17-b01971abb17d"
+                                        }
+                                    }
                                 },
                                 {
-                                    "StateName": "Auxiliary"
+                                    "StateName": "fuse_3_disconnected",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "a5eb05ee-fd08-422e-9cd2-5a7631155051"
+                                        }
+                                    }
                                 },
                                 {
-                                    "StateName": "CustomOverride"
+                                    "StateName": "Closed",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[2213]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[12A4]"
+                                            }
+                                        }
+                                    }
                                 }
                             ],
                             "StateModifiers": {
@@ -5364,80 +5372,61 @@
                                         {
                                             "aggregateStates": {
                                                 "SInteractionState": {
-                                                    "StateName": "CustomOverride"
-                                                }
-                                            },
-                                            "state": {
-                                                "value": "SInteractionState[0E0A]"
-                                            }
-                                        },
-                                        {
-                                            "aggregateStates": {
-                                                "SInteractionState": {
-                                                    "StateName": "Normal",
-                                                    "StateAutoChange": {
-                                                        "SStateAutoChange": {
-                                                            "Delay": 600,
-                                                            "RunWhenStreamedOut": 0,
-                                                            "NextState": {
-                                                                "value": "SInteractionState[0E0D]"
-                                                            }
-                                                        }
-                                                    },
-                                                    "Interactions": {
-                                                        "SInteractionStateTransition": {
-                                                            "Interaction": {
-                                                                "value": "SSharedInteractionParams[1D34]"
-                                                            },
-                                                            "NextState": {
-                                                                "value": "SInteractionState[0E07]"
-                                                            }
+                                                    "StateName": "fuse_1_connected",
+                                                    "enterStateEffectTags": {
+                                                        "Reference": {
+                                                            "value": "33129b2d-d5d2-408b-aacf-342ab92258fb"
                                                         }
                                                     }
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[0E0B]"
+                                                "value": "SInteractionState[12A1]"
                                             }
                                         },
                                         {
                                             "aggregateStates": {
                                                 "SInteractionState": {
-                                                    "StateName": "Off",
-                                                    "Interactions": {
-                                                        "SInteractionStateTransition": {
-                                                            "Interaction": {
-                                                                "value": "SSharedInteractionParams[1D33]"
-                                                            },
-                                                            "NextState": {
-                                                                "value": "SInteractionState[0E08]"
-                                                            }
+                                                    "StateName": "fuse_2_connected",
+                                                    "enterStateEffectTags": {
+                                                        "Reference": {
+                                                            "value": "65dbcbfc-422d-425a-a260-695396e478f5"
                                                         }
                                                     }
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[0E0C]"
+                                                "value": "SInteractionState[12A2]"
                                             }
                                         },
                                         {
                                             "aggregateStates": {
                                                 "SInteractionState": {
-                                                    "StateName": "NoSignal",
-                                                    "Interactions": {
-                                                        "SInteractionStateTransition": {
-                                                            "Interaction": {
-                                                                "value": "SSharedInteractionParams[1D34]"
-                                                            },
-                                                            "NextState": {
-                                                                "value": "SInteractionState[0E07]"
-                                                            }
+                                                    "StateName": "fuse_1_disconnected",
+                                                    "enterStateEffectTags": {
+                                                        "Reference": {
+                                                            "value": "a1f4a441-bb9a-4d0c-9c71-46eaeea6e8ac"
                                                         }
                                                     }
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[0E0C]"
+                                                "value": "SInteractionState[12A3]"
+                                            }
+                                        },
+                                        {
+                                            "aggregateStates": {
+                                                "SInteractionState": {
+                                                    "StateName": "fuse_2_disconnected",
+                                                    "enterStateEffectTags": {
+                                                        "Reference": {
+                                                            "value": "d222dafe-4ea3-4ba6-8775-fe2ed10e28e9"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "state": {
+                                                "value": "SInteractionState[12A3]"
                                             }
                                         }
                                     ]
@@ -5451,27 +5440,23 @@
                             "networkAuthority": "Server",
                             "States": [
                                 {
-                                    "StateName": "NewsBroadcast",
-                                    "StateAutoChange": {
-                                        "SStateAutoChange": {
-                                            "Delay": 80,
-                                            "RunWhenStreamedOut": 0,
+                                    "StateName": "Opened",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[2214]"
+                                            },
                                             "NextState": {
-                                                "value": "SInteractionState[0E08]"
+                                                "value": "SInteractionState[12A3]"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "Off",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[1D35]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[0E0F]"
-                                            }
+                                    "StateName": "fuse_1_connected",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "33129b2d-d5d2-408b-aacf-342ab92258fb"
                                         }
                                     }
                                 }
@@ -5481,7 +5466,7 @@
                                     "context": {
                                         "SEntityTraversalTargetPathContext": {
                                             "targetPath": {
-                                                "value": "SEntityTraversingTarget[00E0]"
+                                                "value": "SEntityTraversingTarget[00EC]"
                                             }
                                         }
                                     },
@@ -5497,7 +5482,7 @@
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[0E0D]"
+                                                "value": "SInteractionState[12A4]"
                                             }
                                         },
                                         {
@@ -5511,7 +5496,7 @@
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[0E0E]"
+                                                "value": "SInteractionState[12A5]"
                                             }
                                         }
                                     ]
@@ -5785,7 +5770,7 @@
                             "paths": {
                                 "SEntityTraversingTargetPath": {
                                     "node": {
-                                        "value": "SEntityTraversingNodeBase[07A3]"
+                                        "value": "SEntityTraversingNodeBase[07DC]"
                                     }
                                 }
                             }
@@ -5795,7 +5780,7 @@
                             "paths": {
                                 "SEntityTraversingTargetPath": {
                                     "node": {
-                                        "value": "SEntityTraversingNodeBase[07A4]"
+                                        "value": "SEntityTraversingNodeBase[07DD]"
                                     }
                                 }
                             }
@@ -5812,13 +5797,13 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[0E03]"
+                        "value": "SInteractionState[129A]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[0E04]"
+                        "value": "SInteractionState[129B]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[0E05]"
+                        "value": "SInteractionState[129C]"
                     }
                 }
             },
@@ -6164,8 +6149,8 @@
                 }
             },
             "Interactions": [
-                "Inspect",
-                "Place"
+                "Disarm",
+                "Boom"
             ]
         }
     }

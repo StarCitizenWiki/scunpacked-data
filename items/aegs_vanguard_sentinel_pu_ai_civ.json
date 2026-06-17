@@ -932,32 +932,53 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "DisableVTOL",
-                                "DisplayName": "IFCS Flight Mode TEMP",
-                                "__DisplayName": "@ui_interactor_IFCS_flight_mode_TEMP",
+                                "Name": "HoldReady",
+                                "DisplayName": "Carry",
+                                "__DisplayName": "@interaction_carry",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 1,
-                                "Linkable": 1,
+                                "Sendable": 0,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "presetList": [
+                                            {
+                                                "value": "3370f020-1774-47d5-a75b-5486986e6cea"
+                                            },
+                                            {
+                                                "value": "69128f9d-3fd7-48ee-b9a3-786406626c1c"
+                                            }
+                                        ]
+                                    }
+                                }
                             },
                             {
-                                "Name": "EnableProximityAssist",
-                                "DisplayName": "Enable Flight Proximity Assist",
-                                "__DisplayName": "@pause_OptionsFlightProximityAssist",
+                                "Name": "EquipToSuit",
+                                "DisplayName": "Equip",
+                                "__DisplayName": "@interaction_equip",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 1,
-                                "Linkable": 1,
+                                "Sendable": 0,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "presetList": {
+                                            "Reference": {
+                                                "value": "53fd2b94-69e5-4a49-a9ad-4eae4a70b471"
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         ]
                     }
@@ -2203,10 +2224,16 @@
                                 "thrusterType": "Maneuver"
                             },
                             {
-                                "thrusterType": "Main"
+                                "thrusterType": "Main",
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                }
                             },
                             {
-                                "thrusterType": "Retro"
+                                "thrusterType": "Retro",
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                }
                             }
                         ]
                     },
@@ -4296,10 +4323,10 @@
                     "InternalResourceLinks": {
                         "SInternalResourceLink": {
                             "port1": {
-                                "value": "SItemPortDef[EE05]"
+                                "value": "SItemPortDef[EF0B]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[EE06]"
+                                "value": "SItemPortDef[EF0C]"
                             }
                         }
                     },
@@ -4636,18 +4663,36 @@
                             "networkAuthority": "Local",
                             "States": [
                                 {
-                                    "StateName": "TargetingSystemMissileLight_CycleEvent"
+                                    "StateName": "TargetingSystemPinned_PinTarget"
                                 },
                                 {
-                                    "StateName": "TargetingSystemMissileLight_FireEvent",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "a6a16f0b-9c5b-4fcf-9241-3ab6f30d501e"
+                                    "StateName": "TargetingSystemPinned_ClearPinnedTargets"
+                                },
+                                {
+                                    "StateName": "TargetingSystemCycle_Next",
+                                    "EnterEventDispatchers": {
+                                        "AnimationSetVariable": {
+                                            "value": 1,
+                                            "variable": {
+                                                "value": "AnimationFloatVariable[09AA]"
+                                            },
+                                            "overrideInterpolation": {
+                                                "AnimationVariableInterpolation": {
+                                                    "timeRange": 1,
+                                                    "type": "Linear"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 0.2,
+                                            "RunWhenStreamedOut": 0,
+                                            "NextState": {
+                                                "value": "SInteractionState[DD37]"
+                                            }
                                         }
                                     }
-                                },
-                                {
-                                    "StateName": "TargetingSystemMissileLight_MissilesDepleted"
                                 }
                             ]
                         }
@@ -4903,13 +4948,13 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[D843]"
+                        "value": "SInteractionState[DD33]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[D844]"
+                        "value": "SInteractionState[DD34]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[D845]"
+                        "value": "SInteractionState[DD35]"
                     }
                 }
             },
@@ -5184,8 +5229,8 @@
                 }
             },
             "Interactions": [
-                "Disablevtol",
-                "Enableproximityassist"
+                "Holdready",
+                "Equiptosuit"
             ]
         }
     }

@@ -720,10 +720,10 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "DisableDecoupled",
-                                "DisplayName": "Disable Coupled Flight",
-                                "__DisplayName": "@vehicle_interactor_Decoupled_Enable",
-                                "DisplayType": "Show",
+                                "Name": "Close",
+                                "DisplayName": "Close",
+                                "__DisplayName": "@interaction_close",
+                                "DisplayType": "Hide",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 1,
@@ -734,14 +734,14 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "EnableGSafe",
-                                "DisplayName": "Enable G-Safe Limiters",
-                                "__DisplayName": "@vehicle_interactor_GSafe_Enable",
+                                "Name": "OpenLootingUI",
+                                "DisplayName": "Loot",
+                                "__DisplayName": "@interaction_loot",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 1,
-                                "Linkable": 1,
+                                "Sendable": 0,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
@@ -2795,10 +2795,16 @@
                                 "thrusterType": "Maneuver"
                             },
                             {
-                                "thrusterType": "Main"
+                                "thrusterType": "Main",
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                }
                             },
                             {
-                                "thrusterType": "Retro"
+                                "thrusterType": "Retro",
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                }
                             }
                         ]
                     },
@@ -5171,23 +5177,31 @@
                             "networkAuthority": "Local",
                             "States": [
                                 {
-                                    "StateName": "QuantumDriveLight_Destroyed",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "c39f7491-4520-47aa-b580-be5a41201051"
+                                    "StateName": "QuantumDriveTriggerDown",
+                                    "EnterEventDispatchers": {
+                                        "AnimationSetVariable": {
+                                            "value": 1,
+                                            "variable": {
+                                                "value": "AnimationFloatVariable[0965]"
+                                            }
+                                        }
+                                    },
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[DB1F]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[DAFC]"
+                                            }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "PowerSystemLight_On",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "e500df6b-8c79-4cd5-897f-462ac7fcc925"
-                                        }
-                                    }
+                                    "StateName": "QuantumDriveCalibration_Idle"
                                 },
                                 {
-                                    "StateName": "PowerSystemLight_Off"
+                                    "StateName": "QuantumDriveCalibration_Active"
                                 }
                             ]
                         }
@@ -5444,13 +5458,13 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[D60D]"
+                        "value": "SInteractionState[DAFD]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[D60E]"
+                        "value": "SInteractionState[DAFE]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[D60F]"
+                        "value": "SInteractionState[DAFF]"
                     }
                 }
             },
@@ -5714,8 +5728,8 @@
                 }
             },
             "Interactions": [
-                "Disabledecoupled",
-                "Enablegsafe"
+                "Close",
+                "Openlootingui"
             ]
         }
     }

@@ -762,28 +762,29 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "DisableGSafe",
-                                "DisplayName": "Disable G-Safe Limiters",
-                                "__DisplayName": "@vehicle_interactor_GSafe_Disable",
+                                "Name": "KeypadSuccess",
+                                "LinkingTag": "e5fbe2d8-71fb-4451-9f65-e7673bc7cc0f",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 1,
-                                "Linkable": 1,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "EnableESP",
-                                "DisplayName": "Enable ESP",
-                                "__DisplayName": "@vehicle_interactor_ESP_Enable",
+                                "Name": "Open",
+                                "DisplayName": "Open",
+                                "__DisplayName": "@interaction_open",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 1,
-                                "Linkable": 1,
+                                "Sendable": 0,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
@@ -4484,10 +4485,16 @@
                                 "thrusterType": "Maneuver"
                             },
                             {
-                                "thrusterType": "Main"
+                                "thrusterType": "Main",
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                }
                             },
                             {
-                                "thrusterType": "Retro"
+                                "thrusterType": "Retro",
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                }
                             }
                         ]
                     },
@@ -6479,18 +6486,18 @@
                     "InternalResourceLinks": [
                         {
                             "port1": {
-                                "value": "SItemPortDef[EC1C]"
+                                "value": "SItemPortDef[ED22]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[EC1D]"
+                                "value": "SItemPortDef[ED23]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[EC1C]"
+                                "value": "SItemPortDef[ED22]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[EC1E]"
+                                "value": "SItemPortDef[ED24]"
                             }
                         }
                     ],
@@ -6803,35 +6810,16 @@
                             "networkAuthority": "Local",
                             "States": [
                                 {
-                                    "StateName": "WeaponSystem_FirePattern_Synchronous",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 1,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[08D7]"
-                                            }
-                                        }
-                                    }
+                                    "StateName": "TargetingSystemMissileLight_MaxArmed"
                                 },
                                 {
-                                    "StateName": "Shields_SwitchUp",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[08D9]"
-                                            }
-                                        }
-                                    }
+                                    "StateName": "TargetingSystemMissileLight_CycleEvent"
                                 },
                                 {
-                                    "StateName": "Shields_SwitchDown",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 1,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[08D9]"
-                                            }
+                                    "StateName": "TargetingSystemMissileLight_FireEvent",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "a6a16f0b-9c5b-4fcf-9241-3ab6f30d501e"
                                         }
                                     }
                                 }
@@ -6844,65 +6832,31 @@
                             "networkAuthority": "Server",
                             "States": [
                                 {
-                                    "StateName": "FlightController_ProximityAssistEnabled",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[08DD]"
-                                            }
-                                        }
-                                    }
+                                    "StateName": "TargetingSystemMissileLight_MissilesDepleted"
                                 },
                                 {
-                                    "StateName": "FlightController_ProximityAssistDisabled",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 1,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[08DD]"
-                                            }
-                                        }
-                                    }
+                                    "StateName": "QuantumDriveEvent_Idle"
                                 },
                                 {
-                                    "StateName": "ArmMissiles_GateClosed",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[08DF]"
-                                            }
-                                        }
-                                    },
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[D865]"
-                                            },
+                                    "StateName": "QuantumDriveEvent_Completed",
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 1,
+                                            "RunWhenStreamedOut": 0,
                                             "NextState": {
-                                                "value": "SInteractionState[D6E2]"
+                                                "value": "SInteractionState[DBFF]"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "ArmMissiles_GateOpen",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 1,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[08DF]"
-                                            }
-                                        }
-                                    },
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[D864]"
-                                            },
+                                    "StateName": "QuantumDriveEvent_Interrupted",
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 1,
+                                            "RunWhenStreamedOut": 0,
                                             "NextState": {
-                                                "value": "SInteractionState[D6E1]"
+                                                "value": "SInteractionState[DBFF]"
                                             }
                                         }
                                     }
@@ -6911,16 +6865,16 @@
                             "StateModifiers": {
                                 "LandingGearStateModifier": {
                                     "deploying": {
-                                        "value": "SInteractionState[D711]"
+                                        "value": "SInteractionState[DC01]"
                                     },
                                     "deployed": {
-                                        "value": "SInteractionState[D710]"
+                                        "value": "SInteractionState[DC00]"
                                     },
                                     "retracting": {
-                                        "value": "SInteractionState[D70F]"
+                                        "value": "SInteractionState[DBFF]"
                                     },
                                     "retracted": {
-                                        "value": "SInteractionState[D70E]"
+                                        "value": "SInteractionState[DBFE]"
                                     }
                                 }
                             }
@@ -6932,43 +6886,24 @@
                             "networkAuthority": "Server",
                             "States": [
                                 {
-                                    "StateName": "FireMissilesTriggerUp",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[08E0]"
-                                            }
-                                        }
-                                    },
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[D866]"
-                                            },
+                                    "StateName": "QuantumDriveEvent_Activated",
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 1,
+                                            "RunWhenStreamedOut": 0,
                                             "NextState": {
-                                                "value": "SInteractionState[D6DE]"
+                                                "value": "SInteractionState[DBFF]"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "FireMissileTriggerDown",
+                                    "StateName": "FlightController_CoupledEnabled",
                                     "EnterEventDispatchers": {
                                         "AnimationSetVariable": {
-                                            "value": 1,
+                                            "value": 0,
                                             "variable": {
-                                                "value": "AnimationFloatVariable[08E0]"
-                                            }
-                                        }
-                                    },
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[D867]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[D712]"
+                                                "value": "AnimationFloatVariable[0974]"
                                             }
                                         }
                                     }
@@ -6979,7 +6914,7 @@
                                     "context": {
                                         "SEntityTraversalTargetPathContext": {
                                             "targetPath": {
-                                                "value": "SEntityTraversingTarget[0223]"
+                                                "value": "SEntityTraversingTarget[0231]"
                                             }
                                         }
                                     },
@@ -6995,7 +6930,7 @@
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[D712]"
+                                                "value": "SInteractionState[DC02]"
                                             }
                                         },
                                         {
@@ -7009,7 +6944,7 @@
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[D713]"
+                                                "value": "SInteractionState[DC03]"
                                             }
                                         }
                                     ]
@@ -7276,7 +7211,7 @@
                             "paths": {
                                 "SEntityTraversingTargetPath": {
                                     "node": {
-                                        "value": "SEntityTraversingNodeBase[1085]"
+                                        "value": "SEntityTraversingNodeBase[10C2]"
                                     }
                                 }
                             }
@@ -7293,13 +7228,13 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[D70B]"
+                        "value": "SInteractionState[DBFB]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[D70C]"
+                        "value": "SInteractionState[DBFC]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[D70D]"
+                        "value": "SInteractionState[DBFD]"
                     }
                 }
             },
@@ -7525,8 +7460,8 @@
                 }
             },
             "Interactions": [
-                "Disablegsafe",
-                "Enableesp"
+                "Keypadsuccess",
+                "Open"
             ]
         }
     }

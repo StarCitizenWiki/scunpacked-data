@@ -196,9 +196,23 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "QuantumSpool_SetActive",
-                                "DisplayName": "Spool Quantum Drive",
-                                "__DisplayName": "@Inner_Thought_SpoolQD",
+                                "Name": "LandingGear_Retract",
+                                "DisplayName": "Retract Landing Gear",
+                                "__DisplayName": "@vehicle_interactor_LandingGear_Retract",
+                                "DisplayType": "Show",
+                                "GenericCursor": "Button",
+                                "FocusModeOnly": 0,
+                                "Sendable": 0,
+                                "Linkable": 0,
+                                "LockedByLinks": 1,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "Coupled_SetCoupled",
+                                "DisplayName": "Enable Coupled Flight",
+                                "__DisplayName": "@vehicle_interactor_Coupled_Enable",
                                 "DisplayType": "Show",
                                 "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
@@ -210,23 +224,9 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "QuantumSpool_SetInactive",
-                                "DisplayName": "Shut Down Quantum Drive",
-                                "__DisplayName": "@Inner_Thought_UnSpoolQD",
-                                "DisplayType": "Show",
-                                "GenericCursor": "Button",
-                                "FocusModeOnly": 0,
-                                "Sendable": 1,
-                                "Linkable": 1,
-                                "LockedByLinks": 1,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
-                            },
-                            {
-                                "Name": "QuantumTravel_SetActive",
-                                "DisplayName": "Engage Quantum Travel",
-                                "__DisplayName": "@vehicle_interactor_QuantumTravel_Enable",
+                                "Name": "Coupled_SetDecoupled",
+                                "DisplayName": "Disable Coupled Flight",
+                                "__DisplayName": "@vehicle_interactor_Decoupled_Enable",
                                 "DisplayType": "Show",
                                 "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
@@ -268,7 +268,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D334]"
+                                            "value": "SSharedInteractionParams[D578]"
                                         }
                                     },
                                     {
@@ -276,7 +276,7 @@
                                         "__DisplayName": "@ui_interactor_generic_seat",
                                         "IsPrimary": 1,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D335]"
+                                            "value": "SSharedInteractionParams[D579]"
                                         }
                                     },
                                     {
@@ -284,7 +284,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D336]"
+                                            "value": "SSharedInteractionParams[D57A]"
                                         }
                                     }
                                 ],
@@ -385,42 +385,15 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[86DB]"
+                                "value": "SInteractionState[8B9F]"
                             },
                             "States": [
-                                {
-                                    "StateName": "DoorClosed",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[91F5]"
-                                            }
-                                        }
-                                    },
-                                    "stateTags": {
-                                        "tags": {
-                                            "Reference": {
-                                                "value": "6bd67663-b803-4f3b-9c9f-42c591b51b93"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "DoorOpening",
-                                    "stateTags": {
-                                        "tags": {
-                                            "Reference": {
-                                                "value": "5d7b8e59-552f-407f-9df1-8eb582e9c22b"
-                                            }
-                                        }
-                                    }
-                                },
                                 {
                                     "StateName": "DoorOpened",
                                     "Interactions": {
                                         "SInteractionStateTransition": {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[91F6]"
+                                                "value": "SSharedInteractionParams[9703]"
                                             }
                                         }
                                     },
@@ -437,7 +410,7 @@
                                     "Interactions": {
                                         "SInteractionStateTransition": {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[91F5]"
+                                                "value": "SSharedInteractionParams[9702]"
                                             }
                                         }
                                     },
@@ -448,12 +421,41 @@
                                             }
                                         }
                                     }
+                                },
+                                {
+                                    "StateName": "DoorUnlocked",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "e5e348ca-7752-4930-8a50-874f34dca55e"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "DoorAccessGranted",
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 1.5,
+                                            "RunWhenStreamedOut": 0,
+                                            "NextState": {
+                                                "value": "SInteractionState[8BA1]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "00000000-0000-0000-0000-000000000000"
+                                            }
+                                        }
+                                    }
                                 }
                             ],
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[86DE]"
+                                        "value": "SInteractionState[8BA2]"
                                     }
                                 }
                             }
@@ -816,9 +818,9 @@
                 }
             },
             "Interactions": [
-                "Quantumspool_setactive",
-                "Quantumspool_setinactive",
-                "Quantumtravel_setactive"
+                "Landinggear_retract",
+                "Coupled_setcoupled",
+                "Coupled_setdecoupled"
             ],
             "ResourceContainer": {
                 "Immutable": false,

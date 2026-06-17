@@ -767,9 +767,23 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "EnableProximityAssist",
-                                "DisplayName": "Enable Flight Proximity Assist",
-                                "__DisplayName": "@pause_OptionsFlightProximityAssist",
+                                "Name": "OnTimerFinished",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
+                                "DisplayType": "Show",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 1,
+                                "Linkable": 0,
+                                "LockedByLinks": 0,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "StartTimer_CountDownB",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -781,28 +795,14 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "DisableProximityAssist",
-                                "DisplayName": "WARNING: Approaching planet gravitational field!",
-                                "__DisplayName": "@dfm_ui_PlanetProximityWarning",
+                                "Name": "OnTimerStarted_CountDownB",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 1,
-                                "Linkable": 1,
-                                "LockedByLinks": 0,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
-                            },
-                            {
-                                "Name": "EngineOn",
-                                "DisplayName": "Engine On",
-                                "__DisplayName": "@ui_interactor_engine_on",
-                                "DisplayType": "Show",
-                                "GenericCursor": "Button",
-                                "FocusModeOnly": 0,
-                                "Sendable": 0,
-                                "Linkable": 1,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
@@ -2103,10 +2103,16 @@
                                 "thrusterType": "Maneuver"
                             },
                             {
-                                "thrusterType": "Main"
+                                "thrusterType": "Main",
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                }
                             },
                             {
-                                "thrusterType": "Retro"
+                                "thrusterType": "Retro",
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                }
                             }
                         ]
                     },
@@ -3861,7 +3867,7 @@
                                             "toStartAngle": -45,
                                             "toEndAngle": 45,
                                             "variable": {
-                                                "value": "AnimationFloatVariable[0B12]"
+                                                "value": "AnimationFloatVariable[0BA3]"
                                             }
                                         }
                                     }
@@ -3875,7 +3881,7 @@
                                             "toStartAngle": -45,
                                             "toEndAngle": 45,
                                             "variable": {
-                                                "value": "AnimationFloatVariable[0B12]"
+                                                "value": "AnimationFloatVariable[0BA3]"
                                             }
                                         }
                                     }
@@ -3889,7 +3895,7 @@
                                             "toStartAngle": -45,
                                             "toEndAngle": 45,
                                             "variable": {
-                                                "value": "AnimationFloatVariable[0B13]"
+                                                "value": "AnimationFloatVariable[0BA4]"
                                             }
                                         }
                                     }
@@ -3903,7 +3909,7 @@
                                             "toStartAngle": -45,
                                             "toEndAngle": 45,
                                             "variable": {
-                                                "value": "AnimationFloatVariable[0B13]"
+                                                "value": "AnimationFloatVariable[0BA4]"
                                             }
                                         }
                                     }
@@ -3917,7 +3923,7 @@
                                             "toStartAngle": -45,
                                             "toEndAngle": 45,
                                             "variable": {
-                                                "value": "AnimationFloatVariable[0B14]"
+                                                "value": "AnimationFloatVariable[0BA5]"
                                             }
                                         }
                                     }
@@ -3931,7 +3937,7 @@
                                             "toStartAngle": -45,
                                             "toEndAngle": 45,
                                             "variable": {
-                                                "value": "AnimationFloatVariable[0B14]"
+                                                "value": "AnimationFloatVariable[0BA5]"
                                             }
                                         }
                                     }
@@ -4790,20 +4796,34 @@
                             "networkAuthority": "Local",
                             "States": [
                                 {
-                                    "StateName": "ShipCanRetract",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[D7F0]"
+                                    "StateName": "FlightControllerCoupledLight_On",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "9306eae2-a95b-4e10-bc83-dc5975b20d7f"
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "FlightController_GSafeEnabled",
+                                    "EnterEventDispatchers": {
+                                        "AnimationSetVariable": {
+                                            "value": 0,
+                                            "variable": {
+                                                "value": "AnimationFloatVariable[094D]"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "ShipCannotRetract"
-                                },
-                                {
-                                    "StateName": "ShipCannotExtend"
+                                    "StateName": "FlightController_GSafeDisabled",
+                                    "EnterEventDispatchers": {
+                                        "AnimationSetVariable": {
+                                            "value": 1,
+                                            "variable": {
+                                                "value": "AnimationFloatVariable[094D]"
+                                            }
+                                        }
+                                    }
                                 }
                             ]
                         }
@@ -5060,13 +5080,13 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[D5C3]"
+                        "value": "SInteractionState[DAB3]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[D5C4]"
+                        "value": "SInteractionState[DAB4]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[D5C5]"
+                        "value": "SInteractionState[DAB5]"
                     }
                 },
                 "SActorUsableParams": {
@@ -16855,7 +16875,7 @@
                             "routingElement": {
                                 "UsableSlottingAlignmentSlot": {
                                     "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[5323]"
+                                        "value": "PointAlignmentSlot[5341]"
                                     }
                                 }
                             },
@@ -17008,7 +17028,7 @@
                             "routingElement": {
                                 "UsableSlottingAlignmentSlot": {
                                     "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[5324]"
+                                        "value": "PointAlignmentSlot[5342]"
                                     }
                                 }
                             },
@@ -17161,7 +17181,7 @@
                             "routingElement": {
                                 "UsableSlottingAlignmentSlot": {
                                     "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[5328]"
+                                        "value": "PointAlignmentSlot[5346]"
                                     }
                                 }
                             },
@@ -17373,7 +17393,7 @@
                             "routingElement": {
                                 "UsableSlottingAlignmentSlot": {
                                     "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[5325]"
+                                        "value": "PointAlignmentSlot[5343]"
                                     }
                                 }
                             },
@@ -17531,7 +17551,7 @@
                             "routingElement": {
                                 "UsableSlottingAlignmentSlot": {
                                     "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[5326]"
+                                        "value": "PointAlignmentSlot[5344]"
                                     }
                                 }
                             },
@@ -17689,7 +17709,7 @@
                             "routingElement": {
                                 "UsableSlottingAlignmentSlot": {
                                     "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[5327]"
+                                        "value": "PointAlignmentSlot[5345]"
                                     }
                                 }
                             },
@@ -17906,7 +17926,7 @@
                             "routingElement": {
                                 "UsableSlottingAlignmentSlot": {
                                     "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[5322]"
+                                        "value": "PointAlignmentSlot[5340]"
                                     }
                                 }
                             },
@@ -18109,7 +18129,7 @@
                             "routingElement": {
                                 "UsableSlottingAlignmentSlot": {
                                     "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[531E]"
+                                        "value": "PointAlignmentSlot[533C]"
                                     }
                                 }
                             },
@@ -18247,6 +18267,671 @@
                                                     "available": 1,
                                                     "canPlayerUse": 1,
                                                     "helperName": "gladius_anchor:weapon_starboard_01",
+                                                    "entityRelativeRotation": 0,
+                                                    "entityRelativeTranslation": 0,
+                                                    "linkMode": "NoLink",
+                                                    "stance": "Stand",
+                                                    "useHandIK": 0,
+                                                    "useADIK": 0,
+                                                    "useAttachedLookAimPose": 0,
+                                                    "relativeTransform": {
+                                                        "Rotation": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        },
+                                                        "Position": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        }
+                                                    },
+                                                    "viewParams": {
+                                                        "viewLimitYawMin": -45,
+                                                        "viewLimitYawMax": 45,
+                                                        "viewLimitPitchMin": -45,
+                                                        "viewLimitPitchMax": 45
+                                                    },
+                                                    "enterParams": {
+                                                        "aiSignal": "UseStart",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "holsterWeapon": 1
+                                                    },
+                                                    "exitParams": {
+                                                        "aiSignal": "UseEnd",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "inputExit": 1,
+                                                        "exitOnMovement": 0,
+                                                        "exitOnJump": 0,
+                                                        "exitOnDamageTaken": 0
+                                                    },
+                                                    "additionalAttachmentFlags": {
+                                                        "exteriorOnly": 0,
+                                                        "interiorOnly": 0
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "relativeTransform": {
+                                        "Rotation": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "z": 0
+                                        },
+                                        "Position": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "z": 0
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "routingElement": {
+                                "UsableSlottingAlignmentSlot": {
+                                    "alignmentSlot": {
+                                        "value": "PointAlignmentSlot[5356]"
+                                    }
+                                }
+                            },
+                            "useSlots": {
+                                "UsableUseSlot": {
+                                    "name": "wingtip_right_talk",
+                                    "available": 1,
+                                    "useSlotReenablePoint": "UsableDelink",
+                                    "stance": "Unset",
+                                    "additionalFragmentTags": "middle",
+                                    "isScoochable": 0,
+                                    "alignWithGravity": 0,
+                                    "syncAnimationWithUser": 0,
+                                    "useChannelInstances": [
+                                        {
+                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
+                                            "triggerInteractionOnSlottedUsables": 0,
+                                            "stance": "Stand",
+                                            "isEnabled": 1,
+                                            "isAvailableOnlyForRouting": 1,
+                                            "isAvailableWhenHoldingTheUsable": 1,
+                                            "shouldValidateExitAnimations": 1,
+                                            "alignmentSlots": [
+                                                {
+                                                    "id": "92716837-7a62-45c0-bc03-a0e0b89a9d59",
+                                                    "available": 1,
+                                                    "canPlayerUse": 1,
+                                                    "fragmentTag": "wing_tip+align_slot_02",
+                                                    "helperName": "gladius_anchor:wingtip_right",
+                                                    "entityRelativeRotation": 0,
+                                                    "entityRelativeTranslation": 0,
+                                                    "linkMode": "NoLink",
+                                                    "stance": "Stand",
+                                                    "useHandIK": 0,
+                                                    "useADIK": 0,
+                                                    "useAttachedLookAimPose": 0,
+                                                    "relativeTransform": {
+                                                        "Rotation": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        },
+                                                        "Position": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        }
+                                                    },
+                                                    "viewParams": {
+                                                        "viewLimitYawMin": -45,
+                                                        "viewLimitYawMax": 45,
+                                                        "viewLimitPitchMin": -45,
+                                                        "viewLimitPitchMax": 45
+                                                    },
+                                                    "enterParams": {
+                                                        "aiSignal": "UseStart",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "holsterWeapon": 1
+                                                    },
+                                                    "exitParams": {
+                                                        "aiSignal": "UseEnd",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "inputExit": 1,
+                                                        "exitOnMovement": 0,
+                                                        "exitOnJump": 0,
+                                                        "exitOnDamageTaken": 0
+                                                    },
+                                                    "additionalAttachmentFlags": {
+                                                        "exteriorOnly": 0,
+                                                        "interiorOnly": 0
+                                                    }
+                                                },
+                                                {
+                                                    "id": "046fd152-65ba-44d1-abbf-7660e48f4a0e",
+                                                    "available": 1,
+                                                    "canPlayerUse": 1,
+                                                    "fragmentTag": "wing_tip+align_slot_02",
+                                                    "helperName": "gladius_anchor:wingtip_right_touch",
+                                                    "entityRelativeRotation": 0,
+                                                    "entityRelativeTranslation": 0,
+                                                    "linkMode": "NoLink",
+                                                    "stance": "Stand",
+                                                    "useHandIK": 0,
+                                                    "useADIK": 0,
+                                                    "useAttachedLookAimPose": 0,
+                                                    "relativeTransform": {
+                                                        "Rotation": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        },
+                                                        "Position": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        }
+                                                    },
+                                                    "viewParams": {
+                                                        "viewLimitYawMin": -45,
+                                                        "viewLimitYawMax": 45,
+                                                        "viewLimitPitchMin": -45,
+                                                        "viewLimitPitchMax": 45
+                                                    },
+                                                    "enterParams": {
+                                                        "aiSignal": "UseStart",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "holsterWeapon": 1
+                                                    },
+                                                    "exitParams": {
+                                                        "aiSignal": "UseEnd",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "inputExit": 1,
+                                                        "exitOnMovement": 0,
+                                                        "exitOnJump": 0,
+                                                        "exitOnDamageTaken": 0
+                                                    },
+                                                    "additionalAttachmentFlags": {
+                                                        "exteriorOnly": 0,
+                                                        "interiorOnly": 0
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
+                                            "triggerInteractionOnSlottedUsables": 0,
+                                            "stance": "Stand",
+                                            "isEnabled": 1,
+                                            "isAvailableOnlyForRouting": 1,
+                                            "isAvailableWhenHoldingTheUsable": 1,
+                                            "shouldValidateExitAnimations": 1,
+                                            "alignmentSlots": {
+                                                "PointAlignmentSlot": {
+                                                    "id": "5fbd03ae-c1f6-4fd7-b79f-6c45dd511bb7",
+                                                    "available": 1,
+                                                    "canPlayerUse": 1,
+                                                    "helperName": "gladius_anchor:weapon_starboard_01",
+                                                    "entityRelativeRotation": 0,
+                                                    "entityRelativeTranslation": 0,
+                                                    "linkMode": "NoLink",
+                                                    "stance": "Stand",
+                                                    "useHandIK": 0,
+                                                    "useADIK": 0,
+                                                    "useAttachedLookAimPose": 0,
+                                                    "relativeTransform": {
+                                                        "Rotation": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        },
+                                                        "Position": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        }
+                                                    },
+                                                    "viewParams": {
+                                                        "viewLimitYawMin": -45,
+                                                        "viewLimitYawMax": 45,
+                                                        "viewLimitPitchMin": -45,
+                                                        "viewLimitPitchMax": 45
+                                                    },
+                                                    "enterParams": {
+                                                        "aiSignal": "UseStart",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "holsterWeapon": 1
+                                                    },
+                                                    "exitParams": {
+                                                        "aiSignal": "UseEnd",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "inputExit": 1,
+                                                        "exitOnMovement": 0,
+                                                        "exitOnJump": 0,
+                                                        "exitOnDamageTaken": 0
+                                                    },
+                                                    "additionalAttachmentFlags": {
+                                                        "exteriorOnly": 0,
+                                                        "interiorOnly": 0
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "relativeTransform": {
+                                        "Rotation": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "z": 0
+                                        },
+                                        "Position": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "z": 0
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "routingElement": {
+                                "UsableSlottingAlignmentSlot": {
+                                    "alignmentSlot": {
+                                        "value": "PointAlignmentSlot[533B]"
+                                    }
+                                }
+                            },
+                            "useSlots": {
+                                "UsableUseSlot": {
+                                    "name": "wingtip_left_talk",
+                                    "available": 1,
+                                    "useSlotReenablePoint": "UsableDelink",
+                                    "stance": "Unset",
+                                    "additionalFragmentTags": "middle",
+                                    "isScoochable": 0,
+                                    "alignWithGravity": 0,
+                                    "syncAnimationWithUser": 0,
+                                    "useChannelInstances": [
+                                        {
+                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
+                                            "triggerInteractionOnSlottedUsables": 0,
+                                            "stance": "Stand",
+                                            "isEnabled": 1,
+                                            "isAvailableOnlyForRouting": 1,
+                                            "isAvailableWhenHoldingTheUsable": 1,
+                                            "shouldValidateExitAnimations": 1,
+                                            "alignmentSlots": {
+                                                "PointAlignmentSlot": {
+                                                    "id": "ab642436-1bea-4e0c-b14c-c972cc0481fc",
+                                                    "available": 1,
+                                                    "canPlayerUse": 1,
+                                                    "fragmentTag": "wing_tip+align_slot_01",
+                                                    "helperName": "gladius_anchor:wingtip_left_touch",
+                                                    "entityRelativeRotation": 0,
+                                                    "entityRelativeTranslation": 0,
+                                                    "linkMode": "NoLink",
+                                                    "stance": "Stand",
+                                                    "useHandIK": 0,
+                                                    "useADIK": 0,
+                                                    "useAttachedLookAimPose": 0,
+                                                    "relativeTransform": {
+                                                        "Rotation": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        },
+                                                        "Position": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        }
+                                                    },
+                                                    "viewParams": {
+                                                        "viewLimitYawMin": -45,
+                                                        "viewLimitYawMax": 45,
+                                                        "viewLimitPitchMin": -45,
+                                                        "viewLimitPitchMax": 45
+                                                    },
+                                                    "enterParams": {
+                                                        "aiSignal": "UseStart",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "holsterWeapon": 1
+                                                    },
+                                                    "exitParams": {
+                                                        "aiSignal": "UseEnd",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "inputExit": 1,
+                                                        "exitOnMovement": 0,
+                                                        "exitOnJump": 0,
+                                                        "exitOnDamageTaken": 0
+                                                    },
+                                                    "additionalAttachmentFlags": {
+                                                        "exteriorOnly": 0,
+                                                        "interiorOnly": 0
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
+                                            "triggerInteractionOnSlottedUsables": 0,
+                                            "stance": "Stand",
+                                            "isEnabled": 1,
+                                            "isAvailableOnlyForRouting": 1,
+                                            "isAvailableWhenHoldingTheUsable": 1,
+                                            "shouldValidateExitAnimations": 1,
+                                            "alignmentSlots": {
+                                                "PointAlignmentSlot": {
+                                                    "id": "526450a9-8f1d-4d0f-a8af-c75e7de191b1",
+                                                    "available": 1,
+                                                    "canPlayerUse": 1,
+                                                    "helperName": "gladius_anchor:weapon_port_01",
+                                                    "entityRelativeRotation": 0,
+                                                    "entityRelativeTranslation": 0,
+                                                    "linkMode": "NoLink",
+                                                    "stance": "Stand",
+                                                    "useHandIK": 0,
+                                                    "useADIK": 0,
+                                                    "useAttachedLookAimPose": 0,
+                                                    "relativeTransform": {
+                                                        "Rotation": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        },
+                                                        "Position": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        }
+                                                    },
+                                                    "viewParams": {
+                                                        "viewLimitYawMin": -45,
+                                                        "viewLimitYawMax": 45,
+                                                        "viewLimitPitchMin": -45,
+                                                        "viewLimitPitchMax": 45
+                                                    },
+                                                    "enterParams": {
+                                                        "aiSignal": "UseStart",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "holsterWeapon": 1
+                                                    },
+                                                    "exitParams": {
+                                                        "aiSignal": "UseEnd",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "inputExit": 1,
+                                                        "exitOnMovement": 0,
+                                                        "exitOnJump": 0,
+                                                        "exitOnDamageTaken": 0
+                                                    },
+                                                    "additionalAttachmentFlags": {
+                                                        "exteriorOnly": 0,
+                                                        "interiorOnly": 0
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "relativeTransform": {
+                                        "Rotation": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "z": 0
+                                        },
+                                        "Position": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "z": 0
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "routingElement": {
+                                "UsableSlottingAlignmentSlot": {
+                                    "alignmentSlot": {
+                                        "value": "PointAlignmentSlot[5355]"
+                                    }
+                                }
+                            },
+                            "useSlots": {
+                                "UsableUseSlot": {
+                                    "name": "wingtip_left_talk",
+                                    "available": 1,
+                                    "useSlotReenablePoint": "UsableDelink",
+                                    "stance": "Unset",
+                                    "additionalFragmentTags": "middle",
+                                    "isScoochable": 0,
+                                    "alignWithGravity": 0,
+                                    "syncAnimationWithUser": 0,
+                                    "useChannelInstances": [
+                                        {
+                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
+                                            "triggerInteractionOnSlottedUsables": 0,
+                                            "stance": "Stand",
+                                            "isEnabled": 1,
+                                            "isAvailableOnlyForRouting": 1,
+                                            "isAvailableWhenHoldingTheUsable": 1,
+                                            "shouldValidateExitAnimations": 1,
+                                            "alignmentSlots": {
+                                                "PointAlignmentSlot": {
+                                                    "id": "ab642436-1bea-4e0c-b14c-c972cc0481fc",
+                                                    "available": 1,
+                                                    "canPlayerUse": 1,
+                                                    "fragmentTag": "wing_tip+align_slot_01",
+                                                    "helperName": "gladius_anchor:wingtip_left_touch",
+                                                    "entityRelativeRotation": 0,
+                                                    "entityRelativeTranslation": 0,
+                                                    "linkMode": "NoLink",
+                                                    "stance": "Stand",
+                                                    "useHandIK": 0,
+                                                    "useADIK": 0,
+                                                    "useAttachedLookAimPose": 0,
+                                                    "relativeTransform": {
+                                                        "Rotation": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        },
+                                                        "Position": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        }
+                                                    },
+                                                    "viewParams": {
+                                                        "viewLimitYawMin": -45,
+                                                        "viewLimitYawMax": 45,
+                                                        "viewLimitPitchMin": -45,
+                                                        "viewLimitPitchMax": 45
+                                                    },
+                                                    "enterParams": {
+                                                        "aiSignal": "UseStart",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "holsterWeapon": 1
+                                                    },
+                                                    "exitParams": {
+                                                        "aiSignal": "UseEnd",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "inputExit": 1,
+                                                        "exitOnMovement": 0,
+                                                        "exitOnJump": 0,
+                                                        "exitOnDamageTaken": 0
+                                                    },
+                                                    "additionalAttachmentFlags": {
+                                                        "exteriorOnly": 0,
+                                                        "interiorOnly": 0
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
+                                            "triggerInteractionOnSlottedUsables": 0,
+                                            "stance": "Stand",
+                                            "isEnabled": 1,
+                                            "isAvailableOnlyForRouting": 1,
+                                            "isAvailableWhenHoldingTheUsable": 1,
+                                            "shouldValidateExitAnimations": 1,
+                                            "alignmentSlots": {
+                                                "PointAlignmentSlot": {
+                                                    "id": "526450a9-8f1d-4d0f-a8af-c75e7de191b1",
+                                                    "available": 1,
+                                                    "canPlayerUse": 1,
+                                                    "helperName": "gladius_anchor:weapon_port_01",
+                                                    "entityRelativeRotation": 0,
+                                                    "entityRelativeTranslation": 0,
+                                                    "linkMode": "NoLink",
+                                                    "stance": "Stand",
+                                                    "useHandIK": 0,
+                                                    "useADIK": 0,
+                                                    "useAttachedLookAimPose": 0,
+                                                    "relativeTransform": {
+                                                        "Rotation": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        },
+                                                        "Position": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        }
+                                                    },
+                                                    "viewParams": {
+                                                        "viewLimitYawMin": -45,
+                                                        "viewLimitYawMax": 45,
+                                                        "viewLimitPitchMin": -45,
+                                                        "viewLimitPitchMax": 45
+                                                    },
+                                                    "enterParams": {
+                                                        "aiSignal": "UseStart",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "holsterWeapon": 1
+                                                    },
+                                                    "exitParams": {
+                                                        "aiSignal": "UseEnd",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "inputExit": 1,
+                                                        "exitOnMovement": 0,
+                                                        "exitOnJump": 0,
+                                                        "exitOnDamageTaken": 0
+                                                    },
+                                                    "additionalAttachmentFlags": {
+                                                        "exteriorOnly": 0,
+                                                        "interiorOnly": 0
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "relativeTransform": {
+                                        "Rotation": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "z": 0
+                                        },
+                                        "Position": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "z": 0
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "routingElement": {
+                                "UsableSlottingAlignmentSlot": {
+                                    "alignmentSlot": {
+                                        "value": "PointAlignmentSlot[533F]"
+                                    }
+                                }
+                            },
+                            "useSlots": {
+                                "UsableUseSlot": {
+                                    "name": "wingtip_left_talk",
+                                    "available": 1,
+                                    "useSlotReenablePoint": "UsableDelink",
+                                    "stance": "Unset",
+                                    "additionalFragmentTags": "middle",
+                                    "isScoochable": 0,
+                                    "alignWithGravity": 0,
+                                    "syncAnimationWithUser": 0,
+                                    "useChannelInstances": [
+                                        {
+                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
+                                            "triggerInteractionOnSlottedUsables": 0,
+                                            "stance": "Stand",
+                                            "isEnabled": 1,
+                                            "isAvailableOnlyForRouting": 1,
+                                            "isAvailableWhenHoldingTheUsable": 1,
+                                            "shouldValidateExitAnimations": 1,
+                                            "alignmentSlots": {
+                                                "PointAlignmentSlot": {
+                                                    "id": "ab642436-1bea-4e0c-b14c-c972cc0481fc",
+                                                    "available": 1,
+                                                    "canPlayerUse": 1,
+                                                    "fragmentTag": "wing_tip+align_slot_01",
+                                                    "helperName": "gladius_anchor:wingtip_left_touch",
+                                                    "entityRelativeRotation": 0,
+                                                    "entityRelativeTranslation": 0,
+                                                    "linkMode": "NoLink",
+                                                    "stance": "Stand",
+                                                    "useHandIK": 0,
+                                                    "useADIK": 0,
+                                                    "useAttachedLookAimPose": 0,
+                                                    "relativeTransform": {
+                                                        "Rotation": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        },
+                                                        "Position": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        }
+                                                    },
+                                                    "viewParams": {
+                                                        "viewLimitYawMin": -45,
+                                                        "viewLimitYawMax": 45,
+                                                        "viewLimitPitchMin": -45,
+                                                        "viewLimitPitchMax": 45
+                                                    },
+                                                    "enterParams": {
+                                                        "aiSignal": "UseStart",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "holsterWeapon": 1
+                                                    },
+                                                    "exitParams": {
+                                                        "aiSignal": "UseEnd",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "inputExit": 1,
+                                                        "exitOnMovement": 0,
+                                                        "exitOnJump": 0,
+                                                        "exitOnDamageTaken": 0
+                                                    },
+                                                    "additionalAttachmentFlags": {
+                                                        "exteriorOnly": 0,
+                                                        "interiorOnly": 0
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
+                                            "triggerInteractionOnSlottedUsables": 0,
+                                            "stance": "Stand",
+                                            "isEnabled": 1,
+                                            "isAvailableOnlyForRouting": 1,
+                                            "isAvailableWhenHoldingTheUsable": 1,
+                                            "shouldValidateExitAnimations": 1,
+                                            "alignmentSlots": {
+                                                "PointAlignmentSlot": {
+                                                    "id": "526450a9-8f1d-4d0f-a8af-c75e7de191b1",
+                                                    "available": 1,
+                                                    "canPlayerUse": 1,
+                                                    "helperName": "gladius_anchor:weapon_port_01",
                                                     "entityRelativeRotation": 0,
                                                     "entityRelativeTranslation": 0,
                                                     "linkMode": "NoLink",
@@ -18318,11 +19003,11 @@
                             },
                             "useSlots": {
                                 "UsableUseSlot": {
-                                    "name": "wingtip_right_talk",
+                                    "name": "tailwing_left_talk",
                                     "available": 1,
                                     "useSlotReenablePoint": "UsableDelink",
                                     "stance": "Unset",
-                                    "additionalFragmentTags": "middle",
+                                    "additionalFragmentTags": "up",
                                     "isScoochable": 0,
                                     "alignWithGravity": 0,
                                     "syncAnimationWithUser": 0,
@@ -18335,62 +19020,13 @@
                                             "isAvailableOnlyForRouting": 1,
                                             "isAvailableWhenHoldingTheUsable": 1,
                                             "shouldValidateExitAnimations": 1,
-                                            "alignmentSlots": [
-                                                {
-                                                    "id": "92716837-7a62-45c0-bc03-a0e0b89a9d59",
+                                            "alignmentSlots": {
+                                                "PointAlignmentSlot": {
+                                                    "id": "d63580aa-3217-4bac-b267-7d1f4440bac5",
                                                     "available": 1,
                                                     "canPlayerUse": 1,
-                                                    "fragmentTag": "wing_tip+align_slot_02",
-                                                    "helperName": "gladius_anchor:wingtip_right",
-                                                    "entityRelativeRotation": 0,
-                                                    "entityRelativeTranslation": 0,
-                                                    "linkMode": "NoLink",
-                                                    "stance": "Stand",
-                                                    "useHandIK": 0,
-                                                    "useADIK": 0,
-                                                    "useAttachedLookAimPose": 0,
-                                                    "relativeTransform": {
-                                                        "Rotation": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        },
-                                                        "Position": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        }
-                                                    },
-                                                    "viewParams": {
-                                                        "viewLimitYawMin": -45,
-                                                        "viewLimitYawMax": 45,
-                                                        "viewLimitPitchMin": -45,
-                                                        "viewLimitPitchMax": 45
-                                                    },
-                                                    "enterParams": {
-                                                        "aiSignal": "UseStart",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "holsterWeapon": 1
-                                                    },
-                                                    "exitParams": {
-                                                        "aiSignal": "UseEnd",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "inputExit": 1,
-                                                        "exitOnMovement": 0,
-                                                        "exitOnJump": 0,
-                                                        "exitOnDamageTaken": 0
-                                                    },
-                                                    "additionalAttachmentFlags": {
-                                                        "exteriorOnly": 0,
-                                                        "interiorOnly": 0
-                                                    }
-                                                },
-                                                {
-                                                    "id": "046fd152-65ba-44d1-abbf-7660e48f4a0e",
-                                                    "available": 1,
-                                                    "canPlayerUse": 1,
-                                                    "fragmentTag": "wing_tip+align_slot_02",
-                                                    "helperName": "gladius_anchor:wingtip_right_touch",
+                                                    "fragmentTag": "tail_wing+align_slot_01",
+                                                    "helperName": "gladius_anchor:tailwing_port_01",
                                                     "entityRelativeRotation": 0,
                                                     "entityRelativeTranslation": 0,
                                                     "linkMode": "NoLink",
@@ -18434,7 +19070,7 @@
                                                         "interiorOnly": 0
                                                     }
                                                 }
-                                            ]
+                                            }
                                         },
                                         {
                                             "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
@@ -18446,10 +19082,10 @@
                                             "shouldValidateExitAnimations": 1,
                                             "alignmentSlots": {
                                                 "PointAlignmentSlot": {
-                                                    "id": "5fbd03ae-c1f6-4fd7-b79f-6c45dd511bb7",
+                                                    "id": "b10a7329-4094-4afa-85a0-1f9a16b6ab66",
                                                     "available": 1,
                                                     "canPlayerUse": 1,
-                                                    "helperName": "gladius_anchor:weapon_starboard_01",
+                                                    "helperName": "gladius_anchor:tailwing_port_02",
                                                     "entityRelativeRotation": 0,
                                                     "entityRelativeTranslation": 0,
                                                     "linkMode": "NoLink",
@@ -18515,469 +19151,7 @@
                             "routingElement": {
                                 "UsableSlottingAlignmentSlot": {
                                     "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[531D]"
-                                    }
-                                }
-                            },
-                            "useSlots": {
-                                "UsableUseSlot": {
-                                    "name": "wingtip_left_talk",
-                                    "available": 1,
-                                    "useSlotReenablePoint": "UsableDelink",
-                                    "stance": "Unset",
-                                    "additionalFragmentTags": "middle",
-                                    "isScoochable": 0,
-                                    "alignWithGravity": 0,
-                                    "syncAnimationWithUser": 0,
-                                    "useChannelInstances": [
-                                        {
-                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
-                                            "triggerInteractionOnSlottedUsables": 0,
-                                            "stance": "Stand",
-                                            "isEnabled": 1,
-                                            "isAvailableOnlyForRouting": 1,
-                                            "isAvailableWhenHoldingTheUsable": 1,
-                                            "shouldValidateExitAnimations": 1,
-                                            "alignmentSlots": {
-                                                "PointAlignmentSlot": {
-                                                    "id": "ab642436-1bea-4e0c-b14c-c972cc0481fc",
-                                                    "available": 1,
-                                                    "canPlayerUse": 1,
-                                                    "fragmentTag": "wing_tip+align_slot_01",
-                                                    "helperName": "gladius_anchor:wingtip_left_touch",
-                                                    "entityRelativeRotation": 0,
-                                                    "entityRelativeTranslation": 0,
-                                                    "linkMode": "NoLink",
-                                                    "stance": "Stand",
-                                                    "useHandIK": 0,
-                                                    "useADIK": 0,
-                                                    "useAttachedLookAimPose": 0,
-                                                    "relativeTransform": {
-                                                        "Rotation": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        },
-                                                        "Position": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        }
-                                                    },
-                                                    "viewParams": {
-                                                        "viewLimitYawMin": -45,
-                                                        "viewLimitYawMax": 45,
-                                                        "viewLimitPitchMin": -45,
-                                                        "viewLimitPitchMax": 45
-                                                    },
-                                                    "enterParams": {
-                                                        "aiSignal": "UseStart",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "holsterWeapon": 1
-                                                    },
-                                                    "exitParams": {
-                                                        "aiSignal": "UseEnd",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "inputExit": 1,
-                                                        "exitOnMovement": 0,
-                                                        "exitOnJump": 0,
-                                                        "exitOnDamageTaken": 0
-                                                    },
-                                                    "additionalAttachmentFlags": {
-                                                        "exteriorOnly": 0,
-                                                        "interiorOnly": 0
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
-                                            "triggerInteractionOnSlottedUsables": 0,
-                                            "stance": "Stand",
-                                            "isEnabled": 1,
-                                            "isAvailableOnlyForRouting": 1,
-                                            "isAvailableWhenHoldingTheUsable": 1,
-                                            "shouldValidateExitAnimations": 1,
-                                            "alignmentSlots": {
-                                                "PointAlignmentSlot": {
-                                                    "id": "526450a9-8f1d-4d0f-a8af-c75e7de191b1",
-                                                    "available": 1,
-                                                    "canPlayerUse": 1,
-                                                    "helperName": "gladius_anchor:weapon_port_01",
-                                                    "entityRelativeRotation": 0,
-                                                    "entityRelativeTranslation": 0,
-                                                    "linkMode": "NoLink",
-                                                    "stance": "Stand",
-                                                    "useHandIK": 0,
-                                                    "useADIK": 0,
-                                                    "useAttachedLookAimPose": 0,
-                                                    "relativeTransform": {
-                                                        "Rotation": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        },
-                                                        "Position": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        }
-                                                    },
-                                                    "viewParams": {
-                                                        "viewLimitYawMin": -45,
-                                                        "viewLimitYawMax": 45,
-                                                        "viewLimitPitchMin": -45,
-                                                        "viewLimitPitchMax": 45
-                                                    },
-                                                    "enterParams": {
-                                                        "aiSignal": "UseStart",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "holsterWeapon": 1
-                                                    },
-                                                    "exitParams": {
-                                                        "aiSignal": "UseEnd",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "inputExit": 1,
-                                                        "exitOnMovement": 0,
-                                                        "exitOnJump": 0,
-                                                        "exitOnDamageTaken": 0
-                                                    },
-                                                    "additionalAttachmentFlags": {
-                                                        "exteriorOnly": 0,
-                                                        "interiorOnly": 0
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ],
-                                    "relativeTransform": {
-                                        "Rotation": {
-                                            "x": 0,
-                                            "y": 0,
-                                            "z": 0
-                                        },
-                                        "Position": {
-                                            "x": 0,
-                                            "y": 0,
-                                            "z": 0
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "routingElement": {
-                                "UsableSlottingAlignmentSlot": {
-                                    "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[5337]"
-                                    }
-                                }
-                            },
-                            "useSlots": {
-                                "UsableUseSlot": {
-                                    "name": "wingtip_left_talk",
-                                    "available": 1,
-                                    "useSlotReenablePoint": "UsableDelink",
-                                    "stance": "Unset",
-                                    "additionalFragmentTags": "middle",
-                                    "isScoochable": 0,
-                                    "alignWithGravity": 0,
-                                    "syncAnimationWithUser": 0,
-                                    "useChannelInstances": [
-                                        {
-                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
-                                            "triggerInteractionOnSlottedUsables": 0,
-                                            "stance": "Stand",
-                                            "isEnabled": 1,
-                                            "isAvailableOnlyForRouting": 1,
-                                            "isAvailableWhenHoldingTheUsable": 1,
-                                            "shouldValidateExitAnimations": 1,
-                                            "alignmentSlots": {
-                                                "PointAlignmentSlot": {
-                                                    "id": "ab642436-1bea-4e0c-b14c-c972cc0481fc",
-                                                    "available": 1,
-                                                    "canPlayerUse": 1,
-                                                    "fragmentTag": "wing_tip+align_slot_01",
-                                                    "helperName": "gladius_anchor:wingtip_left_touch",
-                                                    "entityRelativeRotation": 0,
-                                                    "entityRelativeTranslation": 0,
-                                                    "linkMode": "NoLink",
-                                                    "stance": "Stand",
-                                                    "useHandIK": 0,
-                                                    "useADIK": 0,
-                                                    "useAttachedLookAimPose": 0,
-                                                    "relativeTransform": {
-                                                        "Rotation": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        },
-                                                        "Position": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        }
-                                                    },
-                                                    "viewParams": {
-                                                        "viewLimitYawMin": -45,
-                                                        "viewLimitYawMax": 45,
-                                                        "viewLimitPitchMin": -45,
-                                                        "viewLimitPitchMax": 45
-                                                    },
-                                                    "enterParams": {
-                                                        "aiSignal": "UseStart",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "holsterWeapon": 1
-                                                    },
-                                                    "exitParams": {
-                                                        "aiSignal": "UseEnd",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "inputExit": 1,
-                                                        "exitOnMovement": 0,
-                                                        "exitOnJump": 0,
-                                                        "exitOnDamageTaken": 0
-                                                    },
-                                                    "additionalAttachmentFlags": {
-                                                        "exteriorOnly": 0,
-                                                        "interiorOnly": 0
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
-                                            "triggerInteractionOnSlottedUsables": 0,
-                                            "stance": "Stand",
-                                            "isEnabled": 1,
-                                            "isAvailableOnlyForRouting": 1,
-                                            "isAvailableWhenHoldingTheUsable": 1,
-                                            "shouldValidateExitAnimations": 1,
-                                            "alignmentSlots": {
-                                                "PointAlignmentSlot": {
-                                                    "id": "526450a9-8f1d-4d0f-a8af-c75e7de191b1",
-                                                    "available": 1,
-                                                    "canPlayerUse": 1,
-                                                    "helperName": "gladius_anchor:weapon_port_01",
-                                                    "entityRelativeRotation": 0,
-                                                    "entityRelativeTranslation": 0,
-                                                    "linkMode": "NoLink",
-                                                    "stance": "Stand",
-                                                    "useHandIK": 0,
-                                                    "useADIK": 0,
-                                                    "useAttachedLookAimPose": 0,
-                                                    "relativeTransform": {
-                                                        "Rotation": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        },
-                                                        "Position": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        }
-                                                    },
-                                                    "viewParams": {
-                                                        "viewLimitYawMin": -45,
-                                                        "viewLimitYawMax": 45,
-                                                        "viewLimitPitchMin": -45,
-                                                        "viewLimitPitchMax": 45
-                                                    },
-                                                    "enterParams": {
-                                                        "aiSignal": "UseStart",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "holsterWeapon": 1
-                                                    },
-                                                    "exitParams": {
-                                                        "aiSignal": "UseEnd",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "inputExit": 1,
-                                                        "exitOnMovement": 0,
-                                                        "exitOnJump": 0,
-                                                        "exitOnDamageTaken": 0
-                                                    },
-                                                    "additionalAttachmentFlags": {
-                                                        "exteriorOnly": 0,
-                                                        "interiorOnly": 0
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ],
-                                    "relativeTransform": {
-                                        "Rotation": {
-                                            "x": 0,
-                                            "y": 0,
-                                            "z": 0
-                                        },
-                                        "Position": {
-                                            "x": 0,
-                                            "y": 0,
-                                            "z": 0
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "routingElement": {
-                                "UsableSlottingAlignmentSlot": {
-                                    "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[5321]"
-                                    }
-                                }
-                            },
-                            "useSlots": {
-                                "UsableUseSlot": {
-                                    "name": "wingtip_left_talk",
-                                    "available": 1,
-                                    "useSlotReenablePoint": "UsableDelink",
-                                    "stance": "Unset",
-                                    "additionalFragmentTags": "middle",
-                                    "isScoochable": 0,
-                                    "alignWithGravity": 0,
-                                    "syncAnimationWithUser": 0,
-                                    "useChannelInstances": [
-                                        {
-                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
-                                            "triggerInteractionOnSlottedUsables": 0,
-                                            "stance": "Stand",
-                                            "isEnabled": 1,
-                                            "isAvailableOnlyForRouting": 1,
-                                            "isAvailableWhenHoldingTheUsable": 1,
-                                            "shouldValidateExitAnimations": 1,
-                                            "alignmentSlots": {
-                                                "PointAlignmentSlot": {
-                                                    "id": "ab642436-1bea-4e0c-b14c-c972cc0481fc",
-                                                    "available": 1,
-                                                    "canPlayerUse": 1,
-                                                    "fragmentTag": "wing_tip+align_slot_01",
-                                                    "helperName": "gladius_anchor:wingtip_left_touch",
-                                                    "entityRelativeRotation": 0,
-                                                    "entityRelativeTranslation": 0,
-                                                    "linkMode": "NoLink",
-                                                    "stance": "Stand",
-                                                    "useHandIK": 0,
-                                                    "useADIK": 0,
-                                                    "useAttachedLookAimPose": 0,
-                                                    "relativeTransform": {
-                                                        "Rotation": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        },
-                                                        "Position": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        }
-                                                    },
-                                                    "viewParams": {
-                                                        "viewLimitYawMin": -45,
-                                                        "viewLimitYawMax": 45,
-                                                        "viewLimitPitchMin": -45,
-                                                        "viewLimitPitchMax": 45
-                                                    },
-                                                    "enterParams": {
-                                                        "aiSignal": "UseStart",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "holsterWeapon": 1
-                                                    },
-                                                    "exitParams": {
-                                                        "aiSignal": "UseEnd",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "inputExit": 1,
-                                                        "exitOnMovement": 0,
-                                                        "exitOnJump": 0,
-                                                        "exitOnDamageTaken": 0
-                                                    },
-                                                    "additionalAttachmentFlags": {
-                                                        "exteriorOnly": 0,
-                                                        "interiorOnly": 0
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
-                                            "triggerInteractionOnSlottedUsables": 0,
-                                            "stance": "Stand",
-                                            "isEnabled": 1,
-                                            "isAvailableOnlyForRouting": 1,
-                                            "isAvailableWhenHoldingTheUsable": 1,
-                                            "shouldValidateExitAnimations": 1,
-                                            "alignmentSlots": {
-                                                "PointAlignmentSlot": {
-                                                    "id": "526450a9-8f1d-4d0f-a8af-c75e7de191b1",
-                                                    "available": 1,
-                                                    "canPlayerUse": 1,
-                                                    "helperName": "gladius_anchor:weapon_port_01",
-                                                    "entityRelativeRotation": 0,
-                                                    "entityRelativeTranslation": 0,
-                                                    "linkMode": "NoLink",
-                                                    "stance": "Stand",
-                                                    "useHandIK": 0,
-                                                    "useADIK": 0,
-                                                    "useAttachedLookAimPose": 0,
-                                                    "relativeTransform": {
-                                                        "Rotation": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        },
-                                                        "Position": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        }
-                                                    },
-                                                    "viewParams": {
-                                                        "viewLimitYawMin": -45,
-                                                        "viewLimitYawMax": 45,
-                                                        "viewLimitPitchMin": -45,
-                                                        "viewLimitPitchMax": 45
-                                                    },
-                                                    "enterParams": {
-                                                        "aiSignal": "UseStart",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "holsterWeapon": 1
-                                                    },
-                                                    "exitParams": {
-                                                        "aiSignal": "UseEnd",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "inputExit": 1,
-                                                        "exitOnMovement": 0,
-                                                        "exitOnJump": 0,
-                                                        "exitOnDamageTaken": 0
-                                                    },
-                                                    "additionalAttachmentFlags": {
-                                                        "exteriorOnly": 0,
-                                                        "interiorOnly": 0
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ],
-                                    "relativeTransform": {
-                                        "Rotation": {
-                                            "x": 0,
-                                            "y": 0,
-                                            "z": 0
-                                        },
-                                        "Position": {
-                                            "x": 0,
-                                            "y": 0,
-                                            "z": 0
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "routingElement": {
-                                "UsableSlottingAlignmentSlot": {
-                                    "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[531A]"
+                                        "value": "PointAlignmentSlot[5348]"
                                     }
                                 }
                             },
@@ -19131,161 +19305,7 @@
                             "routingElement": {
                                 "UsableSlottingAlignmentSlot": {
                                     "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[532A]"
-                                    }
-                                }
-                            },
-                            "useSlots": {
-                                "UsableUseSlot": {
-                                    "name": "tailwing_left_talk",
-                                    "available": 1,
-                                    "useSlotReenablePoint": "UsableDelink",
-                                    "stance": "Unset",
-                                    "additionalFragmentTags": "up",
-                                    "isScoochable": 0,
-                                    "alignWithGravity": 0,
-                                    "syncAnimationWithUser": 0,
-                                    "useChannelInstances": [
-                                        {
-                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
-                                            "triggerInteractionOnSlottedUsables": 0,
-                                            "stance": "Stand",
-                                            "isEnabled": 1,
-                                            "isAvailableOnlyForRouting": 1,
-                                            "isAvailableWhenHoldingTheUsable": 1,
-                                            "shouldValidateExitAnimations": 1,
-                                            "alignmentSlots": {
-                                                "PointAlignmentSlot": {
-                                                    "id": "d63580aa-3217-4bac-b267-7d1f4440bac5",
-                                                    "available": 1,
-                                                    "canPlayerUse": 1,
-                                                    "fragmentTag": "tail_wing+align_slot_01",
-                                                    "helperName": "gladius_anchor:tailwing_port_01",
-                                                    "entityRelativeRotation": 0,
-                                                    "entityRelativeTranslation": 0,
-                                                    "linkMode": "NoLink",
-                                                    "stance": "Stand",
-                                                    "useHandIK": 0,
-                                                    "useADIK": 0,
-                                                    "useAttachedLookAimPose": 0,
-                                                    "relativeTransform": {
-                                                        "Rotation": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        },
-                                                        "Position": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        }
-                                                    },
-                                                    "viewParams": {
-                                                        "viewLimitYawMin": -45,
-                                                        "viewLimitYawMax": 45,
-                                                        "viewLimitPitchMin": -45,
-                                                        "viewLimitPitchMax": 45
-                                                    },
-                                                    "enterParams": {
-                                                        "aiSignal": "UseStart",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "holsterWeapon": 1
-                                                    },
-                                                    "exitParams": {
-                                                        "aiSignal": "UseEnd",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "inputExit": 1,
-                                                        "exitOnMovement": 0,
-                                                        "exitOnJump": 0,
-                                                        "exitOnDamageTaken": 0
-                                                    },
-                                                    "additionalAttachmentFlags": {
-                                                        "exteriorOnly": 0,
-                                                        "interiorOnly": 0
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
-                                            "triggerInteractionOnSlottedUsables": 0,
-                                            "stance": "Stand",
-                                            "isEnabled": 1,
-                                            "isAvailableOnlyForRouting": 1,
-                                            "isAvailableWhenHoldingTheUsable": 1,
-                                            "shouldValidateExitAnimations": 1,
-                                            "alignmentSlots": {
-                                                "PointAlignmentSlot": {
-                                                    "id": "b10a7329-4094-4afa-85a0-1f9a16b6ab66",
-                                                    "available": 1,
-                                                    "canPlayerUse": 1,
-                                                    "helperName": "gladius_anchor:tailwing_port_02",
-                                                    "entityRelativeRotation": 0,
-                                                    "entityRelativeTranslation": 0,
-                                                    "linkMode": "NoLink",
-                                                    "stance": "Stand",
-                                                    "useHandIK": 0,
-                                                    "useADIK": 0,
-                                                    "useAttachedLookAimPose": 0,
-                                                    "relativeTransform": {
-                                                        "Rotation": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        },
-                                                        "Position": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        }
-                                                    },
-                                                    "viewParams": {
-                                                        "viewLimitYawMin": -45,
-                                                        "viewLimitYawMax": 45,
-                                                        "viewLimitPitchMin": -45,
-                                                        "viewLimitPitchMax": 45
-                                                    },
-                                                    "enterParams": {
-                                                        "aiSignal": "UseStart",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "holsterWeapon": 1
-                                                    },
-                                                    "exitParams": {
-                                                        "aiSignal": "UseEnd",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "inputExit": 1,
-                                                        "exitOnMovement": 0,
-                                                        "exitOnJump": 0,
-                                                        "exitOnDamageTaken": 0
-                                                    },
-                                                    "additionalAttachmentFlags": {
-                                                        "exteriorOnly": 0,
-                                                        "interiorOnly": 0
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ],
-                                    "relativeTransform": {
-                                        "Rotation": {
-                                            "x": 0,
-                                            "y": 0,
-                                            "z": 0
-                                        },
-                                        "Position": {
-                                            "x": 0,
-                                            "y": 0,
-                                            "z": 0
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "routingElement": {
-                                "UsableSlottingAlignmentSlot": {
-                                    "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[531B]"
+                                        "value": "PointAlignmentSlot[5339]"
                                     }
                                 }
                             },
@@ -19374,6 +19394,470 @@
                                                     "available": 1,
                                                     "canPlayerUse": 1,
                                                     "helperName": "gladius_anchor:tailwing_starboard_02",
+                                                    "entityRelativeRotation": 0,
+                                                    "entityRelativeTranslation": 0,
+                                                    "linkMode": "NoLink",
+                                                    "stance": "Stand",
+                                                    "useHandIK": 0,
+                                                    "useADIK": 0,
+                                                    "useAttachedLookAimPose": 0,
+                                                    "relativeTransform": {
+                                                        "Rotation": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        },
+                                                        "Position": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        }
+                                                    },
+                                                    "viewParams": {
+                                                        "viewLimitYawMin": -45,
+                                                        "viewLimitYawMax": 45,
+                                                        "viewLimitPitchMin": -45,
+                                                        "viewLimitPitchMax": 45
+                                                    },
+                                                    "enterParams": {
+                                                        "aiSignal": "UseStart",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "holsterWeapon": 1
+                                                    },
+                                                    "exitParams": {
+                                                        "aiSignal": "UseEnd",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "inputExit": 1,
+                                                        "exitOnMovement": 0,
+                                                        "exitOnJump": 0,
+                                                        "exitOnDamageTaken": 0
+                                                    },
+                                                    "additionalAttachmentFlags": {
+                                                        "exteriorOnly": 0,
+                                                        "interiorOnly": 0
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "relativeTransform": {
+                                        "Rotation": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "z": 0
+                                        },
+                                        "Position": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "z": 0
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "routingElement": {
+                                "UsableSlottingAlignmentSlot": {
+                                    "alignmentSlot": {
+                                        "value": "PointAlignmentSlot[5347]"
+                                    }
+                                }
+                            },
+                            "useSlots": {
+                                "UsableUseSlot": {
+                                    "name": "tailwing_right_talk",
+                                    "available": 1,
+                                    "useSlotReenablePoint": "UsableDelink",
+                                    "stance": "Unset",
+                                    "additionalFragmentTags": "up",
+                                    "isScoochable": 0,
+                                    "alignWithGravity": 0,
+                                    "syncAnimationWithUser": 0,
+                                    "useChannelInstances": [
+                                        {
+                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
+                                            "triggerInteractionOnSlottedUsables": 0,
+                                            "stance": "Stand",
+                                            "isEnabled": 1,
+                                            "isAvailableOnlyForRouting": 1,
+                                            "isAvailableWhenHoldingTheUsable": 1,
+                                            "shouldValidateExitAnimations": 1,
+                                            "alignmentSlots": {
+                                                "PointAlignmentSlot": {
+                                                    "id": "190cd121-3089-460b-b784-f3d0946144bf",
+                                                    "available": 1,
+                                                    "canPlayerUse": 1,
+                                                    "fragmentTag": "tail_wing+align_slot_02",
+                                                    "helperName": "gladius_anchor:tailwing_starboard_01",
+                                                    "entityRelativeRotation": 0,
+                                                    "entityRelativeTranslation": 0,
+                                                    "linkMode": "NoLink",
+                                                    "stance": "Stand",
+                                                    "useHandIK": 0,
+                                                    "useADIK": 0,
+                                                    "useAttachedLookAimPose": 0,
+                                                    "relativeTransform": {
+                                                        "Rotation": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        },
+                                                        "Position": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        }
+                                                    },
+                                                    "viewParams": {
+                                                        "viewLimitYawMin": -45,
+                                                        "viewLimitYawMax": 45,
+                                                        "viewLimitPitchMin": -45,
+                                                        "viewLimitPitchMax": 45
+                                                    },
+                                                    "enterParams": {
+                                                        "aiSignal": "UseStart",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "holsterWeapon": 1
+                                                    },
+                                                    "exitParams": {
+                                                        "aiSignal": "UseEnd",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "inputExit": 1,
+                                                        "exitOnMovement": 0,
+                                                        "exitOnJump": 0,
+                                                        "exitOnDamageTaken": 0
+                                                    },
+                                                    "additionalAttachmentFlags": {
+                                                        "exteriorOnly": 0,
+                                                        "interiorOnly": 0
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
+                                            "triggerInteractionOnSlottedUsables": 0,
+                                            "stance": "Stand",
+                                            "isEnabled": 1,
+                                            "isAvailableOnlyForRouting": 1,
+                                            "isAvailableWhenHoldingTheUsable": 1,
+                                            "shouldValidateExitAnimations": 1,
+                                            "alignmentSlots": {
+                                                "PointAlignmentSlot": {
+                                                    "id": "40aefd74-38b7-4624-9155-28ac1851b907",
+                                                    "available": 1,
+                                                    "canPlayerUse": 1,
+                                                    "helperName": "gladius_anchor:tailwing_starboard_02",
+                                                    "entityRelativeRotation": 0,
+                                                    "entityRelativeTranslation": 0,
+                                                    "linkMode": "NoLink",
+                                                    "stance": "Stand",
+                                                    "useHandIK": 0,
+                                                    "useADIK": 0,
+                                                    "useAttachedLookAimPose": 0,
+                                                    "relativeTransform": {
+                                                        "Rotation": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        },
+                                                        "Position": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        }
+                                                    },
+                                                    "viewParams": {
+                                                        "viewLimitYawMin": -45,
+                                                        "viewLimitYawMax": 45,
+                                                        "viewLimitPitchMin": -45,
+                                                        "viewLimitPitchMax": 45
+                                                    },
+                                                    "enterParams": {
+                                                        "aiSignal": "UseStart",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "holsterWeapon": 1
+                                                    },
+                                                    "exitParams": {
+                                                        "aiSignal": "UseEnd",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "inputExit": 1,
+                                                        "exitOnMovement": 0,
+                                                        "exitOnJump": 0,
+                                                        "exitOnDamageTaken": 0
+                                                    },
+                                                    "additionalAttachmentFlags": {
+                                                        "exteriorOnly": 0,
+                                                        "interiorOnly": 0
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "relativeTransform": {
+                                        "Rotation": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "z": 0
+                                        },
+                                        "Position": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "z": 0
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "routingElement": {
+                                "UsableSlottingAlignmentSlot": {
+                                    "alignmentSlot": {
+                                        "value": "PointAlignmentSlot[5320]"
+                                    }
+                                }
+                            },
+                            "useSlots": {
+                                "UsableUseSlot": {
+                                    "name": "middle_hull_left_talk",
+                                    "available": 1,
+                                    "useSlotReenablePoint": "UsableDelink",
+                                    "stance": "Stand",
+                                    "additionalFragmentTags": "middle",
+                                    "isScoochable": 0,
+                                    "alignWithGravity": 0,
+                                    "syncAnimationWithUser": 0,
+                                    "useChannelInstances": [
+                                        {
+                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
+                                            "triggerInteractionOnSlottedUsables": 0,
+                                            "stance": "Unset",
+                                            "isEnabled": 1,
+                                            "isAvailableOnlyForRouting": 1,
+                                            "isAvailableWhenHoldingTheUsable": 1,
+                                            "shouldValidateExitAnimations": 1,
+                                            "alignmentSlots": {
+                                                "PointAlignmentSlot": {
+                                                    "id": "d963df32-e951-47f0-8eea-1b4009ed7b6c",
+                                                    "available": 1,
+                                                    "canPlayerUse": 1,
+                                                    "fragmentTag": "air_intake+align_slot_01",
+                                                    "helperName": "gladius_anchor:airintake_dataport_left",
+                                                    "entityRelativeRotation": 0,
+                                                    "entityRelativeTranslation": 0,
+                                                    "linkMode": "NoLink",
+                                                    "stance": "Stand",
+                                                    "useHandIK": 0,
+                                                    "useADIK": 0,
+                                                    "useAttachedLookAimPose": 0,
+                                                    "relativeTransform": {
+                                                        "Rotation": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        },
+                                                        "Position": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        }
+                                                    },
+                                                    "viewParams": {
+                                                        "viewLimitYawMin": -45,
+                                                        "viewLimitYawMax": 45,
+                                                        "viewLimitPitchMin": -45,
+                                                        "viewLimitPitchMax": 45
+                                                    },
+                                                    "enterParams": {
+                                                        "aiSignal": "UseStart",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "holsterWeapon": 1
+                                                    },
+                                                    "exitParams": {
+                                                        "aiSignal": "UseEnd",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "inputExit": 1,
+                                                        "exitOnMovement": 0,
+                                                        "exitOnJump": 0,
+                                                        "exitOnDamageTaken": 0
+                                                    },
+                                                    "additionalAttachmentFlags": {
+                                                        "exteriorOnly": 0,
+                                                        "interiorOnly": 0
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
+                                            "triggerInteractionOnSlottedUsables": 0,
+                                            "stance": "Unset",
+                                            "isEnabled": 1,
+                                            "isAvailableOnlyForRouting": 1,
+                                            "isAvailableWhenHoldingTheUsable": 1,
+                                            "shouldValidateExitAnimations": 1,
+                                            "alignmentSlots": {
+                                                "PointAlignmentSlot": {
+                                                    "id": "b18f8ebf-d1d2-4c9f-adbf-5bb23cfdb5e3",
+                                                    "available": 1,
+                                                    "canPlayerUse": 1,
+                                                    "fragmentTag": "hull+align_slot_01",
+                                                    "helperName": "gladius_anchor:hull_left_base_ventral",
+                                                    "entityRelativeRotation": 0,
+                                                    "entityRelativeTranslation": 0,
+                                                    "linkMode": "NoLink",
+                                                    "stance": "Stand",
+                                                    "useHandIK": 0,
+                                                    "useADIK": 0,
+                                                    "useAttachedLookAimPose": 0,
+                                                    "relativeTransform": {
+                                                        "Rotation": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        },
+                                                        "Position": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        }
+                                                    },
+                                                    "viewParams": {
+                                                        "viewLimitYawMin": -45,
+                                                        "viewLimitYawMax": 45,
+                                                        "viewLimitPitchMin": -45,
+                                                        "viewLimitPitchMax": 45
+                                                    },
+                                                    "enterParams": {
+                                                        "aiSignal": "UseStart",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "holsterWeapon": 1
+                                                    },
+                                                    "exitParams": {
+                                                        "aiSignal": "UseEnd",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "inputExit": 1,
+                                                        "exitOnMovement": 0,
+                                                        "exitOnJump": 0,
+                                                        "exitOnDamageTaken": 0
+                                                    },
+                                                    "additionalAttachmentFlags": {
+                                                        "exteriorOnly": 0,
+                                                        "interiorOnly": 0
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "relativeTransform": {
+                                        "Rotation": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "z": 0
+                                        },
+                                        "Position": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "z": 0
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "routingElement": {
+                                "UsableSlottingAlignmentSlot": {
+                                    "alignmentSlot": {
+                                        "value": "PointAlignmentSlot[5328]"
+                                    }
+                                }
+                            },
+                            "useSlots": {
+                                "UsableUseSlot": {
+                                    "name": "middle_hull_left_talk",
+                                    "available": 1,
+                                    "useSlotReenablePoint": "UsableDelink",
+                                    "stance": "Stand",
+                                    "additionalFragmentTags": "middle",
+                                    "isScoochable": 0,
+                                    "alignWithGravity": 0,
+                                    "syncAnimationWithUser": 0,
+                                    "useChannelInstances": [
+                                        {
+                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
+                                            "triggerInteractionOnSlottedUsables": 0,
+                                            "stance": "Unset",
+                                            "isEnabled": 1,
+                                            "isAvailableOnlyForRouting": 1,
+                                            "isAvailableWhenHoldingTheUsable": 1,
+                                            "shouldValidateExitAnimations": 1,
+                                            "alignmentSlots": {
+                                                "PointAlignmentSlot": {
+                                                    "id": "d963df32-e951-47f0-8eea-1b4009ed7b6c",
+                                                    "available": 1,
+                                                    "canPlayerUse": 1,
+                                                    "fragmentTag": "air_intake+align_slot_01",
+                                                    "helperName": "gladius_anchor:airintake_dataport_left",
+                                                    "entityRelativeRotation": 0,
+                                                    "entityRelativeTranslation": 0,
+                                                    "linkMode": "NoLink",
+                                                    "stance": "Stand",
+                                                    "useHandIK": 0,
+                                                    "useADIK": 0,
+                                                    "useAttachedLookAimPose": 0,
+                                                    "relativeTransform": {
+                                                        "Rotation": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        },
+                                                        "Position": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "z": 0
+                                                        }
+                                                    },
+                                                    "viewParams": {
+                                                        "viewLimitYawMin": -45,
+                                                        "viewLimitYawMax": 45,
+                                                        "viewLimitPitchMin": -45,
+                                                        "viewLimitPitchMax": 45
+                                                    },
+                                                    "enterParams": {
+                                                        "aiSignal": "UseStart",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "holsterWeapon": 1
+                                                    },
+                                                    "exitParams": {
+                                                        "aiSignal": "UseEnd",
+                                                        "eventTriggerMask": "AIAndPlayer",
+                                                        "inputExit": 1,
+                                                        "exitOnMovement": 0,
+                                                        "exitOnJump": 0,
+                                                        "exitOnDamageTaken": 0
+                                                    },
+                                                    "additionalAttachmentFlags": {
+                                                        "exteriorOnly": 0,
+                                                        "interiorOnly": 0
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
+                                            "triggerInteractionOnSlottedUsables": 0,
+                                            "stance": "Unset",
+                                            "isEnabled": 1,
+                                            "isAvailableOnlyForRouting": 1,
+                                            "isAvailableWhenHoldingTheUsable": 1,
+                                            "shouldValidateExitAnimations": 1,
+                                            "alignmentSlots": {
+                                                "PointAlignmentSlot": {
+                                                    "id": "b18f8ebf-d1d2-4c9f-adbf-5bb23cfdb5e3",
+                                                    "available": 1,
+                                                    "canPlayerUse": 1,
+                                                    "fragmentTag": "hull+align_slot_01",
+                                                    "helperName": "gladius_anchor:hull_left_base_ventral",
                                                     "entityRelativeRotation": 0,
                                                     "entityRelativeTranslation": 0,
                                                     "linkMode": "NoLink",
@@ -19440,470 +19924,6 @@
                                 "UsableSlottingAlignmentSlot": {
                                     "alignmentSlot": {
                                         "value": "PointAlignmentSlot[5329]"
-                                    }
-                                }
-                            },
-                            "useSlots": {
-                                "UsableUseSlot": {
-                                    "name": "tailwing_right_talk",
-                                    "available": 1,
-                                    "useSlotReenablePoint": "UsableDelink",
-                                    "stance": "Unset",
-                                    "additionalFragmentTags": "up",
-                                    "isScoochable": 0,
-                                    "alignWithGravity": 0,
-                                    "syncAnimationWithUser": 0,
-                                    "useChannelInstances": [
-                                        {
-                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
-                                            "triggerInteractionOnSlottedUsables": 0,
-                                            "stance": "Stand",
-                                            "isEnabled": 1,
-                                            "isAvailableOnlyForRouting": 1,
-                                            "isAvailableWhenHoldingTheUsable": 1,
-                                            "shouldValidateExitAnimations": 1,
-                                            "alignmentSlots": {
-                                                "PointAlignmentSlot": {
-                                                    "id": "190cd121-3089-460b-b784-f3d0946144bf",
-                                                    "available": 1,
-                                                    "canPlayerUse": 1,
-                                                    "fragmentTag": "tail_wing+align_slot_02",
-                                                    "helperName": "gladius_anchor:tailwing_starboard_01",
-                                                    "entityRelativeRotation": 0,
-                                                    "entityRelativeTranslation": 0,
-                                                    "linkMode": "NoLink",
-                                                    "stance": "Stand",
-                                                    "useHandIK": 0,
-                                                    "useADIK": 0,
-                                                    "useAttachedLookAimPose": 0,
-                                                    "relativeTransform": {
-                                                        "Rotation": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        },
-                                                        "Position": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        }
-                                                    },
-                                                    "viewParams": {
-                                                        "viewLimitYawMin": -45,
-                                                        "viewLimitYawMax": 45,
-                                                        "viewLimitPitchMin": -45,
-                                                        "viewLimitPitchMax": 45
-                                                    },
-                                                    "enterParams": {
-                                                        "aiSignal": "UseStart",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "holsterWeapon": 1
-                                                    },
-                                                    "exitParams": {
-                                                        "aiSignal": "UseEnd",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "inputExit": 1,
-                                                        "exitOnMovement": 0,
-                                                        "exitOnJump": 0,
-                                                        "exitOnDamageTaken": 0
-                                                    },
-                                                    "additionalAttachmentFlags": {
-                                                        "exteriorOnly": 0,
-                                                        "interiorOnly": 0
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
-                                            "triggerInteractionOnSlottedUsables": 0,
-                                            "stance": "Stand",
-                                            "isEnabled": 1,
-                                            "isAvailableOnlyForRouting": 1,
-                                            "isAvailableWhenHoldingTheUsable": 1,
-                                            "shouldValidateExitAnimations": 1,
-                                            "alignmentSlots": {
-                                                "PointAlignmentSlot": {
-                                                    "id": "40aefd74-38b7-4624-9155-28ac1851b907",
-                                                    "available": 1,
-                                                    "canPlayerUse": 1,
-                                                    "helperName": "gladius_anchor:tailwing_starboard_02",
-                                                    "entityRelativeRotation": 0,
-                                                    "entityRelativeTranslation": 0,
-                                                    "linkMode": "NoLink",
-                                                    "stance": "Stand",
-                                                    "useHandIK": 0,
-                                                    "useADIK": 0,
-                                                    "useAttachedLookAimPose": 0,
-                                                    "relativeTransform": {
-                                                        "Rotation": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        },
-                                                        "Position": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        }
-                                                    },
-                                                    "viewParams": {
-                                                        "viewLimitYawMin": -45,
-                                                        "viewLimitYawMax": 45,
-                                                        "viewLimitPitchMin": -45,
-                                                        "viewLimitPitchMax": 45
-                                                    },
-                                                    "enterParams": {
-                                                        "aiSignal": "UseStart",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "holsterWeapon": 1
-                                                    },
-                                                    "exitParams": {
-                                                        "aiSignal": "UseEnd",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "inputExit": 1,
-                                                        "exitOnMovement": 0,
-                                                        "exitOnJump": 0,
-                                                        "exitOnDamageTaken": 0
-                                                    },
-                                                    "additionalAttachmentFlags": {
-                                                        "exteriorOnly": 0,
-                                                        "interiorOnly": 0
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ],
-                                    "relativeTransform": {
-                                        "Rotation": {
-                                            "x": 0,
-                                            "y": 0,
-                                            "z": 0
-                                        },
-                                        "Position": {
-                                            "x": 0,
-                                            "y": 0,
-                                            "z": 0
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "routingElement": {
-                                "UsableSlottingAlignmentSlot": {
-                                    "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[5302]"
-                                    }
-                                }
-                            },
-                            "useSlots": {
-                                "UsableUseSlot": {
-                                    "name": "middle_hull_left_talk",
-                                    "available": 1,
-                                    "useSlotReenablePoint": "UsableDelink",
-                                    "stance": "Stand",
-                                    "additionalFragmentTags": "middle",
-                                    "isScoochable": 0,
-                                    "alignWithGravity": 0,
-                                    "syncAnimationWithUser": 0,
-                                    "useChannelInstances": [
-                                        {
-                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
-                                            "triggerInteractionOnSlottedUsables": 0,
-                                            "stance": "Unset",
-                                            "isEnabled": 1,
-                                            "isAvailableOnlyForRouting": 1,
-                                            "isAvailableWhenHoldingTheUsable": 1,
-                                            "shouldValidateExitAnimations": 1,
-                                            "alignmentSlots": {
-                                                "PointAlignmentSlot": {
-                                                    "id": "d963df32-e951-47f0-8eea-1b4009ed7b6c",
-                                                    "available": 1,
-                                                    "canPlayerUse": 1,
-                                                    "fragmentTag": "air_intake+align_slot_01",
-                                                    "helperName": "gladius_anchor:airintake_dataport_left",
-                                                    "entityRelativeRotation": 0,
-                                                    "entityRelativeTranslation": 0,
-                                                    "linkMode": "NoLink",
-                                                    "stance": "Stand",
-                                                    "useHandIK": 0,
-                                                    "useADIK": 0,
-                                                    "useAttachedLookAimPose": 0,
-                                                    "relativeTransform": {
-                                                        "Rotation": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        },
-                                                        "Position": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        }
-                                                    },
-                                                    "viewParams": {
-                                                        "viewLimitYawMin": -45,
-                                                        "viewLimitYawMax": 45,
-                                                        "viewLimitPitchMin": -45,
-                                                        "viewLimitPitchMax": 45
-                                                    },
-                                                    "enterParams": {
-                                                        "aiSignal": "UseStart",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "holsterWeapon": 1
-                                                    },
-                                                    "exitParams": {
-                                                        "aiSignal": "UseEnd",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "inputExit": 1,
-                                                        "exitOnMovement": 0,
-                                                        "exitOnJump": 0,
-                                                        "exitOnDamageTaken": 0
-                                                    },
-                                                    "additionalAttachmentFlags": {
-                                                        "exteriorOnly": 0,
-                                                        "interiorOnly": 0
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
-                                            "triggerInteractionOnSlottedUsables": 0,
-                                            "stance": "Unset",
-                                            "isEnabled": 1,
-                                            "isAvailableOnlyForRouting": 1,
-                                            "isAvailableWhenHoldingTheUsable": 1,
-                                            "shouldValidateExitAnimations": 1,
-                                            "alignmentSlots": {
-                                                "PointAlignmentSlot": {
-                                                    "id": "b18f8ebf-d1d2-4c9f-adbf-5bb23cfdb5e3",
-                                                    "available": 1,
-                                                    "canPlayerUse": 1,
-                                                    "fragmentTag": "hull+align_slot_01",
-                                                    "helperName": "gladius_anchor:hull_left_base_ventral",
-                                                    "entityRelativeRotation": 0,
-                                                    "entityRelativeTranslation": 0,
-                                                    "linkMode": "NoLink",
-                                                    "stance": "Stand",
-                                                    "useHandIK": 0,
-                                                    "useADIK": 0,
-                                                    "useAttachedLookAimPose": 0,
-                                                    "relativeTransform": {
-                                                        "Rotation": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        },
-                                                        "Position": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        }
-                                                    },
-                                                    "viewParams": {
-                                                        "viewLimitYawMin": -45,
-                                                        "viewLimitYawMax": 45,
-                                                        "viewLimitPitchMin": -45,
-                                                        "viewLimitPitchMax": 45
-                                                    },
-                                                    "enterParams": {
-                                                        "aiSignal": "UseStart",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "holsterWeapon": 1
-                                                    },
-                                                    "exitParams": {
-                                                        "aiSignal": "UseEnd",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "inputExit": 1,
-                                                        "exitOnMovement": 0,
-                                                        "exitOnJump": 0,
-                                                        "exitOnDamageTaken": 0
-                                                    },
-                                                    "additionalAttachmentFlags": {
-                                                        "exteriorOnly": 0,
-                                                        "interiorOnly": 0
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ],
-                                    "relativeTransform": {
-                                        "Rotation": {
-                                            "x": 0,
-                                            "y": 0,
-                                            "z": 0
-                                        },
-                                        "Position": {
-                                            "x": 0,
-                                            "y": 0,
-                                            "z": 0
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "routingElement": {
-                                "UsableSlottingAlignmentSlot": {
-                                    "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[530A]"
-                                    }
-                                }
-                            },
-                            "useSlots": {
-                                "UsableUseSlot": {
-                                    "name": "middle_hull_left_talk",
-                                    "available": 1,
-                                    "useSlotReenablePoint": "UsableDelink",
-                                    "stance": "Stand",
-                                    "additionalFragmentTags": "middle",
-                                    "isScoochable": 0,
-                                    "alignWithGravity": 0,
-                                    "syncAnimationWithUser": 0,
-                                    "useChannelInstances": [
-                                        {
-                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
-                                            "triggerInteractionOnSlottedUsables": 0,
-                                            "stance": "Unset",
-                                            "isEnabled": 1,
-                                            "isAvailableOnlyForRouting": 1,
-                                            "isAvailableWhenHoldingTheUsable": 1,
-                                            "shouldValidateExitAnimations": 1,
-                                            "alignmentSlots": {
-                                                "PointAlignmentSlot": {
-                                                    "id": "d963df32-e951-47f0-8eea-1b4009ed7b6c",
-                                                    "available": 1,
-                                                    "canPlayerUse": 1,
-                                                    "fragmentTag": "air_intake+align_slot_01",
-                                                    "helperName": "gladius_anchor:airintake_dataport_left",
-                                                    "entityRelativeRotation": 0,
-                                                    "entityRelativeTranslation": 0,
-                                                    "linkMode": "NoLink",
-                                                    "stance": "Stand",
-                                                    "useHandIK": 0,
-                                                    "useADIK": 0,
-                                                    "useAttachedLookAimPose": 0,
-                                                    "relativeTransform": {
-                                                        "Rotation": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        },
-                                                        "Position": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        }
-                                                    },
-                                                    "viewParams": {
-                                                        "viewLimitYawMin": -45,
-                                                        "viewLimitYawMax": 45,
-                                                        "viewLimitPitchMin": -45,
-                                                        "viewLimitPitchMax": 45
-                                                    },
-                                                    "enterParams": {
-                                                        "aiSignal": "UseStart",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "holsterWeapon": 1
-                                                    },
-                                                    "exitParams": {
-                                                        "aiSignal": "UseEnd",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "inputExit": 1,
-                                                        "exitOnMovement": 0,
-                                                        "exitOnJump": 0,
-                                                        "exitOnDamageTaken": 0
-                                                    },
-                                                    "additionalAttachmentFlags": {
-                                                        "exteriorOnly": 0,
-                                                        "interiorOnly": 0
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "useChannelArchetype": "237b6bf6-997c-4319-9e75-8095fce41b14",
-                                            "triggerInteractionOnSlottedUsables": 0,
-                                            "stance": "Unset",
-                                            "isEnabled": 1,
-                                            "isAvailableOnlyForRouting": 1,
-                                            "isAvailableWhenHoldingTheUsable": 1,
-                                            "shouldValidateExitAnimations": 1,
-                                            "alignmentSlots": {
-                                                "PointAlignmentSlot": {
-                                                    "id": "b18f8ebf-d1d2-4c9f-adbf-5bb23cfdb5e3",
-                                                    "available": 1,
-                                                    "canPlayerUse": 1,
-                                                    "fragmentTag": "hull+align_slot_01",
-                                                    "helperName": "gladius_anchor:hull_left_base_ventral",
-                                                    "entityRelativeRotation": 0,
-                                                    "entityRelativeTranslation": 0,
-                                                    "linkMode": "NoLink",
-                                                    "stance": "Stand",
-                                                    "useHandIK": 0,
-                                                    "useADIK": 0,
-                                                    "useAttachedLookAimPose": 0,
-                                                    "relativeTransform": {
-                                                        "Rotation": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        },
-                                                        "Position": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "z": 0
-                                                        }
-                                                    },
-                                                    "viewParams": {
-                                                        "viewLimitYawMin": -45,
-                                                        "viewLimitYawMax": 45,
-                                                        "viewLimitPitchMin": -45,
-                                                        "viewLimitPitchMax": 45
-                                                    },
-                                                    "enterParams": {
-                                                        "aiSignal": "UseStart",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "holsterWeapon": 1
-                                                    },
-                                                    "exitParams": {
-                                                        "aiSignal": "UseEnd",
-                                                        "eventTriggerMask": "AIAndPlayer",
-                                                        "inputExit": 1,
-                                                        "exitOnMovement": 0,
-                                                        "exitOnJump": 0,
-                                                        "exitOnDamageTaken": 0
-                                                    },
-                                                    "additionalAttachmentFlags": {
-                                                        "exteriorOnly": 0,
-                                                        "interiorOnly": 0
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ],
-                                    "relativeTransform": {
-                                        "Rotation": {
-                                            "x": 0,
-                                            "y": 0,
-                                            "z": 0
-                                        },
-                                        "Position": {
-                                            "x": 0,
-                                            "y": 0,
-                                            "z": 0
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "routingElement": {
-                                "UsableSlottingAlignmentSlot": {
-                                    "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[530B]"
                                     }
                                 }
                             },
@@ -20058,7 +20078,7 @@
                             "routingElement": {
                                 "UsableSlottingAlignmentSlot": {
                                     "alignmentSlot": {
-                                        "value": "PointAlignmentSlot[5303]"
+                                        "value": "PointAlignmentSlot[5321]"
                                     }
                                 }
                             },
@@ -20492,9 +20512,9 @@
                 }
             },
             "Interactions": [
-                "Enableproximityassist",
-                "Disableproximityassist",
-                "Engineon"
+                "Ontimerfinished",
+                "Starttimer_countdownb",
+                "Ontimerstarted_countdownb"
             ]
         }
     }

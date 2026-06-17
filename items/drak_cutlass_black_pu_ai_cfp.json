@@ -1084,9 +1084,9 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "DisableVTOL",
-                                "DisplayName": "IFCS Flight Mode TEMP",
-                                "__DisplayName": "@ui_interactor_IFCS_flight_mode_TEMP",
+                                "Name": "Open",
+                                "DisplayName": "Open",
+                                "__DisplayName": "@interaction_open",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -1095,13 +1095,33 @@
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "conditionParams": {
+                                            "InteractionConditionCanOpenExternalInventory": {
+                                                "conditionDisplay": {
+                                                    "ConditionDisplayParams": {
+                                                        "exclusiveDisplay": 0,
+                                                        "blockedColor": {
+                                                            "BlockedColorParams": {
+                                                                "selectedColor": "c6688c07-0987-4e85-82b7-04458356db8a",
+                                                                "unselectedColor": "902844b1-8817-4b46-8770-045beee67ce0",
+                                                                "applyImmediately": 1
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             },
                             {
-                                "Name": "EnableProximityAssist",
-                                "DisplayName": "Enable Flight Proximity Assist",
-                                "__DisplayName": "@pause_OptionsFlightProximityAssist",
-                                "DisplayType": "Show",
+                                "Name": "Close",
+                                "DisplayName": "Close",
+                                "__DisplayName": "@interaction_close",
+                                "DisplayType": "Hide",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 1,
@@ -2382,10 +2402,16 @@
                                 "thrusterType": "Maneuver"
                             },
                             {
-                                "thrusterType": "Main"
+                                "thrusterType": "Main",
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                }
                             },
                             {
-                                "thrusterType": "Retro"
+                                "thrusterType": "Retro",
+                                "timeSinceLastAfterburnerEnabledRtpc": {
+                                    "rtpc": "Thruster_Time_Since_Last_Afterburner_Start"
+                                }
                             }
                         ]
                     },
@@ -4626,26 +4652,26 @@
                     "InternalResourceLinks": [
                         {
                             "port1": {
-                                "value": "SItemPortDef[E6A9]"
+                                "value": "SItemPortDef[E7AF]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[E6AA]"
+                                "value": "SItemPortDef[E7B0]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[E6A9]"
+                                "value": "SItemPortDef[E7AF]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[E6AB]"
+                                "value": "SItemPortDef[E7B1]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[E6A9]"
+                                "value": "SItemPortDef[E7AF]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[E6AC]"
+                                "value": "SItemPortDef[E7B2]"
                             }
                         }
                     ],
@@ -4986,26 +5012,31 @@
                             "networkAuthority": "Local",
                             "States": [
                                 {
-                                    "StateName": "TargetingSystemLight_HostileTarget",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "86977ab1-708c-4581-87af-2bc27e043190"
-                                        }
-                                    }
+                                    "StateName": "TargetingSystemPinned_PinTarget"
                                 },
                                 {
-                                    "StateName": "TargetingSystemLight_FriendlyTarget",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "eab907a6-4335-4d38-a96d-22faa0c5bc34"
-                                        }
-                                    }
+                                    "StateName": "TargetingSystemPinned_ClearPinnedTargets"
                                 },
                                 {
-                                    "StateName": "TargetingSystemLight_OtherTarget",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "1c0a5631-be89-4ff4-a3d7-ca1d38f233e3"
+                                    "StateName": "TargetingSystemCycle_Next",
+                                    "EnterEventDispatchers": {
+                                        "AnimationSetVariable": {
+                                            "value": 1,
+                                            "overrideInterpolation": {
+                                                "AnimationVariableInterpolation": {
+                                                    "timeRange": 1,
+                                                    "type": "Linear"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 0.2,
+                                            "RunWhenStreamedOut": 0,
+                                            "NextState": {
+                                                "value": "SInteractionState[DB37]"
+                                            }
                                         }
                                     }
                                 }
@@ -5263,13 +5294,13 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[D643]"
+                        "value": "SInteractionState[DB33]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[D644]"
+                        "value": "SInteractionState[DB34]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[D645]"
+                        "value": "SInteractionState[DB35]"
                     }
                 }
             },
@@ -5556,8 +5587,8 @@
                 }
             },
             "Interactions": [
-                "Disablevtol",
-                "Enableproximityassist"
+                "Open",
+                "Close"
             ]
         }
     }
