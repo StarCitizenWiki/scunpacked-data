@@ -89,6 +89,7 @@
                                 "enable": 1,
                                 "initialTemperature": -1,
                                 "internalTemperatureGeneration": 0,
+                                "useParentRoomOccupant": 0,
                                 "coolingEqualizationParams": {
                                     "CoolingEqualizationMultiplier": {
                                         "coolingEqualizationMultiplier": 1
@@ -196,9 +197,9 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "GSafe_SetActive",
-                                "DisplayName": "Enable G-Safe Limiters",
-                                "__DisplayName": "@vehicle_interactor_GSafe_Enable",
+                                "Name": "IFCS_CruiseControl_SetInactive",
+                                "DisplayName": "Disengage Cruise Control",
+                                "__DisplayName": "@vehicle_interactor_CruiseControl_Disable",
                                 "DisplayType": "Show",
                                 "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
@@ -210,9 +211,9 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "GSafe_SetInactive",
-                                "DisplayName": "Disable G-Safe Limiters",
-                                "__DisplayName": "@vehicle_interactor_GSafe_Disable",
+                                "Name": "IFCS_ProximityAssist_SetActive",
+                                "DisplayName": "Enable Proximity Flight Assist",
+                                "__DisplayName": "@vehicle_interactor_ProximityAssist_Enable",
                                 "DisplayType": "Show",
                                 "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
@@ -224,9 +225,9 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "ESP_SetActive",
-                                "DisplayName": "Enable ESP",
-                                "__DisplayName": "@vehicle_interactor_ESP_Enable",
+                                "Name": "IFCS_ProximityAssist_SetInactive",
+                                "DisplayName": "Disable Proximity Flight Assist",
+                                "__DisplayName": "@vehicle_interactor_ProximityAssist_Disable",
                                 "DisplayType": "Show",
                                 "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
@@ -268,15 +269,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D5FB]"
-                                        }
-                                    },
-                                    {
-                                        "DisplayName": "Sit",
-                                        "__DisplayName": "@ui_interactor_generic_seat",
-                                        "IsPrimary": 1,
-                                        "Interaction": {
-                                            "value": "SSharedInteractionParams[D5FC]"
+                                            "value": "SSharedInteractionParams[DD72]"
                                         }
                                     },
                                     {
@@ -284,7 +277,15 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D5FD]"
+                                            "value": "SSharedInteractionParams[DD76]"
+                                        }
+                                    },
+                                    {
+                                        "DisplayName": "",
+                                        "__DisplayName": "@LOC_EMPTY",
+                                        "IsPrimary": 0,
+                                        "Interaction": {
+                                            "value": "SSharedInteractionParams[DD77]"
                                         }
                                     }
                                 ],
@@ -385,58 +386,70 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[8CB7]"
+                                "value": "SInteractionState[94CA]"
                             },
                             "States": [
                                 {
-                                    "StateName": "AirlockControl_OpenRequested",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[9862]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[8CB6]"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "LockControl_NoLockConnected",
+                                    "StateName": "EquippedToSuit",
                                     "Interactions": [
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[9865]"
+                                                "value": "SSharedInteractionParams[9FF7]"
                                             }
                                         },
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[9866]"
+                                                "value": "SSharedInteractionParams[9FFB]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[9FF9]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[9FF8]"
                                             }
                                         }
                                     ]
                                 },
                                 {
-                                    "StateName": "LockControl_LockConnected"
-                                },
-                                {
-                                    "StateName": "NoMountedGunConnected",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
+                                    "StateName": "Inspecting",
+                                    "Interactions": [
+                                        {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[986C]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[8CBB]"
+                                                "value": "SSharedInteractionParams[9FFB]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[9FF7]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[9FF8]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[9FFA]"
                                             }
                                         }
-                                    }
+                                    ]
+                                },
+                                {
+                                    "StateName": "Dropped"
+                                },
+                                {
+                                    "StateName": "Offered"
                                 }
                             ],
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[8CBA]"
+                                        "value": "SInteractionState[94CD]"
                                     }
                                 }
                             }
@@ -523,32 +536,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         }
                     }
@@ -774,6 +793,7 @@
                 "Enable": 1,
                 "InitialTemperature": -1,
                 "InternalTemperatureGeneration": 0,
+                "UseParentRoomOccupant": 0,
                 "CoolingEqualizationMultiplier": 1,
                 "SignatureParams": {
                     "Enable": 0,
@@ -799,9 +819,9 @@
                 }
             },
             "Interactions": [
-                "Gsafe_setactive",
-                "Gsafe_setinactive",
-                "Esp_setactive"
+                "Ifcs_cruisecontrol_setinactive",
+                "Ifcs_proximityassist_setactive",
+                "Ifcs_proximityassist_setinactive"
             ],
             "ResourceContainer": {
                 "Immutable": false,

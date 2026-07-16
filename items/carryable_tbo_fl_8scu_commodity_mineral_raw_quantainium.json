@@ -89,6 +89,7 @@
                                 "enable": 1,
                                 "initialTemperature": -1,
                                 "internalTemperatureGeneration": 0,
+                                "useParentRoomOccupant": 0,
                                 "coolingEqualizationParams": {
                                     "CoolingEqualizationMultiplier": {
                                         "coolingEqualizationMultiplier": 1
@@ -196,43 +197,43 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "LandingGear_Invalid",
-                                "DisplayName": "---",
-                                "__DisplayName": "@Test_InvalidInteraction",
+                                "Name": "VTOL_SetActive",
+                                "DisplayName": "Enable VTOL",
+                                "__DisplayName": "@vehicle_interactor_VTOL_Enable",
                                 "DisplayType": "Show",
-                                "GenericCursor": "Invalid",
+                                "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
-                                "Sendable": 0,
-                                "Linkable": 0,
-                                "LockedByLinks": 0,
+                                "Sendable": 1,
+                                "Linkable": 1,
+                                "LockedByLinks": 1,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "SelfDestruct_Engage",
-                                "DisplayName": "Self Destruct",
-                                "__DisplayName": "@ui_CISelfDestruct",
+                                "Name": "VTOL_SetInactive",
+                                "DisplayName": "Disable VTOL",
+                                "__DisplayName": "@vehicle_interactor_VTOL_Disable",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
+                                "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
-                                "Sendable": 0,
-                                "Linkable": 0,
-                                "LockedByLinks": 0,
+                                "Sendable": 1,
+                                "Linkable": 1,
+                                "LockedByLinks": 1,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "SelfDestruct_Disengage",
-                                "DisplayName": "Self Destruct",
-                                "__DisplayName": "@ui_CISelfDestruct",
+                                "Name": "ProximityAssist_SetActive",
+                                "DisplayName": "Enable Proximity Flight Assist",
+                                "__DisplayName": "@vehicle_interactor_ProximityAssist_Enable",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
-                                "FocusModeOnly": 1,
-                                "Sendable": 0,
-                                "Linkable": 0,
-                                "LockedByLinks": 0,
+                                "GenericCursor": "Button",
+                                "FocusModeOnly": 0,
+                                "Sendable": 1,
+                                "Linkable": 1,
+                                "LockedByLinks": 1,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
@@ -268,15 +269,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D48B]"
-                                        }
-                                    },
-                                    {
-                                        "DisplayName": "",
-                                        "__DisplayName": "@LOC_EMPTY",
-                                        "IsPrimary": 0,
-                                        "Interaction": {
-                                            "value": "SSharedInteractionParams[D48B]"
+                                            "value": "SSharedInteractionParams[D9BA]"
                                         }
                                     },
                                     {
@@ -284,8 +277,13 @@
                                         "__DisplayName": "@ui_interactor_generic_seat",
                                         "IsPrimary": 1,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D48A]"
+                                            "value": "SSharedInteractionParams[D9BB]"
                                         }
+                                    },
+                                    {
+                                        "DisplayName": "",
+                                        "__DisplayName": "@LOC_EMPTY",
+                                        "IsPrimary": 0
                                     }
                                 ],
                                 "Offset": {
@@ -385,49 +383,56 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[89C3]"
+                                "value": "SInteractionState[91D6]"
                             },
                             "States": [
                                 {
-                                    "StateName": "AirlockControl_OpenRequested",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[9492]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[89C2]"
+                                    "StateName": "DoorUnlocked",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "e5e348ca-7752-4930-8a50-874f34dca55e"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "LockControl_NoLockConnected",
-                                    "Interactions": [
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[9495]"
-                                            }
-                                        },
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[9496]"
+                                    "StateName": "DoorAccessGranted",
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 1.5,
+                                            "RunWhenStreamedOut": 0,
+                                            "NextState": {
+                                                "value": "SInteractionState[91D6]"
                                             }
                                         }
-                                    ]
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "00000000-0000-0000-0000-000000000000"
+                                            }
+                                        }
+                                    }
                                 },
                                 {
-                                    "StateName": "LockControl_LockConnected"
-                                },
-                                {
-                                    "StateName": "NoMountedGunConnected",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[949C]"
-                                            },
+                                    "StateName": "DoorAccessDenied",
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 1.5,
+                                            "RunWhenStreamedOut": 0,
                                             "NextState": {
-                                                "value": "SInteractionState[89C7]"
+                                                "value": "SInteractionState[91D9]"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "DoorLocked",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "60daf4c5-91c1-4900-aac2-1eb57f9de62f"
                                             }
                                         }
                                     }
@@ -436,7 +441,7 @@
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[89C6]"
+                                        "value": "SInteractionState[91D9]"
                                     }
                                 }
                             }
@@ -523,32 +528,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         }
                     }
@@ -774,6 +785,7 @@
                 "Enable": 1,
                 "InitialTemperature": -1,
                 "InternalTemperatureGeneration": 0,
+                "UseParentRoomOccupant": 0,
                 "CoolingEqualizationMultiplier": 1,
                 "SignatureParams": {
                     "Enable": 0,
@@ -799,9 +811,9 @@
                 }
             },
             "Interactions": [
-                "Landinggear_invalid",
-                "Selfdestruct_engage",
-                "Selfdestruct_disengage"
+                "Vtol_setactive",
+                "Vtol_setinactive",
+                "Proximityassist_setactive"
             ],
             "ResourceContainer": {
                 "Immutable": false,

@@ -723,23 +723,23 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "Close",
-                                "DisplayName": "Close",
-                                "__DisplayName": "@innerthought_close",
+                                "Name": "DisableESP",
+                                "DisplayName": "Disable ESP",
+                                "__DisplayName": "@vehicle_interactor_ESP_Disable",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 1,
                                 "Linkable": 1,
-                                "LockedByLinks": 1,
+                                "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "Open Panel",
-                                "DisplayName": "Access Panel",
-                                "__DisplayName": "@innerthought_door_panel_open",
+                                "Name": "EnableCruise",
+                                "DisplayName": "Engage Cruise Control",
+                                "__DisplayName": "@vehicle_interactor_CruiseControl_Enable",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -1958,32 +1958,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         }
                     }
@@ -2064,14 +2070,32 @@
                     },
                     "nlpcParams": {
                         "useDeprecatedAudioModel": 0,
-                        "passByBuildupTime": 2,
+                        "passByBuildupTime": 0.6,
                         "minTimeBetweenPassBy": 5,
                         "minRelativeSpeed": 50,
+                        "passByOneShot": {
+                            "audioTrigger": "Play_SSPB_Shared"
+                        },
                         "movementLoopStart": {
-                            "audioTrigger": "Play_SSPB_AEGS_Gladius_NLPC_LP"
+                            "audioTrigger": "Play_SSPB_Shared_LP"
                         },
                         "movementLoopStop": {
-                            "audioTrigger": "Stop_SSPB_AEGS_Gladius_NLPC_LP"
+                            "audioTrigger": "Stop_SSPB_Shared_LP"
+                        },
+                        "relativeSpeedRtpc": {
+                            "rtpc": "GP_Ship_Relative_Speed"
+                        }
+                    },
+                    "landingGearAudio": {
+                        "attachOffset": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "attachOffsetRotation": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
                         }
                     },
                     "shipBuildQualityRtpc": {
@@ -2101,10 +2125,10 @@
                     "offsetRotation": {
                         "x": 0,
                         "y": 0,
-                        "z": 180
+                        "z": 0
                     },
                     "offsetTranslation": {
-                        "x": -3,
+                        "x": 0,
                         "y": 0,
                         "z": 0
                     },
@@ -2501,6 +2525,32 @@
                                     }
                                 }
                             }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Translation_Acceleration_MaxAll",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Translation_Acceleration_MaxAll"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Linear_VelocityLengthNormalizedLS",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Linear_Velocity_Length_Normalized_LS"
+                                    }
+                                }
+                            }
                         }
                     ],
                     "ifcsOutputsToRtpcs": [
@@ -2815,6 +2865,19 @@
                                     }
                                 }
                             }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Translation_Acceleration_MaxAll",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Translation_Acceleration_MaxAll"
+                                    }
+                                }
+                            }
                         }
                     ],
                     "shipWideAudioObjects": [
@@ -3047,15 +3110,6 @@
                     "normalizedSpeed": 343,
                     "modifier": 1.4,
                     "minTimeBetweenOneShots": 4.5,
-                    "loopStart": {
-                        "audioTrigger": "Play_SSPB_ANVL_Hornet_Loop"
-                    },
-                    "loopStop": {
-                        "audioTrigger": "Stop_SSPB_ANVL_Hornet_Loop"
-                    },
-                    "oneShot": {
-                        "audioTrigger": "Play_SSPB_ANVL_Hornet_PassBy_Oneshot"
-                    },
                     "timeSinceLastOneShotRtpc": {
                         "rtpc": "Ship_PassBy_Time_Since_Last"
                     },
@@ -4458,6 +4512,226 @@
                             "networkAuthority": "Local",
                             "States": [
                                 {
+                                    "StateName": "Stored",
+                                    "Interactions": [
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[2AB0]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[2AB1]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[2AB4]"
+                                            }
+                                        }
+                                    ],
+                                    "interactionPoints": [
+                                        {
+                                            "HelperName": "LeftFoot",
+                                            "FirstInteractionPrimary": 0,
+                                            "UseHelperLocation": 0,
+                                            "ApplyToEntireSkeleton": 0,
+                                            "longRangeIP": 0,
+                                            "Radius": 2,
+                                            "ShowHighlight": 1,
+                                            "HighlightOnRayHitEntity": 0,
+                                            "TextJustification": "Middle",
+                                            "TextOrientation": "RotateToPlayer",
+                                            "TextScale": 1,
+                                            "ShowInteractionTextAtCursorPos": 0,
+                                            "ScalePromptOffsetWithEntity": 0,
+                                            "PromptStyle": "PromptAndText",
+                                            "OverrideControlHintDescription": 0,
+                                            "InteractionPromptScale": 1,
+                                            "InteractionPromptLabelVerticalOffset": 70,
+                                            "InteractionPromptBound": "EntityRoot",
+                                            "UseHorizontalDistance": 0,
+                                            "MaxCursorScreenDistance": 2,
+                                            "ShowInnerThoughtsOffScreen": 0,
+                                            "OnlySelectableInLookDir": 0,
+                                            "Interactions": [
+                                                {
+                                                    "DisplayName": "",
+                                                    "__DisplayName": "@LOC_EMPTY",
+                                                    "IsPrimary": 1,
+                                                    "Interaction": {
+                                                        "value": "SSharedInteractionParams[2AB0]"
+                                                    }
+                                                },
+                                                {
+                                                    "DisplayName": "",
+                                                    "__DisplayName": "@LOC_EMPTY",
+                                                    "IsPrimary": 0,
+                                                    "Interaction": {
+                                                        "value": "SSharedInteractionParams[2AB3]"
+                                                    }
+                                                },
+                                                {
+                                                    "DisplayName": "",
+                                                    "__DisplayName": "@LOC_EMPTY",
+                                                    "IsPrimary": 0,
+                                                    "Interaction": {
+                                                        "value": "SSharedInteractionParams[2AB4]"
+                                                    }
+                                                }
+                                            ],
+                                            "Tags": [
+                                                {
+                                                    "value": "95b959c6-fb00-4d63-b062-a36d86b66128"
+                                                },
+                                                {
+                                                    "value": "d8a79162-cc7b-4f0d-9445-c25530cf1588"
+                                                }
+                                            ],
+                                            "Offset": {
+                                                "Rotation": {
+                                                    "x": 0,
+                                                    "y": 0,
+                                                    "z": 0
+                                                },
+                                                "Position": {
+                                                    "x": 0,
+                                                    "y": 0,
+                                                    "z": 0
+                                                }
+                                            },
+                                            "InteractionPromptOffset": {
+                                                "Rotation": {
+                                                    "x": 0,
+                                                    "y": 0,
+                                                    "z": 0
+                                                },
+                                                "Position": {
+                                                    "x": 0,
+                                                    "y": 0,
+                                                    "z": 0
+                                                }
+                                            },
+                                            "AngleConstraint": {
+                                                "angleRange": 181,
+                                                "viewAngleLimit": 110,
+                                                "forwardDirOffset": {
+                                                    "x": 0,
+                                                    "y": 0,
+                                                    "z": 0
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "HelperName": "RightFoot",
+                                            "FirstInteractionPrimary": 0,
+                                            "UseHelperLocation": 0,
+                                            "ApplyToEntireSkeleton": 0,
+                                            "longRangeIP": 0,
+                                            "Radius": 2,
+                                            "ShowHighlight": 1,
+                                            "HighlightOnRayHitEntity": 0,
+                                            "TextJustification": "Middle",
+                                            "TextOrientation": "RotateToPlayer",
+                                            "TextScale": 1,
+                                            "ShowInteractionTextAtCursorPos": 0,
+                                            "ScalePromptOffsetWithEntity": 0,
+                                            "PromptStyle": "PromptAndText",
+                                            "OverrideControlHintDescription": 0,
+                                            "InteractionPromptScale": 1,
+                                            "InteractionPromptLabelVerticalOffset": 70,
+                                            "InteractionPromptBound": "EntityRoot",
+                                            "UseHorizontalDistance": 0,
+                                            "MaxCursorScreenDistance": 2,
+                                            "ShowInnerThoughtsOffScreen": 0,
+                                            "OnlySelectableInLookDir": 0,
+                                            "Interactions": [
+                                                {
+                                                    "DisplayName": "",
+                                                    "__DisplayName": "@LOC_EMPTY",
+                                                    "IsPrimary": 0,
+                                                    "Interaction": {
+                                                        "value": "SSharedInteractionParams[2AB0]"
+                                                    }
+                                                },
+                                                {
+                                                    "DisplayName": "",
+                                                    "__DisplayName": "@LOC_EMPTY",
+                                                    "IsPrimary": 0,
+                                                    "Interaction": {
+                                                        "value": "SSharedInteractionParams[2AB1]"
+                                                    }
+                                                },
+                                                {
+                                                    "DisplayName": "",
+                                                    "__DisplayName": "@LOC_EMPTY",
+                                                    "IsPrimary": 0,
+                                                    "Interaction": {
+                                                        "value": "SSharedInteractionParams[2AB2]"
+                                                    }
+                                                },
+                                                {
+                                                    "DisplayName": "",
+                                                    "__DisplayName": "@LOC_EMPTY",
+                                                    "IsPrimary": 0,
+                                                    "Interaction": {
+                                                        "value": "SSharedInteractionParams[2AB3]"
+                                                    }
+                                                },
+                                                {
+                                                    "DisplayName": "",
+                                                    "__DisplayName": "@LOC_EMPTY",
+                                                    "IsPrimary": 0,
+                                                    "Interaction": {
+                                                        "value": "SSharedInteractionParams[2AB4]"
+                                                    }
+                                                }
+                                            ],
+                                            "Tags": [
+                                                {
+                                                    "value": "95b959c6-fb00-4d63-b062-a36d86b66128"
+                                                },
+                                                {
+                                                    "value": "d8a79162-cc7b-4f0d-9445-c25530cf1588"
+                                                }
+                                            ],
+                                            "Offset": {
+                                                "Rotation": {
+                                                    "x": 0,
+                                                    "y": 0,
+                                                    "z": 0
+                                                },
+                                                "Position": {
+                                                    "x": 0,
+                                                    "y": 0,
+                                                    "z": 0
+                                                }
+                                            },
+                                            "InteractionPromptOffset": {
+                                                "Rotation": {
+                                                    "x": 0,
+                                                    "y": 0,
+                                                    "z": 0
+                                                },
+                                                "Position": {
+                                                    "x": 0,
+                                                    "y": 0,
+                                                    "z": 0
+                                                }
+                                            },
+                                            "AngleConstraint": {
+                                                "angleRange": 181,
+                                                "viewAngleLimit": 110,
+                                                "forwardDirOffset": {
+                                                    "x": 0,
+                                                    "y": 0,
+                                                    "z": 0
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
                                     "StateName": "EquippedWorn"
                                 },
                                 {
@@ -4492,7 +4766,7 @@
                                                     "__DisplayName": "@LOC_EMPTY",
                                                     "IsPrimary": 0,
                                                     "Interaction": {
-                                                        "value": "SSharedInteractionParams[241C]"
+                                                        "value": "SSharedInteractionParams[2AB0]"
                                                     }
                                                 },
                                                 {
@@ -4500,7 +4774,7 @@
                                                     "__DisplayName": "@LOC_EMPTY",
                                                     "IsPrimary": 0,
                                                     "Interaction": {
-                                                        "value": "SSharedInteractionParams[241D]"
+                                                        "value": "SSharedInteractionParams[2AB1]"
                                                     }
                                                 },
                                                 {
@@ -4508,7 +4782,7 @@
                                                     "__DisplayName": "@LOC_EMPTY",
                                                     "IsPrimary": 0,
                                                     "Interaction": {
-                                                        "value": "SSharedInteractionParams[241E]"
+                                                        "value": "SSharedInteractionParams[2AB2]"
                                                     }
                                                 },
                                                 {
@@ -4516,7 +4790,7 @@
                                                     "__DisplayName": "@LOC_EMPTY",
                                                     "IsPrimary": 0,
                                                     "Interaction": {
-                                                        "value": "SSharedInteractionParams[241F]"
+                                                        "value": "SSharedInteractionParams[2AB3]"
                                                     }
                                                 },
                                                 {
@@ -4524,23 +4798,7 @@
                                                     "__DisplayName": "@LOC_EMPTY",
                                                     "IsPrimary": 0,
                                                     "Interaction": {
-                                                        "value": "SSharedInteractionParams[2420]"
-                                                    }
-                                                },
-                                                {
-                                                    "DisplayName": "",
-                                                    "__DisplayName": "@LOC_EMPTY",
-                                                    "IsPrimary": 0,
-                                                    "Interaction": {
-                                                        "value": "SSharedInteractionParams[2421]"
-                                                    }
-                                                },
-                                                {
-                                                    "DisplayName": "Loot",
-                                                    "__DisplayName": "@interaction_loot",
-                                                    "IsPrimary": 0,
-                                                    "Interaction": {
-                                                        "value": "SSharedInteractionParams[2422]"
+                                                        "value": "SSharedInteractionParams[2AB4]"
                                                     }
                                                 }
                                             ],
@@ -4593,22 +4851,17 @@
                                     "Interactions": [
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[2423]"
+                                                "value": "SSharedInteractionParams[2AB5]"
                                             }
                                         },
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[2426]"
+                                                "value": "SSharedInteractionParams[2AB8]"
                                             }
                                         },
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[2427]"
-                                            }
-                                        },
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[2428]"
+                                                "value": "SSharedInteractionParams[2AB9]"
                                             }
                                         }
                                     ],
@@ -4642,7 +4895,7 @@
                                                     "__DisplayName": "@LOC_EMPTY",
                                                     "IsPrimary": 0,
                                                     "Interaction": {
-                                                        "value": "SSharedInteractionParams[2423]"
+                                                        "value": "SSharedInteractionParams[2AB5]"
                                                     }
                                                 },
                                                 {
@@ -4650,7 +4903,7 @@
                                                     "__DisplayName": "@LOC_EMPTY",
                                                     "IsPrimary": 0,
                                                     "Interaction": {
-                                                        "value": "SSharedInteractionParams[2424]"
+                                                        "value": "SSharedInteractionParams[2AB6]"
                                                     }
                                                 },
                                                 {
@@ -4658,7 +4911,7 @@
                                                     "__DisplayName": "@LOC_EMPTY",
                                                     "IsPrimary": 0,
                                                     "Interaction": {
-                                                        "value": "SSharedInteractionParams[2425]"
+                                                        "value": "SSharedInteractionParams[2AB7]"
                                                     }
                                                 },
                                                 {
@@ -4666,7 +4919,7 @@
                                                     "__DisplayName": "@LOC_EMPTY",
                                                     "IsPrimary": 0,
                                                     "Interaction": {
-                                                        "value": "SSharedInteractionParams[2426]"
+                                                        "value": "SSharedInteractionParams[2AB8]"
                                                     }
                                                 },
                                                 {
@@ -4674,23 +4927,7 @@
                                                     "__DisplayName": "@LOC_EMPTY",
                                                     "IsPrimary": 0,
                                                     "Interaction": {
-                                                        "value": "SSharedInteractionParams[2427]"
-                                                    }
-                                                },
-                                                {
-                                                    "DisplayName": "",
-                                                    "__DisplayName": "@LOC_EMPTY",
-                                                    "IsPrimary": 0,
-                                                    "Interaction": {
-                                                        "value": "SSharedInteractionParams[2428]"
-                                                    }
-                                                },
-                                                {
-                                                    "DisplayName": "Loot",
-                                                    "__DisplayName": "@interaction_loot",
-                                                    "IsPrimary": 0,
-                                                    "Interaction": {
-                                                        "value": "SSharedInteractionParams[2429]"
+                                                        "value": "SSharedInteractionParams[2AB9]"
                                                     }
                                                 }
                                             ],
@@ -5827,13 +6064,16 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[1481]"
+                        "value": "SInteractionState[1AA0]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[1482]"
+                        "value": "SInteractionState[1AA1]"
+                    },
+                    "emergencyState": {
+                        "value": "SInteractionState[1AA2]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[1483]"
+                        "value": "SInteractionState[1AA3]"
                     }
                 }
             },
@@ -6087,8 +6327,8 @@
                 }
             },
             "Interactions": [
-                "Close",
-                "Open panel"
+                "Disableesp",
+                "Enablecruise"
             ]
         }
     }

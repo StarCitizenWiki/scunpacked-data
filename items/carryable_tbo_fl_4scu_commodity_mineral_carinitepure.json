@@ -89,6 +89,7 @@
                                 "enable": 1,
                                 "initialTemperature": -1,
                                 "internalTemperatureGeneration": 0,
+                                "useParentRoomOccupant": 0,
                                 "coolingEqualizationParams": {
                                     "CoolingEqualizationMultiplier": {
                                         "coolingEqualizationMultiplier": 1
@@ -196,42 +197,54 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "Open",
-                                "DisplayName": "Open",
-                                "__DisplayName": "@ui_interactor_open",
+                                "Name": "SeatExitLeft",
+                                "DisplayName": "Exit Left",
+                                "__DisplayName": "@ui_interactor_exit_left",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
+                                "GenericCursor": "MultiAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
-                                "Linkable": 0,
+                                "Linkable": 1,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "Close",
-                                "DisplayName": "Close",
-                                "__DisplayName": "@ui_interactor_close",
+                                "Name": "SeatEnterRight",
+                                "DisplayName": "Enter Pilot Seat",
+                                "__DisplayName": "@ui_interactor_enter_pilot_seat",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
+                                "GenericCursor": "MultiAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
                                 "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "presetList": [
+                                            {
+                                                "value": "f66fe29a-4be1-4712-b08b-4b79d2eb1b18"
+                                            },
+                                            {
+                                                "value": "f9ca6d73-9575-4206-a7e9-065a713385b5"
+                                            }
+                                        ]
+                                    }
+                                }
                             },
                             {
-                                "Name": "Cook",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "SeatExitRight",
+                                "DisplayName": "Exit Right",
+                                "__DisplayName": "@ui_interactor_exit_right",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
+                                "GenericCursor": "MultiAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
-                                "Linkable": 0,
+                                "Linkable": 1,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
@@ -268,7 +281,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2C66]"
+                                            "value": "SSharedInteractionParams[321A]"
                                         }
                                     },
                                     {
@@ -276,7 +289,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2C67]"
+                                            "value": "SSharedInteractionParams[3216]"
                                         }
                                     },
                                     {
@@ -284,7 +297,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2C68]"
+                                            "value": "SSharedInteractionParams[3217]"
                                         }
                                     }
                                 ],
@@ -385,39 +398,73 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[DA08]"
+                                "value": "SInteractionState[E6F8]"
                             },
                             "States": [
                                 {
-                                    "StateName": "FlightController_GSafeEnabled",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[0939]"
+                                    "StateName": "DoorAccess",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E592]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E6F9]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "2885c6c4-c1b9-4769-8faf-29b61693b2d1"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "FlightController_GSafeDisabled",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 1,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[0939]"
+                                    "StateName": "DoorNoAccess",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E593]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E6F8]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "8d607f8e-a6f5-4944-be87-784316971d7d"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "FlightControllerGSafeLight_Off"
+                                    "StateName": "DoorClosed",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E597]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "6bd67663-b803-4f3b-9c9f-42c591b51b93"
+                                            }
+                                        }
+                                    }
                                 },
                                 {
-                                    "StateName": "FlightControllerGSafeLight_On",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "44a5ef54-48cb-46c6-bd39-11fd2c468b25"
+                                    "StateName": "DoorOpening",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "5d7b8e59-552f-407f-9df1-8eb582e9c22b"
+                                            }
                                         }
                                     }
                                 }
@@ -425,7 +472,7 @@
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[DA0B]"
+                                        "value": "SInteractionState[E6FB]"
                                     }
                                 }
                             }
@@ -512,32 +559,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         }
                     }
@@ -763,6 +816,7 @@
                 "Enable": 1,
                 "InitialTemperature": -1,
                 "InternalTemperatureGeneration": 0,
+                "UseParentRoomOccupant": 0,
                 "CoolingEqualizationMultiplier": 1,
                 "SignatureParams": {
                     "Enable": 0,
@@ -788,9 +842,9 @@
                 }
             },
             "Interactions": [
-                "Open",
-                "Close",
-                "Cook"
+                "Seatexitleft",
+                "Seatenterright",
+                "Seatexitright"
             ],
             "ResourceContainer": {
                 "Immutable": false,

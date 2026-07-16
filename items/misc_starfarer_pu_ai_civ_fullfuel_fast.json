@@ -150,7 +150,7 @@
                     "aiDamageModifiers": "4605e5ab-9d52-4e89-82f7-3b118ed30a8a",
                     "emergencyStatusDamageThreshold": 0.25,
                     "emergencyStatusChargeThreshold": 0.8,
-                    "crewSize": 1,
+                    "crewSize": 8,
                     "vehicleName": "MISC Starfarer",
                     "__vehicleName": "@vehicle_NameMISC_Starfarer",
                     "vehicleDescription": "Manufacturer: MISC\nFocus:\u00a0Heavy Refueling\n\nThe Starfarer differs from traditional bulk freighters in one key way: it is a dedicated fuel platform. The Starfarer is designed not only to load, store and protect fuel stasis units, it is designed to take in spaceborne gases and refine them for use without landing. And while it excels at this, the Starfarer can also be used to ferry traditional bulk cargo pods.",
@@ -1196,24 +1196,24 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "OnStateDamaged",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "DisableVTOL",
+                                "DisplayName": "IFCS Flight Mode TEMP",
+                                "__DisplayName": "@ui_interactor_IFCS_flight_mode_TEMP",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 1,
-                                "Linkable": 0,
+                                "Linkable": 1,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "ApplyDamageMap",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
-                                "DisplayType": "Hide",
+                                "Name": "EnableProximityAssist",
+                                "DisplayName": "Enable Flight Proximity Assist",
+                                "__DisplayName": "@pause_OptionsFlightProximityAssist",
+                                "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 1,
@@ -2527,32 +2527,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         }
                     }
@@ -2633,14 +2639,32 @@
                     },
                     "nlpcParams": {
                         "useDeprecatedAudioModel": 0,
-                        "passByBuildupTime": 2,
+                        "passByBuildupTime": 1.5,
                         "minTimeBetweenPassBy": 5,
                         "minRelativeSpeed": 50,
+                        "passByOneShot": {
+                            "audioTrigger": "Play_SSPB_Shared"
+                        },
                         "movementLoopStart": {
-                            "audioTrigger": "Play_SSPB_AEGS_Gladius_NLPC_LP"
+                            "audioTrigger": "Play_SSPB_Shared_LP"
                         },
                         "movementLoopStop": {
-                            "audioTrigger": "Stop_SSPB_AEGS_Gladius_NLPC_LP"
+                            "audioTrigger": "Stop_SSPB_Shared_LP"
+                        },
+                        "relativeSpeedRtpc": {
+                            "rtpc": "GP_Ship_Relative_Speed"
+                        }
+                    },
+                    "landingGearAudio": {
+                        "attachOffset": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "attachOffsetRotation": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
                         }
                     },
                     "shipBuildQualityRtpc": {
@@ -2670,10 +2694,10 @@
                     "offsetRotation": {
                         "x": 0,
                         "y": 0,
-                        "z": 180
+                        "z": 0
                     },
                     "offsetTranslation": {
-                        "x": -3,
+                        "x": 0,
                         "y": 0,
                         "z": 0
                     },
@@ -3070,6 +3094,32 @@
                                     }
                                 }
                             }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Translation_Acceleration_MaxAll",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Translation_Acceleration_MaxAll"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Linear_VelocityLengthNormalizedLS",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Linear_Velocity_Length_Normalized_LS"
+                                    }
+                                }
+                            }
                         }
                     ],
                     "ifcsOutputsToRtpcs": [
@@ -3381,6 +3431,19 @@
                                 "AudioRtpcWithBehaviour": {
                                     "rtpc": {
                                         "rtpc": "GP_Thrusters_Afterburner_RampUp_Ratio"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Translation_Acceleration_MaxAll",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Translation_Acceleration_MaxAll"
                                     }
                                 }
                             }
@@ -3763,15 +3826,6 @@
                     "normalizedSpeed": 343,
                     "modifier": 1.4,
                     "minTimeBetweenOneShots": 4.5,
-                    "loopStart": {
-                        "audioTrigger": "Play_SSPB_MISC_Starfarer_Loop"
-                    },
-                    "loopStop": {
-                        "audioTrigger": "Stop_SSPB_MISC_Starfarer_Loop"
-                    },
-                    "oneShot": {
-                        "audioTrigger": "Play_SSPB_MISC_Starfarer_PassBy_Oneshot"
-                    },
                     "timeSinceLastOneShotRtpc": {
                         "rtpc": "Ship_PassBy_Time_Since_Last"
                     },
@@ -7590,210 +7644,210 @@
                     "InternalResourceLinks": [
                         {
                             "port1": {
-                                "value": "SItemPortDef[829B]"
+                                "value": "SItemPortDef[8438]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[828D]"
+                                "value": "SItemPortDef[842A]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829B]"
+                                "value": "SItemPortDef[8438]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[828E]"
+                                "value": "SItemPortDef[842B]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829B]"
+                                "value": "SItemPortDef[8438]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[828F]"
+                                "value": "SItemPortDef[842C]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829C]"
+                                "value": "SItemPortDef[8439]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[8290]"
+                                "value": "SItemPortDef[842D]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829C]"
+                                "value": "SItemPortDef[8439]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[8291]"
+                                "value": "SItemPortDef[842E]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829C]"
+                                "value": "SItemPortDef[8439]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[8292]"
+                                "value": "SItemPortDef[842F]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829C]"
+                                "value": "SItemPortDef[8439]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[8296]"
+                                "value": "SItemPortDef[8433]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829C]"
+                                "value": "SItemPortDef[8439]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[8283]"
+                                "value": "SItemPortDef[8420]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829E]"
+                                "value": "SItemPortDef[843B]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[829D]"
+                                "value": "SItemPortDef[843A]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829E]"
+                                "value": "SItemPortDef[843B]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[8299]"
+                                "value": "SItemPortDef[8436]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829E]"
+                                "value": "SItemPortDef[843B]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[8297]"
+                                "value": "SItemPortDef[8434]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829E]"
+                                "value": "SItemPortDef[843B]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[8298]"
+                                "value": "SItemPortDef[8435]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829E]"
+                                "value": "SItemPortDef[843B]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[829A]"
+                                "value": "SItemPortDef[8437]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829A]"
+                                "value": "SItemPortDef[8437]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[829B]"
+                                "value": "SItemPortDef[8438]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829B]"
+                                "value": "SItemPortDef[8438]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[829C]"
+                                "value": "SItemPortDef[8439]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829E]"
+                                "value": "SItemPortDef[843B]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[829F]"
+                                "value": "SItemPortDef[843C]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829E]"
+                                "value": "SItemPortDef[843B]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[82A0]"
+                                "value": "SItemPortDef[843D]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829E]"
+                                "value": "SItemPortDef[843B]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[82A1]"
+                                "value": "SItemPortDef[843E]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829B]"
+                                "value": "SItemPortDef[8438]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[828C]"
+                                "value": "SItemPortDef[8429]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829B]"
+                                "value": "SItemPortDef[8438]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[828A]"
+                                "value": "SItemPortDef[8427]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829B]"
+                                "value": "SItemPortDef[8438]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[8288]"
+                                "value": "SItemPortDef[8425]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829C]"
+                                "value": "SItemPortDef[8439]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[8287]"
+                                "value": "SItemPortDef[8424]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829C]"
+                                "value": "SItemPortDef[8439]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[8289]"
+                                "value": "SItemPortDef[8426]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[829C]"
+                                "value": "SItemPortDef[8439]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[828B]"
+                                "value": "SItemPortDef[8428]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[82A1]"
+                                "value": "SItemPortDef[843E]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[82A2]"
+                                "value": "SItemPortDef[843F]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[82A1]"
+                                "value": "SItemPortDef[843E]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[82A3]"
+                                "value": "SItemPortDef[8440]"
                             }
                         }
                     ],
@@ -8090,86 +8144,16 @@
                             "networkAuthority": "Local",
                             "States": [
                                 {
-                                    "StateName": "Settled",
-                                    "Interactions": [
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[2283]"
-                                            }
-                                        },
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[2287]"
-                                            }
-                                        },
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[2285]"
-                                            }
-                                        },
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[2288]"
-                                            }
-                                        }
-                                    ]
+                                    "StateName": "RefuelingSetPrice"
                                 },
                                 {
-                                    "StateName": "CarriedLowered",
-                                    "Interactions": [
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[2285]"
-                                            }
-                                        },
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[2284]"
-                                            }
-                                        },
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[2286]"
-                                            }
-                                        },
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[2287]"
-                                            }
-                                        }
-                                    ],
-                                    "entityTags": {
-                                        "tags": {
-                                            "Reference": {
-                                                "value": "ba576025-1c42-4e4e-80d0-1b902f3351b1"
-                                            }
-                                        }
-                                    }
+                                    "StateName": "RefuelingNozzleCamera"
                                 },
                                 {
-                                    "StateName": "Inspecting",
-                                    "Interactions": [
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[2287]"
-                                            }
-                                        },
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[2283]"
-                                            }
-                                        },
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[2284]"
-                                            }
-                                        },
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[2286]"
-                                            }
-                                        }
-                                    ]
+                                    "StateName": "RefuelingNozzleControl"
+                                },
+                                {
+                                    "StateName": "RefuelingFuelTankInfo"
                                 }
                             ]
                         }
@@ -8425,13 +8409,16 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[1311]"
+                        "value": "SInteractionState[18F0]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[1312]"
+                        "value": "SInteractionState[18F1]"
+                    },
+                    "emergencyState": {
+                        "value": "SInteractionState[18F2]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[1313]"
+                        "value": "SInteractionState[18F3]"
                     }
                 }
             },
@@ -9353,8 +9340,8 @@
                 }
             },
             "Interactions": [
-                "Onstatedamaged",
-                "Applydamagemap"
+                "Disablevtol",
+                "Enableproximityassist"
             ]
         }
     }

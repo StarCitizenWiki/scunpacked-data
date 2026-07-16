@@ -89,6 +89,7 @@
                                 "enable": 1,
                                 "initialTemperature": -1,
                                 "internalTemperatureGeneration": 0,
+                                "useParentRoomOccupant": 0,
                                 "coolingEqualizationParams": {
                                     "CoolingEqualizationMultiplier": {
                                         "coolingEqualizationMultiplier": 1
@@ -201,42 +202,42 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "UseConsole",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "SeatExitCargo",
+                                "DisplayName": "Exit",
+                                "__DisplayName": "@ui_interactor_exit",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
-                                "Linkable": 0,
+                                "Linkable": 1,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "UseConsole",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "Activate Remote Camera",
+                                "DisplayName": "Enter Remote Turret",
+                                "__DisplayName": "@ui_interactor_use_remote_turret",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
-                                "Linkable": 0,
+                                "Linkable": 1,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "UseConsole",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "Turret_Gyro_Mode",
+                                "DisplayName": "Switch Gyro Mode",
+                                "__DisplayName": "@ui_interactor_turret_gyro",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
+                                "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
-                                "Linkable": 0,
+                                "Linkable": 1,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
@@ -271,9 +272,9 @@
                                     {
                                         "DisplayName": "",
                                         "__DisplayName": "@LOC_EMPTY",
-                                        "IsPrimary": 0,
+                                        "IsPrimary": 1,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2C67]"
+                                            "value": "SSharedInteractionParams[3216]"
                                         }
                                     },
                                     {
@@ -281,7 +282,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2C68]"
+                                            "value": "SSharedInteractionParams[3217]"
                                         }
                                     },
                                     {
@@ -289,7 +290,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2C69]"
+                                            "value": "SSharedInteractionParams[3218]"
                                         }
                                     }
                                 ],
@@ -390,26 +391,97 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[DA1D]"
+                                "value": "SInteractionState[E70D]"
                             },
                             "States": [
                                 {
-                                    "StateName": "Deploying"
+                                    "StateName": "PressureNormalizing",
+                                    "ExitStatePlaySequence": {
+                                        "value": "SReplicatedSequencerDefSequenceParams[1518]"
+                                    },
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E5B7]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E70B]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "0c2dcc60-f463-4643-862e-90bbe606b7aa"
+                                            }
+                                        }
+                                    }
                                 },
                                 {
-                                    "StateName": "Deployed"
+                                    "StateName": "PressureDifferentializing",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E5B7]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E70C]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "6d92f3ae-5f13-4b77-b7b1-1b51a334916c"
+                                            }
+                                        }
+                                    }
                                 },
                                 {
-                                    "StateName": "Retracting"
+                                    "StateName": "PowerNormal",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E5B1]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E710]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "7e6a2f02-480d-4f86-9ee6-b19dbc778f76"
+                                            }
+                                        }
+                                    }
                                 },
                                 {
-                                    "StateName": "LightsOff"
+                                    "StateName": "PowerLost",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E5B0]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E70F]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "aff7a3ed-a8bf-4b91-b07a-462f57003211"
+                                            }
+                                        }
+                                    }
                                 }
                             ],
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[DA20]"
+                                        "value": "SInteractionState[E710]"
                                     }
                                 }
                             }
@@ -496,32 +568,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         }
                     }
@@ -747,6 +825,7 @@
                 "Enable": 1,
                 "InitialTemperature": -1,
                 "InternalTemperatureGeneration": 0,
+                "UseParentRoomOccupant": 0,
                 "CoolingEqualizationMultiplier": 1,
                 "SignatureParams": {
                     "Enable": 0,
@@ -772,7 +851,9 @@
                 }
             },
             "Interactions": [
-                "Useconsole"
+                "Seatexitcargo",
+                "Activate remote camera",
+                "Turret_gyro_mode"
             ],
             "ResourceContainer": {
                 "Immutable": false,

@@ -92,6 +92,7 @@
                                 "enable": 1,
                                 "initialTemperature": -1,
                                 "internalTemperatureGeneration": 0,
+                                "useParentRoomOccupant": 0,
                                 "coolingEqualizationParams": {
                                     "CoolingEqualizationMultiplier": {
                                         "coolingEqualizationMultiplier": 1
@@ -204,11 +205,25 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "Activate Remote Camera",
-                                "DisplayName": "Enter Remote Turret",
-                                "__DisplayName": "@ui_interactor_use_remote_turret",
+                                "Name": "SeatEnterLeftZeroG",
+                                "DisplayName": "Enter Pilot Seat",
+                                "__DisplayName": "@ui_interactor_enter_pilot_seat",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
+                                "GenericCursor": "MultiAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 0,
+                                "Linkable": 0,
+                                "LockedByLinks": 0,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "SeatExitLeftZeroG",
+                                "DisplayName": "Exit Left",
+                                "__DisplayName": "@ui_interactor_exit_left",
+                                "DisplayType": "Show",
+                                "GenericCursor": "MultiAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
                                 "Linkable": 1,
@@ -218,11 +233,11 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "Racking",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "SeatEnterRightZeroG",
+                                "DisplayName": "Enter Pilot Seat",
+                                "__DisplayName": "@ui_interactor_enter_pilot_seat",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
+                                "GenericCursor": "MultiAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
                                 "Linkable": 0,
@@ -232,23 +247,23 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "UseConsole",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "SeatExitRightZeroG",
+                                "DisplayName": "Exit Right",
+                                "__DisplayName": "@ui_interactor_exit_right",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
+                                "GenericCursor": "MultiAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
-                                "Linkable": 0,
+                                "Linkable": 1,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "UseConsole",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "SeatEnterCargo",
+                                "DisplayName": "Enter",
+                                "__DisplayName": "@ui_interactor_enter",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -257,21 +272,16 @@
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
-                            },
-                            {
-                                "Name": "UseConsole",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
-                                "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
-                                "FocusModeOnly": 0,
-                                "Sendable": 0,
-                                "Linkable": 0,
-                                "LockedByLinks": 0,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "presetList": {
+                                            "Reference": {
+                                                "value": "a762cc02-259b-4594-aadf-0b7670be50b6"
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         ],
                         "InteractionPoints": {
@@ -304,7 +314,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2C69]"
+                                            "value": "SSharedInteractionParams[3218]"
                                         }
                                     },
                                     {
@@ -312,7 +322,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2C65]"
+                                            "value": "SSharedInteractionParams[3219]"
                                         }
                                     },
                                     {
@@ -320,7 +330,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2C66]"
+                                            "value": "SSharedInteractionParams[321A]"
                                         }
                                     }
                                 ],
@@ -457,68 +467,90 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[DA0C]"
+                                "value": "SInteractionState[E6FC]"
                             },
                             "States": [
                                 {
-                                    "StateName": "FlightController_ESPEnabled",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[093A]"
+                                    "StateName": "DoorOpened",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E598]"
                                             }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "FlightController_ESPDisabled",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 1,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[093A]"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "FlightControllerESPLight_Off"
-                                },
-                                {
-                                    "StateName": "FlightControllerESPLight_On",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "b0f8a23f-f3c3-49b0-bc92-c7ff39d0354e"
                                         }
                                     },
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[093A]"
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "9057a388-8ac5-40e2-9b0f-657bfab9ff60"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "WeaponSystem_PipType_Lag",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[093F]"
+                                    "StateName": "DoorClosing",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E597]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "19e014c7-a1cc-4255-b206-94a9d85a3dac"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "WeaponSystem_PipType_Lead",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 1,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[093F]"
+                                    "StateName": "DoorUnlocked",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "e5e348ca-7752-4930-8a50-874f34dca55e"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "DoorAccessGranted",
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 1.5,
+                                            "RunWhenStreamedOut": 0,
+                                            "NextState": {
+                                                "value": "SInteractionState[E6FE]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "00000000-0000-0000-0000-000000000000"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "DoorAccessDenied",
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 1.5,
+                                            "RunWhenStreamedOut": 0,
+                                            "NextState": {
+                                                "value": "SInteractionState[E701]"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "DoorLocked",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "60daf4c5-91c1-4900-aac2-1eb57f9de62f"
                                             }
                                         }
                                     }
@@ -527,7 +559,7 @@
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[DA11]"
+                                        "value": "SInteractionState[E701]"
                                     }
                                 }
                             }
@@ -539,34 +571,39 @@
                             "networkAuthority": "Server",
                             "States": [
                                 {
-                                    "StateName": "WeaponSystem_FirePattern_Staggered",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[093E]"
+                                    "StateName": "DoorOperable",
+                                    "Interactions": [
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E5A1]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E598]"
+                                            }
+                                        }
+                                    ],
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "63128da1-d91e-4395-a69b-e19e81a376cc"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "WeaponSystem_FirePattern_Synchronous",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 1,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[093E]"
-                                            }
-                                        }
-                                    }
+                                    "StateName": "DoorInoperable"
                                 },
                                 {
-                                    "StateName": "Shields_SwitchUp",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[0940]"
+                                    "StateName": "AirlockControl_NoAirlockConnected",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E5B8]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E705]"
                                             }
                                         }
                                     }
@@ -577,7 +614,7 @@
                                     "context": {
                                         "SEntityTraversalNodeContext": {
                                             "entityTraversalNode": {
-                                                "value": "SEntityTraversingNodeUniqueId[0066]"
+                                                "value": "SEntityTraversingNodeUniqueId[0067]"
                                             }
                                         }
                                     },
@@ -593,7 +630,7 @@
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[DA13]"
+                                                "value": "SInteractionState[E703]"
                                             }
                                         },
                                         {
@@ -607,7 +644,7 @@
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[DA13]"
+                                                "value": "SInteractionState[E703]"
                                             }
                                         },
                                         {
@@ -621,7 +658,7 @@
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[DA14]"
+                                                "value": "SInteractionState[E704]"
                                             }
                                         },
                                         {
@@ -635,7 +672,7 @@
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[DA12]"
+                                                "value": "SInteractionState[E702]"
                                             }
                                         },
                                         {
@@ -649,12 +686,12 @@
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[DA12]"
+                                                "value": "SInteractionState[E702]"
                                             }
                                         }
                                     ],
                                     "nullEntityState": {
-                                        "value": "SInteractionState[DA12]"
+                                        "value": "SInteractionState[E702]"
                                     }
                                 }
                             }
@@ -666,58 +703,48 @@
                             "networkAuthority": "Server",
                             "States": [
                                 {
-                                    "StateName": "Shields_SwitchDown",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 1,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[0940]"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "FlightController_ProximityAssistEnabled",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[0944]"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "FlightController_ProximityAssistDisabled",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 1,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[0944]"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "ArmMissiles_GateClosed",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[0946]"
-                                            }
-                                        }
-                                    },
+                                    "StateName": "AirlockControl_AirlockConnected",
                                     "Interactions": {
                                         "SInteractionStateTransition": {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[DAB5]"
+                                                "value": "SSharedInteractionParams[E5A8]"
                                             },
                                             "NextState": {
-                                                "value": "SInteractionState[D9EA]"
+                                                "value": "SInteractionState[E706]"
                                             }
                                         }
                                     }
+                                },
+                                {
+                                    "StateName": "AirlockControl_OpenRequested",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E5A3]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E705]"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "LockControl_NoLockConnected",
+                                    "Interactions": [
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E5A6]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E5A7]"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "StateName": "LockControl_LockConnected"
                                 }
                             ],
                             "StateModifiers": {
@@ -726,83 +753,77 @@
                                         {
                                             "aggregateStates": {
                                                 "SInteractionState": {
-                                                    "StateName": "FireMissilesTriggerUp",
-                                                    "EnterEventDispatchers": {
-                                                        "AnimationSetVariable": {
-                                                            "value": 0,
-                                                            "variable": {
-                                                                "value": "AnimationFloatVariable[0947]"
+                                                    "StateName": "RequireMountedGunRetractBeforeClose",
+                                                    "stateTags": {
+                                                        "tags": {
+                                                            "Reference": {
+                                                                "value": "60887103-4f1f-48e3-bff4-d841fdd09171"
                                                             }
                                                         }
-                                                    },
+                                                    }
+                                                }
+                                            },
+                                            "state": {
+                                                "value": "SInteractionState[E705]"
+                                            }
+                                        },
+                                        {
+                                            "aggregateStates": {
+                                                "SInteractionState": {
+                                                    "StateName": "DoorOperable",
+                                                    "Interactions": [
+                                                        {
+                                                            "Interaction": {
+                                                                "value": "SSharedInteractionParams[E5A1]"
+                                                            }
+                                                        },
+                                                        {
+                                                            "Interaction": {
+                                                                "value": "SSharedInteractionParams[E598]"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "stateTags": {
+                                                        "tags": {
+                                                            "Reference": {
+                                                                "value": "63128da1-d91e-4395-a69b-e19e81a376cc"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "state": {
+                                                "value": "SInteractionState[E705]"
+                                            }
+                                        },
+                                        {
+                                            "aggregateStates": {
+                                                "SInteractionState": {
+                                                    "StateName": "DoorInoperable"
+                                                }
+                                            },
+                                            "state": {
+                                                "value": "SInteractionState[E706]"
+                                            }
+                                        },
+                                        {
+                                            "aggregateStates": {
+                                                "SInteractionState": {
+                                                    "StateName": "AirlockControl_NoAirlockConnected",
                                                     "Interactions": {
                                                         "SInteractionStateTransition": {
                                                             "Interaction": {
-                                                                "value": "SSharedInteractionParams[DAB6]"
+                                                                "value": "SSharedInteractionParams[E5B8]"
                                                             },
                                                             "NextState": {
-                                                                "value": "SInteractionState[D9E6]"
+                                                                "value": "SInteractionState[E705]"
                                                             }
                                                         }
                                                     }
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[DA15]"
-                                            }
-                                        },
-                                        {
-                                            "aggregateStates": {
-                                                "SInteractionState": {
-                                                    "StateName": "WeaponSystem_FirePattern_Staggered",
-                                                    "EnterEventDispatchers": {
-                                                        "AnimationSetVariable": {
-                                                            "value": 0,
-                                                            "variable": {
-                                                                "value": "AnimationFloatVariable[093E]"
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            },
-                                            "state": {
-                                                "value": "SInteractionState[DA15]"
-                                            }
-                                        },
-                                        {
-                                            "aggregateStates": {
-                                                "SInteractionState": {
-                                                    "StateName": "WeaponSystem_FirePattern_Synchronous",
-                                                    "EnterEventDispatchers": {
-                                                        "AnimationSetVariable": {
-                                                            "value": 1,
-                                                            "variable": {
-                                                                "value": "AnimationFloatVariable[093E]"
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            },
-                                            "state": {
-                                                "value": "SInteractionState[DA16]"
-                                            }
-                                        },
-                                        {
-                                            "aggregateStates": {
-                                                "SInteractionState": {
-                                                    "StateName": "Shields_SwitchUp",
-                                                    "EnterEventDispatchers": {
-                                                        "AnimationSetVariable": {
-                                                            "value": 0,
-                                                            "variable": {
-                                                                "value": "AnimationFloatVariable[0940]"
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            },
-                                            "state": {
-                                                "value": "SInteractionState[DA17]"
+                                                "value": "SInteractionState[E707]"
                                             }
                                         }
                                     ]
@@ -816,43 +837,24 @@
                             "networkAuthority": "Server",
                             "States": [
                                 {
-                                    "StateName": "ArmMissiles_GateOpen",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 1,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[0946]"
-                                            }
-                                        }
-                                    },
+                                    "StateName": "NoMountedGunConnected",
                                     "Interactions": {
                                         "SInteractionStateTransition": {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[DAB4]"
+                                                "value": "SSharedInteractionParams[E5AD]"
                                             },
                                             "NextState": {
-                                                "value": "SInteractionState[D9E9]"
+                                                "value": "SInteractionState[E70A]"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "FireMissilesTriggerUp",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[0947]"
-                                            }
-                                        }
-                                    },
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[DAB6]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[D9E6]"
+                                    "StateName": "RequireMountedGunRetractBeforeClose",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "60887103-4f1f-48e3-bff4-d841fdd09171"
                                             }
                                         }
                                     }
@@ -866,14 +868,14 @@
                                             "min": 0.01,
                                             "max": 1,
                                             "state": {
-                                                "value": "SInteractionState[DA19]"
+                                                "value": "SInteractionState[E709]"
                                             }
                                         },
                                         {
                                             "min": 0,
                                             "max": 0.01,
                                             "state": {
-                                                "value": "SInteractionState[DA1A]"
+                                                "value": "SInteractionState[E70A]"
                                             }
                                         }
                                     ]
@@ -886,32 +888,92 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[DA1C]"
+                                "value": "SInteractionState[E70C]"
                             },
                             "States": [
                                 {
-                                    "StateName": "FireMissileTriggerDown",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 1,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[0947]"
-                                            }
-                                        }
+                                    "StateName": "PressureNormalized",
+                                    "EnterStatePlaySequence": {
+                                        "value": "SReplicatedSequencerDefSequenceParams[151F]"
                                     },
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
+                                    "ExitStatePlaySequence": {
+                                        "value": "SReplicatedSequencerDefSequenceParams[1520]"
+                                    },
+                                    "Interactions": [
+                                        {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[DAB7]"
+                                                "value": "SSharedInteractionParams[E5AE]"
                                             },
                                             "NextState": {
-                                                "value": "SInteractionState[DA1A]"
+                                                "value": "SInteractionState[E70B]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E5AF]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E70C]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E5B6]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E70E]"
                                             }
                                         }
+                                    ],
+                                    "stateTags": {
+                                        "tags": [
+                                            {
+                                                "value": "25f5feca-79ce-4aab-abbd-14a87128b0d4"
+                                            },
+                                            {
+                                                "value": "ce530509-0c5a-4bc6-a1d9-ed0f08b3dc26"
+                                            }
+                                        ]
                                     }
                                 },
                                 {
-                                    "StateName": "Retracted"
+                                    "StateName": "PressureDifferential",
+                                    "EnterStatePlaySequence": {
+                                        "value": "SReplicatedSequencerDefSequenceParams[1520]"
+                                    },
+                                    "Interactions": [
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E5AE]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E70B]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E5AF]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E70C]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E5B6]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E70D]"
+                                            }
+                                        }
+                                    ],
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "a971c1c3-42ee-419c-bcf6-ff565bfdae45"
+                                            }
+                                        }
+                                    }
                                 }
                             ]
                         }
@@ -998,32 +1060,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         }
                     },
@@ -1315,7 +1383,7 @@
                     "onInteractionStateChangeTriggers": {
                         "SOnInteractionStateChangeTriggers": {
                             "targetState": {
-                                "value": "SInteractionState[DA18]"
+                                "value": "SInteractionState[E708]"
                             }
                         }
                     }
@@ -1468,6 +1536,7 @@
                 "Enable": 1,
                 "InitialTemperature": -1,
                 "InternalTemperatureGeneration": 0,
+                "UseParentRoomOccupant": 0,
                 "CoolingEqualizationMultiplier": 1,
                 "SignatureParams": {
                     "Enable": 0,
@@ -1493,9 +1562,11 @@
                 }
             },
             "Interactions": [
-                "Activate remote camera",
-                "Racking",
-                "Useconsole"
+                "Seatenterleftzerog",
+                "Seatexitleftzerog",
+                "Seatenterrightzerog",
+                "Seatexitrightzerog",
+                "Seatentercargo"
             ],
             "ResourceContainer": {
                 "Immutable": false,

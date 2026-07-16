@@ -86,6 +86,7 @@
                                 "enable": 1,
                                 "initialTemperature": -1,
                                 "internalTemperatureGeneration": 0,
+                                "useParentRoomOccupant": 0,
                                 "coolingEqualizationParams": {
                                     "CoolingEqualizationMultiplier": {
                                         "coolingEqualizationMultiplier": 1
@@ -193,22 +194,7 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "Set_PressureDifferential",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
-                                "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
-                                "FocusModeOnly": 0,
-                                "Sendable": 0,
-                                "Linkable": 0,
-                                "LockedByLinks": 0,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
-                            },
-                            {
-                                "Name": "SetState_Powered",
-                                "LinkingTag": "4ff70b4d-b110-4e53-94c0-f028700d9f9c",
+                                "Name": "SetState_Blocked",
                                 "DisplayName": "Use",
                                 "__DisplayName": "@usable_use",
                                 "DisplayType": "Hide",
@@ -222,8 +208,21 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "SetState_Unpowered",
-                                "LinkingTag": "06c76615-2674-4fef-80d5-5a009c492608",
+                                "Name": "SetState_Unblocked",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
+                                "DisplayType": "Hide",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 1,
+                                "Linkable": 1,
+                                "LockedByLinks": 0,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "SetState_NoAccess",
                                 "DisplayName": "Use",
                                 "__DisplayName": "@usable_use",
                                 "DisplayType": "Hide",
@@ -267,7 +266,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[E99C]"
+                                            "value": "SSharedInteractionParams[F439]"
                                         }
                                     },
                                     {
@@ -275,7 +274,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[E99C]"
+                                            "value": "SSharedInteractionParams[F43A]"
                                         }
                                     },
                                     {
@@ -283,7 +282,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[E998]"
+                                            "value": "SSharedInteractionParams[F43B]"
                                         }
                                     }
                                 ],
@@ -384,45 +383,72 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[998B]"
+                                "value": "SInteractionState[A19E]"
                             },
                             "States": [
                                 {
-                                    "StateName": "Aborted",
-                                    "StateAutoChange": {
-                                        "SStateAutoChange": {
-                                            "Delay": 0,
-                                            "RunWhenStreamedOut": 0,
-                                            "NextState": {
-                                                "value": "SInteractionState[9980]"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "CloseHack",
-                                    "StateAutoChange": {
-                                        "SStateAutoChange": {
-                                            "Delay": 90,
-                                            "RunWhenStreamedOut": 0,
-                                            "NextState": {
-                                                "value": "SInteractionState[9980]"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "Idle"
-                                },
-                                {
-                                    "StateName": "Login",
+                                    "StateName": "DoorAccess",
                                     "Interactions": {
                                         "SInteractionStateTransition": {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[A443]"
+                                                "value": "SSharedInteractionParams[AC8E]"
                                             },
                                             "NextState": {
-                                                "value": "SInteractionState[9996]"
+                                                "value": "SInteractionState[A19F]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "2885c6c4-c1b9-4769-8faf-29b61693b2d1"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "DoorNoAccess",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[AC8F]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[A19E]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "8d607f8e-a6f5-4944-be87-784316971d7d"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "DoorClosed",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[AC93]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "6bd67663-b803-4f3b-9c9f-42c591b51b93"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "DoorOpening",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "5d7b8e59-552f-407f-9df1-8eb582e9c22b"
                                             }
                                         }
                                     }
@@ -431,7 +457,7 @@
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[998E]"
+                                        "value": "SInteractionState[A1A1]"
                                     }
                                 }
                             }
@@ -518,32 +544,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         }
                     }
@@ -764,6 +796,7 @@
                 "Enable": 1,
                 "InitialTemperature": -1,
                 "InternalTemperatureGeneration": 0,
+                "UseParentRoomOccupant": 0,
                 "CoolingEqualizationMultiplier": 1,
                 "SignatureParams": {
                     "Enable": 0,
@@ -789,9 +822,9 @@
                 }
             },
             "Interactions": [
-                "Set_pressuredifferential",
-                "Setstate_powered",
-                "Setstate_unpowered"
+                "Setstate_blocked",
+                "Setstate_unblocked",
+                "Setstate_noaccess"
             ],
             "ResourceContainer": {
                 "Immutable": false,

@@ -52,7 +52,13 @@
                     "value": "73ed23cc-c20d-4f4d-97a0-30edcbfd49be"
                 },
                 {
+                    "value": "2c61697c-e004-449b-8e3f-c8f79c058332"
+                },
+                {
                     "value": "c08564a2-68d2-4eb1-903b-e3c3ecf12ac1"
+                },
+                {
+                    "value": "a45f6533-982c-45dc-97ea-0166a3560617"
                 }
             ],
             "StaticEntityClassData": {
@@ -683,13 +689,14 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "SyncOpen",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "Close",
+                                "LinkingTag": "61cc8167-9013-4534-b4fc-3d7f60e752b7",
+                                "DisplayName": "Retract Storage",
+                                "__DisplayName": "@vehicle_interactor_Storage_Retract",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 0,
+                                "Sendable": 1,
                                 "Linkable": 1,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
@@ -697,14 +704,15 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "SyncClose",
+                                "Name": "OpenComplete",
+                                "LinkingTag": "9057a388-8ac5-40e2-9b0f-657bfab9ff60",
                                 "DisplayName": "Use",
                                 "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 0,
-                                "Linkable": 1,
+                                "Sendable": 1,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
@@ -1899,32 +1907,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         }
                     }
@@ -2056,14 +2070,32 @@
                     },
                     "nlpcParams": {
                         "useDeprecatedAudioModel": 0,
-                        "passByBuildupTime": 2,
+                        "passByBuildupTime": 0.6,
                         "minTimeBetweenPassBy": 5,
                         "minRelativeSpeed": 50,
+                        "passByOneShot": {
+                            "audioTrigger": "Play_SSPB_Shared"
+                        },
                         "movementLoopStart": {
-                            "audioTrigger": "Play_SSPB_AEGS_Gladius_NLPC_LP"
+                            "audioTrigger": "Play_SSPB_Shared_LP"
                         },
                         "movementLoopStop": {
-                            "audioTrigger": "Stop_SSPB_AEGS_Gladius_NLPC_LP"
+                            "audioTrigger": "Stop_SSPB_Shared_LP"
+                        },
+                        "relativeSpeedRtpc": {
+                            "rtpc": "GP_Ship_Relative_Speed"
+                        }
+                    },
+                    "landingGearAudio": {
+                        "attachOffset": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "attachOffsetRotation": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
                         }
                     },
                     "shipBuildQualityRtpc": {
@@ -2093,10 +2125,10 @@
                     "offsetRotation": {
                         "x": 0,
                         "y": 0,
-                        "z": 180
+                        "z": 0
                     },
                     "offsetTranslation": {
-                        "x": -3,
+                        "x": 0,
                         "y": 0,
                         "z": 0
                     },
@@ -2493,6 +2525,32 @@
                                     }
                                 }
                             }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Translation_Acceleration_MaxAll",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Translation_Acceleration_MaxAll"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Linear_VelocityLengthNormalizedLS",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Linear_Velocity_Length_Normalized_LS"
+                                    }
+                                }
+                            }
                         }
                     ],
                     "ifcsOutputsToRtpcs": [
@@ -2804,6 +2862,19 @@
                                 "AudioRtpcWithBehaviour": {
                                     "rtpc": {
                                         "rtpc": "GP_Thrusters_Afterburner_RampUp_Ratio"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Translation_Acceleration_MaxAll",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Translation_Acceleration_MaxAll"
                                     }
                                 }
                             }
@@ -3159,15 +3230,6 @@
                     "normalizedSpeed": 343,
                     "modifier": 1.4,
                     "minTimeBetweenOneShots": 4.5,
-                    "loopStart": {
-                        "audioTrigger": "Play_SSPB_RSI_Aurora_Loop"
-                    },
-                    "loopStop": {
-                        "audioTrigger": "Stop_SSPB_RSI_Aurora_Loop"
-                    },
-                    "oneShot": {
-                        "audioTrigger": "Play_SSPB_RSI_Aurora_PassBy_Oneshot"
-                    },
                     "timeSinceLastOneShotRtpc": {
                         "rtpc": "Ship_PassBy_Time_Since_Last"
                     },
@@ -4163,18 +4225,18 @@
                     "InternalResourceLinks": [
                         {
                             "port1": {
-                                "value": "SItemPortDef[EE39]"
+                                "value": "SItemPortDef[F622]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[EE37]"
+                                "value": "SItemPortDef[F620]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[EE39]"
+                                "value": "SItemPortDef[F622]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[EE3A]"
+                                "value": "SItemPortDef[F623]"
                             }
                         }
                     ],
@@ -4439,34 +4501,62 @@
                             "networkAuthority": "Local",
                             "States": [
                                 {
-                                    "StateName": "WeaponSystem_FirePattern_Staggered",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[098F]"
+                                    "StateName": "DoorClosed",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[EA9D]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "6bd67663-b803-4f3b-9c9f-42c591b51b93"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "WeaponSystem_FirePattern_Synchronous",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 1,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[098F]"
+                                    "StateName": "DoorOpening",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "5d7b8e59-552f-407f-9df1-8eb582e9c22b"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "Shields_SwitchUp",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[0991]"
+                                    "StateName": "DoorOpened",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[EA9E]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "9057a388-8ac5-40e2-9b0f-657bfab9ff60"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "DoorClosing",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[EA9D]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "19e014c7-a1cc-4255-b206-94a9d85a3dac"
                                             }
                                         }
                                     }
@@ -4725,13 +4815,16 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[DCB2]"
+                        "value": "SInteractionState[EB0B]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[DCB3]"
+                        "value": "SInteractionState[EB0C]"
+                    },
+                    "emergencyState": {
+                        "value": "SInteractionState[EB0D]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[DCB4]"
+                        "value": "SInteractionState[EB0E]"
                     }
                 }
             },
@@ -4762,7 +4855,9 @@
             "cbf5484a-2262-4105-ae60-48f8b10d0a21",
             "1c361447-b3d2-4f59-90dd-3f8b6f95c0aa",
             "73ed23cc-c20d-4f4d-97a0-30edcbfd49be",
-            "c08564a2-68d2-4eb1-903b-e3c3ecf12ac1"
+            "2c61697c-e004-449b-8e3f-c8f79c058332",
+            "c08564a2-68d2-4eb1-903b-e3c3ecf12ac1",
+            "a45f6533-982c-45dc-97ea-0166a3560617"
         ],
         "entity_tag_map": [
             {
@@ -4814,8 +4909,16 @@
                 "name": "Light_Fighter"
             },
             {
+                "tag": "2c61697c-e004-449b-8e3f-c8f79c058332",
+                "name": "CombatRaiting2"
+            },
+            {
                 "tag": "c08564a2-68d2-4eb1-903b-e3c3ecf12ac1",
                 "name": "PU"
+            },
+            {
+                "tag": "a45f6533-982c-45dc-97ea-0166a3560617",
+                "name": "Criminal"
             }
         ],
         "manufacturer": "RSI",
@@ -4969,8 +5072,8 @@
                 }
             },
             "Interactions": [
-                "Syncopen",
-                "Syncclose"
+                "Close",
+                "Opencomplete"
             ]
         }
     }

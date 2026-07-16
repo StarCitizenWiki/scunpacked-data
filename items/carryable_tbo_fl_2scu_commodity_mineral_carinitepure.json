@@ -89,6 +89,7 @@
                                 "enable": 1,
                                 "initialTemperature": -1,
                                 "internalTemperatureGeneration": 0,
+                                "useParentRoomOccupant": 0,
                                 "coolingEqualizationParams": {
                                     "CoolingEqualizationMultiplier": {
                                         "coolingEqualizationMultiplier": 1
@@ -196,13 +197,13 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "Deploy",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "OpenRightDoor",
+                                "DisplayName": "Open Right Door",
+                                "__DisplayName": "@ui_interactor_open_right_door",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 1,
+                                "Sendable": 0,
                                 "Linkable": 1,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
@@ -210,13 +211,13 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "Retract",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "CloseRightDoor",
+                                "DisplayName": "Close Right Door",
+                                "__DisplayName": "@ui_interactor_close_right_door",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 1,
+                                "Sendable": 0,
                                 "Linkable": 1,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
@@ -224,23 +225,18 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "Idle_LeanBack",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "SeatEnterLeft",
+                                "DisplayName": "Enter Pilot Seat",
+                                "__DisplayName": "@ui_interactor_enter_pilot_seat",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
+                                "GenericCursor": "MultiAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
                                 "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0,
-                                "QueryTags": {
-                                    "Reference": {
-                                        "value": "0134fec9-cd4c-4708-8854-b1368d8ee286"
-                                    }
-                                }
+                                "InheritsConditionDisplaysThroughLinks": 0
                             }
                         ],
                         "InteractionPoints": {
@@ -273,7 +269,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2C63]"
+                                            "value": "SSharedInteractionParams[3217]"
                                         }
                                     },
                                     {
@@ -281,15 +277,15 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2C64]"
+                                            "value": "SSharedInteractionParams[3218]"
                                         }
                                     },
                                     {
                                         "DisplayName": "",
                                         "__DisplayName": "@LOC_EMPTY",
-                                        "IsPrimary": 1,
+                                        "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2C65]"
+                                            "value": "SSharedInteractionParams[3219]"
                                         }
                                     }
                                 ],
@@ -390,39 +386,86 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[DA04]"
+                                "value": "SInteractionState[E6F4]"
                             },
                             "States": [
                                 {
-                                    "StateName": "FlightController_CoupledEnabled",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[0937]"
+                                    "StateName": "PowerNormal",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E58F]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E6F5]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "7e6a2f02-480d-4f86-9ee6-b19dbc778f76"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "FlightController_CoupledDisabled",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 1,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[0937]"
+                                    "StateName": "PowerLost",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E58E]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E6F4]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "aff7a3ed-a8bf-4b91-b07a-462f57003211"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "FlightControllerCoupledLight_Off"
+                                    "StateName": "DoorUnblocked",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E590]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E6F7]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "630d2bb0-e66c-4dc6-9648-261822326bdb"
+                                            }
+                                        }
+                                    }
                                 },
                                 {
-                                    "StateName": "FlightControllerCoupledLight_On",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "9306eae2-a95b-4e10-bc83-dc5975b20d7f"
+                                    "StateName": "DoorBlocked",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E591]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E6F6]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "727ccaa9-7cc3-4238-b25d-c4f7633dbdab"
+                                            }
                                         }
                                     }
                                 }
@@ -430,7 +473,7 @@
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[DA07]"
+                                        "value": "SInteractionState[E6F7]"
                                     }
                                 }
                             }
@@ -517,32 +560,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         }
                     }
@@ -768,6 +817,7 @@
                 "Enable": 1,
                 "InitialTemperature": -1,
                 "InternalTemperatureGeneration": 0,
+                "UseParentRoomOccupant": 0,
                 "CoolingEqualizationMultiplier": 1,
                 "SignatureParams": {
                     "Enable": 0,
@@ -793,9 +843,9 @@
                 }
             },
             "Interactions": [
-                "Deploy",
-                "Retract",
-                "Idle_leanback"
+                "Openrightdoor",
+                "Closerightdoor",
+                "Seatenterleft"
             ],
             "ResourceContainer": {
                 "Immutable": false,

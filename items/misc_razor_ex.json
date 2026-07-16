@@ -669,34 +669,25 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "TurretEnter",
-                                "DisplayName": "Enter Turret",
-                                "__DisplayName": "@ui_interactor_use_turret",
+                                "Name": "EngineOn",
+                                "DisplayName": "Engine On",
+                                "__DisplayName": "@ui_interactor_engine_on",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
+                                "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
                                 "Linkable": 1,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0,
-                                "conditionList": {
-                                    "InteractionConditionList": {
-                                        "presetList": {
-                                            "Reference": {
-                                                "value": "cc265f0b-6b01-4e61-8fee-b2a8ec7e4c68"
-                                            }
-                                        }
-                                    }
-                                }
+                                "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "TurretExit",
-                                "DisplayName": "Exit",
-                                "__DisplayName": "@ui_interactor_exit",
+                                "Name": "EngineOff",
+                                "DisplayName": "Engine Off",
+                                "__DisplayName": "@ui_interactor_engine_off",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
+                                "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
                                 "Linkable": 1,
@@ -1941,32 +1932,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         }
                     }
@@ -2077,14 +2074,32 @@
                     },
                     "nlpcParams": {
                         "useDeprecatedAudioModel": 0,
-                        "passByBuildupTime": 2,
+                        "passByBuildupTime": 0.6,
                         "minTimeBetweenPassBy": 5,
                         "minRelativeSpeed": 50,
+                        "passByOneShot": {
+                            "audioTrigger": "Play_SSPB_Shared"
+                        },
                         "movementLoopStart": {
-                            "audioTrigger": "Play_SSPB_AEGS_Gladius_NLPC_LP"
+                            "audioTrigger": "Play_SSPB_Shared_LP"
                         },
                         "movementLoopStop": {
-                            "audioTrigger": "Stop_SSPB_AEGS_Gladius_NLPC_LP"
+                            "audioTrigger": "Stop_SSPB_Shared_LP"
+                        },
+                        "relativeSpeedRtpc": {
+                            "rtpc": "GP_Ship_Relative_Speed"
+                        }
+                    },
+                    "landingGearAudio": {
+                        "attachOffset": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "attachOffsetRotation": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
                         }
                     },
                     "shipBuildQualityRtpc": {
@@ -2114,10 +2129,10 @@
                     "offsetRotation": {
                         "x": 0,
                         "y": 0,
-                        "z": 180
+                        "z": 0
                     },
                     "offsetTranslation": {
-                        "x": -3,
+                        "x": 0,
                         "y": 0,
                         "z": 0
                     },
@@ -2514,6 +2529,32 @@
                                     }
                                 }
                             }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Translation_Acceleration_MaxAll",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Translation_Acceleration_MaxAll"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Linear_VelocityLengthNormalizedLS",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Linear_Velocity_Length_Normalized_LS"
+                                    }
+                                }
+                            }
                         }
                     ],
                     "ifcsOutputsToRtpcs": [
@@ -2825,6 +2866,19 @@
                                 "AudioRtpcWithBehaviour": {
                                     "rtpc": {
                                         "rtpc": "GP_Thrusters_Afterburner_RampUp_Ratio"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Translation_Acceleration_MaxAll",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Translation_Acceleration_MaxAll"
                                     }
                                 }
                             }
@@ -3147,15 +3201,6 @@
                     "normalizedSpeed": 343,
                     "modifier": 1.4,
                     "minTimeBetweenOneShots": 4.5,
-                    "loopStart": {
-                        "audioTrigger": "Play_SSPB_MISC_Reliant_Loop"
-                    },
-                    "loopStop": {
-                        "audioTrigger": "Stop_SSPB_MISC_Reliant_Loop"
-                    },
-                    "oneShot": {
-                        "audioTrigger": "Play_SSPB_MISC_Shared_PassBy_Oneshot"
-                    },
                     "timeSinceLastOneShotRtpc": {
                         "rtpc": "Ship_PassBy_Time_Since_Last"
                     },
@@ -4080,34 +4125,34 @@
                     "InternalResourceLinks": [
                         {
                             "port1": {
-                                "value": "SItemPortDef[8081]"
+                                "value": "SItemPortDef[8208]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[807E]"
+                                "value": "SItemPortDef[8205]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[8081]"
+                                "value": "SItemPortDef[8208]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[807F]"
+                                "value": "SItemPortDef[8206]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[8081]"
+                                "value": "SItemPortDef[8208]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[8080]"
+                                "value": "SItemPortDef[8207]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[8081]"
+                                "value": "SItemPortDef[8208]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[8082]"
+                                "value": "SItemPortDef[8209]"
                             }
                         }
                     ],
@@ -4360,13 +4405,54 @@
                             "networkAuthority": "Local",
                             "States": [
                                 {
-                                    "StateName": "Complete"
+                                    "StateName": "Opened",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "03228d89-5cf3-42cd-9ece-936d37cd6da2"
+                                        }
+                                    },
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[28F7]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[1855]"
+                                            }
+                                        }
+                                    }
                                 },
                                 {
-                                    "StateName": "WrongItem"
+                                    "StateName": "Closing",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "03228d89-5cf3-42cd-9ece-936d37cd6da2"
+                                        }
+                                    },
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 0,
+                                            "RunWhenStreamedOut": 0,
+                                            "NextState": {
+                                                "value": "SInteractionState[1852]"
+                                            }
+                                        }
+                                    }
                                 },
                                 {
-                                    "StateName": "RemoveItem"
+                                    "StateName": "Cooldown",
+                                    "StateAutoChange": {
+                                        "SStateAutoChange": {
+                                            "Delay": 7200,
+                                            "RunWhenStreamedOut": 1,
+                                            "NextState": {
+                                                "value": "SInteractionState[1855]"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "Attached"
                                 }
                             ]
                         }
@@ -4622,13 +4708,16 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[1291]"
+                        "value": "SInteractionState[1854]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[1292]"
+                        "value": "SInteractionState[1855]"
+                    },
+                    "emergencyState": {
+                        "value": "SInteractionState[1856]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[1293]"
+                        "value": "SInteractionState[1857]"
                     }
                 }
             },
@@ -4874,8 +4963,8 @@
                 }
             },
             "Interactions": [
-                "Turretenter",
-                "Turretexit"
+                "Engineon",
+                "Engineoff"
             ]
         }
     }

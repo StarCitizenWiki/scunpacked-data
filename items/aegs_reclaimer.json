@@ -139,7 +139,7 @@
                     "aiDamageModifiers": "4605e5ab-9d52-4e89-82f7-3b118ed30a8a",
                     "emergencyStatusDamageThreshold": 0.25,
                     "emergencyStatusChargeThreshold": 0.8,
-                    "crewSize": 1,
+                    "crewSize": 5,
                     "vehicleName": "Aegis Reclaimer",
                     "__vehicleName": "@vehicle_NameAEGS_Reclaimer",
                     "vehicleDescription": "Manufacturer: Aegis Dynamics\nFocus:\u00a0Heavy Salvage\n\nThe Aegis Reclaimer is an industrial salvage ship. Equipped with a reinforced cargo bay, a long-range jump drive and launch pods for unmanned drones, the Reclaimer is an ideal ship for taking advantage of deep space wrecks. Tractor beams, floodlights, scanner options and docking ports round out the tools on this capable, utilitarian spacecraft.",
@@ -3092,32 +3092,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         }
                     }
@@ -3198,14 +3204,32 @@
                     },
                     "nlpcParams": {
                         "useDeprecatedAudioModel": 0,
-                        "passByBuildupTime": 2,
+                        "passByBuildupTime": 0.6,
                         "minTimeBetweenPassBy": 5,
                         "minRelativeSpeed": 50,
+                        "passByOneShot": {
+                            "audioTrigger": "Play_SSPB_Shared"
+                        },
                         "movementLoopStart": {
-                            "audioTrigger": "Play_SSPB_AEGS_Gladius_NLPC_LP"
+                            "audioTrigger": "Play_SSPB_Shared_LP"
                         },
                         "movementLoopStop": {
-                            "audioTrigger": "Stop_SSPB_AEGS_Gladius_NLPC_LP"
+                            "audioTrigger": "Stop_SSPB_Shared_LP"
+                        },
+                        "relativeSpeedRtpc": {
+                            "rtpc": "GP_Ship_Relative_Speed"
+                        }
+                    },
+                    "landingGearAudio": {
+                        "attachOffset": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "attachOffsetRotation": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
                         }
                     },
                     "shipBuildQualityRtpc": {
@@ -3235,10 +3259,10 @@
                     "offsetRotation": {
                         "x": 0,
                         "y": 0,
-                        "z": 180
+                        "z": 0
                     },
                     "offsetTranslation": {
-                        "x": -3,
+                        "x": 0,
                         "y": 0,
                         "z": 0
                     },
@@ -3635,6 +3659,32 @@
                                     }
                                 }
                             }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Translation_Acceleration_MaxAll",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Translation_Acceleration_MaxAll"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Linear_VelocityLengthNormalizedLS",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Linear_Velocity_Length_Normalized_LS"
+                                    }
+                                }
+                            }
                         }
                     ],
                     "ifcsOutputsToRtpcs": [
@@ -3946,6 +3996,19 @@
                                 "AudioRtpcWithBehaviour": {
                                     "rtpc": {
                                         "rtpc": "GP_Thrusters_Afterburner_RampUp_Ratio"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Translation_Acceleration_MaxAll",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Translation_Acceleration_MaxAll"
                                     }
                                 }
                             }
@@ -4348,15 +4411,6 @@
                     "normalizedSpeed": 343,
                     "modifier": 1.4,
                     "minTimeBetweenOneShots": 4.5,
-                    "loopStart": {
-                        "audioTrigger": "Play_SSPB_MISC_Starfarer_Loop"
-                    },
-                    "loopStop": {
-                        "audioTrigger": "Stop_SSPB_MISC_Starfarer_Loop"
-                    },
-                    "oneShot": {
-                        "audioTrigger": "Play_SSPB_MISC_Starfarer_PassBy_Oneshot"
-                    },
                     "timeSinceLastOneShotRtpc": {
                         "rtpc": "Ship_PassBy_Time_Since_Last"
                     },
@@ -9453,314 +9507,314 @@
                     "InternalResourceLinks": [
                         {
                             "port1": {
-                                "value": "SItemPortDef[5462]"
+                                "value": "SItemPortDef[5552]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5463]"
+                                "value": "SItemPortDef[5553]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5462]"
+                                "value": "SItemPortDef[5552]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5464]"
+                                "value": "SItemPortDef[5554]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5464]"
+                                "value": "SItemPortDef[5554]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5465]"
+                                "value": "SItemPortDef[5555]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5464]"
+                                "value": "SItemPortDef[5554]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5467]"
+                                "value": "SItemPortDef[5557]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5465]"
+                                "value": "SItemPortDef[5555]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5466]"
+                                "value": "SItemPortDef[5556]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5465]"
+                                "value": "SItemPortDef[5555]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5463]"
+                                "value": "SItemPortDef[5553]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[545A]"
+                                "value": "SItemPortDef[554A]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5464]"
+                                "value": "SItemPortDef[5554]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5464]"
+                                "value": "SItemPortDef[5554]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[545B]"
+                                "value": "SItemPortDef[554B]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5466]"
+                                "value": "SItemPortDef[5556]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[546A]"
+                                "value": "SItemPortDef[555A]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5466]"
+                                "value": "SItemPortDef[5556]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[546B]"
+                                "value": "SItemPortDef[555B]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5466]"
+                                "value": "SItemPortDef[5556]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[546C]"
+                                "value": "SItemPortDef[555C]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5466]"
+                                "value": "SItemPortDef[5556]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[546D]"
+                                "value": "SItemPortDef[555D]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5465]"
+                                "value": "SItemPortDef[5555]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[546E]"
+                                "value": "SItemPortDef[555E]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5465]"
+                                "value": "SItemPortDef[5555]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[546F]"
+                                "value": "SItemPortDef[555F]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5465]"
+                                "value": "SItemPortDef[5555]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5470]"
+                                "value": "SItemPortDef[5560]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5465]"
+                                "value": "SItemPortDef[5555]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5471]"
+                                "value": "SItemPortDef[5561]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5465]"
+                                "value": "SItemPortDef[5555]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5472]"
+                                "value": "SItemPortDef[5562]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5465]"
+                                "value": "SItemPortDef[5555]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5473]"
+                                "value": "SItemPortDef[5563]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5465]"
+                                "value": "SItemPortDef[5555]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5474]"
+                                "value": "SItemPortDef[5564]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5465]"
+                                "value": "SItemPortDef[5555]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5475]"
+                                "value": "SItemPortDef[5565]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5462]"
+                                "value": "SItemPortDef[5552]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5476]"
+                                "value": "SItemPortDef[5566]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5462]"
+                                "value": "SItemPortDef[5552]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5477]"
+                                "value": "SItemPortDef[5567]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5462]"
+                                "value": "SItemPortDef[5552]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5478]"
+                                "value": "SItemPortDef[5568]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5462]"
+                                "value": "SItemPortDef[5552]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5479]"
+                                "value": "SItemPortDef[5569]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5463]"
+                                "value": "SItemPortDef[5553]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[547A]"
+                                "value": "SItemPortDef[556A]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5463]"
+                                "value": "SItemPortDef[5553]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[547B]"
+                                "value": "SItemPortDef[556B]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5463]"
+                                "value": "SItemPortDef[5553]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[547C]"
+                                "value": "SItemPortDef[556C]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5463]"
+                                "value": "SItemPortDef[5553]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[547D]"
+                                "value": "SItemPortDef[556D]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5463]"
+                                "value": "SItemPortDef[5553]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[547E]"
+                                "value": "SItemPortDef[556E]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5463]"
+                                "value": "SItemPortDef[5553]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[547F]"
+                                "value": "SItemPortDef[556F]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5463]"
+                                "value": "SItemPortDef[5553]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5480]"
+                                "value": "SItemPortDef[5570]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5463]"
+                                "value": "SItemPortDef[5553]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5481]"
+                                "value": "SItemPortDef[5571]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5462]"
+                                "value": "SItemPortDef[5552]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5482]"
+                                "value": "SItemPortDef[5572]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5462]"
+                                "value": "SItemPortDef[5552]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5483]"
+                                "value": "SItemPortDef[5573]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5462]"
+                                "value": "SItemPortDef[5552]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5484]"
+                                "value": "SItemPortDef[5574]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5462]"
+                                "value": "SItemPortDef[5552]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5485]"
+                                "value": "SItemPortDef[5575]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5463]"
+                                "value": "SItemPortDef[5553]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5486]"
+                                "value": "SItemPortDef[5576]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5463]"
+                                "value": "SItemPortDef[5553]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5487]"
+                                "value": "SItemPortDef[5577]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[5464]"
+                                "value": "SItemPortDef[5554]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[5468]"
+                                "value": "SItemPortDef[5558]"
                             }
                         }
                     ],
@@ -10304,6 +10358,16 @@
                                     }
                                 },
                                 {
+                                    "StateName": "Emergency",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "f3f0850a-7573-426d-ae48-a8a5a03f4a95"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
                                     "StateName": "Critical",
                                     "stateTags": {
                                         "tags": {
@@ -10570,13 +10634,13 @@
                                 {
                                     "linkedInteractionName": "StartGrinder",
                                     "localInteraction": {
-                                        "value": "SSharedInteractionParams[C458]"
+                                        "value": "SSharedInteractionParams[C6EB]"
                                     }
                                 },
                                 {
                                     "linkedInteractionName": "StopGrinder",
                                     "localInteraction": {
-                                        "value": "SSharedInteractionParams[C459]"
+                                        "value": "SSharedInteractionParams[C6EC]"
                                     }
                                 }
                             ]
@@ -10593,13 +10657,16 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[C223]"
+                        "value": "SInteractionState[C633]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[C224]"
+                        "value": "SInteractionState[C634]"
+                    },
+                    "emergencyState": {
+                        "value": "SInteractionState[C635]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[C225]"
+                        "value": "SInteractionState[C636]"
                     }
                 }
             },

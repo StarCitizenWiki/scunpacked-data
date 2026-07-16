@@ -88,6 +88,7 @@
                                 "enable": 0,
                                 "initialTemperature": -1,
                                 "internalTemperatureGeneration": 0,
+                                "useParentRoomOccupant": 0,
                                 "coolingEqualizationParams": {
                                     "CoolingEqualizationMultiplier": {
                                         "coolingEqualizationMultiplier": 1
@@ -542,11 +543,13 @@
                     "Chunks": [
                         {
                             "MeshChunk": "omega_legs_zone",
-                            "Layer": 4
+                            "Layer": 4,
+                            "HideInFirstPerson": 0
                         },
                         {
                             "MeshChunk": "theta_legs_zone",
                             "Layer": 4,
+                            "HideInFirstPerson": 0,
                             "VisibilityConditions": {
                                 "SCItemClothingVisibilityConditionParams": {
                                     "PortVisibility": {
@@ -1244,14 +1247,14 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "Turret_Gyro_Mode",
-                                "DisplayName": "Switch Gyro Mode",
-                                "__DisplayName": "@ui_interactor_turret_gyro",
+                                "Name": "Place",
+                                "DisplayName": "Place",
+                                "__DisplayName": "@ui_interactor_place",
                                 "DisplayType": "Show",
-                                "GenericCursor": "Button",
+                                "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
-                                "Linkable": 1,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
@@ -1259,8 +1262,8 @@
                             },
                             {
                                 "Name": "Activate Remote Camera",
-                                "DisplayName": "Enter Upper Front Remote Turret",
-                                "__DisplayName": "@ui_interactor_enter_top_front_remote_turret",
+                                "DisplayName": "Enter Remote Turret",
+                                "__DisplayName": "@ui_interactor_use_remote_turret",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -1286,61 +1289,138 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "PlaceResourceCanister",
-                                "DisplayName": "Insert MedGel Canister",
-                                "__DisplayName": "@interaction_placeOnItemport_medgel_canister_insert",
+                                "Name": "Wash",
+                                "DisplayName": "Wash",
+                                "__DisplayName": "@interaction_wash",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 0,
-                                "Linkable": 0,
+                                "Sendable": 1,
+                                "Linkable": 1,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0,
                                 "conditionList": {
                                     "InteractionConditionList": {
-                                        "presetList": {
-                                            "Reference": {
-                                                "value": "ebc6aeb5-f9c7-44fe-b914-dc74d5674e54"
+                                        "conditionParams": {
+                                            "InteractionConditionOR": {
+                                                "conditionDisplay": {
+                                                    "ConditionDisplayParams": {
+                                                        "exclusiveDisplay": 0,
+                                                        "blockedText": {
+                                                            "BlockedTextParams": {
+                                                                "blockedText": "Unequip Attached Wearables",
+                                                                "__blockedText": "@interaction_condition_dropItem_unequipOtherWornItems"
+                                                            }
+                                                        },
+                                                        "blockedCursor": {
+                                                            "BlockedCursorParams": {
+                                                                "blockedCursor": "Invalid"
+                                                            }
+                                                        },
+                                                        "blockedColor": {
+                                                            "BlockedColorParams": {
+                                                                "selectedColor": "c6688c07-0987-4e85-82b7-04458356db8a",
+                                                                "unselectedColor": "902844b1-8817-4b46-8770-045beee67ce0",
+                                                                "applyImmediately": 1
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "secondCondition": {
+                                                    "InteractionConditionAND": {
+                                                        "secondCondition": {
+                                                            "InteractionConditionActorHasAttachedEntityTypes": {
+                                                                "conditionResult": "Fail",
+                                                                "itemTypes": [
+                                                                    {
+                                                                        "value": "Char_Clothing_Hat"
+                                                                    },
+                                                                    {
+                                                                        "value": "Char_Clothing_Torso_0"
+                                                                    },
+                                                                    {
+                                                                        "value": "Char_Clothing_Torso_1"
+                                                                    },
+                                                                    {
+                                                                        "value": "Char_Clothing_Torso_2"
+                                                                    },
+                                                                    {
+                                                                        "value": "Char_Clothing_Hands"
+                                                                    },
+                                                                    {
+                                                                        "value": "Char_Clothing_Legs"
+                                                                    },
+                                                                    {
+                                                                        "value": "Char_Clothing_Backpack"
+                                                                    },
+                                                                    {
+                                                                        "value": "Char_Clothing_Feet"
+                                                                    },
+                                                                    {
+                                                                        "value": "Char_Armor_Undersuit"
+                                                                    }
+                                                                ],
+                                                                "ignoreItemPorts": [
+                                                                    {
+                                                                        "value": "weapon_attach_hand_left"
+                                                                    },
+                                                                    {
+                                                                        "value": "weapon_attach_hand_right"
+                                                                    },
+                                                                    {
+                                                                        "value": "magic_pocket"
+                                                                    },
+                                                                    {
+                                                                        "value": "inventory_pocket"
+                                                                    },
+                                                                    {
+                                                                        "value": "inventory_pocket_2"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     }
                                 }
                             },
                             {
-                                "Name": "SlotOccupied",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "Exit",
+                                "DisplayName": "Exit",
+                                "__DisplayName": "@ui_Exit",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 1,
-                                "Linkable": 0,
+                                "Linkable": 1,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "SlotEmpty",
+                                "Name": "ActivateShower",
                                 "DisplayName": "Use",
                                 "__DisplayName": "@usable_use",
-                                "DisplayType": "Show",
+                                "DisplayType": "Hide",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 1,
-                                "Linkable": 0,
+                                "Sendable": 0,
+                                "Linkable": 1,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "ParentSlotOccupied",
+                                "Name": "DeactivateShower",
                                 "DisplayName": "Use",
                                 "__DisplayName": "@usable_use",
-                                "DisplayType": "Show",
+                                "DisplayType": "Hide",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
@@ -1381,7 +1461,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 1,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2674]"
+                                            "value": "SSharedInteractionParams[2B20]"
                                         }
                                     },
                                     {
@@ -1389,7 +1469,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2675]"
+                                            "value": "SSharedInteractionParams[2B21]"
                                         }
                                     },
                                     {
@@ -1397,7 +1477,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2676]"
+                                            "value": "SSharedInteractionParams[2B22]"
                                         }
                                     },
                                     {
@@ -1405,7 +1485,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2677]"
+                                            "value": "SSharedInteractionParams[2B23]"
                                         }
                                     },
                                     {
@@ -1413,7 +1493,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2678]"
+                                            "value": "SSharedInteractionParams[2B24]"
                                         }
                                     },
                                     {
@@ -1421,7 +1501,7 @@
                                         "__DisplayName": "@interaction_open",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2679]"
+                                            "value": "SSharedInteractionParams[2B25]"
                                         }
                                     },
                                     {
@@ -1429,7 +1509,7 @@
                                         "__DisplayName": "@interaction_loot",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[267A]"
+                                            "value": "SSharedInteractionParams[2B26]"
                                         }
                                     }
                                 ],
@@ -1509,7 +1589,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2674]"
+                                            "value": "SSharedInteractionParams[2B20]"
                                         }
                                     },
                                     {
@@ -1517,7 +1597,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2675]"
+                                            "value": "SSharedInteractionParams[2B21]"
                                         }
                                     },
                                     {
@@ -1525,7 +1605,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2676]"
+                                            "value": "SSharedInteractionParams[2B22]"
                                         }
                                     },
                                     {
@@ -1533,7 +1613,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2677]"
+                                            "value": "SSharedInteractionParams[2B23]"
                                         }
                                     },
                                     {
@@ -1541,7 +1621,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2678]"
+                                            "value": "SSharedInteractionParams[2B24]"
                                         }
                                     },
                                     {
@@ -1549,7 +1629,7 @@
                                         "__DisplayName": "@interaction_open",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2679]"
+                                            "value": "SSharedInteractionParams[2B25]"
                                         }
                                     },
                                     {
@@ -1557,7 +1637,7 @@
                                         "__DisplayName": "@interaction_loot",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[267A]"
+                                            "value": "SSharedInteractionParams[2B26]"
                                         }
                                     }
                                 ],
@@ -1616,38 +1696,38 @@
                     "canBeCarriedInProne": 0,
                     "disableRotation": 0,
                     "carryInteraction": {
-                        "value": "SSharedInteractionParams[2674]"
+                        "value": "SSharedInteractionParams[2B20]"
                     },
                     "placeInteraction": {
-                        "value": "SSharedInteractionParams[2676]"
+                        "value": "SSharedInteractionParams[2B22]"
                     },
                     "dropInteraction": {
-                        "value": "SSharedInteractionParams[2675]"
+                        "value": "SSharedInteractionParams[2B21]"
                     },
                     "storeInteraction": {
-                        "value": "SSharedInteractionParams[2677]"
+                        "value": "SSharedInteractionParams[2B23]"
                     },
                     "equipWearableInteraction": {
-                        "value": "SSharedInteractionParams[2678]"
+                        "value": "SSharedInteractionParams[2B24]"
                     },
                     "carryableStatesParams": {
                         "settledState": {
-                            "value": "SInteractionState[316C]"
+                            "value": "SInteractionState[3800]"
                         },
                         "carriedState": {
-                            "value": "SInteractionState[316D]"
+                            "value": "SInteractionState[3801]"
                         },
                         "droppedState": {
-                            "value": "SInteractionState[316E]"
+                            "value": "SInteractionState[3802]"
                         },
                         "equippedWornState": {
-                            "value": "SInteractionState[3170]"
+                            "value": "SInteractionState[3804]"
                         },
                         "storedState": {
-                            "value": "SInteractionState[316F]"
+                            "value": "SInteractionState[3803]"
                         },
                         "hangingOnOutfitHangerState": {
-                            "value": "SInteractionState[3171]"
+                            "value": "SInteractionState[3805]"
                         }
                     },
                     "interactionPointOffsets": {
@@ -1912,47 +1992,59 @@
                             "networkAuthority": "Server",
                             "States": [
                                 {
-                                    "StateName": "Despawn",
-                                    "StateAutoChange": {
-                                        "SStateAutoChange": {
-                                            "Delay": 60,
-                                            "RunWhenStreamedOut": 0,
-                                            "NextState": {
-                                                "value": "SInteractionState[316D]"
+                                    "StateName": "Deployed",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "27741f04-9db7-45eb-ba97-0e3e33e08f32"
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "Retracted"
+                                },
+                                {
+                                    "StateName": "DashboardPower_Off",
+                                    "EnterEventDispatchers": {
+                                        "AnimationSetVariable": {
+                                            "value": 0,
+                                            "variable": {
+                                                "value": "AnimationFloatVariable[011F]"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "Reseting ",
-                                    "StateAutoChange": {
-                                        "SStateAutoChange": {
-                                            "Delay": 20,
-                                            "RunWhenStreamedOut": 0,
-                                            "NextState": {
-                                                "value": "SInteractionState[3164]"
-                                            }
-                                        }
-                                    },
-                                    "stateTags": {
-                                        "tags": {
-                                            "Reference": {
-                                                "value": "3f712682-4042-479b-ac36-e83c4eb16dc7"
+                                    "StateName": "DashboardPower_Normal",
+                                    "EnterEventDispatchers": {
+                                        "AnimationSetVariable": {
+                                            "value": 1,
+                                            "variable": {
+                                                "value": "AnimationFloatVariable[011F]"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "Inactive"
+                                    "StateName": "PowerSystem_SwitchUp",
+                                    "EnterEventDispatchers": {
+                                        "AnimationSetVariable": {
+                                            "value": 0,
+                                            "variable": {
+                                                "value": "AnimationFloatVariable[010C]"
+                                            }
+                                        }
+                                    }
                                 },
                                 {
-                                    "StateName": "Depth1Charge"
-                                },
-                                {
-                                    "StateName": "Depth2Charge"
-                                },
-                                {
-                                    "StateName": "Depth3Charge"
+                                    "StateName": "PowerSystem_SwitchDown",
+                                    "EnterEventDispatchers": {
+                                        "AnimationSetVariable": {
+                                            "value": 1,
+                                            "variable": {
+                                                "value": "AnimationFloatVariable[010C]"
+                                            }
+                                        }
+                                    }
                                 }
                             ]
                         }
@@ -1962,10 +2054,10 @@
                     "containerParams": "e09d253d-0aab-4ff2-b258-a6b4127c0b1d",
                     "canAutoStoreRestrictedItems": 0,
                     "openInventoryInteraction": {
-                        "value": "SSharedInteractionParams[2679]"
+                        "value": "SSharedInteractionParams[2B25]"
                     },
                     "openLootingInteraction": {
-                        "value": "SSharedInteractionParams[267A]"
+                        "value": "SSharedInteractionParams[2B26]"
                     },
                     "inventoryContainer": {
                         "__ref": "e09d253d-0aab-4ff2-b258-a6b4127c0b1d",
@@ -2020,32 +2112,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 0.7,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 0.7,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 0.7,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 0.7,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 0.7,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 0.55,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         },
                         "impactForceResistance": {
@@ -2548,7 +2646,7 @@
                             "routingElement": {
                                 "UsableSlottingReferenceItemPort": {
                                     "itemPort": {
-                                        "value": "SItemPortDef[8D1D]"
+                                        "value": "SItemPortDef[8F0F]"
                                     }
                                 }
                             },
@@ -2960,12 +3058,13 @@
                 "Volume": 0.216
             },
             "Interactions": [
-                "Turret_gyro_mode",
+                "Place",
                 "Activate remote camera",
-                "Placeresourcecanister",
-                "Slotoccupied",
-                "Slotempty",
-                "Parentslotoccupied"
+                "Turret_gyro_mode",
+                "Wash",
+                "Exit",
+                "Activateshower",
+                "Deactivateshower"
             ],
             "InventoryContainer": {
                 "SCU": 0.01,

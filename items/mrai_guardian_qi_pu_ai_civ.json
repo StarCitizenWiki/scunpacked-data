@@ -37,7 +37,10 @@
                     "value": "89e1fc8d-3364-48c1-85a1-e929731c1d10"
                 },
                 {
-                    "value": "dfe438a4-43d9-44c9-9780-b18b4e1d0521"
+                    "value": "698cc5cd-9113-455c-a439-fadfd3b210f4"
+                },
+                {
+                    "value": "33e0472e-e3ad-4701-951a-915bf5f8a691"
                 }
             ],
             "StaticEntityClassData": {
@@ -762,14 +765,13 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "UnlockTrigger",
-                                "LinkingTag": "3e6acc91-4819-4293-8c67-5ba388e1cdf2",
-                                "DisplayName": "Use",
-                                "__DisplayName": "@usable_use",
+                                "Name": "TurretExit",
+                                "DisplayName": "Exit",
+                                "__DisplayName": "@ui_interactor_exit",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
-                                "Sendable": 1,
+                                "Sendable": 0,
                                 "Linkable": 1,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
@@ -777,18 +779,27 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "Place_Fuse",
-                                "DisplayName": "Place",
-                                "__DisplayName": "@interaction_place",
+                                "Name": "Carry",
+                                "DisplayName": "Carry",
+                                "__DisplayName": "@interaction_carry",
                                 "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
+                                "GenericCursor": "Grab",
                                 "FocusModeOnly": 0,
-                                "Sendable": 1,
-                                "Linkable": 1,
+                                "Sendable": 0,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "presetList": {
+                                            "Reference": {
+                                                "value": "f5e13f32-3097-46d1-b863-5bfae1c846c0"
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         ]
                     }
@@ -4395,32 +4406,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         }
                     }
@@ -4500,14 +4517,32 @@
                     },
                     "nlpcParams": {
                         "useDeprecatedAudioModel": 0,
-                        "passByBuildupTime": 2,
+                        "passByBuildupTime": 0.6,
                         "minTimeBetweenPassBy": 5,
                         "minRelativeSpeed": 50,
+                        "passByOneShot": {
+                            "audioTrigger": "Play_SSPB_Shared"
+                        },
                         "movementLoopStart": {
-                            "audioTrigger": "Play_SSPB_AEGS_Gladius_NLPC_LP"
+                            "audioTrigger": "Play_SSPB_Shared_LP"
                         },
                         "movementLoopStop": {
-                            "audioTrigger": "Stop_SSPB_AEGS_Gladius_NLPC_LP"
+                            "audioTrigger": "Stop_SSPB_Shared_LP"
+                        },
+                        "relativeSpeedRtpc": {
+                            "rtpc": "GP_Ship_Relative_Speed"
+                        }
+                    },
+                    "landingGearAudio": {
+                        "attachOffset": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "attachOffsetRotation": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
                         }
                     },
                     "shipBuildQualityRtpc": {
@@ -4534,10 +4569,10 @@
                     "offsetRotation": {
                         "x": 0,
                         "y": 0,
-                        "z": 180
+                        "z": 0
                     },
                     "offsetTranslation": {
-                        "x": -3,
+                        "x": 0,
                         "y": 0,
                         "z": 0
                     },
@@ -4934,6 +4969,32 @@
                                     }
                                 }
                             }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Translation_Acceleration_MaxAll",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Translation_Acceleration_MaxAll"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Linear_VelocityLengthNormalizedLS",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Linear_Velocity_Length_Normalized_LS"
+                                    }
+                                }
+                            }
                         }
                     ],
                     "ifcsOutputsToRtpcs": [
@@ -5248,6 +5309,19 @@
                                     }
                                 }
                             }
+                        },
+                        {
+                            "ifcsOutput": "Ship_Translation_Acceleration_MaxAll",
+                            "defaultValue": 0,
+                            "calculateOnlyOnPlayerVehicle": 0,
+                            "sendToChildEmitters": 0,
+                            "RTPCs": {
+                                "AudioRtpcWithBehaviour": {
+                                    "rtpc": {
+                                        "rtpc": "GP_Ship_Translation_Acceleration_MaxAll"
+                                    }
+                                }
+                            }
                         }
                     ],
                     "shipHealthRtpc": {
@@ -5325,15 +5399,6 @@
                     "normalizedSpeed": 343,
                     "modifier": 1.4,
                     "minTimeBetweenOneShots": 4.5,
-                    "loopStart": {
-                        "audioTrigger": "Play_SSPB_AEGS_Gladius_Loop"
-                    },
-                    "loopStop": {
-                        "audioTrigger": "Stop_SSPB_AEGS_Gladius_Loop"
-                    },
-                    "oneShot": {
-                        "audioTrigger": "Play_SSPB_AEGS_Gladius_PassBy_OneShot"
-                    },
                     "timeSinceLastOneShotRtpc": {
                         "rtpc": "Ship_PassBy_Time_Since_Last"
                     },
@@ -6486,18 +6551,18 @@
                     "InternalResourceLinks": [
                         {
                             "port1": {
-                                "value": "SItemPortDef[ED1C]"
+                                "value": "SItemPortDef[F399]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[ED1D]"
+                                "value": "SItemPortDef[F39A]"
                             }
                         },
                         {
                             "port1": {
-                                "value": "SItemPortDef[ED1C]"
+                                "value": "SItemPortDef[F399]"
                             },
                             "port2": {
-                                "value": "SItemPortDef[ED1E]"
+                                "value": "SItemPortDef[F39B]"
                             }
                         }
                     ],
@@ -6810,18 +6875,84 @@
                             "networkAuthority": "Local",
                             "States": [
                                 {
-                                    "StateName": "TargetingSystemLight_CyclePreviousOther",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "7ff13ac1-db52-42bd-a42f-6703e1ab746f"
+                                    "StateName": "PowerNormal",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E8B9]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E987]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "7e6a2f02-480d-4f86-9ee6-b19dbc778f76"
+                                            }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "TargetingSystemLight_TargetLost"
+                                    "StateName": "PowerLost",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E8B8]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E986]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "aff7a3ed-a8bf-4b91-b07a-462f57003211"
+                                            }
+                                        }
+                                    }
                                 },
                                 {
-                                    "StateName": "TargetingSystemLight_NoTarget"
+                                    "StateName": "DoorUnblocked",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E8BA]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E989]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "630d2bb0-e66c-4dc6-9648-261822326bdb"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "DoorBlocked",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E8BB]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E988]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "727ccaa9-7cc3-4238-b25d-c4f7633dbdab"
+                                            }
+                                        }
+                                    }
                                 }
                             ]
                         },
@@ -6832,46 +6963,86 @@
                             "networkAuthority": "Server",
                             "States": [
                                 {
-                                    "StateName": "TargetingSystemLight_HostileTarget",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "86977ab1-708c-4581-87af-2bc27e043190"
+                                    "StateName": "DoorAccess",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E8BC]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E98B]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "2885c6c4-c1b9-4769-8faf-29b61693b2d1"
+                                            }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "TargetingSystemLight_FriendlyTarget",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "eab907a6-4335-4d38-a96d-22faa0c5bc34"
+                                    "StateName": "DoorNoAccess",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E8BD]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E98A]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "8d607f8e-a6f5-4944-be87-784316971d7d"
+                                            }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "TargetingSystemLight_OtherTarget",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "1c0a5631-be89-4ff4-a3d7-ca1d38f233e3"
+                                    "StateName": "DoorClosed",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E8C1]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "6bd67663-b803-4f3b-9c9f-42c591b51b93"
+                                            }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "TargetingSystemMissileLight_Off"
+                                    "StateName": "DoorOpening",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "5d7b8e59-552f-407f-9df1-8eb582e9c22b"
+                                            }
+                                        }
+                                    }
                                 }
                             ],
                             "StateModifiers": {
                                 "LandingGearStateModifier": {
                                     "deploying": {
-                                        "value": "SInteractionState[DBF8]"
+                                        "value": "SInteractionState[E98D]"
                                     },
                                     "deployed": {
-                                        "value": "SInteractionState[DBF7]"
+                                        "value": "SInteractionState[E98C]"
                                     },
                                     "retracting": {
-                                        "value": "SInteractionState[DBF6]"
+                                        "value": "SInteractionState[E98B]"
                                     },
                                     "retracted": {
-                                        "value": "SInteractionState[DBF5]"
+                                        "value": "SInteractionState[E98A]"
                                     }
                                 }
                             }
@@ -6883,18 +7054,36 @@
                             "networkAuthority": "Server",
                             "States": [
                                 {
-                                    "StateName": "TargetingSystemMissileLight_Armed",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "b3060028-045a-4b16-a9d2-c84fd08aee6e"
+                                    "StateName": "DoorOpened",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E8C2]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "9057a388-8ac5-40e2-9b0f-657bfab9ff60"
+                                            }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "TargetingSystemMissileLight_ArmedEvent",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "cbdbf045-0d02-4c83-82df-00b3fcf8b685"
+                                    "StateName": "DoorClosing",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E8C1]"
+                                            }
+                                        }
+                                    },
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "19e014c7-a1cc-4255-b206-94a9d85a3dac"
+                                            }
                                         }
                                     }
                                 }
@@ -6904,7 +7093,7 @@
                                     "context": {
                                         "SEntityTraversalTargetPathContext": {
                                             "targetPath": {
-                                                "value": "SEntityTraversingTarget[0230]"
+                                                "value": "SEntityTraversingTarget[0245]"
                                             }
                                         }
                                     },
@@ -6920,7 +7109,7 @@
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[DBF9]"
+                                                "value": "SInteractionState[E98E]"
                                             }
                                         },
                                         {
@@ -6934,7 +7123,7 @@
                                                 }
                                             },
                                             "state": {
-                                                "value": "SInteractionState[DBFA]"
+                                                "value": "SInteractionState[E98F]"
                                             }
                                         }
                                     ]
@@ -7201,7 +7390,7 @@
                             "paths": {
                                 "SEntityTraversingTargetPath": {
                                     "node": {
-                                        "value": "SEntityTraversingNodeBase[10C1]"
+                                        "value": "SEntityTraversingNodeBase[1107]"
                                     }
                                 }
                             }
@@ -7218,13 +7407,16 @@
                 },
                 "EntityComponentResourceNetworkUIProviderParams": {
                     "normalState": {
-                        "value": "SInteractionState[DBF2]"
+                        "value": "SInteractionState[E986]"
                     },
                     "auxState": {
-                        "value": "SInteractionState[DBF3]"
+                        "value": "SInteractionState[E987]"
+                    },
+                    "emergencyState": {
+                        "value": "SInteractionState[E988]"
                     },
                     "criticalState": {
-                        "value": "SInteractionState[DBF4]"
+                        "value": "SInteractionState[E989]"
                     }
                 }
             },
@@ -7250,7 +7442,8 @@
             "ef734509-be28-47c9-87df-2775db104d38",
             "b1f95343-7078-4f5e-83d0-95896dc4630b",
             "89e1fc8d-3364-48c1-85a1-e929731c1d10",
-            "dfe438a4-43d9-44c9-9780-b18b4e1d0521"
+            "698cc5cd-9113-455c-a439-fadfd3b210f4",
+            "33e0472e-e3ad-4701-951a-915bf5f8a691"
         ],
         "entity_tag_map": [
             {
@@ -7282,8 +7475,12 @@
                 "name": "HeavyFighter"
             },
             {
-                "tag": "dfe438a4-43d9-44c9-9780-b18b4e1d0521",
-                "name": "Hard"
+                "tag": "698cc5cd-9113-455c-a439-fadfd3b210f4",
+                "name": "CombatRaiting4"
+            },
+            {
+                "tag": "33e0472e-e3ad-4701-951a-915bf5f8a691",
+                "name": "VeryHard"
             }
         ],
         "manufacturer": "MRAI",
@@ -7450,8 +7647,8 @@
                 }
             },
             "Interactions": [
-                "Unlocktrigger",
-                "Place_fuse"
+                "Turretexit",
+                "Carry"
             ]
         }
     }

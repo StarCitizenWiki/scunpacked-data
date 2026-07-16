@@ -571,6 +571,7 @@
                                 "enable": 0,
                                 "initialTemperature": -1,
                                 "internalTemperatureGeneration": 0,
+                                "useParentRoomOccupant": 0,
                                 "coolingEqualizationParams": {
                                     "CoolingEqualizationMultiplier": {
                                         "coolingEqualizationMultiplier": 1
@@ -614,72 +615,56 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[4B05]"
+                                "value": "SInteractionState[5244]"
                             },
                             "States": [
                                 {
-                                    "StateName": "LightOn",
+                                    "StateName": "DoorOpening",
                                     "enterStateEffectTags": {
                                         "Reference": {
-                                            "value": "03228d89-5cf3-42cd-9ece-936d37cd6da2"
+                                            "value": "5661f83d-ce39-4515-834f-51410446871b"
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "LightOff"
-                                },
-                                {
-                                    "StateName": "SwitchOn",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 1,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[02E2]"
-                                            }
-                                        }
-                                    },
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[5A5F]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[4B08]"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "SwitchOff",
-                                    "EnterEventDispatchers": {
-                                        "AnimationSetVariable": {
-                                            "value": 0,
-                                            "variable": {
-                                                "value": "AnimationFloatVariable[02E2]"
-                                            }
-                                        }
-                                    },
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[5A5E]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[4B07]"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "PowerAvailable",
+                                    "StateName": "DoorClosing",
                                     "enterStateEffectTags": {
                                         "Reference": {
-                                            "value": "6237d5ba-0549-4059-be21-ca36310914ef"
+                                            "value": "bf445c2c-1d59-42dd-91d4-b5d465dd1ffa"
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "PowerUnavailable"
+                                    "StateName": "DoorClosed",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "eafed141-b387-4f7a-aba3-3dcfed6788bd"
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "DoorOpened",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "609cde5b-b8f8-4f29-8348-828e5ab42b5b"
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "DoorOpening",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "5661f83d-ce39-4515-834f-51410446871b"
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "DoorClosing",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "bf445c2c-1d59-42dd-91d4-b5d465dd1ffa"
+                                        }
+                                    }
                                 }
                             ]
                         }
@@ -689,102 +674,156 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "Activate Remote Camera",
-                                "DisplayName": "Enter Remote Turret",
-                                "__DisplayName": "@ui_interactor_use_remote_turret",
+                                "Name": "OpenInventoryUI",
+                                "DisplayName": "Open",
+                                "__DisplayName": "@interaction_open",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
-                                "Linkable": 1,
+                                "Linkable": 0,
+                                "LockedByLinks": 0,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "presetList": {
+                                            "Reference": {
+                                                "value": "2ea75af9-ca5b-4c78-86fa-e53ec3e63b03"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "Name": "OpenLootingUI",
+                                "DisplayName": "Loot",
+                                "__DisplayName": "@interaction_loot",
+                                "DisplayType": "Show",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 0,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "Turret_Gyro_Mode",
-                                "DisplayName": "Switch Gyro Mode",
-                                "__DisplayName": "@ui_interactor_turret_gyro",
+                                "Name": "Carry",
+                                "DisplayName": "Carry",
+                                "__DisplayName": "@interaction_carry",
                                 "DisplayType": "Show",
-                                "GenericCursor": "MultiAction",
+                                "GenericCursor": "Grab",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
-                                "Linkable": 1,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "presetList": {
+                                            "Reference": {
+                                                "value": "f5e13f32-3097-46d1-b863-5bfae1c846c0"
+                                            }
+                                        }
+                                    }
+                                }
                             },
                             {
-                                "Name": "Turret_Fire_Mode",
-                                "DisplayName": "Switch Fire Mode",
-                                "__DisplayName": "@ui_interactor_turret_fire_mode",
+                                "Name": "Drop",
+                                "DisplayName": "Drop",
+                                "__DisplayName": "@interaction_drop",
                                 "DisplayType": "Show",
-                                "GenericCursor": "Button",
+                                "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
-                                "Linkable": 1,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "presetList": {
+                                            "Reference": {
+                                                "value": "901b0193-5e7c-4a9b-9dc6-0a5af5420e51"
+                                            }
+                                        }
+                                    }
+                                }
                             },
                             {
-                                "Name": "Turret_Gyro_Mode",
-                                "DisplayName": "Switch Gyro Mode",
-                                "__DisplayName": "@ui_interactor_turret_gyro",
+                                "Name": "Place",
+                                "DisplayName": "Place",
+                                "__DisplayName": "@interaction_place",
                                 "DisplayType": "Show",
-                                "GenericCursor": "Button",
+                                "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
-                                "Linkable": 1,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "presetList": {
+                                            "Reference": {
+                                                "value": "9e196f93-d77e-4d6e-80b4-2378dcbbf0bf"
+                                            }
+                                        }
+                                    }
+                                }
                             },
                             {
-                                "Name": "Turret_Sensitivity_Increase",
-                                "DisplayName": "Increase Sensitivity",
-                                "__DisplayName": "@ui_interactor_turret_sensitivity_increase",
+                                "Name": "Store",
+                                "DisplayName": "Store",
+                                "__DisplayName": "@interaction_store",
                                 "DisplayType": "Show",
-                                "GenericCursor": "Button",
+                                "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
-                                "Linkable": 1,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "presetList": {
+                                            "Reference": {
+                                                "value": "103b1d52-b826-4b20-bde8-f8156d245321"
+                                            }
+                                        }
+                                    }
+                                }
                             },
                             {
-                                "Name": "Turret_Sensitivity_Decrease",
-                                "DisplayName": "Decrease Sensitivity",
-                                "__DisplayName": "@ui_interactor_turret_sensitivity_decrease",
+                                "Name": "EquipToWear",
+                                "DisplayName": "Equip",
+                                "__DisplayName": "@interaction_equip",
                                 "DisplayType": "Show",
-                                "GenericCursor": "Button",
+                                "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
-                                "Linkable": 1,
+                                "Linkable": 0,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
-                            },
-                            {
-                                "Name": "Turret_Sensitivity_Reset",
-                                "DisplayName": "Reset Sensitivity",
-                                "__DisplayName": "@ui_interactor_turret_sensitivity_reset",
-                                "DisplayType": "Show",
-                                "GenericCursor": "Button",
-                                "FocusModeOnly": 0,
-                                "Sendable": 0,
-                                "Linkable": 1,
-                                "LockedByLinks": 0,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
+                                "InheritsConditionDisplaysThroughLinks": 0,
+                                "conditionList": {
+                                    "InteractionConditionList": {
+                                        "presetList": {
+                                            "Reference": {
+                                                "value": "c2b4a849-3250-499a-ab24-d653c54b293a"
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         ],
                         "InteractionPoints": {
@@ -813,11 +852,19 @@
                                 "OnlySelectableInLookDir": 0,
                                 "Interactions": [
                                     {
-                                        "DisplayName": "",
-                                        "__DisplayName": "@LOC_EMPTY",
+                                        "DisplayName": "Loot",
+                                        "__DisplayName": "@interaction_loot",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[37B6]"
+                                            "value": "SSharedInteractionParams[47D8]"
+                                        }
+                                    },
+                                    {
+                                        "DisplayName": "",
+                                        "__DisplayName": "@LOC_EMPTY",
+                                        "IsPrimary": 1,
+                                        "Interaction": {
+                                            "value": "SSharedInteractionParams[47D9]"
                                         }
                                     },
                                     {
@@ -825,7 +872,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[37B6]"
+                                            "value": "SSharedInteractionParams[47DA]"
                                         }
                                     },
                                     {
@@ -833,7 +880,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[37B2]"
+                                            "value": "SSharedInteractionParams[47DB]"
                                         }
                                     },
                                     {
@@ -841,7 +888,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[37B3]"
+                                            "value": "SSharedInteractionParams[47DC]"
                                         }
                                     },
                                     {
@@ -849,7 +896,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[37D8]"
+                                            "value": "SSharedInteractionParams[47DD]"
                                         }
                                     },
                                     {
@@ -857,15 +904,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[37D8]"
-                                        }
-                                    },
-                                    {
-                                        "DisplayName": "",
-                                        "__DisplayName": "@LOC_EMPTY",
-                                        "IsPrimary": 0,
-                                        "Interaction": {
-                                            "value": "SSharedInteractionParams[37FA]"
+                                            "value": "SSharedInteractionParams[47DE]"
                                         }
                                     }
                                 ],
@@ -931,44 +970,44 @@
                     "canBeCarriedInProne": 1,
                     "disableRotation": 0,
                     "carryInteraction": {
-                        "value": "SSharedInteractionParams[41A5]"
+                        "value": "SSharedInteractionParams[46F0]"
                     },
                     "placeInteraction": {
-                        "value": "SSharedInteractionParams[41A8]"
+                        "value": "SSharedInteractionParams[46F3]"
                     },
                     "dropInteraction": {
-                        "value": "SSharedInteractionParams[41A6]"
+                        "value": "SSharedInteractionParams[46F1]"
                     },
                     "storeInteraction": {
-                        "value": "SSharedInteractionParams[41A9]"
+                        "value": "SSharedInteractionParams[46F4]"
                     },
                     "offHandStoreInteraction": {
-                        "value": "SSharedInteractionParams[41AA]"
+                        "value": "SSharedInteractionParams[46F5]"
                     },
                     "inspectInteraction": {
-                        "value": "SSharedInteractionParams[41A7]"
+                        "value": "SSharedInteractionParams[46F2]"
                     },
                     "attachToHeldItemInteraction": {
-                        "value": "SSharedInteractionParams[41AB]"
+                        "value": "SSharedInteractionParams[46F6]"
                     },
                     "carryableStatesParams": {
                         "settledState": {
-                            "value": "SInteractionState[4B05]"
+                            "value": "SInteractionState[5244]"
                         },
                         "carriedState": {
-                            "value": "SInteractionState[4B06]"
+                            "value": "SInteractionState[5245]"
                         },
                         "inspectingState": {
-                            "value": "SInteractionState[4B08]"
+                            "value": "SInteractionState[5247]"
                         },
                         "droppedState": {
-                            "value": "SInteractionState[4B09]"
+                            "value": "SInteractionState[5248]"
                         },
                         "offeredState": {
-                            "value": "SInteractionState[4B0A]"
+                            "value": "SInteractionState[5249]"
                         },
                         "storedState": {
-                            "value": "SInteractionState[4B07]"
+                            "value": "SInteractionState[5246]"
                         }
                     },
                     "interactionPointOffsets": {
@@ -1274,7 +1313,7 @@
                             "layerName": "Default",
                             "renderTarget": "All",
                             "defaultView": {
-                                "value": "BuildingBlocksView[0736]"
+                                "value": "BuildingBlocksView[0753]"
                             },
                             "views": {
                                 "BuildingBlocksView": {
@@ -1414,12 +1453,13 @@
                 "Volume": 0.216
             },
             "Interactions": [
-                "Activate remote camera",
-                "Turret_gyro_mode",
-                "Turret_fire_mode",
-                "Turret_sensitivity_increase",
-                "Turret_sensitivity_decrease",
-                "Turret_sensitivity_reset"
+                "Openinventoryui",
+                "Openlootingui",
+                "Carry",
+                "Drop",
+                "Place",
+                "Store",
+                "Equiptowear"
             ],
             "WeaponAttachment": {
                 "ItemType": "Scope",

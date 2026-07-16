@@ -89,6 +89,7 @@
                                 "enable": 1,
                                 "initialTemperature": -1,
                                 "internalTemperatureGeneration": 0,
+                                "useParentRoomOccupant": 0,
                                 "coolingEqualizationParams": {
                                     "CoolingEqualizationMultiplier": {
                                         "coolingEqualizationMultiplier": 1
@@ -196,9 +197,9 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "Missiles_CycleMissiles",
-                                "DisplayName": "Cycle Missiles",
-                                "__DisplayName": "@vehicle_interactor_Missiles_CycleMissiles",
+                                "Name": "Countermeasures_Fire",
+                                "DisplayName": "Fire Countermeasures",
+                                "__DisplayName": "@vehicle_interactor_CountermeasureFire",
                                 "DisplayType": "Show",
                                 "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
@@ -210,9 +211,9 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "Missiles_FireMissiles",
-                                "DisplayName": "Fire Missiles",
-                                "__DisplayName": "@vehicle_interactor_Missiles_FireMissiles",
+                                "Name": "MarkHostile",
+                                "DisplayName": "Mark Target Hostile",
+                                "__DisplayName": "@vehicle_interactor_MarkHostile",
                                 "DisplayType": "Show",
                                 "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
@@ -224,15 +225,15 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "Weapons_On",
-                                "DisplayName": "Weapons On",
-                                "__DisplayName": "@vehicle_interactor_Weapons_Enable",
+                                "Name": "MarkFriendly",
+                                "DisplayName": "Mark Target Friendly",
+                                "__DisplayName": "@vehicle_interactor_MarkFriendly",
                                 "DisplayType": "Show",
                                 "GenericCursor": "Button",
                                 "FocusModeOnly": 0,
-                                "Sendable": 1,
-                                "Linkable": 1,
-                                "LockedByLinks": 1,
+                                "Sendable": 0,
+                                "Linkable": 0,
+                                "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
                                 "InheritsConditionDisplaysThroughLinks": 0
@@ -268,15 +269,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D5DD]"
-                                        }
-                                    },
-                                    {
-                                        "DisplayName": "Sit",
-                                        "__DisplayName": "@ui_interactor_generic_seat",
-                                        "IsPrimary": 1,
-                                        "Interaction": {
-                                            "value": "SSharedInteractionParams[D5DE]"
+                                            "value": "SSharedInteractionParams[DD34]"
                                         }
                                     },
                                     {
@@ -284,7 +277,15 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[D5DF]"
+                                            "value": "SSharedInteractionParams[DD36]"
+                                        }
+                                    },
+                                    {
+                                        "DisplayName": "",
+                                        "__DisplayName": "@LOC_EMPTY",
+                                        "IsPrimary": 0,
+                                        "Interaction": {
+                                            "value": "SSharedInteractionParams[DD37]"
                                         }
                                     }
                                 ],
@@ -385,61 +386,91 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[8C7B]"
+                                "value": "SInteractionState[948E]"
                             },
                             "States": [
                                 {
-                                    "StateName": "DoorAccessDenied",
-                                    "StateAutoChange": {
-                                        "SStateAutoChange": {
-                                            "Delay": 1.5,
-                                            "RunWhenStreamedOut": 0,
-                                            "NextState": {
-                                                "value": "SInteractionState[8C7C]"
-                                            }
-                                        }
-                                    }
+                                    "StateName": "Offered"
                                 },
                                 {
-                                    "StateName": "DoorLocked",
-                                    "stateTags": {
-                                        "tags": {
-                                            "Reference": {
-                                                "value": "60daf4c5-91c1-4900-aac2-1eb57f9de62f"
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    "StateName": "DoorOperable",
+                                    "StateName": "Stored",
                                     "Interactions": [
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[981C]"
+                                                "value": "SSharedInteractionParams[9FCA]"
                                             }
                                         },
                                         {
                                             "Interaction": {
-                                                "value": "SSharedInteractionParams[9813]"
+                                                "value": "SSharedInteractionParams[9FCC]"
                                             }
                                         }
                                     ],
-                                    "stateTags": {
+                                    "entityTags": {
                                         "tags": {
                                             "Reference": {
-                                                "value": "63128da1-d91e-4395-a69b-e19e81a376cc"
+                                                "value": "158faf59-73f2-42e6-a7cf-a55c3e46040d"
                                             }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "DoorInoperable"
+                                    "StateName": "Settled",
+                                    "Interactions": [
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[9FCF]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[9FD3]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[9FD1]"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "StateName": "CarriedLowered",
+                                    "Interactions": [
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[9FD3]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[9FD1]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[9FD0]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[9FD2]"
+                                            }
+                                        }
+                                    ],
+                                    "entityTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "ba576025-1c42-4e4e-80d0-1b902f3351b1"
+                                            }
+                                        }
+                                    }
                                 }
                             ],
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[8C7E]"
+                                        "value": "SInteractionState[9491]"
                                     }
                                 }
                             }
@@ -526,32 +557,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         }
                     }
@@ -777,6 +814,7 @@
                 "Enable": 1,
                 "InitialTemperature": -1,
                 "InternalTemperatureGeneration": 0,
+                "UseParentRoomOccupant": 0,
                 "CoolingEqualizationMultiplier": 1,
                 "SignatureParams": {
                     "Enable": 0,
@@ -802,9 +840,9 @@
                 }
             },
             "Interactions": [
-                "Missiles_cyclemissiles",
-                "Missiles_firemissiles",
-                "Weapons_on"
+                "Countermeasures_fire",
+                "Markhostile",
+                "Markfriendly"
             ],
             "ResourceContainer": {
                 "Immutable": false,

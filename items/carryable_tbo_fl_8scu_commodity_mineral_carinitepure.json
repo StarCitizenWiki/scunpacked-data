@@ -89,6 +89,7 @@
                                 "enable": 1,
                                 "initialTemperature": -1,
                                 "internalTemperatureGeneration": 0,
+                                "useParentRoomOccupant": 0,
                                 "coolingEqualizationParams": {
                                     "CoolingEqualizationMultiplier": {
                                         "coolingEqualizationMultiplier": 1
@@ -196,7 +197,21 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "SetState_UserStatus_AIUser",
+                                "Name": "PanelClose",
+                                "DisplayName": "Close",
+                                "__DisplayName": "@interaction_close",
+                                "DisplayType": "Show",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 1,
+                                "Linkable": 1,
+                                "LockedByLinks": 0,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "PanelCycle",
                                 "DisplayName": "Use",
                                 "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
@@ -210,28 +225,14 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "FlowgraphDebug_UnlockBasicCerts",
-                                "DisplayName": "@interaction_debug_FiringRange_EnableBasicCerts",
-                                "__DisplayName": "@interaction_debug_FiringRange_EnableBasicCerts",
-                                "DisplayType": "Hide",
+                                "Name": "OpenLeftPanel",
+                                "DisplayName": "Open",
+                                "__DisplayName": "@interaction_open",
+                                "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
                                 "Sendable": 0,
-                                "Linkable": 0,
-                                "LockedByLinks": 0,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
-                            },
-                            {
-                                "Name": "FlowgraphDebug_UnlockAdvancedCerts",
-                                "DisplayName": "@interaction_debug_FiringRange_EnableAdvancedCerts",
-                                "__DisplayName": "@interaction_debug_FiringRange_EnableAdvancedCerts",
-                                "DisplayType": "Hide",
-                                "GenericCursor": "SingleAction",
-                                "FocusModeOnly": 0,
-                                "Sendable": 0,
-                                "Linkable": 0,
+                                "Linkable": 1,
                                 "LockedByLinks": 0,
                                 "RequiresAuthorizedUser": 0,
                                 "available": 1,
@@ -268,7 +269,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2C62]"
+                                            "value": "SSharedInteractionParams[3212]"
                                         }
                                     },
                                     {
@@ -276,7 +277,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2C63]"
+                                            "value": "SSharedInteractionParams[3213]"
                                         }
                                     },
                                     {
@@ -284,7 +285,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2C64]"
+                                            "value": "SSharedInteractionParams[3214]"
                                         }
                                     }
                                 ],
@@ -385,31 +386,55 @@
                             "asopReset": 0,
                             "networkAuthority": "Server",
                             "DefaultState": {
-                                "value": "SInteractionState[D9FC]"
+                                "value": "SInteractionState[E6EC]"
                             },
                             "States": [
                                 {
-                                    "StateName": "TargetingSystemMissileLight_MaxArmed"
+                                    "StateName": "LockControl_NoLockConnected",
+                                    "Interactions": [
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E584]"
+                                            }
+                                        },
+                                        {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E585]"
+                                            }
+                                        }
+                                    ]
                                 },
                                 {
-                                    "StateName": "TargetingSystemMissileLight_CycleEvent"
+                                    "StateName": "LockControl_LockConnected"
                                 },
                                 {
-                                    "StateName": "TargetingSystemMissileLight_FireEvent",
-                                    "enterStateEffectTags": {
-                                        "Reference": {
-                                            "value": "a6a16f0b-9c5b-4fcf-9241-3ab6f30d501e"
+                                    "StateName": "NoMountedGunConnected",
+                                    "Interactions": {
+                                        "SInteractionStateTransition": {
+                                            "Interaction": {
+                                                "value": "SSharedInteractionParams[E58B]"
+                                            },
+                                            "NextState": {
+                                                "value": "SInteractionState[E6EF]"
+                                            }
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "TargetingSystemMissileLight_MissilesDepleted"
+                                    "StateName": "RequireMountedGunRetractBeforeClose",
+                                    "stateTags": {
+                                        "tags": {
+                                            "Reference": {
+                                                "value": "60887103-4f1f-48e3-bff4-d841fdd09171"
+                                            }
+                                        }
+                                    }
                                 }
                             ],
                             "StateModifiers": {
                                 "SCargoGridSpawnedStateModifier": {
                                     "defaultStateOverride": {
-                                        "value": "SInteractionState[D9FF]"
+                                        "value": "SInteractionState[E6EF]"
                                     }
                                 }
                             }
@@ -496,32 +521,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 1,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 0,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         }
                     }
@@ -747,6 +778,7 @@
                 "Enable": 1,
                 "InitialTemperature": -1,
                 "InternalTemperatureGeneration": 0,
+                "UseParentRoomOccupant": 0,
                 "CoolingEqualizationMultiplier": 1,
                 "SignatureParams": {
                     "Enable": 0,
@@ -772,9 +804,9 @@
                 }
             },
             "Interactions": [
-                "Setstate_userstatus_aiuser",
-                "Flowgraphdebug_unlockbasiccerts",
-                "Flowgraphdebug_unlockadvancedcerts"
+                "Panelclose",
+                "Panelcycle",
+                "Openleftpanel"
             ],
             "ResourceContainer": {
                 "Immutable": false,

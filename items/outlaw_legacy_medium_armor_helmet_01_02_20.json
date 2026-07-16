@@ -88,6 +88,7 @@
                                 "enable": 0,
                                 "initialTemperature": -1,
                                 "internalTemperatureGeneration": 0,
+                                "useParentRoomOccupant": 0,
                                 "coolingEqualizationParams": {
                                     "CoolingEqualizationMultiplier": {
                                         "coolingEqualizationMultiplier": 1
@@ -1319,7 +1320,8 @@
                     "Chunks": {
                         "SCItemClothingMeshChunkParams": {
                             "MeshChunk": "theta_head_zone",
-                            "Layer": 4
+                            "Layer": 4,
+                            "HideInFirstPerson": 0
                         }
                     },
                     "Type": {
@@ -1703,9 +1705,37 @@
                     "Interactable": {
                         "SharedInteractions": [
                             {
-                                "Name": "DisableESP",
-                                "DisplayName": "Disable ESP",
-                                "__DisplayName": "@vehicle_interactor_ESP_Disable",
+                                "Name": "OpenInventoryUI",
+                                "DisplayName": "Open",
+                                "__DisplayName": "@interaction_open",
+                                "DisplayType": "Show",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 0,
+                                "Linkable": 0,
+                                "LockedByLinks": 0,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "OpenLootingUI",
+                                "DisplayName": "Loot",
+                                "__DisplayName": "@interaction_loot",
+                                "DisplayType": "Show",
+                                "GenericCursor": "SingleAction",
+                                "FocusModeOnly": 0,
+                                "Sendable": 0,
+                                "Linkable": 0,
+                                "LockedByLinks": 0,
+                                "RequiresAuthorizedUser": 0,
+                                "available": 1,
+                                "InheritsConditionDisplaysThroughLinks": 0
+                            },
+                            {
+                                "Name": "TurnOn",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -1717,9 +1747,9 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "EnableCruise",
-                                "DisplayName": "Engage Cruise Control",
-                                "__DisplayName": "@vehicle_interactor_CruiseControl_Enable",
+                                "Name": "TurnOff",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -1731,9 +1761,9 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "DisableCruise",
-                                "DisplayName": "Disengage Cruise Control",
-                                "__DisplayName": "@vehicle_interactor_CruiseControl_Disable",
+                                "Name": "Toggle",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -1745,37 +1775,9 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "EnableVTOL",
-                                "DisplayName": "VTOL\n(Enable)",
-                                "__DisplayName": "@ui_CIToggleVTOL_Enable",
-                                "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
-                                "FocusModeOnly": 0,
-                                "Sendable": 1,
-                                "Linkable": 1,
-                                "LockedByLinks": 1,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
-                            },
-                            {
-                                "Name": "DisableVTOL",
-                                "DisplayName": "IFCS Flight Mode TEMP",
-                                "__DisplayName": "@ui_interactor_IFCS_flight_mode_TEMP",
-                                "DisplayType": "Show",
-                                "GenericCursor": "SingleAction",
-                                "FocusModeOnly": 0,
-                                "Sendable": 1,
-                                "Linkable": 1,
-                                "LockedByLinks": 1,
-                                "RequiresAuthorizedUser": 0,
-                                "available": 1,
-                                "InheritsConditionDisplaysThroughLinks": 0
-                            },
-                            {
-                                "Name": "EnableProximityAssist",
-                                "DisplayName": "Enable Flight Proximity Assist",
-                                "__DisplayName": "@pause_OptionsFlightProximityAssist",
+                                "Name": "TurnOn",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -1787,9 +1789,9 @@
                                 "InheritsConditionDisplaysThroughLinks": 0
                             },
                             {
-                                "Name": "DisableProximityAssist",
-                                "DisplayName": "WARNING: Approaching planet gravitational field!",
-                                "__DisplayName": "@dfm_ui_PlanetProximityWarning",
+                                "Name": "TurnOff",
+                                "DisplayName": "Use",
+                                "__DisplayName": "@usable_use",
                                 "DisplayType": "Show",
                                 "GenericCursor": "SingleAction",
                                 "FocusModeOnly": 0,
@@ -1827,19 +1829,11 @@
                                 "OnlySelectableInLookDir": 0,
                                 "Interactions": [
                                     {
-                                        "DisplayName": "",
-                                        "__DisplayName": "@LOC_EMPTY",
-                                        "IsPrimary": 0,
-                                        "Interaction": {
-                                            "value": "SSharedInteractionParams[2815]"
-                                        }
-                                    },
-                                    {
                                         "DisplayName": "Open",
                                         "__DisplayName": "@interaction_open",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2816]"
+                                            "value": "SSharedInteractionParams[2E3C]"
                                         }
                                     },
                                     {
@@ -1847,7 +1841,15 @@
                                         "__DisplayName": "@interaction_loot",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2817]"
+                                            "value": "SSharedInteractionParams[2E3D]"
+                                        }
+                                    },
+                                    {
+                                        "DisplayName": "",
+                                        "__DisplayName": "@LOC_EMPTY",
+                                        "IsPrimary": 0,
+                                        "Interaction": {
+                                            "value": "SSharedInteractionParams[2E37]"
                                         }
                                     }
                                 ],
@@ -1920,9 +1922,9 @@
                                     {
                                         "DisplayName": "",
                                         "__DisplayName": "@LOC_EMPTY",
-                                        "IsPrimary": 1,
+                                        "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2818]"
+                                            "value": "SSharedInteractionParams[2E38]"
                                         }
                                     },
                                     {
@@ -1930,7 +1932,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[2819]"
+                                            "value": "SSharedInteractionParams[2E39]"
                                         }
                                     },
                                     {
@@ -1938,7 +1940,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[281A]"
+                                            "value": "SSharedInteractionParams[2E3A]"
                                         }
                                     },
                                     {
@@ -1946,15 +1948,7 @@
                                         "__DisplayName": "@LOC_EMPTY",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[281B]"
-                                        }
-                                    },
-                                    {
-                                        "DisplayName": "",
-                                        "__DisplayName": "@LOC_EMPTY",
-                                        "IsPrimary": 0,
-                                        "Interaction": {
-                                            "value": "SSharedInteractionParams[281C]"
+                                            "value": "SSharedInteractionParams[2E3B]"
                                         }
                                     },
                                     {
@@ -1962,7 +1956,7 @@
                                         "__DisplayName": "@interaction_open",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[281D]"
+                                            "value": "SSharedInteractionParams[2E3C]"
                                         }
                                     },
                                     {
@@ -1970,7 +1964,15 @@
                                         "__DisplayName": "@interaction_loot",
                                         "IsPrimary": 0,
                                         "Interaction": {
-                                            "value": "SSharedInteractionParams[281E]"
+                                            "value": "SSharedInteractionParams[2E3D]"
+                                        }
+                                    },
+                                    {
+                                        "DisplayName": "",
+                                        "__DisplayName": "@LOC_EMPTY",
+                                        "IsPrimary": 1,
+                                        "Interaction": {
+                                            "value": "SSharedInteractionParams[2E3E]"
                                         }
                                     }
                                 ],
@@ -2029,50 +2031,50 @@
                     "canBeCarriedInProne": 0,
                     "disableRotation": 0,
                     "carryInteraction": {
-                        "value": "SSharedInteractionParams[18AD]"
+                        "value": "SSharedInteractionParams[210C]"
                     },
                     "placeInteraction": {
-                        "value": "SSharedInteractionParams[18AE]"
+                        "value": "SSharedInteractionParams[210D]"
                     },
                     "dropInteraction": {
-                        "value": "SSharedInteractionParams[18AF]"
+                        "value": "SSharedInteractionParams[210E]"
                     },
                     "equipToItemportInteraction": {
-                        "value": "SSharedInteractionParams[18B3]"
+                        "value": "SSharedInteractionParams[2112]"
                     },
                     "storeInteraction": {
-                        "value": "SSharedInteractionParams[18B2]"
+                        "value": "SSharedInteractionParams[2111]"
                     },
                     "equipWearableInteraction": {
-                        "value": "SSharedInteractionParams[18B0]"
+                        "value": "SSharedInteractionParams[210F]"
                     },
                     "inspectInteraction": {
-                        "value": "SSharedInteractionParams[18B1]"
+                        "value": "SSharedInteractionParams[2110]"
                     },
                     "carryableStatesParams": {
                         "settledState": {
-                            "value": "SInteractionState[D36C]"
+                            "value": "SInteractionState[E044]"
                         },
                         "carriedState": {
-                            "value": "SInteractionState[D36D]"
+                            "value": "SInteractionState[E045]"
                         },
                         "equippedToSuitState": {
-                            "value": "SInteractionState[D373]"
+                            "value": "SInteractionState[E04B]"
                         },
                         "inspectingState": {
-                            "value": "SInteractionState[D371]"
+                            "value": "SInteractionState[E049]"
                         },
                         "droppedState": {
-                            "value": "SInteractionState[D36E]"
+                            "value": "SInteractionState[E046]"
                         },
                         "equippedWornState": {
-                            "value": "SInteractionState[D370]"
+                            "value": "SInteractionState[E048]"
                         },
                         "storedState": {
-                            "value": "SInteractionState[D36F]"
+                            "value": "SInteractionState[E047]"
                         },
                         "hangingOnOutfitHangerState": {
-                            "value": "SInteractionState[D372]"
+                            "value": "SInteractionState[E04A]"
                         }
                     },
                     "interactionPointOffsets": {
@@ -2253,7 +2255,7 @@
                     "carryableTasks": {
                         "SSequencerSetInteractionStateCarryableTaskParams": {
                             "state": {
-                                "value": "SInteractionState[D36D]"
+                                "value": "SInteractionState[E045]"
                             }
                         }
                     },
@@ -2344,86 +2346,56 @@
                             "networkAuthority": "Server",
                             "States": [
                                 {
-                                    "StateName": "Dropped"
-                                },
-                                {
-                                    "StateName": "Settled",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[D3CB]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[D36E]"
-                                            }
+                                    "StateName": "QuantumSpoolLight_Complete",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "cd06f664-75b0-4b2f-9e26-7d587edf23d4"
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "Carried",
-                                    "Interactions": [
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[D3CC]"
-                                            }
-                                        },
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[D3CD]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[D36F]"
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    "StateName": "Dropped"
-                                },
-                                {
-                                    "StateName": "Settled",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[D3D1]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[D371]"
-                                            }
+                                    "StateName": "QuantumSpoolLight_Cooldown",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "bc90581b-564f-4879-ac41-c609b7acc953"
                                         }
                                     }
                                 },
                                 {
-                                    "StateName": "Carried",
-                                    "Interactions": [
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[D3D2]"
-                                            }
-                                        },
-                                        {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[D3D3]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[D372]"
-                                            }
+                                    "StateName": "QuantumSpoolLight_Off"
+                                },
+                                {
+                                    "StateName": "QuantumDriveLight_Off"
+                                },
+                                {
+                                    "StateName": "QuantumDriveLight_Available",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "a6401698-12f1-4f5f-88d8-e736c6a0a7b8"
                                         }
-                                    ]
+                                    }
                                 },
                                 {
-                                    "StateName": "Dropped"
+                                    "StateName": "QuantumDriveLight_Calibrating",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "2237d5cf-591b-4718-8bb1-5150cc6645b2"
+                                        }
+                                    }
                                 },
                                 {
-                                    "StateName": "Settled",
-                                    "Interactions": {
-                                        "SInteractionStateTransition": {
-                                            "Interaction": {
-                                                "value": "SSharedInteractionParams[D3D7]"
-                                            },
-                                            "NextState": {
-                                                "value": "SInteractionState[D374]"
-                                            }
+                                    "StateName": "QuantumDriveLight_LinkCalibrating",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "2388fbd9-7692-4c39-aafa-fd96ab2c8c15"
+                                        }
+                                    }
+                                },
+                                {
+                                    "StateName": "QuantumDriveLight_Active",
+                                    "enterStateEffectTags": {
+                                        "Reference": {
+                                            "value": "763945de-a8c8-4bce-a55a-c47319bd8768"
                                         }
                                     }
                                 }
@@ -2435,10 +2407,10 @@
                     "inspectRotateScaleX": 0.05,
                     "inspectRotateScaleY": 0.05,
                     "inspectInteraction": {
-                        "value": "SSharedInteractionParams[18B1]"
+                        "value": "SSharedInteractionParams[2110]"
                     },
                     "stopInspectInteraction": {
-                        "value": "SSharedInteractionParams[18AF]"
+                        "value": "SSharedInteractionParams[210E]"
                     },
                     "inspectRotateLimitsX": {
                         "x": -1,
@@ -3156,32 +3128,38 @@
                             "PhysicalResistance": {
                                 "Multiplier": 0.7,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "EnergyResistance": {
                                 "Multiplier": 0.7,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "DistortionResistance": {
                                 "Multiplier": 0.7,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "ThermalResistance": {
                                 "Multiplier": 0.7,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "BiochemicalResistance": {
                                 "Multiplier": 0.7,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             },
                             "StunResistance": {
                                 "Multiplier": 0.55,
                                 "Threshold": 0,
-                                "DamageCap": 0
+                                "DamageCap": 0,
+                                "DamageCapLimit": 0
                             }
                         },
                         "impactForceResistance": {
@@ -3901,13 +3879,11 @@
                 "PunctureMaxNumber": 10
             },
             "Interactions": [
-                "Disableesp",
-                "Enablecruise",
-                "Disablecruise",
-                "Enablevtol",
-                "Disablevtol",
-                "Enableproximityassist",
-                "Disableproximityassist"
+                "Openinventoryui",
+                "Openlootingui",
+                "Turnon",
+                "Turnoff",
+                "Toggle"
             ],
             "SuitArmor": {
                 "DamageResistance": {
